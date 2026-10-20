@@ -20,112 +20,435 @@
     "La garantía cubre únicamente el trabajo realizado y no aplica por golpes, derrames o manipulación de terceros."
   ],
   "tipos_servicio": [
-    { "nombre": "Diagnóstico", "icono": "search", "categoria": "Diagnóstico", "servicios_sugeridos": ["Diagnóstico básico (software y estado general)"] },
-    { "nombre": "Mantenimiento preventivo", "icono": "refresh", "categoria": "Mantenimiento preventivo", "servicios_sugeridos": ["Mantenimiento preventivo de laptop", "Mantenimiento preventivo de PC de escritorio"] },
-    { "nombre": "Mantenimiento correctivo", "icono": "wrench", "categoria": "Mantenimiento correctivo", "servicios_sugeridos": ["Diagnóstico avanzado (hardware y componentes)"] },
-    { "nombre": "Recuperación de datos", "icono": "database", "categoria": "Recuperación de datos", "servicios_sugeridos": ["Recuperación lógica (archivos borrados o disco formateado)"] },
-    { "nombre": "Cambio de sistema operativo", "icono": "monitor", "categoria": "Sistema operativo y software", "servicios_sugeridos": ["Formateo e instalación de Windows"] },
-    { "nombre": "Clonación de disco", "icono": "layers", "categoria": "Clonación y mejoras", "servicios_sugeridos": ["Clonación de disco (HDD a SSD)"] },
-    { "nombre": "Eliminación de virus", "icono": "shield", "categoria": "Sistema operativo y software", "servicios_sugeridos": ["Eliminación de virus y malware"] },
-    { "nombre": "Mejora de hardware (SSD / RAM)", "icono": "cpu", "categoria": "Clonación y mejoras", "servicios_sugeridos": [] },
-    { "nombre": "Redes e impresoras", "icono": "wifi", "categoria": "Redes y otros", "servicios_sugeridos": [] },
-    { "nombre": "Otro", "icono": "help", "categoria": "", "servicios_sugeridos": [] }
+    {
+      "nombre": "Diagnóstico",
+      "icono": "search",
+      "categoria": "Diagnóstico",
+      "servicios_sugeridos": [
+        "Diagnóstico básico (software y estado general)"
+      ]
+    },
+    {
+      "nombre": "Mantenimiento preventivo",
+      "icono": "refresh",
+      "categoria": "Mantenimiento preventivo",
+      "servicios_sugeridos": [
+        "Mantenimiento preventivo de laptop",
+        "Mantenimiento preventivo de PC de escritorio"
+      ]
+    },
+    {
+      "nombre": "Mantenimiento correctivo",
+      "icono": "wrench",
+      "categoria": "Mantenimiento correctivo",
+      "servicios_sugeridos": [
+        "Diagnóstico avanzado (hardware y componentes)"
+      ]
+    },
+    {
+      "nombre": "Recuperación de datos",
+      "icono": "database",
+      "categoria": "Recuperación de datos",
+      "servicios_sugeridos": [
+        "Recuperación de archivos (borrados o disco formateado)"
+      ]
+    },
+    {
+      "nombre": "Cambio de sistema operativo",
+      "icono": "monitor",
+      "categoria": "Sistema operativo y software",
+      "servicios_sugeridos": [
+        "Formateo + instalación de sistema operativo"
+      ]
+    },
+    {
+      "nombre": "Clonación de disco",
+      "icono": "layers",
+      "categoria": "Clonación y mejoras",
+      "servicios_sugeridos": [
+        "Clonación de disco (HDD a SSD)"
+      ]
+    },
+    {
+      "nombre": "Eliminación de virus",
+      "icono": "shield",
+      "categoria": "Sistema operativo y software",
+      "servicios_sugeridos": [
+        "Eliminación de virus y malware"
+      ]
+    },
+    {
+      "nombre": "Mejora de hardware (SSD / RAM)",
+      "icono": "cpu",
+      "categoria": "Clonación y mejoras",
+      "servicios_sugeridos": []
+    },
+    {
+      "nombre": "Redes e impresoras",
+      "icono": "wifi",
+      "categoria": "Redes y otros",
+      "servicios_sugeridos": []
+    },
+    {
+      "nombre": "Otro",
+      "icono": "help",
+      "categoria": "",
+      "servicios_sugeridos": []
+    }
   ],
   "categorias": [
     {
       "nombre": "Diagnóstico",
       "icono": "search",
       "servicios": [
-        { "nombre": "Diagnóstico básico (software y estado general)", "precio": 75 },
-        { "nombre": "Diagnóstico avanzado (hardware y componentes)", "precio": 125 },
-        { "nombre": "Diagnóstico de placa madre", "precio": 175, "desde": true }
+        {
+          "nombre": "Diagnóstico básico (software y estado general)",
+          "precio": 75
+        },
+        {
+          "nombre": "Diagnóstico avanzado (hardware y componentes)",
+          "precio": 125
+        },
+        {
+          "nombre": "Diagnóstico de placa madre",
+          "precio": 175,
+          "desde": true
+        }
       ]
     },
     {
       "nombre": "Mantenimiento preventivo",
       "icono": "refresh",
       "servicios": [
-        { "nombre": "Mantenimiento preventivo de laptop", "precio": 225, "detalle": "Limpieza interna, pasta térmica y optimización." },
-        { "nombre": "Mantenimiento preventivo de PC de escritorio", "precio": 175, "detalle": "Limpieza interna, pasta térmica y optimización." },
-        { "nombre": "Limpieza interna profunda", "precio": 150 },
-        { "nombre": "Cambio de pasta térmica (CPU / GPU)", "precio": 75 },
-        { "nombre": "Limpieza de teclado, pantalla y carcasa", "precio": 50 },
-        { "nombre": "Optimización del sistema", "precio": 100, "detalle": "Programas de inicio, temporales y actualizaciones." }
+        {
+          "nombre": "Mantenimiento preventivo de laptop",
+          "precio": 225,
+          "detalle": "Limpieza interna, pasta térmica y optimización."
+        },
+        {
+          "nombre": "Mantenimiento preventivo de PC de escritorio",
+          "precio": 175,
+          "detalle": "Limpieza interna, pasta térmica y optimización."
+        },
+        {
+          "nombre": "Limpieza interna profunda",
+          "precio": 250
+        },
+        {
+          "nombre": "Cambio de pasta térmica (CPU / GPU)",
+          "precio": 125
+        },
+        {
+          "nombre": "Limpieza de teclado, pantalla y carcasa",
+          "precio": 50
+        },
+        {
+          "nombre": "Optimización del sistema",
+          "precio": 150,
+          "detalle": "Programas de inicio, temporales y actualizaciones."
+        }
       ]
     },
     {
       "nombre": "Mantenimiento correctivo",
       "icono": "wrench",
       "servicios": [
-        { "nombre": "Reparación de encendido / fuente de poder", "precio": 250, "desde": true },
-        { "nombre": "Cambio de pantalla (mano de obra)", "precio": 150 },
-        { "nombre": "Cambio de teclado (mano de obra)", "precio": 100 },
-        { "nombre": "Cambio de batería (mano de obra)", "precio": 75 },
-        { "nombre": "Reparación de bisagras o carcasa", "precio": 175 },
-        { "nombre": "Reparación de puerto de carga", "precio": 200 },
-        { "nombre": "Cambio de ventilador (mano de obra)", "precio": 100 },
-        { "nombre": "Atención por derrame de líquido", "precio": 300, "desde": true },
-        { "nombre": "Reparación de placa madre", "precio": 450, "desde": true }
+        {
+          "nombre": "Reparación de encendido / fuente de poder",
+          "precio": 250,
+          "desde": true
+        },
+        {
+          "nombre": "Cambio de pantalla (mano de obra)",
+          "precio": 150
+        },
+        {
+          "nombre": "Cambio de teclado (mano de obra)",
+          "precio": 100
+        },
+        {
+          "nombre": "Cambio de batería (mano de obra)",
+          "precio": 75
+        },
+        {
+          "nombre": "Reparación de bisagras o carcasa",
+          "precio": 175
+        },
+        {
+          "nombre": "Reparación de puerto de carga",
+          "precio": 200
+        },
+        {
+          "nombre": "Cambio de ventilador (mano de obra)",
+          "precio": 100
+        },
+        {
+          "nombre": "Atención por derrame de líquido",
+          "precio": 300,
+          "desde": true
+        },
+        {
+          "nombre": "Reparación de placa madre",
+          "precio": 450,
+          "desde": true
+        }
       ]
     },
     {
       "nombre": "Sistema operativo y software",
       "icono": "monitor",
       "servicios": [
-        { "nombre": "Formateo e instalación de Windows", "precio": 200, "detalle": "Incluye drivers básicos. La licencia se cotiza aparte." },
-        { "nombre": "Cambio de sistema operativo (Windows / Linux)", "precio": 225 },
-        { "nombre": "Actualización a Windows 11", "precio": 175 },
-        { "nombre": "Instalación de drivers", "precio": 100 },
-        { "nombre": "Instalación de paquete de oficina", "precio": 75 },
-        { "nombre": "Instalación de programas", "precio": 35, "por_unidad": true, "unidad": "programa" },
-        { "nombre": "Eliminación de virus y malware", "precio": 150 },
-        { "nombre": "Recuperación de contraseña o acceso", "precio": 125 }
+        {
+          "nombre": "Instalación de sistema operativo (disco nuevo o vacío)",
+          "precio": 200,
+          "detalle": "Instalación limpia en un disco nuevo o vacío, con drivers básicos. La licencia se cotiza aparte."
+        },
+        {
+          "nombre": "Formateo + instalación de sistema operativo",
+          "precio": 250,
+          "detalle": "Incluye drivers básicos. La licencia se cotiza aparte."
+        },
+        {
+          "nombre": "Cambio de sistema operativo (Windows / Linux)",
+          "precio": 225
+        },
+        {
+          "nombre": "Actualización a Windows 11",
+          "precio": 175
+        },
+        {
+          "nombre": "Instalación de drivers",
+          "precio": 100
+        },
+        {
+          "nombre": "Instalación de paquete de oficina",
+          "precio": 75
+        },
+        {
+          "nombre": "Instalación de programas",
+          "precio": 35,
+          "por_unidad": true,
+          "unidad": "programa"
+        },
+        {
+          "nombre": "Eliminación de virus y malware",
+          "precio": 150
+        },
+        {
+          "nombre": "Recuperación de contraseña o acceso",
+          "precio": 125
+        }
       ]
     },
     {
       "nombre": "Recuperación de datos",
       "icono": "database",
       "servicios": [
-        { "nombre": "Respaldo de información (hasta 100 GB)", "precio": 100 },
-        { "nombre": "Recuperación lógica (archivos borrados o disco formateado)", "precio": 300, "desde": true },
-        { "nombre": "Recuperación de disco dañado o que no detecta", "precio": 600, "desde": true },
-        { "nombre": "Recuperación de memoria USB o SD", "precio": 200, "desde": true }
+        {
+          "nombre": "Respaldo de información (hasta 100 GB)",
+          "precio": 100
+        },
+        {
+          "nombre": "Recuperación de archivos (borrados o disco formateado)",
+          "precio": 150,
+          "desde": true
+        },
+        {
+          "nombre": "Recuperación de disco dañado o que no detecta",
+          "precio": 600,
+          "desde": true
+        },
+        {
+          "nombre": "Recuperación de memoria USB o SD",
+          "precio": 200,
+          "desde": true
+        }
       ]
     },
     {
       "nombre": "Clonación y mejoras",
       "icono": "layers",
       "servicios": [
-        { "nombre": "Clonación de disco (HDD a SSD)", "precio": 175, "detalle": "Pasa todo tu sistema y archivos al disco nuevo, sin reinstalar." },
-        { "nombre": "Instalación de SSD (mano de obra)", "precio": 75 },
-        { "nombre": "Ampliación de memoria RAM (mano de obra)", "precio": 50 },
-        { "nombre": "Migración de datos a equipo nuevo", "precio": 150 },
-        { "nombre": "Instalación de tarjeta de video (mano de obra)", "precio": 100 }
+        {
+          "nombre": "Clonación de disco (HDD a SSD)",
+          "precio": 175,
+          "detalle": "Pasa todo tu sistema y archivos al disco nuevo, sin reinstalar."
+        },
+        {
+          "nombre": "Cambio de disco / instalación de SSD (mano de obra)",
+          "precio": 100
+        },
+        {
+          "nombre": "Cambio o ampliación de memoria RAM (mano de obra)",
+          "precio": 75
+        },
+        {
+          "nombre": "Migración de datos a equipo nuevo",
+          "precio": 150
+        },
+        {
+          "nombre": "Instalación de tarjeta de video (mano de obra)",
+          "precio": 100
+        }
       ]
     },
     {
       "nombre": "Redes y otros",
       "icono": "wifi",
       "servicios": [
-        { "nombre": "Configuración de red / WiFi", "precio": 125 },
-        { "nombre": "Instalación y configuración de impresora", "precio": 75 },
-        { "nombre": "Soporte remoto", "precio": 100, "por_unidad": true, "unidad": "hora" },
-        { "nombre": "Servicio a domicilio", "precio": 100 }
+        {
+          "nombre": "Configuración de red / WiFi",
+          "precio": 125
+        },
+        {
+          "nombre": "Instalación y configuración de impresora",
+          "precio": 75
+        },
+        {
+          "nombre": "Soporte remoto",
+          "precio": 100,
+          "por_unidad": true,
+          "unidad": "hora"
+        },
+        {
+          "nombre": "Servicio a domicilio",
+          "precio": 100
+        }
       ]
     }
   ],
   "listas": {
-    "tipos_equipo": ["Laptop", "PC de escritorio", "All-in-One", "Mini PC", "MacBook", "iMac", "Servidor", "Tablet", "Otro"],
-    "marcas": ["HP", "Dell", "Lenovo", "Asus", "Acer", "Apple", "MSI", "Samsung", "Toshiba", "Huawei", "Microsoft Surface", "Ensamblada / genérica", "Otra"],
-    "sistemas": ["Windows 11", "Windows 10", "Windows 8.1", "Windows 7", "macOS", "Linux (Ubuntu, Mint, etc.)", "ChromeOS", "Sin sistema operativo", "No sabe"],
-    "procesadores": ["Intel Celeron / Pentium", "Intel Core i3", "Intel Core i5", "Intel Core i7", "Intel Core i9", "Intel Core Ultra", "AMD Athlon / A-Series", "AMD Ryzen 3", "AMD Ryzen 5", "AMD Ryzen 7", "AMD Ryzen 9", "Apple M1 / M2 / M3 / M4", "No sabe"],
-    "ram": ["2 GB", "4 GB", "6 GB", "8 GB", "12 GB", "16 GB", "32 GB", "64 GB", "No sabe"],
-    "tipo_ram": ["DDR3", "DDR4", "DDR5", "LPDDR (soldada)", "No sabe"],
-    "almacenamiento_tipo": ["Disco duro (HDD)", "SSD SATA", "SSD NVMe / M.2", "eMMC", "HDD + SSD", "No sabe"],
-    "almacenamiento_capacidad": ["120 / 128 GB", "240 / 256 GB", "480 / 512 GB", "1 TB", "2 TB o más", "No sabe"],
-    "graficos": ["Integrada", "Dedicada (NVIDIA)", "Dedicada (AMD)", "No sabe"],
-    "sintomas": ["No enciende", "Enciende pero no da imagen", "Está muy lento", "Se calienta o se apaga solo", "Ventilador ruidoso", "Pantalla azul o se reinicia", "Virus o publicidad", "No carga la batería", "Pantalla rota o con líneas", "Teclado o touchpad fallan", "Sin WiFi / internet", "Derrame de líquido", "Golpe o caída", "No detecta el disco", "Olvidó la contraseña", "Archivos borrados o perdidos", "Problemas con programas"],
-    "accesorios": ["Cargador", "Cable de poder", "Batería", "Mouse", "Teclado", "Maletín o funda", "Disco externo / USB"],
-    "estado_fisico": ["Sin daños visibles", "Rayones", "Golpes", "Pantalla quebrada", "Bisagras flojas o rotas", "Faltan tornillos o tapas", "Teclas faltantes", "Señales de líquido"]
+    "tipos_equipo": [
+      "Laptop",
+      "PC de escritorio",
+      "All-in-One",
+      "Mini PC",
+      "MacBook",
+      "iMac",
+      "Servidor",
+      "Tablet",
+      "Otro"
+    ],
+    "marcas": [
+      "HP",
+      "Dell",
+      "Lenovo",
+      "Asus",
+      "Acer",
+      "Apple",
+      "MSI",
+      "Samsung",
+      "Toshiba",
+      "Huawei",
+      "Microsoft Surface",
+      "Ensamblada / genérica",
+      "Otra"
+    ],
+    "sistemas": [
+      "Windows 11",
+      "Windows 10",
+      "Windows 8.1",
+      "Windows 7",
+      "macOS",
+      "Linux (Ubuntu, Mint, etc.)",
+      "ChromeOS",
+      "Sin sistema operativo",
+      "No sabe"
+    ],
+    "procesadores": [
+      "Intel Celeron / Pentium",
+      "Intel Core i3",
+      "Intel Core i5",
+      "Intel Core i7",
+      "Intel Core i9",
+      "Intel Core Ultra",
+      "AMD Athlon / A-Series",
+      "AMD Ryzen 3",
+      "AMD Ryzen 5",
+      "AMD Ryzen 7",
+      "AMD Ryzen 9",
+      "Apple M1 / M2 / M3 / M4",
+      "No sabe"
+    ],
+    "ram": [
+      "2 GB",
+      "4 GB",
+      "6 GB",
+      "8 GB",
+      "12 GB",
+      "16 GB",
+      "32 GB",
+      "64 GB",
+      "No sabe"
+    ],
+    "tipo_ram": [
+      "DDR3",
+      "DDR4",
+      "DDR5",
+      "LPDDR (soldada)",
+      "No sabe"
+    ],
+    "almacenamiento_tipo": [
+      "Disco duro (HDD)",
+      "SSD SATA",
+      "SSD NVMe / M.2",
+      "eMMC",
+      "HDD + SSD",
+      "No sabe"
+    ],
+    "almacenamiento_capacidad": [
+      "120 / 128 GB",
+      "240 / 256 GB",
+      "480 / 512 GB",
+      "1 TB",
+      "2 TB o más",
+      "No sabe"
+    ],
+    "graficos": [
+      "Integrada",
+      "Dedicada (NVIDIA)",
+      "Dedicada (AMD)",
+      "No sabe"
+    ],
+    "sintomas": [
+      "No enciende",
+      "Enciende pero no da imagen",
+      "Está muy lento",
+      "Se calienta o se apaga solo",
+      "Ventilador ruidoso",
+      "Pantalla azul o se reinicia",
+      "Virus o publicidad",
+      "No carga la batería",
+      "Pantalla rota o con líneas",
+      "Teclado o touchpad fallan",
+      "Sin WiFi / internet",
+      "Derrame de líquido",
+      "Golpe o caída",
+      "No detecta el disco",
+      "Olvidó la contraseña",
+      "Archivos borrados o perdidos",
+      "Problemas con programas"
+    ],
+    "accesorios": [
+      "Cargador",
+      "Cable de poder",
+      "Batería",
+      "Mouse",
+      "Teclado",
+      "Maletín o funda",
+      "Disco externo / USB"
+    ],
+    "estado_fisico": [
+      "Sin daños visibles",
+      "Sucia / con mucho polvo",
+      "Rayones",
+      "Golpes",
+      "Pantalla quebrada",
+      "Bisagras flojas o rotas",
+      "Faltan tornillos o tapas",
+      "Teclas faltantes",
+      "Señales de líquido",
+      "Quemada / olor a quemado o cortocircuito"
+    ]
   }
 }
