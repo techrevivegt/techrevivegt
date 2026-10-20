@@ -171,7 +171,7 @@ def build_contacto():
       </div>
     </section>
 '''
-    body = hero + directory + contact_section("formulario", title="Envíanos tu solicitud.") + links
+    body = hero + directory + contact_section("formulario", title=(g(CFG, "seccion_contacto", "titulo_pagina_contacto") or "Envíanos tu solicitud.")) + links
     page("contacto.html", "Contacto: solicita tu servicio",
          "Contacta a TechRevive por WhatsApp, correo o formulario. Solicita reparación, soporte técnico, capacitación, página web o aplicaciones.",
          body, section="Contacto")

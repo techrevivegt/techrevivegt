@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-TechRevive · Generador del sitio con panel de administración (Pages CMS)
+TechRevive · Generador del sitio con panel de administración propio (/panel)
 
   Uso:  python3 build.py
 
@@ -22,21 +22,34 @@ def preparar_salida():
     os.makedirs(os.path.join(OUT, "css"))
     shutil.copytree(os.path.join(SRC, "img"), os.path.join(OUT, "img"))
     shutil.copytree(os.path.join(SRC, "js"), os.path.join(OUT, "js"))
+    shutil.copytree(os.path.join(SRC, "panel"), os.path.join(OUT, "panel"))
     if os.path.isfile(os.path.join(SRC, "img", "favicon.ico")):
         shutil.copy(os.path.join(SRC, "img", "favicon.ico"), os.path.join(OUT, "favicon.ico"))
     css = ""
-    for name in ("styles.css", "paginas.css"):
+    for name in ("styles.css", "paginas.css", "cotizador.css"):
         with open(os.path.join(SRC, "css", name), encoding="utf-8") as f:
             css += f.read() + "\n"
     with open(os.path.join(OUT, "css", "styles.css"), "w", encoding="utf-8") as f:
         f.write(css)
+    shutil.copy(os.path.join(SRC, "css", "aula.css"), os.path.join(OUT, "css", "aula.css"))
+
+
+def aula_propia():
+    """True si el aula virtual propia (content/aula.json) está habilitada y tiene cursos."""
+    a = sb.load("aula.json", default={}) or {}
+    return isinstance(a, dict) and a.get("habilitada", True) is not False and any(
+        isinstance(c, dict) and c.get("publicado", True) is not False for c in (a.get("cursos") or []))
 
 
 def escribir_config():
     """js/config.js se genera con los datos de 'Configuración general' del panel."""
     c = g(CFG, "contacto", default={})
     r = g(CFG, "redes", default={})
-    wa = "".join(ch for ch in str(c.get("whatsapp") or "") if ch.isdigit())
+    c = c if isinstance(c, dict) else {}
+    r = r if isinstance(r, dict) else {}
+    wa = "".join(ch for ch in str(c.get("whatsapp") or c.get("whatsapp_visible") or "") if ch.isdigit())
+    if len(wa) == 8:  # número de Guatemala sin código de país
+        wa = "502" + wa
     data = {
         "whatsapp": wa or "50200000000",
         "whatsappDisplay": c.get("whatsapp_visible") or "+502 0000-0000",
@@ -45,7 +58,7 @@ def escribir_config():
         "address": c.get("direccion") or "Tu dirección aquí, Guatemala",
         "mapQuery": c.get("busqueda_mapa") or c.get("direccion") or "Ciudad de Guatemala, Guatemala",
         "hours": c.get("horario") or "",
-        "aulaVirtualUrl": g(CFG, "aula_virtual") or "",
+        "aulaVirtualUrl": g(CFG, "aula_virtual") or (aula_propia() and "/aula/ingresar") or "",
         "social": {k: (r.get(k) or "") for k in ("facebook", "instagram", "tiktok", "linkedin")},
         "formEndpoint": g(CFG, "formulario", "endpoint") or "",
     }
@@ -56,6 +69,19 @@ def escribir_config():
         f.write(js)
 
 
+def escribir_extras():
+    """version.json (para que el panel sepa cuándo terminó de publicarse un cambio) y /admin → /panel/."""
+    from datetime import datetime, timezone
+    with open(os.path.join(OUT, "version.json"), "w", encoding="utf-8") as f:
+        json.dump({"commit": os.environ.get("WORKERS_CI_COMMIT_SHA") or os.environ.get("CF_PAGES_COMMIT_SHA") or "",
+                   "fecha": datetime.now(timezone.utc).isoformat(timespec="seconds")}, f)
+    os.makedirs(os.path.join(OUT, "admin"), exist_ok=True)
+    with open(os.path.join(OUT, "admin", "index.html"), "w", encoding="utf-8") as f:
+        f.write('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex">'
+                '<meta http-equiv="refresh" content="0;url=/panel/"><title>Panel</title>'
+                '<a href="/panel/">Ir al panel de administración</a>\n')
+
+
 def main():
     preparar_salida()
     escribir_config()
@@ -64,6 +90,8 @@ def main():
     import capacitacion as pc
     import recursos as pr
     import prensa as pk
+    import cotizador as pq
+    import aula as pa
 
     pp.build_index(pr.posts_preview)
     pp.build_about()
@@ -72,7 +100,10 @@ def main():
     pc.build_capacitacion(); pc.build_cursos(); pc.build_aula(); pc.build_inscripcion()
     pr.build_blog(); pr.build_articles(); pr.build_faq()
     pk.build_novedades(); pk.build_galeria(); pk.build_redes()
-    pk.build_contacto(); pk.build_ubicacion(); pk.build_mapa(pr.POSTS); pk.build_404(); pk.build_panel()
+    pq.build_cotizador()
+    n_alumnos = pa.build_aula_virtual()
+    pk.build_contacto(); pk.build_ubicacion(); pk.build_mapa(pr.POSTS); pk.build_404()
+    escribir_extras()
 
     # sitemap.xml y robots.txt
     urls = "".join(
@@ -81,11 +112,14 @@ def main():
     with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + "</urlset>\n")
     with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as f:
-        f.write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n")
+        f.write(f"User-agent: *\nAllow: /\nDisallow: /panel/\nDisallow: /api/\nDisallow: /aula/\n\nSitemap: {SITE_URL}/sitemap.xml\n")
 
     for w in dict.fromkeys(WARNINGS):
         print("⚠ Aviso:", w)
     print(f"✔ {len(PAGES) + 1} páginas generadas en _site/")
+    if pa.habilitada():
+        n_lec = sum(len(c["_lessons"]) for c in pa.cursos())
+        print(f"✔ Aula virtual: {len(pa.cursos())} cursos, {n_lec} lecciones, {n_alumnos} alumnos con acceso")
 
 
 if __name__ == "__main__":

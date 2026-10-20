@@ -1,0 +1,2755 @@
+{
+  "sections": [
+    {
+      "id": "configuracion",
+      "label": "⚙️ Configuración general",
+      "type": "file",
+      "path": "content/configuracion.json",
+      "fields": [
+        {
+          "name": "contacto",
+          "label": "📞 Datos de contacto",
+          "type": "object",
+          "description": "Se actualizan en todas las páginas, el pie de página y el botón flotante de WhatsApp.",
+          "fields": [
+            {
+              "name": "whatsapp",
+              "label": "Número de WhatsApp (para los enlaces)",
+              "type": "string",
+              "description": "Ejemplo: 50212345678 o +502 1234-5678. Los espacios, guiones y el + se quitan solos; si pones solo 8 dígitos se agrega el 502."
+            },
+            {
+              "name": "whatsapp_visible",
+              "label": "Número de WhatsApp (como se muestra)",
+              "type": "string",
+              "description": "Ejemplo: +502 1234-5678"
+            },
+            {
+              "name": "mensaje_whatsapp",
+              "label": "Mensaje que aparece escrito al abrir WhatsApp",
+              "type": "text"
+            },
+            {
+              "name": "correo",
+              "label": "Correo electrónico",
+              "type": "string"
+            },
+            {
+              "name": "direccion",
+              "label": "Dirección",
+              "type": "string",
+              "description": "Si no tienes local, puedes escribir: Servicio remoto y a domicilio."
+            },
+            {
+              "name": "busqueda_mapa",
+              "label": "Búsqueda para el mapa",
+              "type": "string",
+              "description": "Lo que se busca en Google Maps para la página Ubicación (dirección exacta o nombre del negocio en Maps)."
+            },
+            {
+              "name": "horario",
+              "label": "Horario de atención",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "seccion_contacto",
+          "label": "✉️ Sección de contacto y formulario",
+          "type": "object",
+          "description": "Los textos del recuadro «Hablemos de lo que necesitas» y del formulario «Solicita tu servicio» (al final de Inicio y en la página Contacto). Los datos (WhatsApp, correo, etc.) se cambian arriba en «Contacto».",
+          "fields": [
+            {
+              "name": "etiqueta",
+              "label": "Etiqueta pequeña (arriba del título)",
+              "type": "string"
+            },
+            {
+              "name": "titulo",
+              "label": "Título (página de Inicio)",
+              "type": "string"
+            },
+            {
+              "name": "titulo_pagina_contacto",
+              "label": "Título (página Contacto)",
+              "type": "string"
+            },
+            {
+              "name": "texto",
+              "label": "Texto debajo del título",
+              "type": "text"
+            },
+            {
+              "name": "boton_whatsapp",
+              "label": "Texto del botón verde de WhatsApp",
+              "type": "string"
+            },
+            {
+              "name": "formulario_titulo",
+              "label": "Título del formulario",
+              "type": "string"
+            },
+            {
+              "name": "formulario_ayuda",
+              "label": "Texto de ayuda dentro de la casilla «Mensaje»",
+              "type": "text"
+            },
+            {
+              "name": "boton_enviar",
+              "label": "Texto del botón azul de enviar",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "redes",
+          "label": "📱 Redes sociales",
+          "type": "object",
+          "description": "Pega el enlace completo de cada perfil (https://…). Si lo dejas vacío, el ícono no lleva a ningún lado.",
+          "fields": [
+            {
+              "name": "facebook",
+              "label": "Facebook",
+              "type": "string"
+            },
+            {
+              "name": "instagram",
+              "label": "Instagram",
+              "type": "string"
+            },
+            {
+              "name": "tiktok",
+              "label": "TikTok",
+              "type": "string"
+            },
+            {
+              "name": "linkedin",
+              "label": "LinkedIn",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "aula_virtual",
+          "label": "💻 Enlace de un aula externa (opcional)",
+          "type": "string",
+          "description": "Déjalo VACÍO para usar el aula virtual propia del sitio (/aula/). Solo escribe un enlace si prefieres Google Classroom, Moodle u otra plataforma."
+        },
+        {
+          "name": "formulario",
+          "label": "📨 Formularios",
+          "type": "object",
+          "fields": [
+            {
+              "name": "opciones_servicio",
+              "label": "Opciones de «Tipo de servicio» en el formulario de contacto",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "endpoint",
+              "label": "Enlace de Formspree (opcional)",
+              "type": "string",
+              "description": "Vacío: los formularios abren WhatsApp con la solicitud lista. Para recibirlas por correo, crea un formulario gratis en formspree.io y pega aquí su enlace (ej. https://formspree.io/f/abcd)."
+            }
+          ]
+        },
+        {
+          "name": "sitio",
+          "label": "🌐 Sitio",
+          "type": "object",
+          "fields": [
+            {
+              "name": "url",
+              "label": "Dirección del sitio",
+              "type": "string",
+              "description": "Ejemplo: https://techrevive.techrevive-gt.workers.dev (o tu dominio propio). Se usa para Google y al compartir en redes."
+            },
+            {
+              "name": "eslogan",
+              "label": "Eslogan (pie de página)",
+              "type": "string"
+            },
+            {
+              "name": "logo",
+              "label": "Logo (ícono junto al nombre, arriba a la izquierda)",
+              "type": "image",
+              "description": "Imagen cuadrada, idealmente PNG con fondo transparente. Solo el dibujo, sin letras: el nombre TECHREVIVE se escribe al lado automáticamente."
+            },
+            {
+              "name": "favicon",
+              "label": "Ícono de la pestaña del navegador",
+              "type": "image",
+              "description": "Imagen cuadrada pequeña (PNG de 48×48 px o más)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "📄 Páginas",
+      "items": [
+        {
+          "id": "inicio",
+          "label": "🏠 Inicio",
+          "type": "file",
+          "path": "content/inicio.json",
+          "fields": [
+            {
+              "name": "portada",
+              "label": "1 · Portada",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta superior",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "titulo_resaltado",
+                  "label": "Parte del título en azul",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "boton_principal",
+                  "label": "Botón principal",
+                  "type": "object",
+                  "fields": [
+                    {
+                      "name": "texto",
+                      "label": "Texto del botón",
+                      "type": "string",
+                      "description": "Déjalo vacío para ocultar el botón."
+                    },
+                    {
+                      "name": "enlace",
+                      "label": "¿A dónde lleva?",
+                      "type": "string",
+                      "description": "Escribe una página (ej. servicios.html, cursos.html, contacto.html#formulario), una sección de la portada (#contacto, #servicios), la palabra whatsapp para abrir WhatsApp, o pega un enlace completo (https://…)."
+                    }
+                  ]
+                },
+                {
+                  "name": "boton_secundario",
+                  "label": "Botón secundario",
+                  "type": "object",
+                  "fields": [
+                    {
+                      "name": "texto",
+                      "label": "Texto del botón",
+                      "type": "string",
+                      "description": "Déjalo vacío para ocultar el botón."
+                    },
+                    {
+                      "name": "enlace",
+                      "label": "¿A dónde lleva?",
+                      "type": "string",
+                      "description": "Escribe una página (ej. servicios.html, cursos.html, contacto.html#formulario), una sección de la portada (#contacto, #servicios), la palabra whatsapp para abrir WhatsApp, o pega un enlace completo (https://…)."
+                    }
+                  ]
+                },
+                {
+                  "name": "frases",
+                  "label": "Frases de marca",
+                  "type": "string",
+                  "list": true
+                },
+                {
+                  "name": "imagen",
+                  "label": "Imagen",
+                  "type": "image"
+                },
+                {
+                  "name": "imagen_descripcion",
+                  "label": "Descripción de la imagen (para accesibilidad)",
+                  "type": "string"
+                },
+                {
+                  "name": "tarjetas_flotantes",
+                  "label": "Tarjetas flotantes sobre la imagen (máximo 3)",
+                  "type": "object",
+                  "list": {
+                    "max": 3,
+                    "summary": "{titulo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "icono",
+                      "label": "Ícono",
+                      "type": "select",
+                      "options": "@iconos"
+                    },
+                    {
+                      "name": "titulo",
+                      "label": "Título",
+                      "type": "string"
+                    },
+                    {
+                      "name": "subtitulo",
+                      "label": "Subtítulo",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "valores",
+              "label": "2 · Barra de valores (Aprende, Repara, Crea, Crece)",
+              "type": "object",
+              "list": {
+                "max": 4,
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "icono",
+                  "label": "Ícono",
+                  "type": "select",
+                  "options": "@iconos"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "name": "servicios",
+              "label": "3 · Servicios (encabezado)",
+              "type": "object",
+              "description": "Las tarjetas de servicios se editan en Páginas → Servicios.",
+              "fields": [
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "publico",
+                  "label": "A quién servimos",
+                  "type": "string",
+                  "list": true
+                }
+              ]
+            },
+            {
+              "name": "por_que",
+              "label": "4 · ¿Por qué TechRevive? (también aparece en ¿Quiénes somos?)",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "mostrar",
+                  "label": "Mostrar esta sección",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "formula",
+                  "label": "Fórmula (Tecnología + Conocimiento + Soluciones)",
+                  "type": "string",
+                  "list": true
+                },
+                {
+                  "name": "cita",
+                  "label": "Frase destacada",
+                  "type": "text"
+                },
+                {
+                  "name": "ventajas",
+                  "label": "Ventajas",
+                  "type": "object",
+                  "list": {
+                    "summary": "{titulo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "icono",
+                      "label": "Ícono",
+                      "type": "select",
+                      "options": "@iconos"
+                    },
+                    {
+                      "name": "titulo",
+                      "label": "Título",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "texto",
+                      "label": "Texto",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "capacitacion",
+              "label": "5 · Tecnología para todos",
+              "type": "object",
+              "description": "La lista de cursos se toma automáticamente de Capacitación → Cursos.",
+              "fields": [
+                {
+                  "name": "mostrar",
+                  "label": "Mostrar esta sección",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "imagenes",
+                  "label": "Imágenes del collage (1 a 3; la primera es la grande)",
+                  "type": "object",
+                  "list": {
+                    "max": 3,
+                    "summary": "{leyenda}"
+                  },
+                  "fields": [
+                    {
+                      "name": "imagen",
+                      "label": "Imagen",
+                      "type": "image"
+                    },
+                    {
+                      "name": "descripcion",
+                      "label": "Descripción de la imagen",
+                      "type": "string"
+                    },
+                    {
+                      "name": "leyenda",
+                      "label": "Texto sobre la imagen",
+                      "type": "string"
+                    },
+                    {
+                      "name": "icono",
+                      "label": "Ícono",
+                      "type": "select",
+                      "options": "@iconos"
+                    }
+                  ]
+                },
+                {
+                  "name": "niveles",
+                  "label": "Niveles",
+                  "type": "string",
+                  "list": true
+                },
+                {
+                  "name": "cursos_titulo",
+                  "label": "Título de la lista de cursos",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "negocios",
+              "label": "6 · Emprendedores y negocios",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "mostrar",
+                  "label": "Mostrar esta sección",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "etiquetas",
+                  "label": "Soluciones (etiquetas)",
+                  "type": "string",
+                  "list": true
+                },
+                {
+                  "name": "boton",
+                  "label": "Botón",
+                  "type": "object",
+                  "fields": [
+                    {
+                      "name": "texto",
+                      "label": "Texto del botón",
+                      "type": "string",
+                      "description": "Déjalo vacío para ocultar el botón."
+                    },
+                    {
+                      "name": "enlace",
+                      "label": "¿A dónde lleva?",
+                      "type": "string",
+                      "description": "Escribe una página (ej. servicios.html, cursos.html, contacto.html#formulario), una sección de la portada (#contacto, #servicios), la palabra whatsapp para abrir WhatsApp, o pega un enlace completo (https://…)."
+                    }
+                  ]
+                },
+                {
+                  "name": "pasos",
+                  "label": "Pasos",
+                  "type": "object",
+                  "list": {
+                    "summary": "{titulo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "icono",
+                      "label": "Ícono",
+                      "type": "select",
+                      "options": "@iconos"
+                    },
+                    {
+                      "name": "titulo",
+                      "label": "Título",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "texto",
+                      "label": "Texto",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "proyectos",
+              "label": "7 · Proyectos",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "mostrar",
+                  "label": "Mostrar esta sección",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "lista",
+                  "label": "Proyectos",
+                  "type": "object",
+                  "list": {
+                    "summary": "{titulo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "titulo",
+                      "label": "Título del proyecto",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "categoria",
+                      "label": "Categoría",
+                      "type": "select",
+                      "options": [
+                        {
+                          "value": "Reparación",
+                          "label": "Reparación"
+                        },
+                        {
+                          "value": "Sitios web",
+                          "label": "Sitios web"
+                        },
+                        {
+                          "value": "Aplicaciones",
+                          "label": "Aplicaciones"
+                        },
+                        {
+                          "value": "Capacitación",
+                          "label": "Capacitación"
+                        },
+                        {
+                          "value": "Soluciones empresariales",
+                          "label": "Soluciones empresariales"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "descripcion",
+                      "label": "Descripción",
+                      "type": "text"
+                    },
+                    {
+                      "name": "imagen",
+                      "label": "Imagen",
+                      "type": "image"
+                    },
+                    {
+                      "name": "imagen_descripcion",
+                      "label": "Descripción de la imagen",
+                      "type": "string"
+                    },
+                    {
+                      "name": "demostrativo",
+                      "label": "Es un proyecto demostrativo (muestra la etiqueta «Proyecto demostrativo»)",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  ]
+                },
+                {
+                  "name": "tarjeta_final",
+                  "label": "Tarjeta final «Tu proyecto puede ser el siguiente»",
+                  "type": "object",
+                  "fields": [
+                    {
+                      "name": "mostrar",
+                      "label": "Mostrar esta sección",
+                      "type": "boolean",
+                      "default": true
+                    },
+                    {
+                      "name": "titulo",
+                      "label": "Título",
+                      "type": "string"
+                    },
+                    {
+                      "name": "texto",
+                      "label": "Texto",
+                      "type": "string"
+                    },
+                    {
+                      "name": "enlace_texto",
+                      "label": "Texto del enlace",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "testimonios",
+              "label": "8 · Testimonios",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "mostrar",
+                  "label": "Mostrar esta sección",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "lista",
+                  "label": "Testimonios",
+                  "type": "object",
+                  "description": "Publica solo opiniones reales y con permiso del cliente.",
+                  "list": {
+                    "summary": "{nombre}"
+                  },
+                  "fields": [
+                    {
+                      "name": "nombre",
+                      "label": "Nombre",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "servicio",
+                      "label": "Servicio recibido",
+                      "type": "string"
+                    },
+                    {
+                      "name": "testimonio",
+                      "label": "Testimonio",
+                      "type": "text",
+                      "required": true
+                    },
+                    {
+                      "name": "foto",
+                      "label": "Fotografía (opcional)",
+                      "type": "image"
+                    },
+                    {
+                      "name": "es_ejemplo",
+                      "label": "Es un texto de ejemplo (se muestra atenuado)",
+                      "type": "boolean",
+                      "default": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "blog",
+              "label": "9 · Artículos del blog",
+              "type": "object",
+              "description": "Muestra los artículos más recientes del blog.",
+              "fields": [
+                {
+                  "name": "mostrar",
+                  "label": "Mostrar esta sección",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "cantidad",
+                  "label": "Cantidad de artículos a mostrar",
+                  "type": "number",
+                  "min": 1,
+                  "max": 9
+                }
+              ]
+            },
+            {
+              "name": "llamado",
+              "label": "10 · Llamado a la acción (recuadro azul)",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "boton_whatsapp",
+                  "label": "Texto del botón blanco (abre WhatsApp)",
+                  "type": "string"
+                },
+                {
+                  "name": "boton_cotizacion",
+                  "label": "Texto del botón con borde (lleva al formulario)",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "nosotros",
+          "label": "👋 ¿Quiénes somos?",
+          "type": "file",
+          "path": "content/nosotros.json",
+          "fields": [
+            {
+              "name": "portada",
+              "label": "Portada",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "titulo_resaltado",
+                  "label": "Parte del título en azul",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "imagen",
+                  "label": "Imagen",
+                  "type": "image"
+                },
+                {
+                  "name": "imagen_descripcion",
+                  "label": "Descripción de la imagen",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "historia",
+              "label": "Nuestra historia",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "parrafos",
+                  "label": "Párrafos",
+                  "type": "text",
+                  "list": true
+                },
+                {
+                  "name": "puntos",
+                  "label": "Puntos destacados",
+                  "type": "string",
+                  "list": true
+                },
+                {
+                  "name": "imagen",
+                  "label": "Imagen",
+                  "type": "image"
+                },
+                {
+                  "name": "imagen_descripcion",
+                  "label": "Descripción de la imagen",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "mision",
+              "label": "Misión",
+              "type": "text"
+            },
+            {
+              "name": "vision",
+              "label": "Visión",
+              "type": "text"
+            },
+            {
+              "name": "valores",
+              "label": "Nuestros valores",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "lista",
+                  "label": "Valores",
+                  "type": "object",
+                  "list": {
+                    "summary": "{titulo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "icono",
+                      "label": "Ícono",
+                      "type": "select",
+                      "options": "@iconos"
+                    },
+                    {
+                      "name": "titulo",
+                      "label": "Título",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "texto",
+                      "label": "Texto",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "audiencia",
+              "label": "A quién servimos",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "lista",
+                  "label": "Tipos de cliente",
+                  "type": "object",
+                  "list": {
+                    "summary": "{titulo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "icono",
+                      "label": "Ícono",
+                      "type": "select",
+                      "options": "@iconos"
+                    },
+                    {
+                      "name": "titulo",
+                      "label": "Título",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "texto",
+                      "label": "Texto",
+                      "type": "text"
+                    },
+                    {
+                      "name": "enlace",
+                      "label": "Página a la que lleva (ej. cursos.html)",
+                      "type": "string"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "llamado",
+              "label": "Llamado a la acción",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "servicios",
+          "label": "🛠️ Servicios",
+          "type": "file",
+          "path": "content/servicios.json",
+          "fields": [
+            {
+              "name": "portada",
+              "label": "Portada de la página Servicios",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo_resaltado",
+                  "label": "Parte del título en azul",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "name": "lista",
+              "label": "Servicios (cada uno tiene su propia página y aparece en el menú)",
+              "type": "object",
+              "list": {
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "pagina",
+                  "label": "Nombre de la página",
+                  "type": "string",
+                  "description": "Será la dirección de la página: reparacion → reparacion.html. Se ajusta sola (sin tildes ni espacios). Si la dejas vacía se usa el título. Si la cambias, los enlaces antiguos dejan de funcionar."
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título de la tarjeta",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "nombre_corto",
+                  "label": "Nombre en el menú",
+                  "type": "string"
+                },
+                {
+                  "name": "icono",
+                  "label": "Ícono",
+                  "type": "select",
+                  "options": "@iconos"
+                },
+                {
+                  "name": "descripcion_menu",
+                  "label": "Descripción corta (menú desplegable)",
+                  "type": "string"
+                },
+                {
+                  "name": "descripcion",
+                  "label": "Descripción (tarjeta)",
+                  "type": "text"
+                },
+                {
+                  "name": "incluye",
+                  "label": "Qué incluye (lista corta de la tarjeta)",
+                  "type": "string",
+                  "list": true
+                },
+                {
+                  "name": "boton_texto",
+                  "label": "Texto del botón",
+                  "type": "string"
+                },
+                {
+                  "name": "opcion_formulario",
+                  "label": "Opción del formulario que se preselecciona",
+                  "type": "string",
+                  "description": "Ej. Reparación, Página web, Aplicación, Soporte técnico."
+                },
+                {
+                  "name": "detalle",
+                  "label": "Página del servicio",
+                  "type": "object",
+                  "fields": [
+                    {
+                      "name": "titulo",
+                      "label": "Título de la portada",
+                      "type": "string"
+                    },
+                    {
+                      "name": "titulo_resaltado",
+                      "label": "Parte del título en azul",
+                      "type": "string"
+                    },
+                    {
+                      "name": "texto",
+                      "label": "Texto de la portada",
+                      "type": "text"
+                    },
+                    {
+                      "name": "imagen",
+                      "label": "Imagen de la portada",
+                      "type": "image"
+                    },
+                    {
+                      "name": "imagen_descripcion",
+                      "label": "Descripción de la imagen",
+                      "type": "string"
+                    },
+                    {
+                      "name": "intro_titulo",
+                      "label": "Introducción · título",
+                      "type": "string"
+                    },
+                    {
+                      "name": "intro_parrafos",
+                      "label": "Introducción · párrafos",
+                      "type": "text",
+                      "list": true
+                    },
+                    {
+                      "name": "intro_imagen",
+                      "label": "Introducción · imagen",
+                      "type": "image"
+                    },
+                    {
+                      "name": "intro_imagen_descripcion",
+                      "label": "Introducción · descripción de la imagen",
+                      "type": "string"
+                    },
+                    {
+                      "name": "incluye_titulo",
+                      "label": "«Qué incluye» · título",
+                      "type": "string"
+                    },
+                    {
+                      "name": "incluye_detalle",
+                      "label": "«Qué incluye» · tarjetas",
+                      "type": "object",
+                      "list": {
+                        "summary": "{titulo}"
+                      },
+                      "fields": [
+                        {
+                          "name": "icono",
+                          "label": "Ícono",
+                          "type": "select",
+                          "options": "@iconos"
+                        },
+                        {
+                          "name": "titulo",
+                          "label": "Título",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "texto",
+                          "label": "Texto",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "extra_titulo",
+                      "label": "«Para tener en cuenta» · título",
+                      "type": "string"
+                    },
+                    {
+                      "name": "extra",
+                      "label": "«Para tener en cuenta» · tarjetas",
+                      "type": "object",
+                      "list": {
+                        "summary": "{titulo}"
+                      },
+                      "fields": [
+                        {
+                          "name": "icono",
+                          "label": "Ícono",
+                          "type": "select",
+                          "options": "@iconos"
+                        },
+                        {
+                          "name": "titulo",
+                          "label": "Título",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "texto",
+                          "label": "Texto",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "preguntas",
+                      "label": "Preguntas frecuentes del servicio",
+                      "type": "object",
+                      "list": {
+                        "summary": "{pregunta}"
+                      },
+                      "fields": [
+                        {
+                          "name": "pregunta",
+                          "label": "Pregunta",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "respuesta",
+                          "label": "Respuesta",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "seo_titulo",
+                      "label": "Título para Google",
+                      "type": "string"
+                    },
+                    {
+                      "name": "seo_descripcion",
+                      "label": "Descripción para Google",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proceso",
+          "label": "🔄 Nuestro proceso",
+          "type": "file",
+          "path": "content/proceso.json",
+          "fields": [
+            {
+              "name": "etiqueta",
+              "label": "Etiqueta",
+              "type": "string"
+            },
+            {
+              "name": "titulo",
+              "label": "Título",
+              "type": "string"
+            },
+            {
+              "name": "texto",
+              "label": "Texto",
+              "type": "text"
+            },
+            {
+              "name": "pasos",
+              "label": "Pasos",
+              "type": "object",
+              "description": "Se muestra en Inicio, Servicios y en la página de cada servicio.",
+              "list": {
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "icono",
+                  "label": "Ícono",
+                  "type": "select",
+                  "options": "@iconos"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "preguntas",
+          "label": "❓ Preguntas frecuentes",
+          "type": "file",
+          "path": "content/preguntas.json",
+          "fields": [
+            {
+              "name": "grupos",
+              "label": "Categorías",
+              "type": "object",
+              "list": {
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Nombre de la categoría",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "icono",
+                  "label": "Ícono",
+                  "type": "select",
+                  "options": "@iconos"
+                },
+                {
+                  "name": "preguntas",
+                  "label": "Preguntas",
+                  "type": "object",
+                  "list": {
+                    "summary": "{pregunta}"
+                  },
+                  "fields": [
+                    {
+                      "name": "pregunta",
+                      "label": "Pregunta",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "respuesta",
+                      "label": "Respuesta",
+                      "type": "rich-text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tarifario",
+      "label": "💲 Tarifario y cotizador",
+      "type": "file",
+      "path": "content/tarifario.json",
+      "fields": [
+        {
+          "name": "mostrar_en_menu",
+          "label": "Mostrar «Tarifario y cotizador» en el menú Servicios",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "portada",
+          "label": "Portada de la página",
+          "type": "object",
+          "fields": [
+            {
+              "name": "titulo",
+              "label": "Título",
+              "type": "string"
+            },
+            {
+              "name": "titulo_resaltado",
+              "label": "Parte del título en azul",
+              "type": "string"
+            },
+            {
+              "name": "texto",
+              "label": "Texto",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "subtitulo",
+          "label": "Subtítulo junto al logo",
+          "type": "string"
+        },
+        {
+          "name": "logo",
+          "label": "Logo del cotizador (pantalla e impresión)",
+          "type": "image",
+          "description": "Usa una imagen horizontal con fondo transparente o blanco."
+        },
+        {
+          "name": "moneda",
+          "label": "Símbolo de moneda",
+          "type": "string"
+        },
+        {
+          "name": "validez_dias",
+          "label": "Días de vigencia de la cotización",
+          "type": "number",
+          "min": 1
+        },
+        {
+          "name": "recargo_urgencia",
+          "label": "Recargo por servicio urgente (%)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "name": "precios_incluyen_iva",
+          "label": "Los precios incluyen IVA",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "categorias",
+          "label": "🧾 Servicios y precios (por categoría)",
+          "type": "object",
+          "list": {
+            "summary": "{nombre}"
+          },
+          "description": "Cada categoría agrupa servicios. Precio: solo el número (ej. 175). Marca «Precio desde» cuando el precio final depende del diagnóstico.",
+          "fields": [
+            {
+              "name": "nombre",
+              "label": "Nombre de la categoría",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "icono",
+              "label": "Ícono",
+              "type": "select",
+              "options": "@iconos"
+            },
+            {
+              "name": "servicios",
+              "label": "Servicios",
+              "type": "object",
+              "list": {
+                "summary": "{nombre} — Q{precio}"
+              },
+              "fields": [
+                {
+                  "name": "nombre",
+                  "label": "Nombre del servicio",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "precio",
+                  "label": "Precio (Q)",
+                  "type": "number",
+                  "min": 0
+                },
+                {
+                  "name": "desde",
+                  "label": "Precio «desde» (puede variar tras el diagnóstico)",
+                  "type": "boolean"
+                },
+                {
+                  "name": "por_unidad",
+                  "label": "Se cobra por unidad (permite elegir cantidad)",
+                  "type": "boolean"
+                },
+                {
+                  "name": "unidad",
+                  "label": "Nombre de la unidad",
+                  "type": "string",
+                  "description": "Ej. hora, programa, equipo. Solo si se cobra por unidad."
+                },
+                {
+                  "name": "detalle",
+                  "label": "Detalle corto (opcional)",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "tipos_servicio",
+          "label": "🧩 «¿Qué quiere el cliente?» (tarjetas del paso 5)",
+          "type": "object",
+          "list": {
+            "summary": "{nombre}"
+          },
+          "description": "Al elegir una tarjeta se abre su categoría en el tarifario y se marca el servicio sugerido.",
+          "fields": [
+            {
+              "name": "nombre",
+              "label": "Nombre",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "icono",
+              "label": "Ícono",
+              "type": "select",
+              "options": "@iconos"
+            },
+            {
+              "name": "categoria",
+              "label": "Categoría que se abre",
+              "type": "string",
+              "description": "Escríbela exactamente igual que en «Servicios y precios». Déjala vacía para «Otro»."
+            },
+            {
+              "name": "servicios_sugeridos",
+              "label": "Servicios que se marcan solos",
+              "type": "string",
+              "list": true,
+              "description": "Escribe el nombre exacto del servicio. Si pones uno de laptop y otro de PC de escritorio, se elige según el tipo de equipo."
+            }
+          ]
+        },
+        {
+          "name": "listas",
+          "label": "📋 Opciones de las listas desplegables",
+          "type": "object",
+          "fields": [
+            {
+              "name": "tipos_equipo",
+              "label": "Tipos de computadora",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "marcas",
+              "label": "Marcas",
+              "type": "string",
+              "list": true,
+              "description": "Deja «Otra» al final: permite escribir una marca distinta."
+            },
+            {
+              "name": "sistemas",
+              "label": "Sistemas operativos",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "procesadores",
+              "label": "Procesadores",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "ram",
+              "label": "Cantidades de RAM",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "tipo_ram",
+              "label": "Tipos de RAM",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "almacenamiento_tipo",
+              "label": "Tipos de almacenamiento",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "almacenamiento_capacidad",
+              "label": "Capacidades de disco",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "graficos",
+              "label": "Tarjetas gráficas",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "sintomas",
+              "label": "Síntomas (diagnóstico previo)",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "accesorios",
+              "label": "Accesorios que se reciben",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "estado_fisico",
+              "label": "Estado físico",
+              "type": "string",
+              "list": true
+            }
+          ]
+        },
+        {
+          "name": "nota",
+          "label": "Nota importante (sale en pantalla y en la impresión)",
+          "type": "text"
+        },
+        {
+          "name": "condiciones",
+          "label": "📜 Términos y condiciones (salen en la impresión)",
+          "type": "string",
+          "list": true,
+          "description": "Escribe {dias} para mostrar automáticamente los días de vigencia."
+        }
+      ]
+    },
+    {
+      "group": "🎓 Capacitación",
+      "items": [
+        {
+          "id": "cursos",
+          "label": "📚 Cursos",
+          "type": "file",
+          "path": "content/cursos.json",
+          "list": true,
+          "fields": [
+            {
+              "name": "titulo",
+              "label": "Nombre del curso",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "categoria",
+              "label": "Categoría (para los filtros)",
+              "type": "select",
+              "options": [
+                {
+                  "value": "Computación",
+                  "label": "Computación"
+                },
+                {
+                  "value": "Técnico",
+                  "label": "Técnico"
+                },
+                {
+                  "value": "Digital",
+                  "label": "Digital"
+                },
+                {
+                  "value": "Desarrollo profesional",
+                  "label": "Desarrollo profesional"
+                },
+                {
+                  "value": "A tu medida",
+                  "label": "A tu medida"
+                }
+              ]
+            },
+            {
+              "name": "icono",
+              "label": "Ícono",
+              "type": "select",
+              "options": "@iconos"
+            },
+            {
+              "name": "descripcion",
+              "label": "Descripción",
+              "type": "text"
+            },
+            {
+              "name": "nivel",
+              "label": "Nivel",
+              "type": "string",
+              "description": "Ej. Principiante, Principiante · Intermedio, Todos los niveles."
+            },
+            {
+              "name": "modalidad",
+              "label": "Modalidad",
+              "type": "string",
+              "description": "Ej. Presencial · Virtual"
+            },
+            {
+              "name": "temas",
+              "label": "Temas",
+              "type": "string",
+              "list": true
+            }
+          ]
+        },
+        {
+          "id": "capacitacion",
+          "label": "🧑‍🏫 Página de Capacitación",
+          "type": "file",
+          "path": "content/capacitacion.json",
+          "fields": [
+            {
+              "name": "tarjeta_servicio",
+              "label": "Tarjeta en la lista de servicios",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "mostrar",
+                  "label": "Mostrar esta sección",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "icono",
+                  "label": "Ícono",
+                  "type": "select",
+                  "options": "@iconos"
+                },
+                {
+                  "name": "descripcion",
+                  "label": "Descripción",
+                  "type": "text"
+                },
+                {
+                  "name": "boton_texto",
+                  "label": "Texto del botón",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "portada",
+              "label": "Portada",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo_resaltado",
+                  "label": "Parte del título en azul",
+                  "type": "string"
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "imagen",
+                  "label": "Imagen",
+                  "type": "image"
+                },
+                {
+                  "name": "imagen_descripcion",
+                  "label": "Descripción de la imagen",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "enfoque",
+              "label": "Nuestra forma de enseñar",
+              "type": "object",
+              "fields": [
+                {
+                  "name": "etiqueta",
+                  "label": "Etiqueta",
+                  "type": "string"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string"
+                },
+                {
+                  "name": "parrafos",
+                  "label": "Párrafos",
+                  "type": "text",
+                  "list": true
+                },
+                {
+                  "name": "imagen",
+                  "label": "Imagen",
+                  "type": "image"
+                },
+                {
+                  "name": "imagen_descripcion",
+                  "label": "Descripción de la imagen",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "modalidades",
+              "label": "Modalidades (también son las opciones del formulario de inscripción)",
+              "type": "object",
+              "list": {
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "icono",
+                  "label": "Ícono",
+                  "type": "select",
+                  "options": "@iconos"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "name": "para_quien",
+              "label": "¿Para quién?",
+              "type": "object",
+              "list": {
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "icono",
+                  "label": "Ícono",
+                  "type": "select",
+                  "options": "@iconos"
+                },
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "name": "pasos",
+              "label": "Cómo inscribirte (pasos)",
+              "type": "object",
+              "list": {
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "name": "aviso_cursos",
+              "label": "Aviso en la página de cursos (horarios y costos)",
+              "type": "text"
+            },
+            {
+              "name": "preguntas_cursos",
+              "label": "Preguntas frecuentes de la página de cursos",
+              "type": "object",
+              "list": {
+                "summary": "{pregunta}"
+              },
+              "fields": [
+                {
+                  "name": "pregunta",
+                  "label": "Pregunta",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "respuesta",
+                  "label": "Respuesta",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "🖥️ Aula virtual",
+      "items": [
+        {
+          "id": "aula",
+          "label": "📘 Cursos del aula",
+          "type": "file",
+          "path": "content/aula.json",
+          "fields": [
+            {
+              "name": "habilitada",
+              "label": "Aula virtual activa",
+              "type": "boolean",
+              "default": true,
+              "description": "Si la desactivas, el aula deja de mostrarse y el botón del sitio vuelve a decir «Próximamente»."
+            },
+            {
+              "name": "nombre",
+              "label": "Nombre del aula",
+              "type": "string"
+            },
+            {
+              "name": "bienvenida",
+              "label": "Mensaje de bienvenida (en «Mis cursos»)",
+              "type": "text"
+            },
+            {
+              "name": "texto_ingreso",
+              "label": "Texto de la página de ingreso",
+              "type": "text"
+            },
+            {
+              "name": "nota_minima",
+              "label": "Nota mínima para aprobar cuestionarios (%)",
+              "type": "number",
+              "default": 70
+            },
+            {
+              "name": "avisos",
+              "label": "📢 Avisos para los alumnos",
+              "type": "object",
+              "list": {
+                "summary": "{fecha} · {titulo}"
+              },
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "fecha",
+                  "label": "Fecha",
+                  "type": "date"
+                }
+              ]
+            },
+            {
+              "name": "cursos",
+              "label": "📚 Cursos",
+              "type": "object",
+              "list": {
+                "summary": "{titulo}"
+              },
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Nombre del curso",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "id",
+                  "label": "Identificador (para asignarlo a alumnos)",
+                  "type": "string",
+                  "description": "Corto, sin espacios ni tildes, ej. computacion-basica. Es la dirección del curso (/aula/computacion-basica/). Evita cambiarlo después: los alumnos lo tienen asignado y perderían su progreso."
+                },
+                {
+                  "name": "publicado",
+                  "label": "Publicado",
+                  "type": "boolean",
+                  "default": true
+                },
+                {
+                  "name": "descripcion",
+                  "label": "Descripción",
+                  "type": "text"
+                },
+                {
+                  "name": "imagen",
+                  "label": "Imagen de portada",
+                  "type": "image"
+                },
+                {
+                  "name": "docente",
+                  "label": "Docente / instructor",
+                  "type": "string"
+                },
+                {
+                  "name": "duracion",
+                  "label": "Duración total",
+                  "type": "string",
+                  "description": "Ej. 6 semanas · 12 horas."
+                },
+                {
+                  "name": "nivel",
+                  "label": "Nivel",
+                  "type": "string"
+                },
+                {
+                  "name": "modulos",
+                  "label": "Módulos",
+                  "type": "object",
+                  "list": {
+                    "summary": "{titulo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "titulo",
+                      "label": "Nombre del módulo",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "lecciones",
+                      "label": "Lecciones",
+                      "type": "object",
+                      "list": {
+                        "summary": "{titulo} · {tipo}"
+                      },
+                      "fields": [
+                        {
+                          "name": "titulo",
+                          "label": "Título de la lección",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "tipo",
+                          "label": "Tipo",
+                          "type": "select",
+                          "options": [
+                            {
+                              "value": "video",
+                              "label": "🎬 Video"
+                            },
+                            {
+                              "value": "lectura",
+                              "label": "📖 Lectura"
+                            },
+                            {
+                              "value": "cuestionario",
+                              "label": "📝 Cuestionario"
+                            },
+                            {
+                              "value": "tarea",
+                              "label": "📤 Tarea"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "duracion",
+                          "label": "Duración aproximada",
+                          "type": "string",
+                          "description": "Ej. 10 min."
+                        },
+                        {
+                          "name": "video",
+                          "label": "Enlace del video (opcional)",
+                          "type": "string",
+                          "description": "Pega el enlace de YouTube, Vimeo o Google Drive (compartido como «Cualquier persona con el enlace»). Tip: en YouTube súbelo como «No listado» para que solo lo vean tus alumnos."
+                        },
+                        {
+                          "name": "contenido",
+                          "label": "Contenido / explicación",
+                          "type": "rich-text"
+                        },
+                        {
+                          "name": "materiales",
+                          "label": "Materiales para descargar",
+                          "type": "object",
+                          "list": {
+                            "summary": "{titulo}"
+                          },
+                          "fields": [
+                            {
+                              "name": "titulo",
+                              "label": "Nombre del material",
+                              "type": "string"
+                            },
+                            {
+                              "name": "archivo",
+                              "label": "Archivo (PDF, Word, Excel, PowerPoint…)",
+                              "type": "file",
+                              "description": "Sube el archivo (máx. 15 MB) o elige uno ya subido."
+                            },
+                            {
+                              "name": "enlace",
+                              "label": "…o un enlace externo",
+                              "type": "string",
+                              "description": "Opcional: Google Drive, un sitio web, etc. Se usa si no hay archivo."
+                            }
+                          ]
+                        },
+                        {
+                          "name": "preguntas",
+                          "label": "Preguntas (solo para cuestionarios)",
+                          "type": "object",
+                          "list": {
+                            "summary": "{pregunta}"
+                          },
+                          "fields": [
+                            {
+                              "name": "pregunta",
+                              "label": "Pregunta",
+                              "type": "string",
+                              "required": true
+                            },
+                            {
+                              "name": "opciones",
+                              "label": "Opciones de respuesta",
+                              "type": "string",
+                              "list": true
+                            },
+                            {
+                              "name": "correcta",
+                              "label": "Número de la opción correcta",
+                              "type": "number",
+                              "description": "1 = la primera opción, 2 = la segunda, etc."
+                            },
+                            {
+                              "name": "explicacion",
+                              "label": "Explicación (se muestra al revisar)",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "fecha_limite",
+                          "label": "Fecha límite (solo para tareas)",
+                          "type": "date",
+                          "default": ""
+                        },
+                        {
+                          "name": "enlace_entrega",
+                          "label": "Enlace para entregar (opcional, solo tareas)",
+                          "type": "string",
+                          "description": "Ej. un Google Forms. Siempre aparece también el botón «Enviar por WhatsApp»."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alumnos",
+          "label": "👥 Alumnos y accesos",
+          "type": "file",
+          "path": "content/alumnos.json",
+          "fields": [
+            {
+              "name": "alumnos",
+              "label": "Alumnos",
+              "type": "object",
+              "list": {
+                "summary": "{nombre} · {usuario}"
+              },
+              "description": "Cada alumno entra en /aula/ingresar con su usuario y contraseña. Los cambios funcionan 1–2 minutos después de guardar.",
+              "fields": [
+                {
+                  "name": "nombre",
+                  "label": "Nombre completo",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "usuario",
+                  "label": "Usuario",
+                  "type": "string",
+                  "required": true,
+                  "description": "Sin espacios, ej. maria.lopez. No distingue mayúsculas."
+                },
+                {
+                  "name": "contrasena",
+                  "label": "Contraseña",
+                  "type": "password",
+                  "required": true,
+                  "description": "Usa 🎲 Generar para crear una segura. Envíasela al alumno por WhatsApp."
+                },
+                {
+                  "name": "cursos",
+                  "label": "Cursos a los que tiene acceso",
+                  "type": "string",
+                  "list": true,
+                  "description": "Escribe el identificador de cada curso (ej. computacion-basica) o la palabra «todos»."
+                },
+                {
+                  "name": "activo",
+                  "label": "Acceso activo",
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Desactívalo para bloquear la entrada sin borrar al alumno."
+                },
+                {
+                  "name": "vence",
+                  "label": "Acceso hasta (opcional)",
+                  "type": "date",
+                  "default": "",
+                  "description": "Déjalo vacío para que no venza."
+                },
+                {
+                  "name": "telefono",
+                  "label": "Teléfono / WhatsApp",
+                  "type": "string"
+                },
+                {
+                  "name": "correo",
+                  "label": "Correo",
+                  "type": "string"
+                },
+                {
+                  "name": "notas",
+                  "label": "Notas internas (el alumno no las ve)",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blog",
+      "label": "📝 Blog",
+      "type": "collection",
+      "path": "content/blog",
+      "primary": "titulo",
+      "columns": [
+        "titulo",
+        "categoria",
+        "fecha",
+        "publicado"
+      ],
+      "fields": [
+        {
+          "name": "titulo",
+          "label": "Título",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "categoria",
+          "label": "Categoría",
+          "type": "select",
+          "options": [
+            {
+              "value": "Reparación",
+              "label": "Reparación"
+            },
+            {
+              "value": "Tutoriales",
+              "label": "Tutoriales"
+            },
+            {
+              "value": "Negocios",
+              "label": "Negocios"
+            },
+            {
+              "value": "Seguridad",
+              "label": "Seguridad"
+            },
+            {
+              "value": "Capacitación",
+              "label": "Capacitación"
+            }
+          ]
+        },
+        {
+          "name": "fecha",
+          "label": "Fecha de publicación",
+          "type": "date"
+        },
+        {
+          "name": "publicado",
+          "label": "Publicado",
+          "type": "boolean",
+          "description": "Desactívalo para guardar el artículo como borrador (no aparece en el sitio).",
+          "default": true
+        },
+        {
+          "name": "resumen",
+          "label": "Resumen (aparece en las tarjetas y en Google)",
+          "type": "text"
+        },
+        {
+          "name": "imagen",
+          "label": "Imagen de portada",
+          "type": "image"
+        },
+        {
+          "name": "imagen_descripcion",
+          "label": "Descripción de la imagen",
+          "type": "string"
+        },
+        {
+          "name": "contenido",
+          "label": "Contenido del artículo",
+          "type": "rich-text",
+          "description": "El primer párrafo se muestra más grande. Usa «Cita» para los consejos destacados y «Encabezado 2» para los subtítulos."
+        },
+        {
+          "name": "llamado_titulo",
+          "label": "Recuadro final · título",
+          "type": "string"
+        },
+        {
+          "name": "llamado_texto",
+          "label": "Recuadro final · texto",
+          "type": "text"
+        },
+        {
+          "name": "servicio_relacionado",
+          "label": "Recuadro final · servicio que se preselecciona en el formulario",
+          "type": "string",
+          "description": "Ej. Reparación, Página web, Soporte técnico."
+        }
+      ]
+    },
+    {
+      "group": "📰 Sala de prensa",
+      "items": [
+        {
+          "id": "novedades",
+          "label": "📣 Novedades y comunicados",
+          "type": "file",
+          "path": "content/novedades.json",
+          "list": true,
+          "fields": [
+            {
+              "name": "titulo",
+              "label": "Título",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "categoria",
+              "label": "Categoría",
+              "type": "select",
+              "options": [
+                {
+                  "value": "Comunicado",
+                  "label": "Comunicado"
+                },
+                {
+                  "value": "Capacitación",
+                  "label": "Capacitación"
+                },
+                {
+                  "value": "Servicios",
+                  "label": "Servicios"
+                },
+                {
+                  "value": "Actividades",
+                  "label": "Actividades"
+                },
+                {
+                  "value": "Promoción",
+                  "label": "Promoción"
+                }
+              ]
+            },
+            {
+              "name": "fecha",
+              "label": "Fecha",
+              "type": "date",
+              "description": "Déjala vacía para mostrar «Próximamente». La primera publicación de la lista se destaca."
+            },
+            {
+              "name": "texto",
+              "label": "Texto",
+              "type": "text"
+            },
+            {
+              "name": "boton_texto",
+              "label": "Texto del enlace (opcional)",
+              "type": "string"
+            },
+            {
+              "name": "boton_enlace",
+              "label": "¿A dónde lleva el enlace?",
+              "type": "string",
+              "description": "Una página (ej. inscripcion.html), la palabra whatsapp o un enlace completo (https://…)."
+            },
+            {
+              "name": "ejemplo",
+              "label": "Es una publicación de ejemplo (muestra la etiqueta «Ejemplo»)",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        },
+        {
+          "id": "galeria",
+          "label": "🖼️ Galería de fotos",
+          "type": "file",
+          "path": "content/galeria.json",
+          "list": true,
+          "fields": [
+            {
+              "name": "imagen",
+              "label": "Foto",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "titulo",
+              "label": "Descripción de la foto",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "categoria",
+              "label": "Categoría (para los filtros)",
+              "type": "select",
+              "options": [
+                {
+                  "value": "Reparación y soporte",
+                  "label": "Reparación y soporte"
+                },
+                {
+                  "value": "Capacitación",
+                  "label": "Capacitación"
+                },
+                {
+                  "value": "Desarrollo digital",
+                  "label": "Desarrollo digital"
+                },
+                {
+                  "value": "Instalaciones",
+                  "label": "Instalaciones"
+                }
+              ]
+            },
+            {
+              "name": "demostrativa",
+              "label": "Es una imagen demostrativa (muestra la etiqueta «Imagen demostrativa»)",
+              "type": "boolean",
+              "default": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "shared": {
+    "iconos": [
+      {
+        "value": "laptop",
+        "label": "💻 Laptop / computadora"
+      },
+      {
+        "value": "monitor",
+        "label": "🖥️ Monitor / clases virtuales"
+      },
+      {
+        "value": "wrench",
+        "label": "🔧 Herramienta / reparación"
+      },
+      {
+        "value": "cpu",
+        "label": "🔲 Procesador / componentes"
+      },
+      {
+        "value": "thermo",
+        "label": "🌡️ Temperatura"
+      },
+      {
+        "value": "refresh",
+        "label": "🔄 Actualizar / limpieza"
+      },
+      {
+        "value": "zap",
+        "label": "⚡ Rapidez / optimización"
+      },
+      {
+        "value": "database",
+        "label": "🗄️ Datos / respaldo"
+      },
+      {
+        "value": "cloud",
+        "label": "☁️ Nube"
+      },
+      {
+        "value": "printer",
+        "label": "🖨️ Impresora"
+      },
+      {
+        "value": "wifi",
+        "label": "📶 Red / internet"
+      },
+      {
+        "value": "phone",
+        "label": "📱 Celular / app"
+      },
+      {
+        "value": "lock",
+        "label": "🔒 Seguridad / contraseña"
+      },
+      {
+        "value": "shield",
+        "label": "🛡️ Protección / garantía"
+      },
+      {
+        "value": "alert",
+        "label": "⚠️ Alerta / aviso"
+      },
+      {
+        "value": "settings",
+        "label": "⚙️ Configuración"
+      },
+      {
+        "value": "cap",
+        "label": "🎓 Capacitación"
+      },
+      {
+        "value": "book",
+        "label": "📖 Libro / aprender"
+      },
+      {
+        "value": "school",
+        "label": "🏫 Escuela / estudiantes"
+      },
+      {
+        "value": "play",
+        "label": "▶️ Video / clase en línea"
+      },
+      {
+        "value": "download",
+        "label": "⬇️ Descarga / material"
+      },
+      {
+        "value": "clipboard",
+        "label": "📋 Lista / propuesta / inscripción"
+      },
+      {
+        "value": "file",
+        "label": "📄 Documento / ofimática"
+      },
+      {
+        "value": "layout",
+        "label": "🖥️ Página web"
+      },
+      {
+        "value": "code",
+        "label": "</> Código / desarrollo"
+      },
+      {
+        "value": "layers",
+        "label": "🧩 Aplicaciones / sistemas"
+      },
+      {
+        "value": "globe",
+        "label": "🌐 Internet / digital"
+      },
+      {
+        "value": "cart",
+        "label": "🛒 Tienda en línea"
+      },
+      {
+        "value": "camera",
+        "label": "📷 Fotografía"
+      },
+      {
+        "value": "image",
+        "label": "🖼️ Imagen / galería"
+      },
+      {
+        "value": "headset",
+        "label": "🎧 Soporte / atención"
+      },
+      {
+        "value": "message",
+        "label": "💬 Mensaje / claridad"
+      },
+      {
+        "value": "mail",
+        "label": "✉️ Correo"
+      },
+      {
+        "value": "whatsapp",
+        "label": "🟢 WhatsApp"
+      },
+      {
+        "value": "share",
+        "label": "🔗 Compartir / redes"
+      },
+      {
+        "value": "news",
+        "label": "📰 Noticias"
+      },
+      {
+        "value": "calendar",
+        "label": "📅 Calendario / cita"
+      },
+      {
+        "value": "clock",
+        "label": "🕒 Horario / tiempo"
+      },
+      {
+        "value": "pin",
+        "label": "📍 Ubicación"
+      },
+      {
+        "value": "map",
+        "label": "🗺️ Mapa"
+      },
+      {
+        "value": "home",
+        "label": "🏠 Casa / inicio"
+      },
+      {
+        "value": "building",
+        "label": "🏢 Empresa / instalaciones"
+      },
+      {
+        "value": "briefcase",
+        "label": "💼 Negocios / trabajo"
+      },
+      {
+        "value": "trend",
+        "label": "📈 Crecimiento"
+      },
+      {
+        "value": "rocket",
+        "label": "🚀 Emprendimiento / lanzamiento"
+      },
+      {
+        "value": "dollar",
+        "label": "💲 Ventas / precios"
+      },
+      {
+        "value": "handshake",
+        "label": "🤝 Alianza / acuerdo"
+      },
+      {
+        "value": "users",
+        "label": "👥 Personas / equipo"
+      },
+      {
+        "value": "user",
+        "label": "👤 Persona"
+      },
+      {
+        "value": "heart",
+        "label": "❤️ Compromiso"
+      },
+      {
+        "value": "star",
+        "label": "⭐ Destacado"
+      },
+      {
+        "value": "award",
+        "label": "🏅 Experiencia / calidad"
+      },
+      {
+        "value": "bulb",
+        "label": "💡 Idea / innovación"
+      },
+      {
+        "value": "target",
+        "label": "🎯 Objetivo / misión"
+      },
+      {
+        "value": "eye",
+        "label": "👁️ Visión"
+      },
+      {
+        "value": "search",
+        "label": "🔍 Buscar / diagnóstico"
+      },
+      {
+        "value": "package",
+        "label": "📦 Entrega"
+      },
+      {
+        "value": "buoy",
+        "label": "🛟 Ayuda / acompañamiento"
+      },
+      {
+        "value": "check",
+        "label": "✅ Listo / completado"
+      },
+      {
+        "value": "help",
+        "label": "❓ Pregunta / ayuda"
+      },
+      {
+        "value": "grid",
+        "label": "🔳 Cuadrícula / todos"
+      },
+      {
+        "value": "sitemap",
+        "label": "🧭 Mapa del sitio"
+      },
+      {
+        "value": "facebook",
+        "label": "Facebook"
+      },
+      {
+        "value": "instagram",
+        "label": "Instagram"
+      },
+      {
+        "value": "tiktok",
+        "label": "TikTok"
+      },
+      {
+        "value": "linkedin",
+        "label": "LinkedIn"
+      }
+    ]
+  }
+}

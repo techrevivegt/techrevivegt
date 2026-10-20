@@ -1,197 +1,185 @@
-# TechRevive: sitio web con panel de administración
+# TechRevive · Guía del panel de administración
 
-Con esta versión puedes **editar textos, fotos, servicios, cursos, artículos del blog, novedades y la galería desde un panel en el navegador**, sin tocar código. Cada vez que guardas, el sitio se actualiza solo en 1 o 2 minutos.
+Tu sitio tiene un **panel propio** en:
 
-**Cómo funciona:**
+> **https://techrevive.techrevive-gt.workers.dev/panel**
+> (también funciona `/admin`)
+
+Entras con una **contraseña**, cambias lo que quieras y pulsas **Guardar cambios**. El panel te avisa cuando el cambio ya se ve en el sitio (1 o 2 minutos). No necesitas otras páginas ni otras cuentas para editar.
+
+**Cómo funciona por dentro:** cuando guardas, el panel guarda el cambio en tu repositorio de GitHub. Cloudflare lo detecta y vuelve a publicar el sitio solo.
+
+---
+
+## Instalación (una sola vez, unos 10 minutos)
+
+### Paso 1 · Subir los archivos a GitHub
+
+1. Descomprime `techrevive-panel.zip`.
+2. Entra a tu repositorio **techrevivegt/techrevivegt** en GitHub y elige **Add file → Upload files**.
+3. Abre la carpeta descomprimida, selecciona **todo** con **Ctrl + A**, arrástralo a la página y pulsa **Commit changes**.
+
+Deben quedar estas carpetas y archivos (además de los que ya tenías):
 
 ```
-Panel (Pages CMS)  →  guarda los cambios en  →  GitHub  →  Cloudflare reconstruye y publica el sitio
+📁 content   📁 generador   📁 src   📁 worker   ← carpeta nueva del panel
+build.py   wrangler.jsonc   GUIA.md   .pages.yml   .python-version   .gitignore
 ```
 
-Todo es gratis. Lo configuras **una sola vez** (unos 20 minutos) siguiendo los pasos 1 a 5.
+> ⚠️ **Más adelante, cuando ya edites desde el panel:** si vuelves a subir un zip, **no subas la carpeta `content`**. Ahí se guarda lo que editas en el panel, y si la subes se reemplaza por la del zip.
 
----
+### Paso 2 · Crear la "llave" de GitHub (token)
 
-## Paso 1 · Crear tu cuenta de GitHub
+El panel necesita permiso para guardar en tu repositorio. Ese permiso es un *token*:
 
-GitHub es donde se guardan los archivos de tu sitio. El panel y Cloudflare se conectan a él.
+1. En GitHub, haz clic en tu foto (arriba a la derecha) → **Settings**.
+2. Abajo del menú izquierdo: **Developer settings** → **Personal access tokens** → **Fine-grained tokens** → **Generate new token**.
+3. Llena así:
 
-1. Entra en **https://github.com/signup**.
-2. Escribe tu **correo**, una **contraseña** y un **nombre de usuario** (por ejemplo `techrevive-gt`).
-3. Resuelve la verificación ("no soy un robot").
-4. Revisa tu correo, copia el **código de 8 dígitos** que te envió GitHub y pégalo.
-5. Si te hace preguntas de bienvenida, puedes saltarlas (*Skip personalization*).
-6. Elige el plan **Free** (gratis). Es suficiente.
+| Campo | Qué poner |
+|---|---|
+| Token name | `Panel TechRevive` |
+| Expiration | La más larga que permita (por ejemplo, 1 año). Anota la fecha: ese día hay que crear uno nuevo. |
+| Repository access | **Only select repositories** → elige `techrevivegt/techrevivegt` |
+| Permissions → Repository permissions | **Contents** → **Read and write** (si ves un botón **Add permissions**, búscalo ahí) |
 
-> 💡 Te recomendamos activar la verificación en dos pasos en *Settings → Password and authentication*. Protege tu sitio.
+4. Pulsa **Generate token** y **copia** el código que empieza con `github_pat_…`. Solo se muestra una vez; si lo pierdes, genera otro.
 
----
+### Paso 3 · Poner la contraseña y el token en Cloudflare
 
-## Paso 2 · Crear el repositorio y subir los archivos
+1. En Cloudflare entra en **Workers & Pages → techrevive → Settings → Variables and Secrets**.
+2. Pulsa **+ Add** y crea estos dos, los dos con **Type: Secret**:
 
-Un **repositorio** es la carpeta de tu sitio dentro de GitHub.
+| Variable name | Value |
+|---|---|
+| `PANEL_PASSWORD` | La contraseña que quieras para entrar al panel (usa una larga, que no uses en otro lado) |
+| `GITHUB_TOKEN` | El código `github_pat_…` que copiaste |
 
-1. Descomprime **techrevive-panel.zip** en tu computadora.
-2. En GitHub, haz clic en el botón **+** (arriba a la derecha) y luego en **New repository**.
-3. En **Repository name** escribe `techrevive`.
-4. Elige **Private** (privado; solo tú lo ves) o **Public**. Los dos funcionan.
-5. **No** marques "Add a README". Haz clic en **Create repository**.
-6. En la página que aparece, haz clic en el enlace **uploading an existing file**.
-7. Abre la carpeta descomprimida `techrevive-panel`, selecciona **todo su contenido** (las carpetas `content`, `generador` y `src`, y los archivos `build.py`, `.pages.yml`, etc.) y **arrástralo** a la página de GitHub.
-   - ⚠️ Arrastra **lo que está dentro** de la carpeta, no la carpeta completa.
-8. Espera a que terminen de cargar los archivos. Luego haz clic en **Commit changes**.
+3. Pulsa **Deploy** (o **Save**).
 
-### ✅ Comprueba que se subió `.pages.yml`
+> El repositorio (`techrevivegt/techrevivegt`) y la rama (`main`) ya vienen configurados en `wrangler.jsonc`. Si algún día cambias de repositorio, edita ahí `GITHUB_REPO`.
 
-Los archivos que empiezan con punto están **ocultos** en Mac (y a veces en Windows). Sin `.pages.yml`, el panel no funciona.
+### Paso 4 · Revisar la publicación automática
 
-Si **no** ves `.pages.yml` en la lista de archivos del repositorio:
-
-1. Haz clic en **Add file → Create new file**.
-2. En el nombre escribe exactamente: `.pages.yml`
-3. Abre el archivo **copia-de-pages.yml.txt** (incluido en el zip) con el Bloc de notas o TextEdit, copia **todo** su contenido y pégalo.
-4. Haz clic en **Commit changes**.
-
-> En Mac también puedes mostrar los archivos ocultos con **Cmd + Shift + .** (punto) en el Finder.
-
----
-
-## Paso 3 · Publicar el sitio en Cloudflare (conectado a GitHub)
-
-> ℹ️ El proyecto que creaste antes en Cloudflare subiendo archivos **no se puede conectar a GitHub**. Por eso creas uno nuevo. Al final de este paso te explicamos qué hacer con el anterior.
-
-1. Entra en **https://dash.cloudflare.com** → **Workers & Pages** → **Create** (o *Create application*).
-2. Elige la pestaña **Pages** y luego **Connect to Git** (o *Import an existing Git repository*).
-3. Elige **GitHub** y haz clic en **Connect GitHub**. Autoriza a Cloudflare. Cuando te pregunte a qué repositorios dar acceso, elige **Only select repositories → techrevive** y confirma.
-4. Selecciona el repositorio `techrevive` y haz clic en **Begin setup**.
-5. Completa la configuración **exactamente así**:
-
-   | Campo | Valor |
-   |---|---|
-   | Project name | `techrevive` (si ya está ocupado, por ejemplo `techrevive-gt`) |
-   | Production branch | `main` |
-   | Framework preset | **None** |
-   | Build command | `python3 build.py` |
-   | Build output directory | `_site` |
-
-6. Haz clic en **Save and Deploy**. En 1 o 2 minutos verás **Success** y la dirección de tu sitio, por ejemplo `https://techrevive-gt.pages.dev`.
-
-**¿Lo publicaste como Worker (dirección `…workers.dev`)?** También funciona. Comprueba en Cloudflare → tu Worker → **Settings → Build** que:
+En **Settings → Build** del mismo Worker debe estar (como ya lo tienes):
 
 | Campo | Valor |
 |---|---|
-| Git repository | tu repositorio `techrevive` (conectado) |
+| Git repository | `techrevivegt/techrevivegt` |
 | Build command | `python3 build.py` |
 | Deploy command | `npx wrangler deploy` |
 
-Si en lugar de eso dice que no hay repositorio conectado, haz clic en **Connect** y elige `techrevive`. Sin esa conexión, los cambios del panel no se publican.
+### Paso 5 · Entrar
 
-**¿Qué hago con el proyecto anterior?**
-
-- **Si quieres conservar la dirección `techrevive.pages.dev`:** primero elimina el proyecto anterior (*Settings → Delete project*) y luego crea el nuevo con el nombre `techrevive`.
-- **Si tienes un dominio propio:** quítalo del proyecto anterior y agrégalo al nuevo en *Custom domains*.
+Abre **`/panel`** en tu sitio, escribe tu contraseña y listo. Si falta algo de la configuración, el mismo panel te muestra qué falta (✅ / ⬜).
 
 ---
 
-## Paso 4 · Entrar al panel de administración
+## Uso diario
 
-**Acceso rápido desde tu propio sitio:** escribe **`/panel`** al final de tu dirección, por ejemplo `https://techrevive.techrevive-gt.workers.dev/panel` (también sirve `/admin`). Esa página tiene el botón **Entrar al panel**. No aparece en el menú ni en Google; guárdala en favoritos.
+1. Entra a `/panel`.
+2. Elige una sección en el menú de la izquierda (en el celular, en el botón ☰).
+3. Haz tus cambios. Arriba aparece **"Sin guardar"**.
+4. Pulsa **💾 Guardar cambios** (o **Ctrl + S**).
+5. Arriba verás **"Publicando…"** y después **"✓ Publicado"**: ya se ve en el sitio.
 
-> Para que el botón abra **directo tu repositorio**, entra una vez al panel y completa **Configuración general → Acceso al panel** con tu usuario de GitHub (el repositorio normalmente es `techrevive` y la rama `main`).
-
-La primera vez:
-
-1. Entra en **https://app.pagescms.org** (o usa el botón de `/panel`).
-2. Haz clic en **Sign in with GitHub** y autoriza a Pages CMS.
-3. Te pedirá **instalar la aplicación de Pages CMS** en GitHub. Elige **Only select repositories → techrevive** y haz clic en **Install**.
-4. Elige el repositorio **techrevive** (rama `main`).
-
-Verás el menú del panel:
-
-- ⚙️ Configuración general
-- 📄 Páginas
-- 🎓 Capacitación
-- 📝 Blog
-- 📰 Sala de prensa
-
-**Guarda en favoritos** `app.pagescms.org`: desde ahí administrarás el sitio.
-
----
-
-## Paso 5 · Pon tus datos reales (primera edición)
-
-Entra en **⚙️ Configuración general** y completa:
-
-- **WhatsApp:** número para los enlaces, solo números con código de país (ej. `50212345678`), y número como se muestra (ej. `+502 1234-5678`).
-- **Correo, dirección, horario y búsqueda para el mapa.**
-- **Redes sociales:** enlaces completos (`https://…`).
-- **Aula virtual:** enlace de Google Classroom, Moodle, etc. (si aún no tienes, déjalo vacío).
-- **Sitio → Dirección del sitio:** la dirección que te dio Cloudflare en el paso 3 (o tu dominio).
-
-Haz clic en **Save**. Espera 1 o 2 minutos y recarga tu sitio: ¡ya tiene tus datos! 🎉
-
----
-
-## Uso diario: qué se edita en cada sección
-
-| En el panel | Qué cambia en el sitio |
+| Sección del panel | Qué cambia en el sitio |
 |---|---|
-| ⚙️ **Configuración general** | WhatsApp, correo, dirección, horario, mapa, redes, aula virtual, opciones del formulario y Formspree. En **Sitio**: la dirección web, el eslogan, el **logo** (ícono junto al nombre) y el **ícono de la pestaña** del navegador. |
-| 📄 Páginas → 🏠 **Inicio** | Portada, barra de valores, ¿Por qué TechRevive?, Tecnología para todos, Negocios, Proyectos, Testimonios, cantidad de artículos y llamado final. Cada sección tiene un interruptor **Mostrar**. |
-| 📄 Páginas → 👋 **¿Quiénes somos?** | Historia, misión, visión, valores y "A quién servimos". |
-| 📄 Páginas → 🛠️ **Servicios** | Las tarjetas de servicios **y** la página completa de cada servicio. Si agregas un servicio, se crea su página y aparece solo en el menú y en el pie de página. |
-| 📄 Páginas → 🔄 **Nuestro proceso** | Los 5 pasos (Diagnóstico → Soporte) que aparecen en varias páginas. |
-| 📄 Páginas → ❓ **Preguntas frecuentes** | Categorías y preguntas. |
-| 🎓 Capacitación → 📚 **Cursos** | La lista de cursos. Se actualizan la página de cursos, el formulario de inscripción y la lista de la portada. |
-| 🎓 Capacitación → 🧑‍🏫 **Página de Capacitación** | Portada, enfoque, modalidades, ¿para quién?, pasos, aviso de horarios y preguntas de cursos. |
-| 📝 **Blog** | Artículos: **Add entry** para crear uno. Desactiva **Publicado** para guardarlo como borrador. |
-| 📰 Sala de prensa → 📣 **Novedades** | Comunicados. La primera de la lista se destaca. Sin fecha se muestra "Próximamente". |
-| 📰 Sala de prensa → 🖼️ **Galería** | Fotos con su descripción y categoría (para los filtros). |
+| ⚙️ **Configuración general** | WhatsApp, correo, dirección, horario, mapa, redes sociales, aula virtual, opciones del formulario, textos de la sección de contacto, **logo** e ícono de la pestaña. |
+| 🏠 **Inicio** | Portada, valores, ¿Por qué TechRevive?, capacitación, negocios, proyectos, testimonios, blog y el recuadro azul final. |
+| 👋 **¿Quiénes somos?** | Historia, misión, visión, valores y "A quién servimos". |
+| 🛠️ **Servicios** | Las tarjetas **y** la página de cada servicio. Si agregas uno, se crea su página y aparece en el menú. |
+| 💲 **Tarifario y cotizador** | Servicios y precios por categoría, tarjetas «¿Qué quiere el cliente?», opciones de las listas (marcas, sistemas, síntomas…), vigencia, recargo por urgencia, logo de la impresión, nota y términos y condiciones. |
+| 🔄 **Nuestro proceso** | Los pasos (Diagnóstico → Soporte). |
+| ❓ **Preguntas frecuentes** | Categorías y preguntas. |
+| 📚 **Cursos** | La lista de cursos (página de cursos, inscripción y portada). |
+| 🧑‍🏫 **Página de Capacitación** | Portada, enfoque, modalidades, pasos y preguntas. |
+| 📘 **Cursos del aula** | Aula virtual: cursos, módulos, lecciones (videos, lecturas, cuestionarios, tareas), materiales en PDF y avisos. |
+| 👥 **Alumnos y accesos** | Quién puede entrar al aula: usuario, contraseña, cursos asignados, activo y fecha de vencimiento. |
+| 📝 **Blog** | Crear, editar, borrar artículos. Apaga **Publicado** para dejarlo como borrador. |
+| 📣 **Novedades** | Comunicados y anuncios. |
+| 🖼️ **Galería** | Fotos con descripción y categoría. |
 
-### Consejos
+### Herramientas
 
-- **Fotos:** súbelas en formato JPG, de unos 1200 a 1600 px de ancho y menos de 500 KB. Puedes reducirlas gratis en **squoosh.app**. Escribe siempre la **descripción de la imagen**: ayuda a Google y a personas con discapacidad visual.
-- **Etiquetas de ejemplo:** cuando reemplaces un proyecto, foto, novedad o testimonio de muestra por uno real, **desactiva** la casilla "demostrativo" o "de ejemplo".
-- **Testimonios:** publica solo opiniones reales y con permiso del cliente.
-- **Enlaces de botones:** escribe una página (`cursos.html`, `contacto.html#formulario`), la palabra `whatsapp` o un enlace completo (`https://…`).
-- **Orden:** en las listas puedes arrastrar los elementos para cambiar su orden.
-- **Cambiar el nombre de una página de servicio** cambia su dirección. Los enlaces que hayas compartido antes dejarán de funcionar.
+- **Listas:** **+ Agregar** crea un elemento, **▲ ▼** cambian el orden y **✕** lo quita. Haz clic en el nombre de un elemento para abrirlo.
+- **Mostrar:** muchas secciones tienen este interruptor. Apágalo para ocultar la sección sin borrar su contenido.
+- **Imágenes:**
+  - **Subir imagen** usa una foto de tu computadora o celular; se achica sola si es muy grande.
+  - **Elegir una existente** reutiliza una foto que ya está en el sitio.
+  - Después de elegirla, pulsa **Guardar cambios**.
+- **Texto con formato** (artículos del blog y respuestas de preguntas frecuentes): botones para negrita, subtítulos, listas y enlaces.
+- Si intentas salir con cambios sin guardar, el panel te avisa.
 
-### ¿Más personas pueden editar?
+### Tarifario y cotizador (`/cotizador`)
 
-Sí. En Pages CMS, entra en **Settings → Collaborators** e invita por correo. Esas personas **no necesitan cuenta de GitHub**.
+- Está en el menú **Servicios → Tarifario y cotizador**. Lo pueden usar los clientes (para tener un precio estimado) y el técnico (para la recepción y la cotización formal).
+- **Pasos:** cliente → equipo (tipo, marca, modelo, serie, sistema, accesorios, estado físico) → especificaciones → diagnóstico previo (lo que reporta el cliente) → qué quiere el cliente → tarifario → repuestos → diagnóstico técnico, descuento y anticipo.
+- **Imprimir / guardar PDF** genera una cotización formal con el logo, el número `TR-AAAAMMDD-XXXX`, la fecha de vencimiento, una tabla de precios, los términos y las líneas de firma. Para guardarla como PDF, elige **Guardar como PDF** en el destino de la impresora. Si aparecen la dirección web y la fecha en los bordes, desactiva **Encabezados y pies de página** en *Más opciones*.
+- **Enviar por WhatsApp** manda el resumen a TechRevive (el número de Configuración general) o al cliente (el teléfono del paso 1).
+- Lo escrito se guarda solo **en ese navegador** hasta que pulses **Nueva cotización**. No se envía a ningún servidor.
+- **Precios:** en el panel escribe solo el número (ej. `175`). Activa **Precio «desde»** cuando el precio final depende del diagnóstico. Activa **Se cobra por unidad** para servicios por hora o por programa.
+- Si cambias el nombre de una categoría, cambia también la **Categoría que se abre** en las tarjetas «¿Qué quiere el cliente?». Lo mismo con los **servicios que se marcan solos**: el nombre debe ser idéntico.
+
+### Aula virtual (`/aula/ingresar`)
+
+- El botón **Ingresar al aula virtual** del sitio lleva a `/aula/ingresar`. Cada alumno entra con **su** usuario y contraseña; sin sesión, ninguna página del aula, video o PDF es visible.
+- **Dar acceso a un alumno:** panel → **👥 Alumnos y accesos** → **+ Agregar** → nombre, usuario (ej. `maria.lopez`), contraseña (**🎲 Generar** y **Copiar**), cursos (el identificador, ej. `computacion-basica`, o `todos`) → **Guardar cambios**. En 1–2 minutos ya puede entrar. Envíale sus datos por WhatsApp.
+- **Quitar el acceso:** apaga **Acceso activo** o pon una fecha en **Acceso hasta**. Al día siguiente de esa fecha ya no puede entrar. Si estaba dentro, su sesión se cierra en la siguiente publicación.
+- **Crear un curso:** panel → **📘 Cursos del aula** → **Cursos → + Agregar** → nombre, **identificador** (corto, sin espacios ni tildes), imagen → **Módulos → + Agregar** → **Lecciones → + Agregar**.
+- **Tipos de lección:**
+  - **Video:** pega el enlace de YouTube (súbelo como **No listado**), Vimeo o Google Drive. Se reproduce dentro del aula.
+  - **Lectura:** solo el texto con formato.
+  - **Cuestionario:** agrega **Preguntas**, cada una con sus opciones, el **número** de la correcta (1, 2, 3…) y una explicación. Se califica al instante; con la **nota mínima** (70 % por defecto) la lección queda completada.
+  - **Tarea:** instrucciones, fecha límite y, si quieres, un enlace de entrega (ej. Google Forms). Siempre aparece el botón **Enviar por WhatsApp**, que te llega con el nombre del alumno, el curso y la tarea.
+- **Materiales:** en cada lección, **Materiales → + Agregar → Subir archivo** (PDF, Word, Excel, PowerPoint, ZIP o TXT; máx. 15 MB). Para archivos más pesados usa un enlace de Google Drive.
+- El **progreso** (lecciones completadas y notas) se guarda en el navegador del alumno. Si cambia de computadora o borra sus datos, empieza de cero; sus accesos no se pierden.
+- Cuentas de ejemplo incluidas: `demo` (todos los cursos) y `alumno.prueba` (solo Computación básica). Sus contraseñas están en el documento de accesos. **Desactívalas o bórralas** cuando ya no las necesites.
+- Si en algún momento prefieres Google Classroom o Moodle, pega su enlace en **Configuración general → Enlace de un aula externa**. El botón del sitio llevará ahí en lugar del aula propia.
+
+### Seguridad
+
+- La contraseña solo está en Cloudflare. Para cambiarla, edita `PANEL_PASSWORD` en **Variables and Secrets**.
+- La sesión dura 12 horas. Usa **Cerrar sesión** en computadoras compartidas.
+- El panel no aparece en Google ni en el menú del sitio.
 
 ---
 
 ## Si algo sale mal
 
-- **Guardé y el sitio no cambió:** espera 2 minutos y recarga con **Ctrl + F5** (en Mac, **Cmd + Shift + R**). Para revisar el estado, entra en Cloudflare → tu proyecto → **Deployments**.
-- **La publicación falló (Failed):** tu sitio **sigue en línea con la versión anterior**; no se rompe nada. Abre el despliegue fallido y lee el mensaje que empieza con ✖ ERROR: indica qué archivo revisar. Para deshacer un cambio, en GitHub entra en *Commits*, abre el último cambio y usa **Revert**, o vuelve a editar ese contenido en el panel.
-- **Avisos ⚠ en el registro:** por ejemplo, "La imagen … no existe". El sitio se publica igual, pero conviene corregirlo.
-- **Formularios:** si el enlace de Formspree está vacío, los formularios abren WhatsApp con la solicitud lista. Para recibirlos por correo, crea un formulario gratis en **formspree.io** y pega su enlace en Configuración general → Formularios.
+El panel muestra mensajes claros. Los más comunes:
+
+| Mensaje | Solución |
+|---|---|
+| "Falta un último paso" con casillas ⬜ | Falta `PANEL_PASSWORD` o `GITHUB_TOKEN` en Cloudflare (Paso 3). |
+| "GitHub rechazó el token" | El token venció o se copió mal. Crea uno nuevo (Paso 2) y reemplaza `GITHUB_TOKEN`. |
+| "El token no tiene permiso para guardar" | Al token le falta **Contents: Read and write**. |
+| "GitHub no encuentra el repositorio" | El token no incluye tu repositorio, o `GITHUB_REPO` en `wrangler.jsonc` está mal escrito. |
+| "Este contenido cambió desde que lo abriste" | Se guardó desde otra pestaña. Recarga la página (tus cambios sin guardar se pierden). |
+| "Tarda más de lo normal" | Revisa **Cloudflare → techrevive → Deployments**. Si hay uno en rojo, abre el registro y envíalo a tu desarrollador. El sitio anterior sigue en línea. |
+| `/panel` muestra el error 404 | Todavía no se publicó la versión con el panel: sube los archivos (Paso 1) y espera a que el despliegue diga **Success**. |
 
 ---
 
 ## Lo que no se edita desde el panel
 
-Estas páginas tienen textos fijos y se ajustan en el código (`generador/`). Si necesitas cambiarlas, pídelo y se agregan al panel:
-
-- La página de **Redes sociales** (los enlaces sí se editan en Configuración).
-- El **directorio** de la página Contacto y la página **Ubicación** (los datos de contacto y el mapa sí se editan).
-- Los textos fijos del **aula virtual** y de la **inscripción**.
-- La página **404**.
-
-El **mapa del sitio**, `sitemap.xml` y el menú se generan **solos**.
+Textos fijos de: la página **Redes sociales** (los enlaces sí se editan), el **directorio** de Contacto, la página **Ubicación** (los datos y el mapa sí se editan), los textos fijos de la página informativa del **aula virtual** y de la **inscripción**, y la página **404**. El **mapa del sitio**, `sitemap.xml` y el menú se generan solos.
 
 ---
 
 ## Para el desarrollador (opcional)
 
-- **Compilar en tu computadora:** `python3 build.py`. Genera `_site/` y solo necesita Python 3.12 o superior, sin instalar nada más. Para verlo: `python3 -m http.server -d _site 8080`.
-- **Estructura:**
-  - `content/`: el contenido en JSON (lo que edita el panel).
-  - `src/`: CSS, JavaScript e imágenes.
-  - `generador/`: plantillas en Python.
-  - `.pages.yml`: la definición del panel.
-- **Si un JSON tiene un error de formato,** la compilación se detiene a propósito para que Cloudflare mantenga la versión anterior en línea.
-- **Alternativa con Workers:** `wrangler.jsonc` ya apunta a `./_site`. Usa el build command `python3 build.py` y el deploy command `npx wrangler deploy`.
+- **Compilar localmente:** ejecuta `python3 build.py` (Python 3.12+, sin dependencias). Genera `_site/`.
+- **Panel:**
+  - `src/panel/` contiene la interfaz: `index.html`, `panel.js`, `panel.css` y `schema.json`, que define los campos de cada sección.
+  - `worker/index.js` es la API `/api/*`: sesión con cookie firmada (HMAC), lectura y escritura vía la GitHub Contents API, y subida de imágenes a `src/img/`.
+  - Solo se permiten estas rutas: `content/*.json`, `content/blog/*.json` e imágenes en `src/img/`.
+- **Aviso de "Publicado":** `build.py` escribe `_site/version.json` con `WORKERS_CI_COMMIT_SHA`, y el panel lo compara con el commit que acaba de guardar.
+- **Cotizador:** `generador/cotizador.py` genera `cotizador.html` desde `content/tarifario.json` (los precios también quedan en el HTML para Google). La lógica está en `src/js/cotizador.js` y los estilos de pantalla e impresión (`@media print`, documento `#qp`) en `src/css/cotizador.css`.
+- **Aula virtual:**
+  - `generador/aula.py` genera `_site/aula/` desde `content/aula.json` y copia `src/aula-archivos/` a `/aula/archivos/`.
+  - También escribe `worker/aula-datos.js` con los alumnos de `content/alumnos.json`: contraseñas con SHA-256 y sal aleatoria, cursos, activo y vencimiento. Ese archivo se genera en cada build y **no** se sube a GitHub (`.gitignore`).
+  - `worker/index.js` atiende `/aula/*` gracias a `run_worker_first` en `wrangler.jsonc`. Usa la cookie firmada `tr_aula` (14 días, clave `AULA_SECRET` o `PANEL_PASSWORD`), la API `/api/aula/login|logout|yo` y la subida de materiales `/api/documento`.
+  - Las respuestas del aula llevan `Cache-Control: private, no-store` y `X-Robots-Tag: noindex`, y `/aula/` está en `Disallow` de `robots.txt`.
+  - La interfaz está en `src/js/aula.js` y `src/css/aula.css`.
+- `.pages.yml` sigue presente por compatibilidad con Pages CMS, pero ya no es necesario.

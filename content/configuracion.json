@@ -1,13 +1,36 @@
 {
+  "sitio": {
+    "url": "https://techrevive.techrevive-gt.workers.dev",
+    "eslogan": "Tecnología que transforma, soluciones que impulsan.",
+    "logo": "/img/logo-icono.png",
+    "favicon": "/img/favicon.png"
+  },
   "contacto": {
-    "whatsapp": "50249091826",
-    "whatsapp_visible": "+502 49091826",
+    "whatsapp": "50200000000",
+    "whatsapp_visible": "+502 0000-0000",
     "mensaje_whatsapp": "Hola TechRevive, me gustaría recibir información sobre sus servicios.",
-    "correo": "techrevive.gt@gmail.com",
-    "direccion": "Ciudad de Guatemala, Guatemala",
+    "correo": "contacto@tudominio.com",
+    "direccion": "Tu dirección aquí, Guatemala",
     "busqueda_mapa": "Ciudad de Guatemala, Guatemala",
     "horario": "Lun a vie: 8:00 – 18:00 · Sáb: 8:00 – 13:00"
   },
+  "seccion_contacto": {
+    "etiqueta": "Contacto",
+    "titulo": "Hablemos de lo que necesitas.",
+    "titulo_pagina_contacto": "Envíanos tu solicitud.",
+    "texto": "Escríbenos por WhatsApp o completa el formulario. Te responderemos lo antes posible con una orientación clara.",
+    "boton_whatsapp": "Escribir por WhatsApp",
+    "formulario_titulo": "Solicita tu servicio",
+    "formulario_ayuda": "Cuéntanos qué necesitas: el problema de tu equipo, el curso que te interesa o la idea de tu proyecto.",
+    "boton_enviar": "Enviar solicitud"
+  },
+  "redes": {
+    "facebook": "",
+    "instagram": "",
+    "tiktok": "",
+    "linkedin": ""
+  },
+  "aula_virtual": "",
   "panel": {
     "usuario_github": "techrevivegt",
     "repositorio": "techrevivegt",
@@ -22,10 +45,7 @@
       "Aplicación",
       "Soporte técnico",
       "Otro"
-    ]
-  },
-  "sitio": {
-    "url": "https://techrevive.techrevive-gt.workers.dev",
-    "eslogan": "Tecnología que transforma, soluciones que impulsan."
+    ],
+    "endpoint": ""
   }
 }

@@ -132,11 +132,7 @@ content:
           - name: whatsapp
             label: Número de WhatsApp (para los enlaces)
             type: string
-            required: true
-            pattern:
-              regex: "^[0-9]{8,15}$"
-              message: "Solo números, con el código de país y sin + ni espacios. Ejemplo: 50212345678"
-            description: "Solo números, con el código de país (502) y sin espacios. Ejemplo: 50212345678"
+            description: "Ejemplo: 50212345678 o +502 1234-5678. Los espacios, guiones y el + se quitan solos; si pones solo 8 dígitos se agrega el 502."
           - name: whatsapp_visible
             label: Número de WhatsApp (como se muestra)
             type: string
@@ -154,6 +150,19 @@ content:
             type: string
             description: "Lo que se busca en Google Maps para la página Ubicación (dirección exacta o nombre del negocio en Maps)."
           - { name: horario, label: Horario de atención, type: string }
+      - name: seccion_contacto
+        label: "✉️ Sección de contacto y formulario"
+        type: object
+        description: "Los textos del recuadro «Hablemos de lo que necesitas» y del formulario «Solicita tu servicio» (al final de Inicio y en la página Contacto). Los datos (WhatsApp, correo, etc.) se cambian arriba en «Contacto»."
+        fields:
+          - { name: etiqueta, label: Etiqueta pequeña (arriba del título), type: string }
+          - { name: titulo, label: Título (página de Inicio), type: string }
+          - { name: titulo_pagina_contacto, label: Título (página Contacto), type: string }
+          - { name: texto, label: Texto debajo del título, type: text }
+          - { name: boton_whatsapp, label: Texto del botón verde de WhatsApp, type: string }
+          - { name: formulario_titulo, label: Título del formulario, type: string }
+          - { name: formulario_ayuda, label: Texto de ayuda dentro de la casilla «Mensaje», type: text }
+          - { name: boton_enviar, label: Texto del botón azul de enviar, type: string }
       - name: redes
         label: "📱 Redes sociales"
         type: object
@@ -382,11 +391,13 @@ content:
                 type: number
                 options: { min: 1, max: 9 }
           - name: llamado
-            label: "10 · Llamado a la acción"
+            label: "10 · Llamado a la acción (recuadro azul)"
             type: object
             fields:
               - { name: titulo, label: Título, type: string }
               - { name: texto, label: Texto, type: text }
+              - { name: boton_whatsapp, label: Texto del botón blanco (abre WhatsApp), type: string }
+              - { name: boton_cotizacion, label: Texto del botón con borde (lleva al formulario), type: string }
 
       # ---------------------------------------------------------------------
       - name: nosotros
@@ -473,11 +484,7 @@ content:
               - name: pagina
                 label: Nombre de la página
                 type: string
-                required: true
-                pattern:
-                  regex: "^[a-z0-9-]+$"
-                  message: "Solo minúsculas, números y guiones. Ejemplo: diseno-grafico"
-                description: "Será la dirección de la página: reparacion → reparacion.html. Solo minúsculas, números y guiones. Si lo cambias, los enlaces antiguos dejan de funcionar."
+                description: "Será la dirección de la página: reparacion → reparacion.html. Se ajusta sola (sin tildes ni espacios). Si la dejas vacía se usa el título. Si la cambias, los enlaces antiguos dejan de funcionar."
               - { name: titulo, label: Título de la tarjeta, type: string, required: true }
               - { name: nombre_corto, label: Nombre en el menú, type: string }
               - { name: icono, component: icono }

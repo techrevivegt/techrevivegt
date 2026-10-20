@@ -274,6 +274,8 @@
   },
   "llamado": {
     "titulo": "¿Tienes un problema tecnológico o una idea que quieres convertir en realidad?",
-    "texto": "Cuéntanos qué necesitas. En TechRevive podemos ayudarte a encontrar una solución."
+    "texto": "Cuéntanos qué necesitas. En TechRevive podemos ayudarte a encontrar una solución.",
+    "boton_whatsapp": "Hablar con TechRevive",
+    "boton_cotizacion": "Solicitar cotización"
   }
 }

@@ -1,0 +1,26 @@
+{
+  "alumnos": [
+    {
+      "nombre": "Cuenta de demostración",
+      "usuario": "demo",
+      "contrasena": "Jade-Antigua-246",
+      "cursos": ["todos"],
+      "activo": true,
+      "vence": "",
+      "telefono": "",
+      "correo": "",
+      "notas": "Cuenta para probar el aula. Ve todos los cursos. Desactívala o bórrala cuando ya no la necesites."
+    },
+    {
+      "nombre": "Alumno de prueba",
+      "usuario": "alumno.prueba",
+      "contrasena": "Quetzal-Azul-873",
+      "cursos": ["computacion-basica"],
+      "activo": true,
+      "vence": "2027-06-30",
+      "telefono": "",
+      "correo": "",
+      "notas": "Ejemplo de alumno con un solo curso y fecha de vencimiento."
+    }
+  ]
+}

@@ -53,7 +53,8 @@
   // Aula virtual
   $$("[data-aula]").forEach(function (a) {
     if (cfg.aulaVirtualUrl) {
-      a.href = cfg.aulaVirtualUrl; a.target = "_blank"; a.rel = "noopener";
+      a.href = cfg.aulaVirtualUrl;
+      if (!/^\//.test(cfg.aulaVirtualUrl)) { a.target = "_blank"; a.rel = "noopener"; } // aula externa: nueva pestaña
     } else {
       a.classList.add("is-disabled");
       a.setAttribute("aria-disabled", "true");
@@ -63,6 +64,7 @@
     }
   });
   $$("[data-aula-pending]").forEach(function (el) { if (cfg.aulaVirtualUrl) el.hidden = true; });
+  $$("[data-aula-ready]").forEach(function (el) { if (cfg.aulaVirtualUrl) el.hidden = false; });
 
   /* ---------- 2. Header y menú ---------- */
   var header = $("#header");

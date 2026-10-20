@@ -146,8 +146,9 @@ ARROW = icon("arrow")
 
 # ------------------------------------------------------------------ Datos compartidos
 SERVICIOS = load("servicios.json")
+TARIFARIO = load("tarifario.json") or {}
 RESERVED = {"index", "quienes-somos", "servicios", "capacitacion", "cursos", "aula-virtual", "inscripcion", "blog",
-            "preguntas-frecuentes", "novedades", "galeria", "redes-sociales", "contacto", "ubicacion", "mapa-del-sitio", "404"}
+            "preguntas-frecuentes", "novedades", "galeria", "redes-sociales", "contacto", "ubicacion", "mapa-del-sitio", "404", "cotizador"}
 
 
 def service_list():
@@ -205,6 +206,8 @@ def service_link(value):
 # ------------------------------------------------------------------ Navegación
 def nav_items():
     serv = [(s["_nombre"], s["_href"], s.get("icono"), s.get("descripcion_menu", "")) for s in SERVICES]
+    if TARIFARIO.get("mostrar_en_menu", True) is not False:
+        serv += [None, ("Tarifario y cotizador", "cotizador.html", "dollar", "Calcula al instante el costo de tu servicio.")]
     serv += [None, ("Todos los servicios", "servicios.html", "grid", "Conoce todo lo que podemos hacer por ti.")]
     return [
         ("Inicio", "index.html", None),
@@ -601,7 +604,16 @@ def field(fid, label, name, kind="text", required=False, placeholder="", error="
 HONEYPOT = '''<div class="hp" aria-hidden="true"><label for="{p}-web">No llenar</label><input id="{p}-web" name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></div>'''
 
 
-def contact_form(prefix="c", title="Solicita tu servicio"):
+SC = g(CFG, "seccion_contacto", default={}) or {}
+
+
+def sc(key, default):
+    v = SC.get(key) if isinstance(SC, dict) else None
+    return e(v.strip()) if isinstance(v, str) and v.strip() else e(default)
+
+
+def contact_form(prefix="c", title=None):
+    title = title or sc("formulario_titulo", "Solicita tu servicio")
     return f'''<form class="form js-form reveal" style="--d:1" novalidate data-form-name="Solicitud de servicio" data-wa-intro="Hola TechRevive, quiero solicitar un servicio.">
           <h3 class="form__title">{title}</h3>
           <p class="form__sub">Los campos marcados con <span aria-hidden="true">*</span><span class="sr-only">asterisco</span> son obligatorios.</p>
@@ -613,10 +625,10 @@ def contact_form(prefix="c", title="Solicita tu servicio"):
             {field(prefix + "-email", "Correo electrónico", "email", "email", False, "tucorreo@ejemplo.com", "Revisa el formato del correo.", autocomplete="email")}
             {field(prefix + "-servicio", "Tipo de servicio", "servicio", "select", True, error="Selecciona el tipo de servicio.", options=form_options())}
           </div>
-          {field(prefix + "-mensaje", "Mensaje", "mensaje", "textarea", True, "Cuéntanos qué necesitas: el problema de tu equipo, el curso que te interesa o la idea de tu proyecto.", "Cuéntanos brevemente qué necesitas.")}
+          {field(prefix + "-mensaje", "Mensaje", "mensaje", "textarea", True, sc("formulario_ayuda", "Cuéntanos qué necesitas: el problema de tu equipo, el curso que te interesa o la idea de tu proyecto."), "Cuéntanos brevemente qué necesitas.")}
           {HONEYPOT.format(p=prefix)}
           <button type="submit" class="btn btn--primary btn--lg btn--block form__submit">
-            <span class="form__submit-text">Enviar solicitud</span>
+            <span class="form__submit-text">{sc("boton_enviar", "Enviar solicitud")}</span>
             {icon("send")}
           </button>
           <p class="form__status" role="status" aria-live="polite"></p>
@@ -632,14 +644,15 @@ def contact_list():
           </ul>'''
 
 
-def contact_section(sec_id="contacto", heading_tag="h2", title="Hablemos de lo que necesitas."):
+def contact_section(sec_id="contacto", heading_tag="h2", title=None):
+    title = e(title) if title else sc("titulo", "Hablemos de lo que necesitas.")
     return f'''    <section class="section section--soft contact" id="{sec_id}" aria-labelledby="{sec_id}-title">
       <div class="container contact__inner">
         <aside class="contact__info reveal">
-          <p class="eyebrow eyebrow--dark">Contacto</p>
+          <p class="eyebrow eyebrow--dark">{sc("etiqueta", "Contacto")}</p>
           <{heading_tag} class="contact__title" id="{sec_id}-title">{title}</{heading_tag}>
-          <p class="contact__lead">Escríbenos por WhatsApp o completa el formulario. Te responderemos lo antes posible con una orientación clara.</p>
-          <a href="contacto.html" class="btn btn--whatsapp btn--lg btn--block" data-wa>{icon("whatsapp")} Escribir por WhatsApp</a>
+          <p class="contact__lead">{sc("texto", "Escríbenos por WhatsApp o completa el formulario. Te responderemos lo antes posible con una orientación clara.")}</p>
+          <a href="contacto.html" class="btn btn--whatsapp btn--lg btn--block" data-wa>{icon("whatsapp")} {sc("boton_whatsapp", "Escribir por WhatsApp")}</a>
           {contact_list()}
           <div class="socials" aria-label="Redes sociales">
           {SOCIALS}

@@ -1,10 +1,21 @@
-// Solo se usa si publicas con Cloudflare Workers (opción alternativa).
-// Con Cloudflare Pages este archivo se ignora.
+// Configuración de Cloudflare Workers para TechRevive.
+// - Publica la carpeta _site (el sitio que genera build.py).
+// - worker/index.js atiende el panel de administración (/panel y /api).
 {
   "name": "techrevive",
+  "main": "worker/index.js",
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./_site",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/aula", "/aula/*"]
+  },
+  "vars": {
+    // Tu repositorio de GitHub (usuario/repositorio) y la rama.
+    "GITHUB_REPO": "techrevivegt/techrevivegt",
+    "GITHUB_BRANCH": "main"
   }
+  // Los secretos PANEL_PASSWORD y GITHUB_TOKEN se agregan en Cloudflare:
+  // tu Worker → Settings → Variables and Secrets → Add → tipo "Secret".
 }

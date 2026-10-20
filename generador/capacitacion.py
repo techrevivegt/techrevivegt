@@ -190,6 +190,7 @@ def build_aula():
           <div>
             <h2>¿Ya tienes tu usuario?</h2>
             <p data-aula-pending>Estamos preparando nuestra aula virtual. Inscríbete y te avisaremos en cuanto esté disponible.</p>
+            <p data-aula-ready hidden>Entra con el usuario y la contraseña que te enviamos. ¿Los olvidaste? <a href="contacto.html" data-wa>Escríbenos</a> y te ayudamos.</p>
           </div>
           <a href="#acceso" class="btn btn--primary btn--lg" data-aula>{icon("monitor")} <span data-aula-label>Ingresar al aula virtual</span></a>
         </div>
