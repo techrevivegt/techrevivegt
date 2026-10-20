@@ -1,0 +1,6 @@
+# Carpeta generada automáticamente por build.py (Cloudflare la crea en cada publicación)
+_site/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

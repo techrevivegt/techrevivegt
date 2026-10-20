@@ -1,0 +1,7 @@
+<svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <defs><linearGradient id="lg-logo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F8DFF"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient></defs>
+          <rect width="40" height="40" rx="11" fill="url(#lg-logo)"/>
+          <g transform="translate(8 8)" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M6.5 12h2.2l1.6-3.2 3 6.4 1.6-3.2h2.6" stroke-width="1.9"/>
+          </g>
+        </svg>

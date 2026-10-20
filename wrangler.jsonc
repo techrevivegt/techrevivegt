@@ -1,0 +1,10 @@
+// Solo se usa si publicas con Cloudflare Workers (opción alternativa).
+// Con Cloudflare Pages este archivo se ignora.
+{
+  "name": "techrevive",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./_site",
+    "not_found_handling": "404-page"
+  }
+}

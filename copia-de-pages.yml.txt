@@ -1,0 +1,745 @@
+# =========================================================================
+#  TECHREVIVE · Configuración del panel de administración (Pages CMS)
+#  Entra en https://app.pagescms.org con tu cuenta de GitHub.
+#  Este archivo define qué se puede editar en el panel. No necesitas tocarlo.
+# =========================================================================
+
+media:
+  input: src/img
+  output: /img
+  categories: [image]
+  rename: safe
+
+components:
+  icono:
+    type: select
+    label: Ícono
+    options:
+      values:
+        - { name: laptop, label: "💻 Laptop / computadora" }
+        - { name: monitor, label: "🖥️ Monitor / clases virtuales" }
+        - { name: wrench, label: "🔧 Herramienta / reparación" }
+        - { name: cpu, label: "🔲 Procesador / componentes" }
+        - { name: thermo, label: "🌡️ Temperatura" }
+        - { name: refresh, label: "🔄 Actualizar / limpieza" }
+        - { name: zap, label: "⚡ Rapidez / optimización" }
+        - { name: database, label: "🗄️ Datos / respaldo" }
+        - { name: cloud, label: "☁️ Nube" }
+        - { name: printer, label: "🖨️ Impresora" }
+        - { name: wifi, label: "📶 Red / internet" }
+        - { name: phone, label: "📱 Celular / app" }
+        - { name: lock, label: "🔒 Seguridad / contraseña" }
+        - { name: shield, label: "🛡️ Protección / garantía" }
+        - { name: alert, label: "⚠️ Alerta / aviso" }
+        - { name: settings, label: "⚙️ Configuración" }
+        - { name: cap, label: "🎓 Capacitación" }
+        - { name: book, label: "📖 Libro / aprender" }
+        - { name: school, label: "🏫 Escuela / estudiantes" }
+        - { name: play, label: "▶️ Video / clase en línea" }
+        - { name: download, label: "⬇️ Descarga / material" }
+        - { name: clipboard, label: "📋 Lista / propuesta / inscripción" }
+        - { name: file, label: "📄 Documento / ofimática" }
+        - { name: layout, label: "🖥️ Página web" }
+        - { name: code, label: "</> Código / desarrollo" }
+        - { name: layers, label: "🧩 Aplicaciones / sistemas" }
+        - { name: globe, label: "🌐 Internet / digital" }
+        - { name: cart, label: "🛒 Tienda en línea" }
+        - { name: camera, label: "📷 Fotografía" }
+        - { name: image, label: "🖼️ Imagen / galería" }
+        - { name: headset, label: "🎧 Soporte / atención" }
+        - { name: message, label: "💬 Mensaje / claridad" }
+        - { name: mail, label: "✉️ Correo" }
+        - { name: whatsapp, label: "🟢 WhatsApp" }
+        - { name: share, label: "🔗 Compartir / redes" }
+        - { name: news, label: "📰 Noticias" }
+        - { name: calendar, label: "📅 Calendario / cita" }
+        - { name: clock, label: "🕒 Horario / tiempo" }
+        - { name: pin, label: "📍 Ubicación" }
+        - { name: map, label: "🗺️ Mapa" }
+        - { name: home, label: "🏠 Casa / inicio" }
+        - { name: building, label: "🏢 Empresa / instalaciones" }
+        - { name: briefcase, label: "💼 Negocios / trabajo" }
+        - { name: trend, label: "📈 Crecimiento" }
+        - { name: rocket, label: "🚀 Emprendimiento / lanzamiento" }
+        - { name: dollar, label: "💲 Ventas / precios" }
+        - { name: handshake, label: "🤝 Alianza / acuerdo" }
+        - { name: users, label: "👥 Personas / equipo" }
+        - { name: user, label: "👤 Persona" }
+        - { name: heart, label: "❤️ Compromiso" }
+        - { name: star, label: "⭐ Destacado" }
+        - { name: award, label: "🏅 Experiencia / calidad" }
+        - { name: bulb, label: "💡 Idea / innovación" }
+        - { name: target, label: "🎯 Objetivo / misión" }
+        - { name: eye, label: "👁️ Visión" }
+        - { name: search, label: "🔍 Buscar / diagnóstico" }
+        - { name: package, label: "📦 Entrega" }
+        - { name: buoy, label: "🛟 Ayuda / acompañamiento" }
+        - { name: check, label: "✅ Listo / completado" }
+        - { name: help, label: "❓ Pregunta / ayuda" }
+        - { name: grid, label: "🔳 Cuadrícula / todos" }
+        - { name: sitemap, label: "🧭 Mapa del sitio" }
+        - { name: facebook, label: "Facebook" }
+        - { name: instagram, label: "Instagram" }
+        - { name: tiktok, label: "TikTok" }
+        - { name: linkedin, label: "LinkedIn" }
+
+  mostrar:
+    type: boolean
+    label: Mostrar esta sección
+    default: true
+
+  boton:
+    type: object
+    label: Botón
+    fields:
+      - name: texto
+        label: Texto del botón
+        type: string
+        description: "Déjalo vacío para ocultar el botón."
+      - name: enlace
+        label: ¿A dónde lleva?
+        type: string
+        description: "Escribe una página (ej. servicios.html, cursos.html, contacto.html#formulario), una sección de la portada (#contacto, #servicios), la palabra whatsapp para abrir WhatsApp, o pega un enlace completo (https://…)."
+
+  tarjeta:
+    type: object
+    label: Tarjeta
+    fields:
+      - { name: icono, component: icono }
+      - { name: titulo, label: Título, type: string, required: true }
+      - { name: texto, label: Texto, type: text }
+
+  pregunta:
+    type: object
+    label: Pregunta
+    fields:
+      - { name: pregunta, label: Pregunta, type: string, required: true }
+      - { name: respuesta, label: Respuesta, type: text }
+
+content:
+  # =======================================================================
+  - name: configuracion
+    label: "⚙️ Configuración general"
+    type: file
+    path: content/configuracion.json
+    format: json
+    fields:
+      - name: contacto
+        label: "📞 Datos de contacto"
+        type: object
+        description: "Se actualizan en todas las páginas, el pie de página y el botón flotante de WhatsApp."
+        fields:
+          - name: whatsapp
+            label: Número de WhatsApp (para los enlaces)
+            type: string
+            required: true
+            pattern:
+              regex: "^[0-9]{8,15}$"
+              message: "Solo números, con el código de país y sin + ni espacios. Ejemplo: 50212345678"
+            description: "Solo números, con el código de país (502) y sin espacios. Ejemplo: 50212345678"
+          - name: whatsapp_visible
+            label: Número de WhatsApp (como se muestra)
+            type: string
+            description: "Ejemplo: +502 1234-5678"
+          - name: mensaje_whatsapp
+            label: Mensaje que aparece escrito al abrir WhatsApp
+            type: text
+          - { name: correo, label: Correo electrónico, type: string }
+          - name: direccion
+            label: Dirección
+            type: string
+            description: "Si no tienes local, puedes escribir: Servicio remoto y a domicilio."
+          - name: busqueda_mapa
+            label: Búsqueda para el mapa
+            type: string
+            description: "Lo que se busca en Google Maps para la página Ubicación (dirección exacta o nombre del negocio en Maps)."
+          - { name: horario, label: Horario de atención, type: string }
+      - name: redes
+        label: "📱 Redes sociales"
+        type: object
+        description: "Pega el enlace completo de cada perfil (https://…). Si lo dejas vacío, el ícono no lleva a ningún lado."
+        fields:
+          - { name: facebook, label: Facebook, type: string }
+          - { name: instagram, label: Instagram, type: string }
+          - { name: tiktok, label: TikTok, type: string }
+          - { name: linkedin, label: LinkedIn, type: string }
+      - name: aula_virtual
+        label: "💻 Enlace del aula virtual"
+        type: string
+        description: "Google Classroom, Moodle, etc. Si lo dejas vacío, el botón del aula virtual muestra «Próximamente»."
+      - name: panel
+        label: "🔐 Acceso al panel (página /panel de tu sitio)"
+        type: object
+        description: "Con estos datos, el botón «Entrar al panel» de tusitio/panel abre directamente tu repositorio."
+        fields:
+          - name: usuario_github
+            label: Tu usuario de GitHub
+            type: string
+            description: "El nombre de usuario con el que entras a GitHub (ej. techrevive-gt). Si lo dejas vacío, el botón abre la página de inicio de Pages CMS."
+          - { name: repositorio, label: Nombre del repositorio, type: string, description: "Normalmente: techrevive" }
+          - { name: rama, label: Rama, type: string, description: "Normalmente: main" }
+      - name: formulario
+        label: "📨 Formularios"
+        type: object
+        fields:
+          - name: opciones_servicio
+            label: Opciones de «Tipo de servicio» en el formulario de contacto
+            type: string
+            list: true
+          - name: endpoint
+            label: Enlace de Formspree (opcional)
+            type: string
+            description: "Vacío: los formularios abren WhatsApp con la solicitud lista. Para recibirlas por correo, crea un formulario gratis en formspree.io y pega aquí su enlace (ej. https://formspree.io/f/abcd)."
+      - name: sitio
+        label: "🌐 Sitio"
+        type: object
+        fields:
+          - name: url
+            label: Dirección del sitio
+            type: string
+            description: "Ejemplo: https://techrevive.pages.dev (o tu dominio propio). Se usa para Google y al compartir en redes."
+          - { name: eslogan, label: Eslogan (pie de página), type: string }
+
+  # =======================================================================
+  - name: paginas
+    label: "📄 Páginas"
+    type: group
+    items:
+      # ---------------------------------------------------------------------
+      - name: inicio
+        label: "🏠 Inicio"
+        type: file
+        path: content/inicio.json
+        format: json
+        fields:
+          - name: portada
+            label: "1 · Portada"
+            type: object
+            fields:
+              - { name: etiqueta, label: Etiqueta superior, type: string }
+              - { name: titulo, label: Título, type: string, required: true }
+              - { name: titulo_resaltado, label: Parte del título en azul, type: string }
+              - { name: texto, label: Texto, type: text }
+              - { name: boton_principal, label: Botón principal, component: boton }
+              - { name: boton_secundario, label: Botón secundario, component: boton }
+              - { name: frases, label: Frases de marca, type: string, list: true }
+              - { name: imagen, label: Imagen, type: image }
+              - { name: imagen_descripcion, label: Descripción de la imagen (para accesibilidad), type: string }
+              - name: tarjetas_flotantes
+                label: Tarjetas flotantes sobre la imagen (máximo 3)
+                type: object
+                list:
+                  max: 3
+                  collapsible: { collapsed: true, summary: "{titulo}" }
+                fields:
+                  - { name: icono, component: icono }
+                  - { name: titulo, label: Título, type: string }
+                  - { name: subtitulo, label: Subtítulo, type: string }
+          - name: valores
+            label: "2 · Barra de valores (Aprende, Repara, Crea, Crece)"
+            component: tarjeta
+            list:
+              max: 4
+              collapsible: { collapsed: true, summary: "{titulo}" }
+          - name: servicios
+            label: "3 · Servicios (encabezado)"
+            type: object
+            description: "Las tarjetas de servicios se editan en Páginas → Servicios."
+            fields:
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - { name: publico, label: A quién servimos, type: string, list: true }
+          - name: por_que
+            label: "4 · ¿Por qué TechRevive? (también aparece en ¿Quiénes somos?)"
+            type: object
+            fields:
+              - { name: mostrar, component: mostrar }
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - { name: formula, label: Fórmula (Tecnología + Conocimiento + Soluciones), type: string, list: true }
+              - { name: cita, label: Frase destacada, type: text }
+              - name: ventajas
+                label: Ventajas
+                component: tarjeta
+                list:
+                  collapsible: { collapsed: true, summary: "{titulo}" }
+          - name: capacitacion
+            label: "5 · Tecnología para todos"
+            type: object
+            description: "La lista de cursos se toma automáticamente de Capacitación → Cursos."
+            fields:
+              - { name: mostrar, component: mostrar }
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - name: imagenes
+                label: Imágenes del collage (1 a 3; la primera es la grande)
+                type: object
+                list:
+                  max: 3
+                  collapsible: { collapsed: true, summary: "{leyenda}" }
+                fields:
+                  - { name: imagen, label: Imagen, type: image }
+                  - { name: descripcion, label: Descripción de la imagen, type: string }
+                  - { name: leyenda, label: Texto sobre la imagen, type: string }
+                  - { name: icono, component: icono }
+              - { name: niveles, label: Niveles, type: string, list: true }
+              - { name: cursos_titulo, label: Título de la lista de cursos, type: string }
+          - name: negocios
+            label: "6 · Emprendedores y negocios"
+            type: object
+            fields:
+              - { name: mostrar, component: mostrar }
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - { name: etiquetas, label: Soluciones (etiquetas), type: string, list: true }
+              - { name: boton, label: Botón, component: boton }
+              - name: pasos
+                label: Pasos
+                component: tarjeta
+                list:
+                  collapsible: { collapsed: true, summary: "{titulo}" }
+          - name: proyectos
+            label: "7 · Proyectos"
+            type: object
+            fields:
+              - { name: mostrar, component: mostrar }
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - name: lista
+                label: Proyectos
+                type: object
+                list:
+                  collapsible: { collapsed: true, summary: "{titulo}" }
+                fields:
+                  - { name: titulo, label: Título del proyecto, type: string, required: true }
+                  - name: categoria
+                    label: Categoría
+                    type: select
+                    options:
+                      values: [Reparación, Sitios web, Aplicaciones, Capacitación, Soluciones empresariales]
+                  - { name: descripcion, label: Descripción, type: text }
+                  - { name: imagen, label: Imagen, type: image }
+                  - { name: imagen_descripcion, label: Descripción de la imagen, type: string }
+                  - name: demostrativo
+                    label: Es un proyecto demostrativo (muestra la etiqueta «Proyecto demostrativo»)
+                    type: boolean
+                    default: false
+              - name: tarjeta_final
+                label: Tarjeta final «Tu proyecto puede ser el siguiente»
+                type: object
+                fields:
+                  - { name: mostrar, component: mostrar }
+                  - { name: titulo, label: Título, type: string }
+                  - { name: texto, label: Texto, type: string }
+                  - { name: enlace_texto, label: Texto del enlace, type: string }
+          - name: testimonios
+            label: "8 · Testimonios"
+            type: object
+            fields:
+              - { name: mostrar, component: mostrar }
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - name: lista
+                label: Testimonios
+                type: object
+                description: "Publica solo opiniones reales y con permiso del cliente."
+                list:
+                  collapsible: { collapsed: true, summary: "{nombre}" }
+                fields:
+                  - { name: nombre, label: Nombre, type: string, required: true }
+                  - { name: servicio, label: Servicio recibido, type: string }
+                  - { name: testimonio, label: Testimonio, type: text, required: true }
+                  - { name: foto, label: Fotografía (opcional), type: image }
+                  - name: es_ejemplo
+                    label: Es un texto de ejemplo (se muestra atenuado)
+                    type: boolean
+                    default: false
+          - name: blog
+            label: "9 · Artículos del blog"
+            type: object
+            description: "Muestra los artículos más recientes del blog."
+            fields:
+              - { name: mostrar, component: mostrar }
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - name: cantidad
+                label: Cantidad de artículos a mostrar
+                type: number
+                options: { min: 1, max: 9 }
+          - name: llamado
+            label: "10 · Llamado a la acción"
+            type: object
+            fields:
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+
+      # ---------------------------------------------------------------------
+      - name: nosotros
+        label: "👋 ¿Quiénes somos?"
+        type: file
+        path: content/nosotros.json
+        format: json
+        fields:
+          - name: portada
+            label: Portada
+            type: object
+            fields:
+              - { name: titulo, label: Título, type: string, required: true }
+              - { name: titulo_resaltado, label: Parte del título en azul, type: string }
+              - { name: texto, label: Texto, type: text }
+              - { name: imagen, label: Imagen, type: image }
+              - { name: imagen_descripcion, label: Descripción de la imagen, type: string }
+          - name: historia
+            label: Nuestra historia
+            type: object
+            fields:
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: parrafos, label: Párrafos, type: text, list: true }
+              - { name: puntos, label: Puntos destacados, type: string, list: true }
+              - { name: imagen, label: Imagen, type: image }
+              - { name: imagen_descripcion, label: Descripción de la imagen, type: string }
+          - { name: mision, label: Misión, type: text }
+          - { name: vision, label: Visión, type: text }
+          - name: valores
+            label: Nuestros valores
+            type: object
+            fields:
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - name: lista
+                label: Valores
+                component: tarjeta
+                list:
+                  collapsible: { collapsed: true, summary: "{titulo}" }
+          - name: audiencia
+            label: A quién servimos
+            type: object
+            fields:
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+              - name: lista
+                label: Tipos de cliente
+                type: object
+                list:
+                  collapsible: { collapsed: true, summary: "{titulo}" }
+                fields:
+                  - { name: icono, component: icono }
+                  - { name: titulo, label: Título, type: string, required: true }
+                  - { name: texto, label: Texto, type: text }
+                  - { name: enlace, label: Página a la que lleva (ej. cursos.html), type: string }
+          - name: llamado
+            label: Llamado a la acción
+            type: object
+            fields:
+              - { name: titulo, label: Título, type: string }
+              - { name: texto, label: Texto, type: text }
+
+      # ---------------------------------------------------------------------
+      - name: servicios
+        label: "🛠️ Servicios"
+        type: file
+        path: content/servicios.json
+        format: json
+        fields:
+          - name: portada
+            label: Portada de la página Servicios
+            type: object
+            fields:
+              - { name: titulo, label: Título, type: string }
+              - { name: titulo_resaltado, label: Parte del título en azul, type: string }
+              - { name: texto, label: Texto, type: text }
+          - name: lista
+            label: Servicios (cada uno tiene su propia página y aparece en el menú)
+            type: object
+            list:
+              collapsible: { collapsed: true, summary: "{titulo}" }
+            fields:
+              - name: pagina
+                label: Nombre de la página
+                type: string
+                required: true
+                pattern:
+                  regex: "^[a-z0-9-]+$"
+                  message: "Solo minúsculas, números y guiones. Ejemplo: diseno-grafico"
+                description: "Será la dirección de la página: reparacion → reparacion.html. Solo minúsculas, números y guiones. Si lo cambias, los enlaces antiguos dejan de funcionar."
+              - { name: titulo, label: Título de la tarjeta, type: string, required: true }
+              - { name: nombre_corto, label: Nombre en el menú, type: string }
+              - { name: icono, component: icono }
+              - { name: descripcion_menu, label: Descripción corta (menú desplegable), type: string }
+              - { name: descripcion, label: Descripción (tarjeta), type: text }
+              - { name: incluye, label: Qué incluye (lista corta de la tarjeta), type: string, list: true }
+              - { name: boton_texto, label: Texto del botón, type: string }
+              - name: opcion_formulario
+                label: Opción del formulario que se preselecciona
+                type: string
+                description: "Ej. Reparación, Página web, Aplicación, Soporte técnico."
+              - name: detalle
+                label: Página del servicio
+                type: object
+                fields:
+                  - { name: titulo, label: Título de la portada, type: string }
+                  - { name: titulo_resaltado, label: Parte del título en azul, type: string }
+                  - { name: texto, label: Texto de la portada, type: text }
+                  - { name: imagen, label: Imagen de la portada, type: image }
+                  - { name: imagen_descripcion, label: Descripción de la imagen, type: string }
+                  - { name: intro_titulo, label: Introducción · título, type: string }
+                  - { name: intro_parrafos, label: Introducción · párrafos, type: text, list: true }
+                  - { name: intro_imagen, label: Introducción · imagen, type: image }
+                  - { name: intro_imagen_descripcion, label: Introducción · descripción de la imagen, type: string }
+                  - { name: incluye_titulo, label: «Qué incluye» · título, type: string }
+                  - name: incluye_detalle
+                    label: «Qué incluye» · tarjetas
+                    component: tarjeta
+                    list:
+                      collapsible: { collapsed: true, summary: "{titulo}" }
+                  - { name: extra_titulo, label: «Para tener en cuenta» · título, type: string }
+                  - name: extra
+                    label: «Para tener en cuenta» · tarjetas
+                    component: tarjeta
+                    list:
+                      collapsible: { collapsed: true, summary: "{titulo}" }
+                  - name: preguntas
+                    label: Preguntas frecuentes del servicio
+                    component: pregunta
+                    list:
+                      collapsible: { collapsed: true, summary: "{pregunta}" }
+                  - { name: seo_titulo, label: Título para Google, type: string }
+                  - { name: seo_descripcion, label: Descripción para Google, type: text }
+
+      # ---------------------------------------------------------------------
+      - name: proceso
+        label: "🔄 Nuestro proceso"
+        type: file
+        path: content/proceso.json
+        format: json
+        fields:
+          - { name: etiqueta, label: Etiqueta, type: string }
+          - { name: titulo, label: Título, type: string }
+          - { name: texto, label: Texto, type: text }
+          - name: pasos
+            label: Pasos
+            component: tarjeta
+            description: "Se muestra en Inicio, Servicios y en la página de cada servicio."
+            list:
+              collapsible: { collapsed: true, summary: "{titulo}" }
+
+      # ---------------------------------------------------------------------
+      - name: preguntas
+        label: "❓ Preguntas frecuentes"
+        type: file
+        path: content/preguntas.json
+        format: json
+        fields:
+          - name: grupos
+            label: Categorías
+            type: object
+            list:
+              collapsible: { collapsed: true, summary: "{titulo}" }
+            fields:
+              - { name: titulo, label: Nombre de la categoría, type: string, required: true }
+              - { name: icono, component: icono }
+              - name: preguntas
+                label: Preguntas
+                type: object
+                list:
+                  collapsible: { collapsed: true, summary: "{pregunta}" }
+                fields:
+                  - { name: pregunta, label: Pregunta, type: string, required: true }
+                  - name: respuesta
+                    label: Respuesta
+                    type: rich-text
+                    options: { format: html, media: false }
+
+  # =======================================================================
+  - name: grupo_capacitacion
+    label: "🎓 Capacitación"
+    type: group
+    items:
+      - name: cursos
+        label: "📚 Cursos"
+        type: file
+        path: content/cursos.json
+        format: json
+        list: true
+        fields:
+          - { name: titulo, label: Nombre del curso, type: string, required: true }
+          - name: categoria
+            label: Categoría (para los filtros)
+            type: select
+            options:
+              values: [Computación, Técnico, Digital, Desarrollo profesional, A tu medida]
+          - { name: icono, component: icono }
+          - { name: descripcion, label: Descripción, type: text }
+          - name: nivel
+            label: Nivel
+            type: string
+            description: "Ej. Principiante, Principiante · Intermedio, Todos los niveles."
+          - name: modalidad
+            label: Modalidad
+            type: string
+            description: "Ej. Presencial · Virtual"
+          - { name: temas, label: Temas, type: string, list: true }
+
+      - name: capacitacion
+        label: "🧑‍🏫 Página de Capacitación"
+        type: file
+        path: content/capacitacion.json
+        format: json
+        fields:
+          - name: tarjeta_servicio
+            label: Tarjeta en la lista de servicios
+            type: object
+            fields:
+              - { name: mostrar, component: mostrar }
+              - { name: titulo, label: Título, type: string }
+              - { name: icono, component: icono }
+              - { name: descripcion, label: Descripción, type: text }
+              - { name: boton_texto, label: Texto del botón, type: string }
+          - name: portada
+            label: Portada
+            type: object
+            fields:
+              - { name: titulo, label: Título, type: string }
+              - { name: titulo_resaltado, label: Parte del título en azul, type: string }
+              - { name: texto, label: Texto, type: text }
+              - { name: imagen, label: Imagen, type: image }
+              - { name: imagen_descripcion, label: Descripción de la imagen, type: string }
+          - name: enfoque
+            label: Nuestra forma de enseñar
+            type: object
+            fields:
+              - { name: etiqueta, label: Etiqueta, type: string }
+              - { name: titulo, label: Título, type: string }
+              - { name: parrafos, label: Párrafos, type: text, list: true }
+              - { name: imagen, label: Imagen, type: image }
+              - { name: imagen_descripcion, label: Descripción de la imagen, type: string }
+          - name: modalidades
+            label: Modalidades (también son las opciones del formulario de inscripción)
+            component: tarjeta
+            list:
+              collapsible: { collapsed: true, summary: "{titulo}" }
+          - name: para_quien
+            label: ¿Para quién?
+            component: tarjeta
+            list:
+              collapsible: { collapsed: true, summary: "{titulo}" }
+          - name: pasos
+            label: Cómo inscribirte (pasos)
+            type: object
+            list:
+              collapsible: { collapsed: true, summary: "{titulo}" }
+            fields:
+              - { name: titulo, label: Título, type: string, required: true }
+              - { name: texto, label: Texto, type: text }
+          - name: aviso_cursos
+            label: Aviso en la página de cursos (horarios y costos)
+            type: text
+          - name: preguntas_cursos
+            label: Preguntas frecuentes de la página de cursos
+            component: pregunta
+            list:
+              collapsible: { collapsed: true, summary: "{pregunta}" }
+
+  # =======================================================================
+  - name: blog
+    label: "📝 Blog"
+    type: collection
+    path: content/blog
+    format: json
+    filename: "{primary}.json"
+    view:
+      fields: [titulo, categoria, fecha, publicado]
+      primary: titulo
+      sort: [fecha, titulo]
+      default: { sort: fecha, order: desc }
+    fields:
+      - { name: titulo, label: Título, type: string, required: true }
+      - name: categoria
+        label: Categoría
+        type: select
+        options:
+          values: [Reparación, Tutoriales, Negocios, Seguridad, Capacitación]
+      - name: fecha
+        label: Fecha de publicación
+        type: date
+        options: { format: "yyyy-MM-dd" }
+      - name: publicado
+        label: Publicado
+        type: boolean
+        default: true
+        description: "Desactívalo para guardar el artículo como borrador (no aparece en el sitio)."
+      - { name: resumen, label: Resumen (aparece en las tarjetas y en Google), type: text }
+      - { name: imagen, label: Imagen de portada, type: image }
+      - { name: imagen_descripcion, label: Descripción de la imagen, type: string }
+      - name: contenido
+        label: Contenido del artículo
+        type: rich-text
+        options: { format: html }
+        description: "El primer párrafo se muestra más grande. Usa «Cita» para los consejos destacados y «Encabezado 2» para los subtítulos."
+      - { name: llamado_titulo, label: Recuadro final · título, type: string }
+      - { name: llamado_texto, label: Recuadro final · texto, type: text }
+      - name: servicio_relacionado
+        label: Recuadro final · servicio que se preselecciona en el formulario
+        type: string
+        description: "Ej. Reparación, Página web, Soporte técnico."
+
+  # =======================================================================
+  - name: prensa
+    label: "📰 Sala de prensa"
+    type: group
+    items:
+      - name: novedades
+        label: "📣 Novedades y comunicados"
+        type: file
+        path: content/novedades.json
+        format: json
+        list: true
+        fields:
+          - { name: titulo, label: Título, type: string, required: true }
+          - name: categoria
+            label: Categoría
+            type: select
+            options:
+              values: [Comunicado, Capacitación, Servicios, Actividades, Promoción]
+          - name: fecha
+            label: Fecha
+            type: date
+            options: { format: "yyyy-MM-dd" }
+            description: "Déjala vacía para mostrar «Próximamente». La primera publicación de la lista se destaca."
+          - { name: texto, label: Texto, type: text }
+          - { name: boton_texto, label: Texto del enlace (opcional), type: string }
+          - name: boton_enlace
+            label: ¿A dónde lleva el enlace?
+            type: string
+            description: "Una página (ej. inscripcion.html), la palabra whatsapp o un enlace completo (https://…)."
+          - name: ejemplo
+            label: Es una publicación de ejemplo (muestra la etiqueta «Ejemplo»)
+            type: boolean
+            default: false
+
+      - name: galeria
+        label: "🖼️ Galería de fotos"
+        type: file
+        path: content/galeria.json
+        format: json
+        list: true
+        fields:
+          - { name: imagen, label: Foto, type: image, required: true }
+          - { name: titulo, label: Descripción de la foto, type: string, required: true }
+          - name: categoria
+            label: Categoría (para los filtros)
+            type: select
+            options:
+              values: [Reparación y soporte, Capacitación, Desarrollo digital, Instalaciones]
+          - name: demostrativa
+            label: Es una imagen demostrativa (muestra la etiqueta «Imagen demostrativa»)
+            type: boolean
+            default: false
