@@ -1,13 +1,26 @@
 {
+  "sitio": {
+    "url": "https://techrevive.techrevive-gt.workers.dev",
+    "eslogan": "Tecnología que transforma, soluciones que impulsan.",
+    "logo": "/img/logo-icono.png",
+    "favicon": "/img/favicon.png"
+  },
   "contacto": {
-    "whatsapp": "50249091826",
-    "whatsapp_visible": "+502 49091826",
+    "whatsapp": "50200000000",
+    "whatsapp_visible": "+502 0000-0000",
     "mensaje_whatsapp": "Hola TechRevive, me gustaría recibir información sobre sus servicios.",
-    "correo": "techrevive.gt@gmail.com",
-    "direccion": "Guatemala",
+    "correo": "contacto@tudominio.com",
+    "direccion": "Tu dirección aquí, Guatemala",
     "busqueda_mapa": "Ciudad de Guatemala, Guatemala",
     "horario": "Lun a vie: 8:00 – 18:00 · Sáb: 8:00 – 13:00"
   },
+  "redes": {
+    "facebook": "",
+    "instagram": "",
+    "tiktok": "",
+    "linkedin": ""
+  },
+  "aula_virtual": "",
   "panel": {
     "usuario_github": "techrevivegt",
     "repositorio": "techrevivegt",
@@ -22,10 +35,7 @@
       "Aplicación",
       "Soporte técnico",
       "Otro"
-    ]
-  },
-  "sitio": {
-    "url": "https://techrevive.techrevive-gt.workers.dev",
-    "eslogan": "Tecnología que transforma, soluciones que impulsan."
+    ],
+    "endpoint": ""
   }
 }
