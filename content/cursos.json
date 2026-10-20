@@ -1,0 +1,114 @@
+[
+  {
+    "titulo": "Computación básica",
+    "categoria": "Computación",
+    "icono": "monitor",
+    "descripcion": "Da tus primeros pasos con la computadora con confianza, desde cero y a tu ritmo.",
+    "nivel": "Principiante",
+    "modalidad": "Presencial · Virtual",
+    "temas": [
+      "Uso del sistema operativo",
+      "Archivos y carpetas",
+      "Internet y correo electrónico",
+      "Seguridad básica en línea"
+    ]
+  },
+  {
+    "titulo": "Ofimática",
+    "categoria": "Computación",
+    "icono": "file",
+    "descripcion": "Domina las herramientas que más se usan en el estudio y en el trabajo.",
+    "nivel": "Principiante · Intermedio",
+    "modalidad": "Presencial · Virtual",
+    "temas": [
+      "Documentos con Word",
+      "Hojas de cálculo con Excel",
+      "Presentaciones con PowerPoint",
+      "Herramientas en la nube"
+    ]
+  },
+  {
+    "titulo": "Reparación de computadoras",
+    "categoria": "Técnico",
+    "icono": "wrench",
+    "descripcion": "Aprende a diagnosticar, mantener y reparar equipos con práctica real.",
+    "nivel": "Intermedio",
+    "modalidad": "Presencial",
+    "temas": [
+      "Componentes de una computadora",
+      "Diagnóstico de fallas",
+      "Mantenimiento preventivo",
+      "Instalación de sistemas"
+    ]
+  },
+  {
+    "titulo": "Herramientas digitales",
+    "categoria": "Digital",
+    "icono": "cloud",
+    "descripcion": "Trabaja, estudia y colabora en línea de forma más productiva.",
+    "nivel": "Principiante",
+    "modalidad": "Presencial · Virtual",
+    "temas": [
+      "Correo y calendario",
+      "Almacenamiento en la nube",
+      "Videollamadas y trabajo remoto",
+      "Herramientas de inteligencia artificial"
+    ]
+  },
+  {
+    "titulo": "Fotografía",
+    "categoria": "Digital",
+    "icono": "camera",
+    "descripcion": "Toma mejores fotos con tu celular o cámara para tus redes y tu negocio.",
+    "nivel": "Principiante",
+    "modalidad": "Presencial",
+    "temas": [
+      "Composición e iluminación",
+      "Fotografía con celular",
+      "Edición básica",
+      "Fotos de producto para redes"
+    ]
+  },
+  {
+    "titulo": "Emprendimiento",
+    "categoria": "Desarrollo profesional",
+    "icono": "rocket",
+    "descripcion": "Convierte tu idea en un negocio y llévalo al mundo digital.",
+    "nivel": "Todos los niveles",
+    "modalidad": "Presencial · Virtual",
+    "temas": [
+      "Modelo de negocio",
+      "Presencia digital",
+      "Ventas por redes y WhatsApp",
+      "Finanzas básicas"
+    ]
+  },
+  {
+    "titulo": "Empleabilidad",
+    "categoria": "Desarrollo profesional",
+    "icono": "briefcase",
+    "descripcion": "Prepárate para buscar empleo y destacar en un mundo cada vez más digital.",
+    "nivel": "Todos los niveles",
+    "modalidad": "Presencial · Virtual",
+    "temas": [
+      "Currículum efectivo",
+      "Preparación para entrevistas",
+      "Perfil profesional en LinkedIn",
+      "Habilidades digitales para el trabajo"
+    ]
+  },
+  {
+    "titulo": "Capacitación personalizada",
+    "categoria": "A tu medida",
+    "icono": "settings",
+    "descripcion": "Elige el tema, el horario y el ritmo. Para personas, equipos de trabajo e instituciones.",
+    "nivel": "Según tu nivel",
+    "modalidad": "Presencial · Virtual",
+    "temas": [
+      "Temas a elección",
+      "Horarios flexibles",
+      "Individual o grupal",
+      "Para empresas e instituciones"
+    ]
+  }
+]

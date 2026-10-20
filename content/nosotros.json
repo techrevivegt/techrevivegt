@@ -1,0 +1,109 @@
+{
+  "portada": {
+    "titulo": "Tecnología, conocimiento y soluciones",
+    "titulo_resaltado": "para todos.",
+    "texto": "TechRevive es una empresa tecnológica integral que acompaña a personas, estudiantes, emprendedores, empresas e instituciones a aprender, reparar, crear y crecer con la tecnología.",
+    "imagen": "/img/taller.jpg",
+    "imagen_descripcion": "Espacio de trabajo de TechRevive con área técnica y estaciones de capacitación"
+  },
+  "historia": {
+    "etiqueta": "Nuestra historia",
+    "titulo": "Más que un taller: un aliado tecnológico.",
+    "parrafos": [
+      "TechRevive nació de una idea sencilla: la tecnología debe ser una herramienta al alcance de todos, no una barrera. Muchas personas tienen un equipo que no funciona bien, una idea de negocio que no saben cómo llevar a internet o simplemente quieren aprender a usar mejor su computadora.",
+      "Por eso unimos en un solo lugar el servicio técnico, la capacitación y el desarrollo digital. Reparamos tu equipo, pero también te explicamos qué pasó. Creamos tu página web, pero también te enseñamos a usarla. Nuestro objetivo es que cada cliente salga con una solución y con más confianza en la tecnología."
+    ],
+    "puntos": [
+      "Atención cercana y personalizada",
+      "Explicaciones claras, sin tecnicismos",
+      "Soluciones a la medida de cada necesidad",
+      "Acompañamiento después del servicio"
+    ],
+    "imagen": "/img/aprender.jpg",
+    "imagen_descripcion": "Instructor de TechRevive enseñando computación a un grupo de personas de distintas edades"
+  },
+  "mision": "Brindar soluciones tecnológicas integrales —capacitación, soporte, reparación y desarrollo digital— que permitan a personas, emprendedores y organizaciones aprovechar la tecnología de forma práctica, accesible y confiable.",
+  "vision": "Ser un referente en soluciones tecnológicas y formación digital en Guatemala, reconocido por hacer que la tecnología sea fácil de entender y por impulsar el crecimiento de las personas y los negocios que confían en nosotros.",
+  "valores": {
+    "titulo": "Lo que nos guía en cada servicio.",
+    "texto": "Más allá de la técnica, estos principios definen cómo trabajamos y cómo tratamos a cada persona que confía en nosotros.",
+    "lista": [
+      {
+        "icono": "shield",
+        "titulo": "Confianza",
+        "texto": "Cuidamos tus equipos y tu información como si fueran nuestros, con total confidencialidad."
+      },
+      {
+        "icono": "message",
+        "titulo": "Claridad",
+        "texto": "Explicamos cada diagnóstico, propuesta y costo con palabras sencillas, antes de empezar."
+      },
+      {
+        "icono": "bulb",
+        "titulo": "Innovación",
+        "texto": "Nos actualizamos constantemente para ofrecerte soluciones modernas y eficientes."
+      },
+      {
+        "icono": "heart",
+        "titulo": "Compromiso",
+        "texto": "Cumplimos lo que prometemos y damos seguimiento hasta que todo funcione bien."
+      },
+      {
+        "icono": "users",
+        "titulo": "Accesibilidad",
+        "texto": "Creemos que todos pueden aprender y aprovechar la tecnología, sin importar su nivel."
+      },
+      {
+        "icono": "book",
+        "titulo": "Aprendizaje continuo",
+        "texto": "Compartimos lo que sabemos para que cada cliente gane autonomía y confianza."
+      }
+    ]
+  },
+  "audiencia": {
+    "titulo": "Soluciones para cada tipo de cliente.",
+    "texto": "Adaptamos cada servicio y cada curso a tu nivel de experiencia y a lo que realmente necesitas.",
+    "lista": [
+      {
+        "icono": "user",
+        "titulo": "Personas",
+        "texto": "Reparamos y optimizamos tu equipo, y te enseñamos a usar la tecnología con confianza.",
+        "enlace": "reparacion.html"
+      },
+      {
+        "icono": "school",
+        "titulo": "Estudiantes",
+        "texto": "Cursos prácticos de computación y ofimática para destacar en tus estudios.",
+        "enlace": "cursos.html"
+      },
+      {
+        "icono": "rocket",
+        "titulo": "Emprendedores",
+        "texto": "Página web, WhatsApp y herramientas digitales para vender más y mejor.",
+        "enlace": "desarrollo-web.html"
+      },
+      {
+        "icono": "briefcase",
+        "titulo": "Empresas",
+        "texto": "Soporte técnico, redes, sistemas a medida y capacitación para tu equipo.",
+        "enlace": "soporte.html"
+      },
+      {
+        "icono": "building",
+        "titulo": "Instituciones",
+        "texto": "Programas de formación tecnológica y soluciones digitales para tu organización.",
+        "enlace": "capacitacion.html"
+      },
+      {
+        "icono": "handshake",
+        "titulo": "Aliados",
+        "texto": "¿Quieres colaborar con nosotros en un proyecto o programa? Conversemos.",
+        "enlace": "contacto.html"
+      }
+    ]
+  },
+  "llamado": {
+    "titulo": "¿Quieres conocernos mejor?",
+    "texto": "Escríbenos y cuéntanos en qué podemos ayudarte. Será un gusto atenderte."
+  }
+}

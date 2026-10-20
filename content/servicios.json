@@ -1,0 +1,479 @@
+{
+  "portada": {
+    "titulo": "Todo lo que necesitas en tecnología,",
+    "titulo_resaltado": "en un solo lugar.",
+    "texto": "Reparamos, enseñamos, creamos y acompañamos. Elige el servicio que necesitas o cuéntanos tu situación y te orientamos."
+  },
+  "lista": [
+    {
+      "pagina": "reparacion",
+      "titulo": "Reparación y Mantenimiento",
+      "nombre_corto": "Reparación y mantenimiento",
+      "icono": "laptop",
+      "descripcion_menu": "Diagnóstico, limpieza, optimización y reparación de equipos.",
+      "descripcion": "Diagnóstico, mantenimiento preventivo y correctivo, optimización y reparación de computadoras y laptops.",
+      "incluye": [
+        "Diagnóstico técnico",
+        "Limpieza interna",
+        "Cambio de pasta térmica",
+        "Optimización",
+        "Instalación de sistemas operativos",
+        "Actualización de componentes",
+        "Recuperación y respaldo de información",
+        "Soporte técnico"
+      ],
+      "boton_texto": "Solicitar diagnóstico",
+      "opcion_formulario": "Reparación",
+      "detalle": {
+        "titulo": "Reparación y mantenimiento de",
+        "titulo_resaltado": "computadoras.",
+        "texto": "Diagnóstico, mantenimiento preventivo y correctivo, optimización y reparación de computadoras y laptops. Te explicamos qué tiene tu equipo y qué conviene hacer, antes de empezar.",
+        "imagen": "/img/tecnico.jpg",
+        "imagen_descripcion": "Técnico aplicando pasta térmica en una laptop abierta",
+        "intro_titulo": "Tu equipo, como nuevo otra vez.",
+        "intro_parrafos": [
+          "Una computadora lenta, que se calienta o que se apaga sola no siempre necesita ser reemplazada. En la mayoría de los casos, un buen diagnóstico y el mantenimiento adecuado pueden devolverle velocidad y alargar su vida útil por varios años.",
+          "Revisamos tu equipo a fondo, te explicamos con palabras sencillas lo que encontramos y te damos opciones claras. Tú decides qué hacer, sin presiones ni sorpresas."
+        ],
+        "intro_imagen": "/img/p-reparacion.jpg",
+        "intro_imagen_descripcion": "Computadora de escritorio abierta con nuevos módulos de memoria y unidad SSD",
+        "incluye_titulo": "¿Qué incluye el servicio?",
+        "incluye_detalle": [
+          {
+            "icono": "search",
+            "titulo": "Diagnóstico técnico",
+            "texto": "Revisamos hardware y software para encontrar la causa real del problema."
+          },
+          {
+            "icono": "refresh",
+            "titulo": "Limpieza interna",
+            "texto": "Eliminamos el polvo que provoca calentamiento, ruido y fallas."
+          },
+          {
+            "icono": "thermo",
+            "titulo": "Cambio de pasta térmica",
+            "texto": "Mejora la temperatura del procesador y protege los componentes."
+          },
+          {
+            "icono": "zap",
+            "titulo": "Optimización",
+            "texto": "Quitamos programas innecesarios y aceleramos el arranque."
+          },
+          {
+            "icono": "monitor",
+            "titulo": "Sistemas operativos",
+            "texto": "Instalación de Windows o Linux con controladores y programas esenciales."
+          },
+          {
+            "icono": "cpu",
+            "titulo": "Actualización de componentes",
+            "texto": "Unidades SSD, memoria RAM y otras mejoras para ganar velocidad."
+          },
+          {
+            "icono": "database",
+            "titulo": "Recuperación y respaldo",
+            "texto": "Protegemos tus archivos antes de trabajar y te ayudamos a recuperarlos."
+          },
+          {
+            "icono": "headset",
+            "titulo": "Soporte técnico",
+            "texto": "Te acompañamos después del servicio para resolver tus dudas."
+          }
+        ],
+        "extra_titulo": "¿Cuándo es momento de traer tu equipo?",
+        "extra": [
+          {
+            "icono": "thermo",
+            "titulo": "Se calienta o hace mucho ruido",
+            "texto": "El ventilador trabaja de más y el equipo quema al tacto."
+          },
+          {
+            "icono": "clock",
+            "titulo": "Está lento o tarda en encender",
+            "texto": "Abrir programas o archivos se vuelve una espera."
+          },
+          {
+            "icono": "alert",
+            "titulo": "Se apaga solo o muestra errores",
+            "texto": "Pantallas azules, reinicios o mensajes extraños."
+          },
+          {
+            "icono": "calendar",
+            "titulo": "Lleva más de un año sin mantenimiento",
+            "texto": "La limpieza preventiva evita reparaciones costosas."
+          }
+        ],
+        "preguntas": [
+          {
+            "pregunta": "¿Cuánto tiempo tarda una reparación?",
+            "respuesta": "Depende del diagnóstico. Antes de empezar te damos un tiempo estimado y te avisamos de cualquier cambio. Los mantenimientos preventivos suelen ser los más rápidos."
+          },
+          {
+            "pregunta": "¿Mi información está segura?",
+            "respuesta": "Sí. Tratamos tus archivos con total confidencialidad y, cuando el trabajo lo requiere, te recomendamos hacer un respaldo antes de empezar. Si lo necesitas, nosotros te ayudamos a hacerlo."
+          },
+          {
+            "pregunta": "¿Cada cuánto debo dar mantenimiento a mi computadora?",
+            "respuesta": "Recomendamos un mantenimiento preventivo al menos una vez al año, o cada seis meses si el equipo se usa muchas horas al día o en lugares con mucho polvo."
+          },
+          {
+            "pregunta": "¿Vale la pena reparar o es mejor comprar otro equipo?",
+            "respuesta": "Te lo decimos con honestidad después del diagnóstico. Muchas veces una actualización a SSD o más memoria RAM da excelentes resultados por una fracción del costo de un equipo nuevo."
+          },
+          {
+            "pregunta": "¿Trabajan con laptops y computadoras de escritorio?",
+            "respuesta": "Sí, trabajamos con ambos tipos de equipo. Escríbenos con la marca y el modelo, y te orientamos sobre el servicio que necesitas."
+          }
+        ],
+        "seo_titulo": "Reparación y mantenimiento de computadoras y laptops",
+        "seo_descripcion": "Diagnóstico técnico, limpieza interna, cambio de pasta térmica, optimización, instalación de sistemas, actualización a SSD y recuperación de información."
+      }
+    },
+    {
+      "pagina": "desarrollo-web",
+      "titulo": "Diseño y Desarrollo Web",
+      "nombre_corto": "Diseño y desarrollo web",
+      "icono": "layout",
+      "descripcion_menu": "Sitios modernos, tiendas en línea y landing pages.",
+      "descripcion": "Creamos sitios web modernos, funcionales y adaptados a las necesidades de cada negocio o proyecto.",
+      "incluye": [
+        "Sitios web corporativos",
+        "Landing pages",
+        "Portafolios",
+        "Tiendas en línea",
+        "Formularios",
+        "Integración con WhatsApp",
+        "Diseño responsive",
+        "Optimización básica para buscadores"
+      ],
+      "boton_texto": "Crear mi página web",
+      "opcion_formulario": "Página web",
+      "detalle": {
+        "titulo": "Diseño y desarrollo",
+        "titulo_resaltado": "web.",
+        "texto": "Creamos sitios web modernos, funcionales y adaptados a las necesidades de cada negocio o proyecto. Tu página trabaja por ti las 24 horas, en computadoras y celulares.",
+        "imagen": "/img/p-web.jpg",
+        "imagen_descripcion": "Laptop mostrando el diseño de un sitio web moderno",
+        "intro_titulo": "Una página web que te ayuda a vender.",
+        "intro_parrafos": [
+          "Hoy, antes de comprar o contratar, las personas buscan en internet. Una página web profesional le da a tu negocio credibilidad, te ayuda a aparecer en Google y facilita que tus clientes te contacten con un solo toque.",
+          "Diseñamos cada sitio a la medida: entendemos tu negocio, organizamos tu información y creamos una página clara, rápida y fácil de usar. Al terminar, te explicamos cómo funciona y cómo mantenerla actualizada."
+        ],
+        "intro_imagen": "/img/emprendedor.jpg",
+        "intro_imagen_descripcion": "Emprendedora revisando su tienda en línea en una tablet",
+        "incluye_titulo": "¿Qué podemos crear para ti?",
+        "incluye_detalle": [
+          {
+            "icono": "building",
+            "titulo": "Sitios web corporativos",
+            "texto": "Presenta tu empresa, servicios y datos de contacto con imagen profesional."
+          },
+          {
+            "icono": "target",
+            "titulo": "Landing pages",
+            "texto": "Páginas enfocadas en una promoción, producto o campaña específica."
+          },
+          {
+            "icono": "image",
+            "titulo": "Portafolios",
+            "texto": "Muestra tus trabajos, proyectos o productos de forma atractiva."
+          },
+          {
+            "icono": "cart",
+            "titulo": "Tiendas en línea",
+            "texto": "Catálogo de productos con pedidos por WhatsApp o pagos en línea."
+          },
+          {
+            "icono": "clipboard",
+            "titulo": "Formularios",
+            "texto": "Cotizaciones, reservas o inscripciones que llegan directo a ti."
+          },
+          {
+            "icono": "whatsapp",
+            "titulo": "Integración con WhatsApp",
+            "texto": "Botones y mensajes listos para que te escriban al instante."
+          },
+          {
+            "icono": "phone",
+            "titulo": "Diseño responsive",
+            "texto": "Tu página se verá perfecta en celulares, tablets y computadoras."
+          },
+          {
+            "icono": "search",
+            "titulo": "Optimización básica para buscadores",
+            "texto": "Estructura y textos preparados para que Google te encuentre."
+          }
+        ],
+        "extra_titulo": "Lo que recibes con tu página",
+        "extra": [
+          {
+            "icono": "layout",
+            "titulo": "Diseño a tu medida",
+            "texto": "Con los colores, logo e identidad de tu marca."
+          },
+          {
+            "icono": "globe",
+            "titulo": "Asesoría de dominio y hosting",
+            "texto": "Te ayudamos a elegir y configurar tu dirección web."
+          },
+          {
+            "icono": "book",
+            "titulo": "Capacitación de uso",
+            "texto": "Te enseñamos a actualizar tu información."
+          },
+          {
+            "icono": "buoy",
+            "titulo": "Acompañamiento",
+            "texto": "Soporte y ajustes después de la entrega."
+          }
+        ],
+        "preguntas": [
+          {
+            "pregunta": "¿Necesito tener un dominio o hosting antes de empezar?",
+            "respuesta": "No. Te asesoramos para elegir el dominio (por ejemplo, tunegocio.com) y el servicio de alojamiento más conveniente para tu proyecto."
+          },
+          {
+            "pregunta": "¿Cuánto tiempo toma crear mi página?",
+            "respuesta": "Depende del tamaño y del tipo de sitio. Una landing page es más rápida que una tienda en línea. En la propuesta te damos un cronograma claro con cada etapa."
+          },
+          {
+            "pregunta": "¿Podré actualizar mi página yo mismo?",
+            "respuesta": "Sí. Al entregar el sitio te explicamos cómo hacer cambios sencillos. Si lo prefieres, también podemos encargarnos del mantenimiento."
+          },
+          {
+            "pregunta": "¿Mi página se verá bien en celulares?",
+            "respuesta": "Sí. Todos nuestros sitios son responsive: se adaptan automáticamente a celulares, tablets y computadoras."
+          },
+          {
+            "pregunta": "¿Qué necesito para empezar?",
+            "respuesta": "Solo tu idea. Si ya tienes logo, fotos o textos, excelente; si no, te orientamos para prepararlos."
+          }
+        ],
+        "seo_titulo": "Diseño y desarrollo de páginas web para negocios",
+        "seo_descripcion": "Sitios web corporativos, landing pages, portafolios y tiendas en línea con diseño responsive, integración con WhatsApp y optimización básica para buscadores."
+      }
+    },
+    {
+      "pagina": "aplicaciones",
+      "titulo": "Aplicaciones y Soluciones Digitales",
+      "nombre_corto": "Aplicaciones y soluciones digitales",
+      "icono": "layers",
+      "descripcion_menu": "Sistemas a medida y automatización de procesos.",
+      "descripcion": "Desarrollamos herramientas digitales personalizadas para automatizar procesos y resolver necesidades específicas.",
+      "incluye": [
+        "Aplicaciones web",
+        "Sistemas personalizados",
+        "Formularios digitales",
+        "Automatización",
+        "Gestión de información",
+        "Herramientas para negocios"
+      ],
+      "boton_texto": "Hablar sobre mi proyecto",
+      "opcion_formulario": "Aplicación",
+      "detalle": {
+        "titulo": "Aplicaciones y soluciones",
+        "titulo_resaltado": "digitales.",
+        "texto": "Desarrollamos herramientas digitales personalizadas para automatizar procesos y resolver necesidades específicas de tu negocio o institución.",
+        "imagen": "/img/p-app.jpg",
+        "imagen_descripcion": "Pantalla con un panel de control de una aplicación web",
+        "intro_titulo": "Menos papel, menos errores, más tiempo.",
+        "intro_parrafos": [
+          "Muchos negocios todavía controlan inventarios, ventas o clientes en cuadernos o en hojas de cálculo difíciles de mantener. Una solución digital a la medida ordena tu información, evita errores y te da datos claros para tomar mejores decisiones.",
+          "Escuchamos cómo trabajas hoy, identificamos qué se puede simplificar y construimos una herramienta fácil de usar para ti y tu equipo, sin funciones que no necesitas."
+        ],
+        "intro_imagen": "/img/p-empresa.jpg",
+        "intro_imagen_descripcion": "Equipo de red ordenado en una oficina",
+        "incluye_titulo": "¿Qué incluye el servicio?",
+        "incluye_detalle": [
+          {
+            "icono": "globe",
+            "titulo": "Aplicaciones web",
+            "texto": "Funcionan desde el navegador, en computadora o celular, sin instalar nada."
+          },
+          {
+            "icono": "settings",
+            "titulo": "Sistemas personalizados",
+            "texto": "Diseñados según los procesos reales de tu negocio."
+          },
+          {
+            "icono": "clipboard",
+            "titulo": "Formularios digitales",
+            "texto": "Registros, encuestas y solicitudes que se guardan automáticamente."
+          },
+          {
+            "icono": "zap",
+            "titulo": "Automatización",
+            "texto": "Tareas repetitivas que se hacen solas: reportes, avisos y recordatorios."
+          },
+          {
+            "icono": "database",
+            "titulo": "Gestión de información",
+            "texto": "Datos organizados, seguros y disponibles cuando los necesitas."
+          },
+          {
+            "icono": "briefcase",
+            "titulo": "Herramientas para negocios",
+            "texto": "Soluciones prácticas para vender, controlar y crecer."
+          }
+        ],
+        "extra_titulo": "Ejemplos de soluciones que podemos desarrollar",
+        "extra": [
+          {
+            "icono": "package",
+            "titulo": "Control de inventario",
+            "texto": "Entradas, salidas y existencias en tiempo real."
+          },
+          {
+            "icono": "users",
+            "titulo": "Registro de clientes",
+            "texto": "Historial, contactos y seguimiento de cada cliente."
+          },
+          {
+            "icono": "calendar",
+            "titulo": "Reservas y citas",
+            "texto": "Agenda en línea con confirmaciones automáticas."
+          },
+          {
+            "icono": "file",
+            "titulo": "Cotizaciones y reportes",
+            "texto": "Documentos generados en segundos, sin errores."
+          }
+        ],
+        "preguntas": [
+          {
+            "pregunta": "¿Cómo sé si mi negocio necesita una aplicación?",
+            "respuesta": "Si repites las mismas tareas cada día, pierdes información o te cuesta saber cómo van tus ventas o inventario, probablemente una herramienta digital te ahorrará tiempo y errores. Conversemos sobre tu caso."
+          },
+          {
+            "pregunta": "¿Es muy caro desarrollar un sistema a la medida?",
+            "respuesta": "Depende del alcance. Empezamos por lo esencial y, si lo necesitas, el sistema puede crecer por etapas. Siempre recibirás una propuesta clara antes de empezar."
+          },
+          {
+            "pregunta": "¿Mi equipo podrá usarla fácilmente?",
+            "respuesta": "Sí. Diseñamos interfaces sencillas y, al entregar, capacitamos a las personas que la utilizarán."
+          },
+          {
+            "pregunta": "¿Qué pasa si después necesito cambios?",
+            "respuesta": "Ofrecemos soporte y mejoras continuas para que la herramienta siga adaptándose a tu negocio."
+          }
+        ],
+        "seo_titulo": "Aplicaciones web y sistemas a la medida",
+        "seo_descripcion": "Aplicaciones web, sistemas personalizados, formularios digitales, automatización y gestión de información para negocios e instituciones."
+      }
+    },
+    {
+      "pagina": "soporte",
+      "titulo": "Soporte Tecnológico",
+      "nombre_corto": "Soporte tecnológico",
+      "icono": "headset",
+      "descripcion_menu": "Asistencia remota, redes, impresoras y seguridad.",
+      "descripcion": "Te ayudamos a resolver problemas tecnológicos y mantener tus herramientas digitales funcionando correctamente.",
+      "incluye": [
+        "Soporte remoto",
+        "Configuración de equipos",
+        "Instalación de software",
+        "Redes",
+        "Impresoras",
+        "Seguridad básica",
+        "Asistencia tecnológica"
+      ],
+      "boton_texto": "Solicitar soporte",
+      "opcion_formulario": "Soporte técnico",
+      "detalle": {
+        "titulo": "Soporte",
+        "titulo_resaltado": "tecnológico.",
+        "texto": "Te ayudamos a resolver problemas tecnológicos y a mantener tus herramientas digitales funcionando correctamente, de forma remota o presencial.",
+        "imagen": "/img/soporte.jpg",
+        "imagen_descripcion": "Técnico de soporte con auriculares atendiendo una solicitud frente a dos monitores",
+        "intro_titulo": "Tecnología que funciona cuando la necesitas.",
+        "intro_parrafos": [
+          "Una impresora que no imprime, una red WiFi que falla o un programa que no abre pueden detener tu día. Nuestro servicio de soporte resuelve esos problemas rápidamente para que tú te enfoques en lo importante.",
+          "Muchos problemas se pueden resolver de forma remota en pocos minutos. Cuando se necesita, te atendemos de forma presencial. En ambos casos te explicamos qué hicimos y cómo evitar que vuelva a pasar."
+        ],
+        "intro_imagen": "/img/p-empresa.jpg",
+        "intro_imagen_descripcion": "Rack de red ordenado con switch y cables en una oficina",
+        "incluye_titulo": "¿En qué te podemos ayudar?",
+        "incluye_detalle": [
+          {
+            "icono": "monitor",
+            "titulo": "Soporte remoto",
+            "texto": "Nos conectamos a tu equipo de forma segura para resolver el problema."
+          },
+          {
+            "icono": "settings",
+            "titulo": "Configuración de equipos",
+            "texto": "Computadoras nuevas listas para trabajar desde el primer día."
+          },
+          {
+            "icono": "download",
+            "titulo": "Instalación de software",
+            "texto": "Programas, antivirus y herramientas de trabajo instalados correctamente."
+          },
+          {
+            "icono": "wifi",
+            "titulo": "Redes",
+            "texto": "Configuración y mejora de redes WiFi y cableadas en casa u oficina."
+          },
+          {
+            "icono": "printer",
+            "titulo": "Impresoras",
+            "texto": "Instalación, configuración en red y solución de errores comunes."
+          },
+          {
+            "icono": "lock",
+            "titulo": "Seguridad básica",
+            "texto": "Antivirus, contraseñas seguras, respaldos y buenas prácticas."
+          },
+          {
+            "icono": "headset",
+            "titulo": "Asistencia tecnológica",
+            "texto": "Orientación para elegir equipos, servicios y herramientas."
+          }
+        ],
+        "extra_titulo": "Modalidades de atención",
+        "extra": [
+          {
+            "icono": "monitor",
+            "titulo": "Remoto",
+            "texto": "Rápido y sin desplazarte, ideal para problemas de software."
+          },
+          {
+            "icono": "building",
+            "titulo": "Presencial",
+            "texto": "Para redes, impresoras o equipos que requieren revisión física."
+          },
+          {
+            "icono": "briefcase",
+            "titulo": "Para negocios",
+            "texto": "Planes de soporte periódico para mantener tu operación activa."
+          },
+          {
+            "icono": "book",
+            "titulo": "Con capacitación",
+            "texto": "Te enseñamos a resolver por tu cuenta los problemas más comunes."
+          }
+        ],
+        "preguntas": [
+          {
+            "pregunta": "¿Cómo funciona el soporte remoto?",
+            "respuesta": "Con tu autorización, nos conectamos a tu computadora mediante un programa seguro. Tú ves en todo momento lo que hacemos y puedes terminar la conexión cuando quieras."
+          },
+          {
+            "pregunta": "¿Atienden negocios y oficinas?",
+            "respuesta": "Sí. Además de atenciones puntuales, podemos acordar un plan de soporte periódico para revisar equipos, redes y respaldos."
+          },
+          {
+            "pregunta": "¿Qué necesito para recibir soporte remoto?",
+            "respuesta": "Una computadora con conexión a internet. Te guiamos paso a paso para iniciar la sesión."
+          },
+          {
+            "pregunta": "¿Y si el problema no se puede resolver de forma remota?",
+            "respuesta": "Te lo diremos con claridad y coordinaremos una revisión presencial o en nuestro taller."
+          }
+        ],
+        "seo_titulo": "Soporte técnico remoto y presencial",
+        "seo_descripcion": "Soporte remoto, configuración de equipos, instalación de software, redes, impresoras, seguridad básica y asistencia tecnológica para hogares y negocios."
+      }
+    }
+  ]
+}

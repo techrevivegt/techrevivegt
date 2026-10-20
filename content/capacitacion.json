@@ -1,0 +1,102 @@
+{
+  "tarjeta_servicio": {
+    "mostrar": true,
+    "titulo": "Capacitación Tecnológica",
+    "icono": "cap",
+    "descripcion": "Cursos prácticos para desarrollar habilidades digitales aplicables al estudio, trabajo y emprendimiento.",
+    "boton_texto": "Ver capacitaciones"
+  },
+  "portada": {
+    "titulo": "La tecnología no debería",
+    "titulo_resaltado": "ser una barrera.",
+    "texto": "Cursos prácticos para desarrollar habilidades digitales aplicables al estudio, al trabajo y al emprendimiento. Para todas las edades y niveles de experiencia.",
+    "imagen": "/img/aprender.jpg",
+    "imagen_descripcion": "Grupo de personas de distintas edades aprendiendo computación con un instructor"
+  },
+  "enfoque": {
+    "etiqueta": "Nuestra forma de enseñar",
+    "titulo": "Aprender haciendo, paso a paso.",
+    "parrafos": [
+      "En TechRevive creemos que cualquier persona puede aprender, utilizar y aprovechar la tecnología. Por eso nuestras capacitaciones son prácticas: cada tema se aprende resolviendo situaciones reales del estudio, del trabajo o del negocio.",
+      "Explicamos con paciencia y sin tecnicismos, respetando el ritmo de cada persona. Al terminar, no solo sabrás usar una herramienta: entenderás para qué sirve y cómo sacarle provecho."
+    ],
+    "imagen": "/img/p-capacitacion.jpg",
+    "imagen_descripcion": "Estudiantes practicando en computadoras durante una clase"
+  },
+  "modalidades": [
+    {
+      "icono": "building",
+      "titulo": "Presencial",
+      "texto": "Clases prácticas en grupos reducidos, con equipo y acompañamiento del instructor."
+    },
+    {
+      "icono": "monitor",
+      "titulo": "Virtual",
+      "texto": "Aprende desde casa con clases en línea, material digital y seguimiento personalizado."
+    },
+    {
+      "icono": "user",
+      "titulo": "Personalizada",
+      "texto": "Sesiones individuales o para tu equipo, con el tema y el horario que necesites."
+    }
+  ],
+  "para_quien": [
+    {
+      "icono": "school",
+      "titulo": "Estudiantes",
+      "texto": "Refuerza tus habilidades digitales para tus tareas, proyectos y futuro profesional."
+    },
+    {
+      "icono": "users",
+      "titulo": "Adultos y adultos mayores",
+      "texto": "Aprende a usar la computadora y el celular con paciencia y confianza."
+    },
+    {
+      "icono": "rocket",
+      "titulo": "Emprendedores",
+      "texto": "Herramientas digitales para vender, promocionar y organizar tu negocio."
+    },
+    {
+      "icono": "building",
+      "titulo": "Empresas e instituciones",
+      "texto": "Programas de capacitación para equipos de trabajo, a la medida."
+    }
+  ],
+  "pasos": [
+    {
+      "titulo": "Elige tu curso",
+      "texto": "Revisa los cursos disponibles y elige el que más te interese."
+    },
+    {
+      "titulo": "Llena tu inscripción",
+      "texto": "Completa el formulario en línea con tus datos y preferencias."
+    },
+    {
+      "titulo": "Confirmamos contigo",
+      "texto": "Te contactamos para confirmar horario, modalidad y detalles."
+    },
+    {
+      "titulo": "¡A aprender!",
+      "texto": "Empieza tus clases y aprende con acompañamiento en cada paso."
+    }
+  ],
+  "aviso_cursos": "Horarios, duración y costos varían según la modalidad y el grupo. Escríbenos o llena tu inscripción y te enviaremos toda la información del próximo grupo.",
+  "preguntas_cursos": [
+    {
+      "pregunta": "¿Necesito conocimientos previos?",
+      "respuesta": "No para los cursos de nivel principiante. En los cursos intermedios te indicaremos lo que conviene saber antes de empezar."
+    },
+    {
+      "pregunta": "¿Necesito llevar mi propia computadora?",
+      "respuesta": "En las clases presenciales te indicaremos si contamos con equipo disponible para tu grupo. Para las clases virtuales necesitas una computadora o celular con internet."
+    },
+    {
+      "pregunta": "¿Entregan constancia o diploma?",
+      "respuesta": "Al completar el curso recibirás una constancia de participación de TechRevive."
+    },
+    {
+      "pregunta": "¿Puedo pedir un curso que no está en la lista?",
+      "respuesta": "Sí. Con la capacitación personalizada puedes elegir el tema que necesites. Escríbenos y lo preparamos para ti."
+    }
+  ]
+}

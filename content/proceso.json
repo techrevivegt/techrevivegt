@@ -1,0 +1,32 @@
+{
+  "etiqueta": "Nuestro proceso",
+  "titulo": "Un camino claro, de principio a fin.",
+  "texto": "Sabrás en todo momento qué estamos haciendo, cuánto tiempo tomará y qué sigue.",
+  "pasos": [
+    {
+      "icono": "search",
+      "titulo": "Diagnóstico",
+      "texto": "Escuchamos tu necesidad y revisamos el equipo o proyecto."
+    },
+    {
+      "icono": "clipboard",
+      "titulo": "Propuesta",
+      "texto": "Te presentamos una solución clara, con tiempos y costos."
+    },
+    {
+      "icono": "cpu",
+      "titulo": "Implementación",
+      "texto": "Reparamos, desarrollamos o capacitamos según lo acordado."
+    },
+    {
+      "icono": "package",
+      "titulo": "Entrega",
+      "texto": "Revisamos el resultado contigo y te explicamos cómo usarlo."
+    },
+    {
+      "icono": "shield",
+      "titulo": "Soporte",
+      "texto": "Seguimos disponibles para dudas, ajustes y mantenimiento."
+    }
+  ]
+}

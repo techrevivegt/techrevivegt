@@ -1,0 +1,279 @@
+{
+  "portada": {
+    "etiqueta": "Tecnología · Conocimiento · Soluciones",
+    "titulo": "Soluciones tecnológicas para",
+    "titulo_resaltado": "aprender, reparar, crear y crecer.",
+    "texto": "En TechRevive convertimos la tecnología en soluciones reales. Ofrecemos capacitación, soporte técnico, reparación de equipos, desarrollo web, aplicaciones y herramientas digitales para personas y negocios.",
+    "boton_principal": {
+      "texto": "Solicitar servicio",
+      "enlace": "#contacto"
+    },
+    "boton_secundario": {
+      "texto": "Conocer nuestros servicios",
+      "enlace": "#servicios"
+    },
+    "frases": [
+      "Revive tu equipo.",
+      "Potencia tus ideas.",
+      "Transforma tu negocio."
+    ],
+    "imagen": "/img/hero.jpg",
+    "imagen_descripcion": "Laptop con código en pantalla junto a una tarjeta madre y herramientas de precisión sobre una mesa de trabajo",
+    "tarjetas_flotantes": [
+      {
+        "icono": "check",
+        "titulo": "Equipo optimizado",
+        "subtitulo": "Diagnóstico completado"
+      },
+      {
+        "icono": "code",
+        "titulo": "Sitio web",
+        "subtitulo": "Diseño responsive"
+      },
+      {
+        "icono": "cap",
+        "titulo": "Curso de ofimática",
+        "subtitulo": "Capacitación práctica"
+      }
+    ]
+  },
+  "valores": [
+    {
+      "icono": "book",
+      "titulo": "Aprende",
+      "texto": "Capacitación tecnológica práctica y accesible."
+    },
+    {
+      "icono": "wrench",
+      "titulo": "Repara",
+      "texto": "Mantenimiento y reparación de computadoras y laptops."
+    },
+    {
+      "icono": "code",
+      "titulo": "Crea",
+      "texto": "Diseño y desarrollo de sitios web y aplicaciones."
+    },
+    {
+      "icono": "trend",
+      "titulo": "Crece",
+      "texto": "Soluciones digitales para emprendedores y negocios."
+    }
+  ],
+  "servicios": {
+    "etiqueta": "Nuestros servicios",
+    "titulo": "Todo lo que necesitas en tecnología, en un solo lugar.",
+    "texto": "Desde reparar tu computadora hasta crear la página web o el sistema de tu negocio. Te acompañamos en cada paso, con explicaciones claras y sin complicaciones.",
+    "publico": [
+      "Personas",
+      "Estudiantes",
+      "Emprendedores",
+      "Empresas",
+      "Instituciones"
+    ]
+  },
+  "por_que": {
+    "mostrar": true,
+    "etiqueta": "Nosotros",
+    "titulo": "¿Por qué TechRevive?",
+    "texto": "Somos una empresa tecnológica integral. Acompañamos a cada cliente desde la capacitación y el soporte hasta el desarrollo de soluciones digitales a su medida.",
+    "formula": [
+      "Tecnología",
+      "Conocimiento",
+      "Soluciones"
+    ],
+    "cita": "Sabemos de tecnología, pero hacemos que la tecnología sea fácil de entender.",
+    "ventajas": [
+      {
+        "icono": "award",
+        "titulo": "Experiencia técnica",
+        "texto": "Soluciones basadas en conocimientos prácticos y técnicos."
+      },
+      {
+        "icono": "users",
+        "titulo": "Atención personalizada",
+        "texto": "Cada cliente recibe una solución adaptada a sus necesidades."
+      },
+      {
+        "icono": "bulb",
+        "titulo": "Tecnología accesible",
+        "texto": "Buscamos que la tecnología sea útil y comprensible para todos."
+      },
+      {
+        "icono": "layers",
+        "titulo": "Soluciones integrales",
+        "texto": "Desde reparar un equipo hasta desarrollar una solución digital."
+      },
+      {
+        "icono": "target",
+        "titulo": "Enfoque práctico",
+        "texto": "No solamente resolvemos problemas: ayudamos a nuestros clientes a comprender y aprovechar la tecnología."
+      }
+    ]
+  },
+  "capacitacion": {
+    "mostrar": true,
+    "etiqueta": "Tecnología para todos",
+    "titulo": "La tecnología no debería ser una barrera.",
+    "texto": "En TechRevive creemos que cualquier persona puede aprender, utilizar y aprovechar la tecnología. Por eso desarrollamos soluciones y capacitaciones pensadas para diferentes niveles de experiencia y necesidades.",
+    "imagenes": [
+      {
+        "imagen": "/img/aprender.jpg",
+        "descripcion": "Grupo de personas de distintas edades aprendiendo computación con un instructor",
+        "leyenda": "Personas aprendiendo",
+        "icono": "book"
+      },
+      {
+        "imagen": "/img/tecnico.jpg",
+        "descripcion": "Técnico aplicando pasta térmica en una laptop abierta",
+        "leyenda": "Técnicos trabajando",
+        "icono": "wrench"
+      },
+      {
+        "imagen": "/img/emprendedor.jpg",
+        "descripcion": "Emprendedora en su negocio revisando su tienda en línea en una tablet",
+        "leyenda": "Emprendedores creciendo",
+        "icono": "trend"
+      }
+    ],
+    "niveles": [
+      "Principiante",
+      "Intermedio",
+      "Avanzado"
+    ],
+    "cursos_titulo": "Capacitaciones disponibles"
+  },
+  "negocios": {
+    "mostrar": true,
+    "etiqueta": "Desarrollo digital · Emprendedores y negocios",
+    "titulo": "Haz crecer tu negocio con tecnología.",
+    "texto": "Te ayudamos a digitalizar tu negocio desde sus primeros pasos hasta soluciones más avanzadas.",
+    "etiquetas": [
+      "Página web",
+      "Tienda en línea",
+      "Integración con WhatsApp",
+      "Sistemas a medida",
+      "Automatización",
+      "Gestión de información"
+    ],
+    "boton": {
+      "texto": "Quiero digitalizar mi negocio",
+      "enlace": "desarrollo-web.html"
+    },
+    "pasos": [
+      {
+        "icono": "search",
+        "titulo": "Analizamos",
+        "texto": "Identificamos tu necesidad."
+      },
+      {
+        "icono": "bulb",
+        "titulo": "Proponemos",
+        "texto": "Diseñamos una solución adecuada."
+      },
+      {
+        "icono": "code",
+        "titulo": "Desarrollamos",
+        "texto": "Implementamos la solución tecnológica."
+      },
+      {
+        "icono": "buoy",
+        "titulo": "Acompañamos",
+        "texto": "Brindamos soporte y orientación."
+      }
+    ]
+  },
+  "proyectos": {
+    "mostrar": true,
+    "etiqueta": "Proyectos",
+    "titulo": "Lo que podemos hacer por ti.",
+    "texto": "Estos son ejemplos de los trabajos que realizamos. Muy pronto los reemplazaremos por proyectos reales de nuestros clientes.",
+    "lista": [
+      {
+        "titulo": "Actualización y optimización de equipo",
+        "categoria": "Reparación",
+        "descripcion": "Diagnóstico, limpieza interna, cambio a SSD y ampliación de memoria para recuperar la velocidad de una computadora.",
+        "imagen": "/img/p-reparacion.jpg",
+        "imagen_descripcion": "Computadora de escritorio abierta con nuevos módulos de memoria y unidad SSD",
+        "demostrativo": true
+      },
+      {
+        "titulo": "Sitio web para negocio local",
+        "categoria": "Sitios web",
+        "descripcion": "Página responsive con catálogo, formulario de contacto e integración con WhatsApp para recibir pedidos.",
+        "imagen": "/img/p-web.jpg",
+        "imagen_descripcion": "Laptop y teléfono mostrando un sitio web adaptable",
+        "demostrativo": true
+      },
+      {
+        "titulo": "Sistema de control de inventario",
+        "categoria": "Aplicaciones",
+        "descripcion": "Aplicación web para registrar productos, ventas y reportes desde cualquier dispositivo.",
+        "imagen": "/img/p-app.jpg",
+        "imagen_descripcion": "Monitor con un panel de control de una aplicación de negocio",
+        "demostrativo": true
+      },
+      {
+        "titulo": "Taller práctico de reparación",
+        "categoria": "Capacitación",
+        "descripcion": "Curso presencial donde los participantes aprenden a diagnosticar, desarmar y dar mantenimiento a una computadora.",
+        "imagen": "/img/p-capacitacion.jpg",
+        "imagen_descripcion": "Estudiantes en un taller práctico de reparación de computadoras",
+        "demostrativo": true
+      },
+      {
+        "titulo": "Red y soporte para pequeña oficina",
+        "categoria": "Soluciones empresariales",
+        "descripcion": "Instalación de red, configuración de equipos e impresoras, y plan de soporte técnico mensual.",
+        "imagen": "/img/p-empresa.jpg",
+        "imagen_descripcion": "Rack de red ordenado con switch y cables en una oficina",
+        "demostrativo": true
+      }
+    ],
+    "tarjeta_final": {
+      "mostrar": true,
+      "titulo": "Tu proyecto puede ser el siguiente",
+      "texto": "Cuéntanos tu idea y la convertimos en una solución real.",
+      "enlace_texto": "Empezar ahora"
+    }
+  },
+  "testimonios": {
+    "mostrar": true,
+    "etiqueta": "Testimonios",
+    "titulo": "Lo que dirán nuestros clientes y estudiantes.",
+    "texto": "Este espacio está reservado para opiniones reales. Si ya trabajaste con nosotros, nos encantaría conocer tu experiencia.",
+    "lista": [
+      {
+        "nombre": "Nombre del cliente",
+        "servicio": "Reparación y mantenimiento",
+        "testimonio": "Aquí aparecerá el testimonio de un cliente que nos confió la reparación o el mantenimiento de su equipo.",
+        "foto": "",
+        "es_ejemplo": true
+      },
+      {
+        "nombre": "Nombre del estudiante",
+        "servicio": "Capacitación tecnológica",
+        "testimonio": "Aquí aparecerá la experiencia de un estudiante que participó en una de nuestras capacitaciones.",
+        "foto": "",
+        "es_ejemplo": true
+      },
+      {
+        "nombre": "Nombre del negocio",
+        "servicio": "Desarrollo web",
+        "testimonio": "Aquí aparecerá la opinión de un emprendedor o empresa sobre su sitio web o solución digital.",
+        "foto": "",
+        "es_ejemplo": true
+      }
+    ]
+  },
+  "blog": {
+    "mostrar": true,
+    "etiqueta": "Recursos",
+    "titulo": "Aprende con nuestros consejos.",
+    "texto": "Guías cortas y prácticas para cuidar tus equipos, proteger tu información y llevar tu negocio al mundo digital.",
+    "cantidad": 3
+  },
+  "llamado": {
+    "titulo": "¿Tienes un problema tecnológico o una idea que quieres convertir en realidad?",
+    "texto": "Cuéntanos qué necesitas. En TechRevive podemos ayudarte a encontrar una solución."
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "titulo": "¡Estrenamos nuestro nuevo sitio web!",
+    "categoria": "Comunicado",
+    "fecha": "2026-10-19",
+    "texto": "Ahora puedes conocer todos nuestros servicios, revisar los cursos disponibles, inscribirte en línea y leer consejos prácticos en nuestro blog. Gracias por acompañarnos en esta nueva etapa.",
+    "boton_texto": "Explorar servicios",
+    "boton_enlace": "servicios.html",
+    "ejemplo": false
+  },
+  {
+    "titulo": "Inscripciones abiertas: computación básica y ofimática",
+    "categoria": "Capacitación",
+    "fecha": "",
+    "texto": "Ejemplo de anuncio de inscripciones. Aquí podrás publicar las fechas de inicio, horarios y modalidades de tus próximos grupos.",
+    "boton_texto": "Ver cursos",
+    "boton_enlace": "cursos.html",
+    "ejemplo": true
+  },
+  {
+    "titulo": "Jornada de mantenimiento preventivo",
+    "categoria": "Actividades",
+    "fecha": "",
+    "texto": "Ejemplo de comunicado sobre una actividad especial, como una jornada de limpieza y diagnóstico de equipos para estudiantes o vecinos.",
+    "boton_texto": "Solicitar diagnóstico",
+    "boton_enlace": "reparacion.html",
+    "ejemplo": true
+  },
+  {
+    "titulo": "Nuevos planes de soporte para negocios",
+    "categoria": "Servicios",
+    "fecha": "",
+    "texto": "Ejemplo de novedad sobre un servicio. Úsalo para anunciar promociones, nuevos servicios o alianzas con otras organizaciones.",
+    "boton_texto": "Ver soporte tecnológico",
+    "boton_enlace": "soporte.html",
+    "ejemplo": true
+  }
+]

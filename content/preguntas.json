@@ -1,0 +1,100 @@
+{
+  "grupos": [
+    {
+      "titulo": "Generales",
+      "icono": "help",
+      "preguntas": [
+        {
+          "pregunta": "¿Qué servicios ofrece TechRevive?",
+          "respuesta": "<p>Ofrecemos reparación y mantenimiento de computadoras, capacitación tecnológica, diseño y desarrollo web, aplicaciones y soluciones digitales, y soporte técnico. Puedes ver el detalle en nuestra página de <a href=\"servicios.html\">servicios</a>.</p>"
+        },
+        {
+          "pregunta": "¿A quién atienden?",
+          "respuesta": "<p>A personas, estudiantes, emprendedores, empresas e instituciones. Adaptamos cada servicio y cada curso al nivel de experiencia y a la necesidad de cada cliente.</p>"
+        },
+        {
+          "pregunta": "¿Cómo puedo solicitar un servicio?",
+          "respuesta": "<p>Puedes escribirnos por WhatsApp, llenar el <a href=\"contacto.html#formulario\">formulario de contacto</a> o visitarnos en nuestro horario de atención. Te responderemos lo antes posible.</p>"
+        },
+        {
+          "pregunta": "¿Cuánto cuestan sus servicios?",
+          "respuesta": "<p>Depende del tipo de servicio y de lo que necesites. Siempre te presentamos una propuesta clara, con tiempos y costos, antes de empezar cualquier trabajo.</p>"
+        },
+        {
+          "pregunta": "¿Cuáles son las formas de pago?",
+          "respuesta": "<p>Te informaremos las formas de pago disponibles al confirmar tu servicio o inscripción.</p>"
+        }
+      ]
+    },
+    {
+      "titulo": "Reparación y soporte",
+      "icono": "wrench",
+      "preguntas": [
+        {
+          "pregunta": "¿El diagnóstico tiene costo?",
+          "respuesta": "<p>Te lo indicaremos al recibir tu equipo, según el tipo de revisión necesaria. Siempre sabrás el costo antes de autorizar cualquier trabajo.</p>"
+        },
+        {
+          "pregunta": "¿Cuánto tiempo tarda una reparación?",
+          "respuesta": "<p>Depende del diagnóstico y de la disponibilidad de repuestos. Te damos un tiempo estimado antes de empezar y te mantenemos informado.</p>"
+        },
+        {
+          "pregunta": "¿Mi información estará segura?",
+          "respuesta": "<p>Sí. Tratamos tus archivos con total confidencialidad. Cuando el trabajo lo requiere, te recomendamos hacer un respaldo y te ayudamos a realizarlo.</p>"
+        },
+        {
+          "pregunta": "¿Ofrecen soporte remoto?",
+          "respuesta": "<p>Sí. Muchos problemas de software, configuración o programas pueden resolverse de forma remota y segura. Conoce más en <a href=\"soporte.html\">soporte tecnológico</a>.</p>"
+        }
+      ]
+    },
+    {
+      "titulo": "Capacitación",
+      "icono": "cap",
+      "preguntas": [
+        {
+          "pregunta": "¿Necesito conocimientos previos para los cursos?",
+          "respuesta": "<p>No para los cursos de nivel principiante. Para los cursos intermedios te indicaremos qué conviene saber antes de empezar.</p>"
+        },
+        {
+          "pregunta": "¿Los cursos son presenciales o virtuales?",
+          "respuesta": "<p>Ofrecemos ambas modalidades, además de capacitación personalizada. Revisa cada curso en la página de <a href=\"cursos.html\">cursos disponibles</a>.</p>"
+        },
+        {
+          "pregunta": "¿Cómo me inscribo?",
+          "respuesta": "<p>Completa el <a href=\"inscripcion.html\">formulario de inscripción</a>. Te contactaremos para confirmar horario, modalidad y costo.</p>"
+        },
+        {
+          "pregunta": "¿Entregan constancia?",
+          "respuesta": "<p>Sí, al completar el curso recibirás una constancia de participación de TechRevive.</p>"
+        },
+        {
+          "pregunta": "¿Ofrecen capacitación para empresas o instituciones?",
+          "respuesta": "<p>Sí. Diseñamos programas a la medida para equipos de trabajo, con los temas y horarios que necesites.</p>"
+        }
+      ]
+    },
+    {
+      "titulo": "Desarrollo web y aplicaciones",
+      "icono": "code",
+      "preguntas": [
+        {
+          "pregunta": "¿Necesito tener dominio y hosting?",
+          "respuesta": "<p>No es necesario tenerlos antes. Te asesoramos para elegir el dominio y el alojamiento más convenientes para tu proyecto.</p>"
+        },
+        {
+          "pregunta": "¿Podré actualizar mi página web?",
+          "respuesta": "<p>Sí. Al entregar tu sitio te explicamos cómo hacer cambios sencillos. También podemos encargarnos del mantenimiento si lo prefieres.</p>"
+        },
+        {
+          "pregunta": "¿Cuánto tiempo toma desarrollar un proyecto?",
+          "respuesta": "<p>Depende del tamaño y la complejidad. En la propuesta incluimos un cronograma claro con cada etapa.</p>"
+        },
+        {
+          "pregunta": "¿Desarrollan sistemas a la medida?",
+          "respuesta": "<p>Sí. Creamos aplicaciones web, formularios digitales y herramientas de gestión adaptadas a tus procesos. Conoce más en <a href=\"aplicaciones.html\">aplicaciones y soluciones digitales</a>.</p>"
+        }
+      ]
+    }
+  ]
+}

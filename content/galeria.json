@@ -1,0 +1,74 @@
+[
+  {
+    "imagen": "/img/taller.jpg",
+    "titulo": "Nuestro espacio de trabajo y capacitación",
+    "categoria": "Instalaciones",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/tecnico.jpg",
+    "titulo": "Cambio de pasta térmica en una laptop",
+    "categoria": "Reparación y soporte",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/aprender.jpg",
+    "titulo": "Clase de computación para todas las edades",
+    "categoria": "Capacitación",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/p-web.jpg",
+    "titulo": "Diseño de un sitio web responsive",
+    "categoria": "Desarrollo digital",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/p-reparacion.jpg",
+    "titulo": "Actualización con memoria RAM y unidad SSD",
+    "categoria": "Reparación y soporte",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/soporte.jpg",
+    "titulo": "Atención de soporte técnico remoto",
+    "categoria": "Instalaciones",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/p-capacitacion.jpg",
+    "titulo": "Práctica de ofimática en grupo",
+    "categoria": "Capacitación",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/p-app.jpg",
+    "titulo": "Panel de control de una aplicación web",
+    "categoria": "Desarrollo digital",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/p-empresa.jpg",
+    "titulo": "Instalación de red en una pequeña oficina",
+    "categoria": "Reparación y soporte",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/aula-virtual.jpg",
+    "titulo": "Clase en línea desde el aula virtual",
+    "categoria": "Capacitación",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/emprendedor.jpg",
+    "titulo": "Tienda en línea para un emprendimiento",
+    "categoria": "Desarrollo digital",
+    "demostrativa": true
+  },
+  {
+    "imagen": "/img/hero.jpg",
+    "titulo": "Mesa de trabajo técnico y desarrollo",
+    "categoria": "Instalaciones",
+    "demostrativa": true
+  }
+]
