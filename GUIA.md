@@ -136,7 +136,7 @@ Haz clic en **Save**. Espera 1 o 2 minutos y recarga tu sitio: ¡ya tiene tus da
 
 | En el panel | Qué cambia en el sitio |
 |---|---|
-| ⚙️ **Configuración general** | WhatsApp, correo, dirección, horario, mapa, redes, aula virtual, opciones del formulario y Formspree. |
+| ⚙️ **Configuración general** | WhatsApp, correo, dirección, horario, mapa, redes, aula virtual, opciones del formulario y Formspree. En **Sitio**: la dirección web, el eslogan, el **logo** (ícono junto al nombre) y el **ícono de la pestaña** del navegador. |
 | 📄 Páginas → 🏠 **Inicio** | Portada, barra de valores, ¿Por qué TechRevive?, Tecnología para todos, Negocios, Proyectos, Testimonios, cantidad de artículos y llamado final. Cada sección tiene un interruptor **Mostrar**. |
 | 📄 Páginas → 👋 **¿Quiénes somos?** | Historia, misión, visión, valores y "A quién servimos". |
 | 📄 Páginas → 🛠️ **Servicios** | Las tarjetas de servicios **y** la página completa de cada servicio. Si agregas un servicio, se crea su página y aparece solo en el menú y en el pie de página. |

@@ -260,16 +260,19 @@ def nav_html(active):
     return "\n".join(items)
 
 
-_LOGO = None
+def _img_path(v, default):
+    v = (v or "").strip() or default
+    return v.lstrip("/") if not v.startswith("http") else v
+
+
+LOGO_IMG = _img_path(g(CFG, "sitio", "logo"), "img/logo-icono.png")
+FAVICON = _img_path(g(CFG, "sitio", "favicon"), "img/favicon.png")
 
 
 def logo(footer=False):
-    global _LOGO
-    if _LOGO is None:
-        _LOGO = read_gen("logo.svg")
-    svg = re.sub(r"<defs>.*?</defs>", "", _LOGO, flags=re.S) if footer else _LOGO
     return (f'<a href="index.html" class="logo" aria-label="TechRevive, ir al inicio">\n'
-            f'        {svg}\n        <span class="logo__text">TECH<span>REVIVE</span></span>\n      </a>')
+            f'        <img class="logo__mark logo__mark--img" src="{e(LOGO_IMG)}" width="44" height="44" alt="" decoding="async" />\n'
+            f'        <span class="logo__text">TECH<span>REVIVE</span></span>\n      </a>')
 
 
 def header(active):
@@ -391,7 +394,8 @@ def head(slug, title, desc, image="img/hero.jpg", jsonld=None, preload=None, noi
   <meta property="og:image" content="{SITE_URL}/{e(image)}" />
   <meta property="og:url" content="{url}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="{e(FAVICON)}" type="image/png" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />{pre}

@@ -836,3 +836,7 @@ body.menu-open .wa-float { opacity: 0; pointer-events: none; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .js .reveal { opacity: 1; translate: none; }
 }
+
+/* Logo en imagen (editable desde el panel) */
+.logo__mark--img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 4px 14px rgba(56, 189, 248, .35)); }
+@media (max-width: 760px) { .logo__mark--img { width: 38px; height: 38px; } }

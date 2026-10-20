@@ -197,8 +197,16 @@ content:
           - name: url
             label: Dirección del sitio
             type: string
-            description: "Ejemplo: https://techrevive.pages.dev (o tu dominio propio). Se usa para Google y al compartir en redes."
+            description: "Ejemplo: https://techrevive.techrevive-gt.workers.dev (o tu dominio propio). Se usa para Google y al compartir en redes."
           - { name: eslogan, label: Eslogan (pie de página), type: string }
+          - name: logo
+            label: Logo (ícono junto al nombre, arriba a la izquierda)
+            type: image
+            description: "Imagen cuadrada, idealmente PNG con fondo transparente. Solo el dibujo, sin letras: el nombre TECHREVIVE se escribe al lado automáticamente."
+          - name: favicon
+            label: Ícono de la pestaña del navegador
+            type: image
+            description: "Imagen cuadrada pequeña (PNG de 48×48 px o más)."
 
   # =======================================================================
   - name: paginas
