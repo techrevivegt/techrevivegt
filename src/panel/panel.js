@@ -887,49 +887,103 @@
     return h("div", { class: "alert alert--error" }, e.message);
   }
 
+  /* ── Estadísticas: nombres amigables de páginas y fuentes ── */
+  const ccTag = (cc) => h("span", { class: "cc" }, cc && /^[A-Z]{2}$/.test(cc) && cc !== "XX" && cc !== "T1" ? cc : "··");
+  const cleanTitle = (t) => String(t || "").replace(/\s*[|·]\s*(Aula virtual )?TechRevive.*$/i, "").replace(/^TechRevive\s*\|\s*/i, "").trim();
+  const PAGES_MAP = [
+    [/^\/$/, "🏠", "Inicio"], [/^\/servicios$/, "🛠️", "Servicios"], [/^\/cotizador/, "💲", "Cotizador"],
+    [/^\/quienes-somos/, "👋", "¿Quiénes somos?"], [/^\/capacitacion/, "🧑‍🏫", "Capacitación"], [/^\/cursos/, "📚", "Cursos"],
+    [/^\/inscripcion/, "📝", "Inscripción"], [/^\/aula-virtual/, "💻", "Aula virtual (información)"], [/^\/aula\/ingresar/, "🔑", "Aula · Ingreso"],
+    [/^\/aula\/?$/, "🎓", "Aula · Mis cursos"], [/^\/aula\//, "🎓", null], [/^\/certificado/, "🏅", "Verificación de certificado"],
+    [/^\/blog$/, "📰", "Blog"], [/^\/blog-/, "📝", null], [/^\/preguntas-frecuentes/, "❓", "Preguntas frecuentes"],
+    [/^\/contacto/, "✉️", "Contacto"], [/^\/ubicacion/, "📍", "Ubicación"], [/^\/novedades/, "📣", "Novedades"],
+    [/^\/galeria/, "🖼️", "Galería"], [/^\/redes-sociales/, "📱", "Redes sociales"], [/^\/mapa-del-sitio/, "🗺️", "Mapa del sitio"],
+    [/^\/(reparacion|soporte|desarrollo-web|aplicaciones)/, "🔧", null], [/^\/proceso/, "🔄", "Nuestro proceso"],
+  ];
+  function pageInfo(ruta, titulo) {
+    const r = String(ruta || "/").replace(/\/index\.html$/, "/").replace(/\.html$/, "") || "/";
+    let t = cleanTitle(titulo);
+    for (const [re, icon, name] of PAGES_MAP) {
+      if (!re.test(r)) continue;
+      if (name) return { icon, name, ruta: r };
+      if (r.startsWith("/aula/")) { const parts = t.split(/\s+·\s+/); return { icon, name: "Aula · " + (parts.length > 1 ? parts[0] : t || r), ruta: r }; }
+      if (r.startsWith("/blog-")) return { icon, name: "Blog · " + (t.split(/[:|]/)[0] || r), ruta: r };
+      return { icon, name: t.split(/[:|]/)[0] || r, ruta: r };
+    }
+    return { icon: "📄", name: (t.split(/[:|]/)[0] || r).slice(0, 48), ruta: r };
+  }
+  const pageChip = (ruta, titulo, extra) => { const p = pageInfo(ruta, titulo); return h("span", { class: "chip chip--page", title: p.ruta }, `${p.icon} ${p.name}${extra ? " · " + extra : ""}`); };
+  function refInfo(host) {
+    const x = String(host || "").toLowerCase();
+    if (!x) return ["🔗", "Directo (escribió la dirección o un enlace guardado)"];
+    const known = [[/google\./, "🔎", "Google"], [/bing\./, "🔎", "Bing"], [/(facebook|fb)\.|^m\.facebook|l\.facebook/, "📘", "Facebook"], [/instagram\./, "📸", "Instagram"], [/(whatsapp|wa\.me)/, "💬", "WhatsApp"], [/tiktok\./, "🎵", "TikTok"], [/(youtube|youtu\.be)/, "▶️", "YouTube"], [/linkedin\./, "💼", "LinkedIn"], [/(twitter|t\.co|x\.com)/, "✖️", "X (Twitter)"], [/(chatgpt|openai)/, "🤖", "ChatGPT"]];
+    for (const [re, icon, name] of known) if (re.test(x)) return [icon, name];
+    return ["🌐", x];
+  }
+  const escapeHtml = (t) => String(t == null ? "" : t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmtShort = (s) => { s = Math.round(Number(s) || 0); const hh = Math.floor(s / 3600), mm = Math.floor((s % 3600) / 60), ss = s % 60; return hh ? `${hh}h ${mm}m` : mm ? `${mm}m ${ss}s` : `${ss}s`; };
+  const fmtTime = (ts) => new Date(ts).toLocaleTimeString("es-GT", { timeZone: "America/Guatemala", hour: "2-digit", minute: "2-digit" });
+
   function rankList(title, rows, opts = {}) {
     const max = Math.max(1, ...rows.map((r) => r.n));
     const total = opts.total || rows.reduce((a, r) => a + r.n, 0) || 1;
-    return h("section", { class: "stat-card" }, h("h3", {}, title),
-      rows.length ? h("ul", { class: "rank" }, ...rows.slice(0, opts.limit || 8).map((r) => h("li", {},
-        h("div", { class: "rank__top" }, h("span", { class: "rank__label", title: r.title || r.label }, r.label), h("span", { class: "rank__n" }, fmtN(r.n), h("small", {}, ` ${Math.round(r.n * 100 / total)}%`))),
-        h("div", { class: "rank__bar" }, h("span", { style: `width:${Math.max(2, r.n * 100 / max)}%` })))))
+    return h("section", { class: "stat-card" }, h("h3", { class: "stat-card__kicker" }, title),
+      rows.length ? h("ul", { class: "rank2" }, ...rows.slice(0, opts.limit || 8).map((r) => h("li", { title: `${r.n} · ${Math.round(r.n * 100 / total)}%` },
+        h("span", { class: `chip chip--${opts.kind || "page"}`, title: typeof r.label === "string" ? r.label : r.label.textContent }, r.label),
+        h("span", { class: "rank2__bar" }, h("span", { style: `width:${Math.max(2, r.n * 100 / max)}%` })),
+        h("strong", { class: "rank2__n" }, fmtN(r.n)))))
         : h("p", { class: "muted-sm" }, "Sin datos en este periodo."));
   }
 
-  function dayChart(porDia, desde, dias) {
-    const map = new Map(porDia.map((d) => [d.fecha, d]));
-    const days = [];
-    for (let i = 0; i < dias; i++) {
-      const key = new Date(desde + i * 86400000 - 6 * 3600 * 1000).toISOString().slice(0, 10);
-      days.push(map.get(key) || { fecha: key, visitas: 0, visitantes: 0 });
+  // Barras con el número encima. Hoy → por hora; ≤ 31 días → por día; 90 días → por semana; 1 año → por mes.
+  function barsCard(d) {
+    const tz = 6 * 3600 * 1000;
+    let cols = [], title;
+    if (d.dias === 1) {
+      const m = new Map(d.horas.map((x) => [x.h, x.n]));
+      cols = Array.from({ length: 24 }, (_, i) => ({ v: m.get(i) || 0, l: `${i}h`, t: `${i}:00 – ${i}:59` }));
+      title = "Páginas vistas · hoy por hora";
+    } else {
+      const map = new Map(d.porDia.map((x) => [x.fecha, x]));
+      const days = [];
+      for (let i = 0; i < d.dias; i++) {
+        const key = new Date(d.desde + i * 86400000 - tz).toISOString().slice(0, 10);
+        const x = map.get(key) || { visitas: 0, visitantes: 0 };
+        days.push({ key, v: x.visitas, p: x.visitantes });
+      }
+      const dm = (k) => `${k.slice(8, 10)}/${k.slice(5, 7)}`;
+      // Empieza en el primer día con visitas (sin semanas vacías al inicio), mínimo 7 días.
+      const first = days.findIndex((x) => x.v > 0);
+      if (first > 0) days.splice(0, Math.min(first, Math.max(0, days.length - 7)));
+      if (days.length <= 31) {
+        cols = days.map((x) => ({ v: x.v, l: dm(x.key), t: `${dm(x.key)} · ${fmtN(x.v)} vistas · ${fmtN(x.p)} visitantes` }));
+        title = days.length < d.dias ? `Páginas vistas · últimos ${days.length} días (desde la primera visita)` : `Páginas vistas · últimos ${d.dias} días`;
+      } else {
+        const size = days.length <= 120 ? 7 : 30;
+        for (let i = 0; i < days.length; i += size) {
+          const g = days.slice(i, i + size), v = g.reduce((a, x) => a + x.v, 0);
+          cols.push({ v, l: dm(g[0].key), t: `${dm(g[0].key)} – ${dm(g[g.length - 1].key)} · ${fmtN(v)} vistas` });
+        }
+        title = `Páginas vistas · últimos ${days.length} días (por ${size === 7 ? "semana" : "mes"})`;
+      }
     }
-    const W = 900, H = 220, pad = { l: 36, r: 8, t: 12, b: 26 };
-    const peak = Math.max(4, ...days.map((d) => d.visitas));
-    const unit = Math.ceil(peak / 4 / Math.pow(10, Math.floor(Math.log10(peak / 4)))) * Math.pow(10, Math.floor(Math.log10(peak / 4)));
-    const tick = [1, 2, 3, 5, 10].map((m) => m * Math.pow(10, Math.floor(Math.log10(unit)))).find((t) => t >= unit) || unit;
-    const max = tick * 4;
-    const step = (W - pad.l - pad.r) / days.length, bw = Math.max(2, step * 0.7);
-    const y = (v) => pad.t + (H - pad.t - pad.b) * (1 - v / max);
-    let svg = "";
-    for (let g = 0; g <= 4; g++) { const v = tick * g, yy = y(v); svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${yy}" y2="${yy}" class="grid"/><text x="${pad.l - 6}" y="${yy + 4}" text-anchor="end">${v}</text>`; }
-    const every = Math.ceil(days.length / 10);
-    days.forEach((d, i) => {
-      const x = pad.l + i * step + (step - bw) / 2;
-      const label = new Date(d.fecha + "T12:00:00").toLocaleDateString("es-GT", { day: "numeric", month: "short" });
-      svg += `<g><title>${label}: ${d.visitas} visitas · ${d.visitantes} visitantes</title><rect x="${x}" y="${y(d.visitas)}" width="${bw}" height="${Math.max(0, H - pad.b - y(d.visitas))}" rx="2" class="b1"/><rect x="${x + bw * 0.2}" y="${y(d.visitantes)}" width="${bw * 0.6}" height="${Math.max(0, H - pad.b - y(d.visitantes))}" rx="2" class="b2"/></g>`;
-      if (i % every === 0) svg += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${label}</text>`;
-    });
-    return h("div", { class: "chart", html: `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Visitas por día">${svg}</svg>` });
+    const max = Math.max(1, ...cols.map((c) => c.v));
+    const dense = cols.length > 16;
+    return h("section", { class: "stat-card stat-card--wide" }, h("h3", { class: "stat-card__kicker" }, title),
+      h("div", { class: `vbars${dense ? " vbars--dense" : ""}`, style: `--n:${cols.length}` }, ...cols.map((c, i) => h("div", { class: `vbars__col${c.v ? "" : " is-zero"}`, title: c.t },
+        h("div", { class: "vbars__track" },
+          h("small", { class: "vbars__v" }, c.v ? fmtN(c.v) : ""),
+          h("span", { class: "vbars__bar", style: `height:${c.v ? Math.max(3, c.v * 100 / max) : 0}%` })),
+        h("small", { class: `vbars__l${dense && i % 2 ? " is-alt" : ""}` }, c.l)))));
   }
 
   function hourChart(horas) {
     const m = new Map(horas.map((x) => [x.h, x.n]));
     const vals = Array.from({ length: 24 }, (_, i) => m.get(i) || 0);
     const max = Math.max(1, ...vals);
-    return h("section", { class: "stat-card" }, h("h3", {}, "🕑 Horario de visitas (hora de Guatemala)"),
-      h("div", { class: "hours" }, ...vals.map((v, i) => h("div", { class: "hours__col", title: `${i}:00 – ${i}:59 · ${v} visitas` },
-        h("span", { style: `height:${Math.max(3, v * 100 / max)}%` }), h("small", {}, i % 3 === 0 ? String(i) : "")))));
+    return h("section", { class: "stat-card" }, h("h3", { class: "stat-card__kicker" }, "🕑 Horario de visitas (hora de Guatemala)"),
+      h("div", { class: "hours" }, ...vals.map((v, i) => h("div", { class: "hours__col", title: `${i}:00 – ${i}:59 · ${v} vistas` },
+        h("span", { style: `height:${v ? Math.max(4, v * 100 / max) : 0}%` }), h("small", {}, i % 3 === 0 ? String(i) : "")))));
   }
 
   function loadLeaflet() {
@@ -938,7 +992,7 @@
     S.leafletP = new Promise((res, rej) => {
       const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"; document.head.append(css);
       const js = document.createElement("script"); js.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-      js.onload = () => res(window.L); js.onerror = () => { S.leafletP = null; rej(new Error("No se pudo cargar el mapa.")); };
+      js.onload = () => res(window.L); js.onerror = () => { S.leafletP = null; rej(new Error("No se pudo cargar el mapa (revisa tu conexión a internet).")); };
       document.head.append(js);
     });
     return S.leafletP;
@@ -950,85 +1004,114 @@
       loadLeaflet().then((L) => {
         box.replaceChildren();
         const map = L.map(box, { scrollWheelZoom: false, worldCopyJump: true }).setView([15.5, -90.3], 3);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(map);
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© Colaboradores de OpenStreetMap" }).addTo(map);
         const max = Math.max(...points.map((p) => p.n));
         const layer = L.featureGroup().addTo(map);
         points.forEach((p) => {
-          L.circleMarker([p.lat, p.lon], { radius: 5 + 14 * Math.sqrt(p.n / max), color: "#1D4ED8", weight: 1.5, fillColor: "#3B82F6", fillOpacity: 0.45 })
-            .bindTooltip(`${flag(p.pais)} ${p.ciudad || countryName(p.pais)} · ${fmtN(p.n)} visitas`).addTo(layer);
+          const place = [p.ciudad, p.region].filter(Boolean).join(", ") || countryName(p.pais);
+          const html = `<strong>${escapeHtml(place)}</strong><br>${escapeHtml(countryName(p.pais))}<br>${fmtN(p.n)} visita${p.n === 1 ? "" : "s"} · ${fmtN(p.p || 1)} persona${(p.p || 1) === 1 ? "" : "s"} distinta${(p.p || 1) === 1 ? "" : "s"}`;
+          L.circleMarker([p.lat, p.lon], { radius: 6 + 16 * Math.sqrt(p.n / max), color: "#1D4ED8", weight: 2, fillColor: "#3B82F6", fillOpacity: 0.5 })
+            .bindTooltip(`${place} · ${fmtN(p.n)}`).bindPopup(html).addTo(layer);
         });
         if (points.length > 1) map.fitBounds(layer.getBounds().pad(0.3), { maxZoom: 7 }); else map.setView([points[0].lat, points[0].lon], 7);
         setTimeout(() => map.invalidateSize(), 200);
       }).catch((e) => { box.replaceChildren(h("p", { class: "muted-sm", style: "padding:16px" }, e.message)); });
     }
-    return h("section", { class: "stat-card stat-card--wide" }, h("h3", {}, "🗺️ Mapa de visitantes"), box);
+    return h("section", { class: "stat-card stat-card--wide" }, h("h3", { class: "stat-card__kicker" }, "🗺️ Mapa de visitas · de dónde entran"), box,
+      h("p", { class: "muted-sm stat-note" }, "Cada círculo es un lugar desde donde entraron (más grande = más visitas). Toca un círculo para ver cuántas visitas y cuántas personas distintas."));
+  }
+
+  function sectionsCard(rows) {
+    const max = Math.max(1, ...rows.map((r) => r.tiempo));
+    const LIM = 15;
+    const more = rows.length > LIM ? h("button", { type: "button", class: "btn btn--ghost btn--sm secs__more", onclick: (e) => { e.currentTarget.closest("section").classList.add("is-all"); e.currentTarget.remove(); } }, `Ver las ${rows.length} secciones`) : null;
+    return h("section", { class: "stat-card stat-card--wide secs-card" }, h("h3", { class: "stat-card__kicker" }, "⏱️ Tiempo por sección (lo que cada persona vio y cuánto se quedó)"),
+      rows.length ? h("ul", { class: "secs" }, ...rows.map((r, i) => h("li", { class: i >= LIM ? "is-extra" : "" },
+        pageChip(r.ruta, r.titulo, r.seccion),
+        h("span", { class: "rank2__bar" }, h("span", { style: `width:${Math.max(1.5, r.tiempo * 100 / max)}%` })),
+        h("span", { class: "secs__n" }, h("strong", {}, fmtShort(r.tiempo)), h("small", {}, `${fmtN(r.veces)}× · promedio ${fmtShort(r.veces ? r.tiempo / r.veces : 0)}`)))))
+        : null, more,
+      rows.length ? null : h("p", { class: "muted-sm" }, "Todavía no hay datos de secciones en este periodo. Se miden desde esta versión del sitio: cuando alguien recorra una página, aquí verás cuánto tiempo pasó en la portada, los servicios, el contacto, etc."));
+  }
+
+  function detailCard(rows, dias) {
+    const tbody = h("tbody", {});
+    const search = h("input", { type: "search", class: "input input--sm", placeholder: "Buscar ciudad, IP, página, visitante…" });
+    const paintRows = (q) => {
+      q = (q || "").toLowerCase().trim();
+      const list = q ? rows.filter((r) => [r.ruta, pageInfo(r.ruta, r.titulo).name, r.ciudad, r.region, countryName(r.pais), r.ip, r.navegador, r.so, r.dispositivo, r.ref, r.usuario, (r.vid || "").slice(0, 8), (r.secciones || []).map((x) => x.s).join(" ")].join(" ").toLowerCase().includes(q)) : rows;
+      tbody.replaceChildren(...list.map((r) => {
+        const p = pageInfo(r.ruta, r.titulo);
+        const secs = (r.secciones || []).slice(0, 3);
+        const vshort = (r.vid || "").slice(0, 8);
+        return h("tr", {},
+          h("td", { class: "nowrap" }, h("strong", {}, fmtDT(r.ts)), r.inicio && r.inicio < r.ts - 30000 ? h("small", { class: "muted-sm block" }, `sesión desde ${fmtTime(r.inicio)}`) : null),
+          h("td", {}, h("strong", { title: p.ruta }, `${p.icon} ${p.name}`),
+            h("small", { class: "muted-sm block", title: (r.secciones || []).map((x) => `${x.s} ${fmtShort(x.t)}`).join(" · ") }, secs.length ? secs.map((x) => `${x.s} ${fmtShort(x.t)}`).join(" · ") + ((r.secciones || []).length > 3 ? ` · +${r.secciones.length - 3}` : "") : "abrió la página")),
+          h("td", { class: "nowrap" }, r.duracion ? h("strong", {}, fmtShort(r.duracion)) : h("span", { class: "muted-sm" }, "—")),
+          h("td", {}, `${devIcon(r.dispositivo)} ${r.dispositivo || ""}`, h("small", { class: "muted-sm block" }, [r.navegador, r.so, r.pantalla && r.pantalla !== "0x0" ? r.pantalla : ""].filter(Boolean).join(" · "))),
+          h("td", {}, h("span", { class: "nowrap" }, ccTag(r.pais), " ", r.ciudad || countryName(r.pais)), h("small", { class: "muted-sm block" }, [r.region, countryName(r.pais)].filter(Boolean).join(", "))),
+          h("td", { class: "mono ip" }, r.ip || ""),
+          h("td", {}, vshort ? h("button", { type: "button", class: "vid", title: "Ver todas las visitas de esta persona", onclick: () => { search.value = vshort; paintRows(vshort); } }, vshort) : ""),
+          h("td", {}, r.usuario ? h("span", { class: "badge badge--ok" }, `🎓 ${r.usuario}`) : h("span", { class: "muted-sm" }, "—")),
+          h("td", {}, (() => { const [ic, nm] = refInfo(r.ref); return r.ref ? h("span", { title: r.ref }, `${ic} ${nm}`) : h("span", { class: "muted-sm" }, "Directo"); })()));
+      }));
+    };
+    search.oninput = (e) => paintRows(e.target.value);
+    paintRows("");
+    return h("section", { class: "stat-card stat-card--wide stat-detail" },
+      h("div", { class: "stat-detail__head" }, h("h3", {}, `🧾 Detalle de cada visita (últimas ${fmtN(rows.length)})`),
+        h("div", { class: "stat-detail__tools" }, search, h("a", { class: "btn btn--sm btn--white", href: `/api/estadisticas/csv?dias=${dias}` }, "⬇ CSV para Excel"))),
+      h("div", { class: "table-wrap table-wrap--scroll" }, h("table", { class: "table table--compact table--static table--visits" },
+        h("thead", {}, h("tr", {}, ...["Cuándo (hora Guatemala)", "Página / sección", "Tiempo", "Dispositivo", "Lugar", "IP", "Visitante", "Alumno", "Vino de"].map((t) => h("th", {}, t)))), tbody)),
+      h("p", { class: "muted-sm stat-note" }, "La ubicación es aproximada (la da la conexión a internet). «Visitante» es un código anónimo por navegador: tócalo para ver todo lo que hizo esa persona. El CSV trae todas las visitas del periodo."));
   }
 
   async function renderStats(sec) {
     const dias = Number(sessionStorage.getItem("tr-stats-dias")) || 30;
     const periods = [[1, "Hoy"], [7, "7 días"], [30, "30 días"], [90, "90 días"], [365, "1 año"]];
+    const periodName = (periods.find((p) => p[0] === dias) || [0, `${dias} días`])[1].toLowerCase();
     const noTrack = localStorage.getItem("tr-noseguir") === "1";
     const toolbar = h("div", { class: "toolbar" },
-      h("div", { class: "seg", role: "group", "aria-label": "Periodo" }, ...periods.map(([d, l]) => h("button", { type: "button", class: d === dias ? "is-on" : "", onclick: () => { sessionStorage.setItem("tr-stats-dias", d); renderStats(sec); } }, l))),
+      h("div", { class: "seg", role: "group", "aria-label": "Periodo" }, ...periods.map(([n, l]) => h("button", { type: "button", class: n === dias ? "is-on" : "", onclick: () => { sessionStorage.setItem("tr-stats-dias", n); renderStats(sec); } }, l))),
       h("div", { class: "toolbar__left" },
         h("label", { class: "check-inline", title: "Tus propias visitas desde este navegador no se contarán" },
           h("input", { type: "checkbox", checked: noTrack, onchange: (e) => { if (e.target.checked) localStorage.setItem("tr-noseguir", "1"); else localStorage.removeItem("tr-noseguir"); toast(e.target.checked ? "Listo: tus visitas desde este navegador ya no se cuentan." : "Tus visitas desde este navegador se volverán a contar.", "ok"); } }),
           " No contar mis visitas"),
-        h("a", { class: "btn btn--ghost btn--sm", href: `/api/estadisticas/csv?dias=${dias}` }, "⬇ Exportar CSV"),
         h("button", { class: "btn btn--ghost btn--sm", type: "button", onclick: () => renderStats(sec) }, "↻ Actualizar")));
     contentEl.replaceChildren(toolbar, loading("Calculando estadísticas…"));
     let d;
     try { d = await api("GET", `estadisticas?dias=${dias}`); } catch (e) { if (e.message !== "sesión") contentEl.replaceChildren(toolbar, dbError(e)); return; }
-    const R = d.resumen;
-    const kpi = (emoji, label, value, hint) => h("div", { class: "kpi" }, h("span", { class: "kpi__emoji" }, emoji), h("div", {}, h("strong", {}, value), h("span", {}, label), hint ? h("small", {}, hint) : null));
-    const kpis = h("div", { class: "kpis" },
-      kpi("👁️", "Visitas (páginas vistas)", fmtN(R.visitas)),
-      kpi("🧑", "Visitantes únicos", fmtN(R.visitantes)),
-      kpi("⏱️", "Tiempo total en el sitio", fmtDur(R.tiempo)),
-      kpi("⌛", "Tiempo promedio por visitante", fmtDur(R.visitantes ? R.tiempo / R.visitantes : 0)),
-      kpi("📄", "Páginas por visita", R.sesiones ? (R.visitas / R.sesiones).toFixed(1) : "0"),
-      kpi("🎓", "Alumnos del aula activos", fmtN(R.alumnos), "con sesión iniciada"));
+    const R = d.resumen, T = d.totales || {};
+    const big = (icon, value, label, hint) => h("div", { class: "kpi2" }, h("span", { class: "kpi2__icon" }, icon), h("div", {}, h("strong", {}, value), h("span", {}, label), hint ? h("small", {}, hint) : null));
+    const band = h("div", { class: "kpi-band" },
+      big("👁️", fmtN(T.hoy), "Vistas hoy"),
+      big("📅", fmtN(T.semana), "Últimos 7 días"),
+      big("🌐", fmtN(T.total), "Total desde el inicio", T.primera ? `desde el ${fmtD(T.primera)}` : ""),
+      big("🧑‍🤝‍🧑", fmtN(R.visitantes), "Visitantes distintos", periodName),
+      big("📄", fmtN(R.paginas), "Páginas con visitas", periodName));
+    const mini = (label, value) => h("div", { class: "kpi-mini" }, h("span", {}, label), h("strong", {}, value));
+    const minis = h("div", { class: "kpi-minis" },
+      mini(`Vistas (${periodName})`, fmtN(R.visitas)),
+      mini("Tiempo total en el sitio", fmtShort(R.tiempo)),
+      mini("Promedio por visitante", fmtShort(R.visitantes ? R.tiempo / R.visitantes : 0)),
+      mini("Páginas por visita", R.sesiones ? (R.visitas / R.sesiones).toFixed(1) : "0"),
+      mini("Alumnos del aula activos", fmtN(R.alumnos)));
     if (!R.visitas) {
-      contentEl.replaceChildren(toolbar, kpis, h("div", { class: "alert alert--info" }, "Todavía no hay visitas registradas en este periodo. Las visitas empiezan a contarse desde que se publica esta versión del sitio. Abre tu sitio en otra pestaña (o desde tu celular) y vuelve a actualizar."));
+      contentEl.replaceChildren(toolbar, band, h("div", { class: "alert alert--info" }, `Todavía no hay visitas registradas en este periodo (${periodName}). Las visitas empiezan a contarse desde que se publica esta versión del sitio. Abre tu sitio en otra pestaña o desde tu celular y pulsa «Actualizar».`));
       return;
     }
-    const pages = h("section", { class: "stat-card stat-card--wide" }, h("h3", {}, "📄 Páginas más visitadas"),
-      h("div", { class: "table-wrap" }, h("table", { class: "table table--compact table--static" },
-        h("thead", {}, h("tr", {}, h("th", {}, "Página"), h("th", { class: "num" }, "Visitas"), h("th", { class: "num" }, "Visitantes"), h("th", { class: "num" }, "Tiempo prom."))),
-        h("tbody", {}, ...d.paginas.map((p) => h("tr", {}, h("td", {}, h("a", { href: p.ruta, target: "_blank", rel: "noopener" }, (p.titulo || p.ruta).replace(/\s*\|\s*TechRevive$/, "")), h("small", { class: "muted-sm block" }, p.ruta)),
-          h("td", { class: "num" }, fmtN(p.visitas)), h("td", { class: "num" }, fmtN(p.visitantes)), h("td", { class: "num" }, fmtDur(p.prom))))))));
-    const rows = d.detalle;
-    const tbody = h("tbody", {});
-    const paintRows = (q) => {
-      q = (q || "").toLowerCase();
-      const list = q ? rows.filter((r) => [r.ruta, r.titulo, r.ciudad, r.region, countryName(r.pais), r.ip, r.navegador, r.so, r.dispositivo, r.ref, r.usuario].join(" ").toLowerCase().includes(q)) : rows;
-      tbody.replaceChildren(...list.map((r) => h("tr", {},
-        h("td", { class: "nowrap" }, fmtDT(r.ts)),
-        h("td", {}, h("span", { title: r.titulo || "" }, r.ruta)),
-        h("td", {}, `${flag(r.pais)} ${[r.ciudad, r.region].filter(Boolean).join(", ") || countryName(r.pais)}`, h("small", { class: "muted-sm block" }, countryName(r.pais))),
-        h("td", {}, `${devIcon(r.dispositivo)} ${r.dispositivo || ""}`, h("small", { class: "muted-sm block" }, r.so || "")),
-        h("td", {}, r.navegador || ""),
-        h("td", { class: "mono" }, r.ip || ""),
-        h("td", { class: "num nowrap" }, r.duracion ? fmtDur(r.duracion) : "—"),
-        h("td", {}, r.ref || h("span", { class: "muted-sm" }, "Directo / interno")),
-        h("td", {}, r.usuario ? h("span", { class: "badge badge--ok" }, r.usuario) : ""))));
-    };
-    paintRows("");
-    const detail = h("section", { class: "stat-card stat-card--wide" },
-      h("div", { class: "stat-card__head" }, h("h3", {}, `🧾 Últimas visitas (${rows.length})`), h("input", { type: "search", class: "input input--sm", placeholder: "Buscar ciudad, IP, página…", oninput: (e) => paintRows(e.target.value) })),
-      h("div", { class: "table-wrap table-wrap--scroll" }, h("table", { class: "table table--compact table--static" },
-        h("thead", {}, h("tr", {}, ...["Fecha y hora", "Página", "Ubicación", "Dispositivo", "Navegador", "IP", "Tiempo", "Llegó desde", "Alumno"].map((t) => h("th", {}, t)))), tbody)),
-      h("p", { class: "muted-sm", style: "margin:10px 0 0" }, "La ubicación es aproximada (por la conexión a internet). Para ver todas las visitas del periodo usa «Exportar CSV» (se abre en Excel)."));
-    contentEl.replaceChildren(toolbar, kpis,
-      h("section", { class: "stat-card stat-card--wide" }, h("div", { class: "stat-card__head" }, h("h3", {}, "📈 Visitas por día"), h("div", { class: "legend" }, h("span", { class: "lg1" }, "Visitas"), h("span", { class: "lg2" }, "Visitantes únicos"))), dayChart(d.porDia, d.desde, d.dias)),
-      h("div", { class: "stat-grid" },
-        rankList("🌎 Países", d.paises.map((x) => ({ label: `${flag(x.pais)} ${countryName(x.pais)}`, n: x.visitas })), { total: R.visitas }),
-        rankList("📍 Ciudades / regiones", d.ciudades.map((x) => ({ label: `${flag(x.pais)} ${[x.ciudad, x.region].filter(Boolean).join(", ") || countryName(x.pais)}`, n: x.visitas })), { total: R.visitas }),
-        rankList("📱 Dispositivos", d.dispositivos.map((x) => ({ label: `${devIcon(x.k)} ${x.k}`, n: x.n }))),
-        rankList("🌐 Navegadores", d.navegadores.map((x) => ({ label: x.k, n: x.n }))),
-        rankList("🖥️ Sistemas operativos", d.sistemas.map((x) => ({ label: x.k, n: x.n }))),
-        rankList("🔗 Llegaron desde", d.referentes.map((x) => ({ label: x.k, n: x.n })), { total: R.visitas })),
-      mapCard(d.mapa), hourChart(d.horas), pages, detail);
+    const total = R.visitas;
+    const grid = h("div", { class: "stat-grid" },
+      rankList("📄 Por página", d.paginas.map((x) => { const p = pageInfo(x.ruta, x.titulo); return { label: `${p.icon} ${p.name}`, n: x.visitas }; }), { total, kind: "page" }),
+      rankList("📱 Dispositivo", d.dispositivos.map((x) => ({ label: `${devIcon(x.k)} ${x.k || "Otro"}`, n: x.n })), { kind: "dev" }),
+      rankList("🌎 País", d.paises.map((x) => ({ label: h("span", {}, ccTag(x.pais), " ", countryName(x.pais)), n: x.visitas })), { total, kind: "geo" }),
+      rankList("📍 Ciudad / región", d.ciudades.map((x) => ({ label: [x.ciudad, x.region].filter(Boolean).join(", ") || `${countryName(x.pais)} (sin ciudad)`, n: x.visitas })), { total, kind: "geo" }),
+      rankList("🌐 Navegador", d.navegadores.map((x) => ({ label: x.k || "Otro", n: x.n })), { kind: "nav" }),
+      rankList("🖥️ Sistema", d.sistemas.map((x) => ({ label: x.k || "Otro", n: x.n })), { kind: "nav" }),
+      rankList("🔗 Vino de", d.referentes.map((x) => { const [ic, nm] = refInfo(x.k); return { label: `${ic} ${x.k ? nm : "Directo"}`, n: x.n }; }), { total, kind: "ref" }),
+      d.dias > 1 ? hourChart(d.horas) : null);
+    contentEl.replaceChildren(toolbar, band, minis, barsCard(d), grid, mapCard(d.mapa), sectionsCard(d.secciones || []), detailCard(d.detalle, dias));
   }
 
   /* ── Certificados ── */

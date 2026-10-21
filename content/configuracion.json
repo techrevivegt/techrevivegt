@@ -6,11 +6,11 @@
     "favicon": "/img/favicon.png"
   },
   "contacto": {
-    "whatsapp": "50249091826",
-    "whatsapp_visible": "+502 49091826",
+    "whatsapp": "50200000000",
+    "whatsapp_visible": "+502 0000-0000",
     "mensaje_whatsapp": "Hola TechRevive, me gustaría recibir información sobre sus servicios.",
-    "correo": "techrevive.gt@gmail.com",
-    "direccion": "",
+    "correo": "contacto@tudominio.com",
+    "direccion": "Tu dirección aquí, Guatemala",
     "busqueda_mapa": "Ciudad de Guatemala, Guatemala",
     "horario": "Lun a vie: 8:00 – 18:00 · Sáb: 8:00 – 13:00"
   },
@@ -31,7 +31,7 @@
     "linkedin": ""
   },
   "aula_virtual": "",
-  "base_datos": "aa2fa7d7-665a-40c6-b94f-34166766c450",
+  "base_datos": "",
   "panel": {
     "usuario_github": "techrevivegt",
     "repositorio": "techrevivegt",

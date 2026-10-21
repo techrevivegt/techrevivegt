@@ -167,8 +167,13 @@ Sin este paso el sitio, el panel y el aula funcionan igual; solo quedan apagadas
 
 ### Estadísticas de visitas (requiere el Paso 6)
 
-- **📊 Estadísticas de visitas** muestra: visitas, visitantes únicos, tiempo total y promedio, páginas por visita y alumnos activos. También: gráfica por día, países, ciudades, dispositivos, navegadores, sistemas, de dónde llegaron (Google, Facebook, WhatsApp…), mapa, horario, páginas más vistas y las últimas 300 visitas con fecha, página, ubicación, dispositivo, **IP**, tiempo y origen.
-- Elige el periodo: Hoy, 7, 30 o 90 días, o 1 año. **Exportar CSV** descarga todas las visitas del periodo para abrirlas en Excel.
+- **📊 Estadísticas de visitas** muestra arriba: vistas de hoy, de los últimos 7 días, total desde el inicio, visitantes distintos y páginas con visitas. Debajo: tiempo total en el sitio, promedio por visitante, páginas por visita y alumnos activos.
+- **Gráfica de páginas vistas** por día, con el número sobre cada barra. En 90 días o 1 año agrupa por semana o mes.
+- **Listas:** por página, dispositivo, país, ciudad/región, navegador, sistema y de dónde llegaron (Directo, Google, Facebook, Instagram, WhatsApp…). También el horario de visitas (hora de Guatemala).
+- **Mapa:** cada círculo es un lugar desde donde entraron. Tócalo para ver las visitas y las personas.
+- **⏱️ Tiempo por sección:** cuánto tiempo pasaron en cada parte de cada página (Portada, Servicios, Testimonios, Contacto…). En el aula: Video, Lectura, Cuestionario, Tarea… Solo cuenta mientras la pestaña está a la vista y la persona no está inactiva.
+- **Detalle de cada visita** (las últimas 300): fecha, página y secciones vistas, tiempo, dispositivo, lugar, **IP**, visitante, alumno y de dónde llegó. Usa el buscador (ciudad, IP, página…) o toca el código de **visitante** para ver todo lo que hizo esa persona.
+- Elige el periodo: Hoy, 7, 30 o 90 días, o 1 año. **CSV para Excel** descarga todas las visitas (con las secciones vistas) del periodo para abrirlas en Excel.
 - **No contar mis visitas:** márcalo en cada navegador y celular que uses tú o tu equipo, para que sus visitas no inflen los números.
 - Las visitas de robots (Google, buscadores, vistas previas de enlaces) no se cuentan. La ubicación es aproximada (la da la conexión a internet). Se guardan 400 días.
 - **Privacidad:** se guarda la IP completa. Te recomendamos mencionarlo en una página de privacidad o en el pie del sitio.

@@ -409,6 +409,9 @@ function ensureSchema(env) {
     schemaReady = env.DB.batch([
       env.DB.prepare("CREATE TABLE IF NOT EXISTS visitas (id INTEGER PRIMARY KEY AUTOINCREMENT, pid TEXT UNIQUE, ts INTEGER NOT NULL, vid TEXT, sid TEXT, ruta TEXT, titulo TEXT, ref TEXT, pais TEXT, region TEXT, ciudad TEXT, lat REAL, lon REAL, ip TEXT, dispositivo TEXT, so TEXT, navegador TEXT, pantalla TEXT, idioma TEXT, duracion INTEGER DEFAULT 0, usuario TEXT)"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS visitas_ts ON visitas(ts)"),
+      env.DB.prepare("CREATE INDEX IF NOT EXISTS visitas_sid ON visitas(sid)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS secciones (pid TEXT NOT NULL, seccion TEXT NOT NULL, ts INTEGER NOT NULL, segundos INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (pid, seccion))"),
+      env.DB.prepare("CREATE INDEX IF NOT EXISTS secciones_ts ON secciones(ts)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS progreso (usuario TEXT NOT NULL, leccion TEXT NOT NULL, ts INTEGER NOT NULL, nota INTEGER, PRIMARY KEY (usuario, leccion))"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS certificados (id TEXT PRIMARY KEY, usuario TEXT, nombre TEXT NOT NULL, curso TEXT, curso_titulo TEXT NOT NULL, horas TEXT, nota INTEGER, estado TEXT NOT NULL, origen TEXT, motivo TEXT, solicitado INTEGER, emitido INTEGER, fecha TEXT)"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS cert_usuario ON certificados(usuario, curso)"),
@@ -501,10 +504,23 @@ async function handleBeacon(request, env, url, route, method) {
     await ensureSchema(env);
     if (route === "v/fin") {
       const dur = Math.max(0, Math.min(4 * 3600, Math.round(Number(d.d) || 0)));
-      await env.DB.prepare("UPDATE visitas SET duracion = MAX(duracion, ?) WHERE pid = ? AND ts > ?").bind(dur, d.pid, Date.now() - 6 * 3600 * 1000).run();
+      const visit = await env.DB.prepare("SELECT ts FROM visitas WHERE pid = ? AND ts > ?").bind(d.pid, Date.now() - 6 * 3600 * 1000).first();
+      if (!visit) return ok();
+      const stmts = [env.DB.prepare("UPDATE visitas SET duracion = MAX(duracion, ?) WHERE pid = ?").bind(dur, d.pid)];
+      if (d.s && typeof d.s === "object" && !Array.isArray(d.s)) {
+        for (const [k, v] of Object.entries(d.s).slice(0, 30)) {
+          const name = clip(String(k).replace(/[\u0000-\u001f<>]/g, "").replace(/\s+/g, " ").trim(), 60);
+          const secs = Math.max(0, Math.min(dur || 4 * 3600, Math.round(Number(v) || 0)));
+          if (name && secs > 0) {
+            stmts.push(env.DB.prepare("INSERT INTO secciones (pid, seccion, ts, segundos) VALUES (?, ?, ?, ?) ON CONFLICT(pid, seccion) DO UPDATE SET segundos = MAX(segundos, excluded.segundos)").bind(d.pid, name, visit.ts, secs));
+          }
+        }
+      }
+      await env.DB.batch(stmts);
       return ok();
     }
-    const ruta = clip(d.r, 300);
+    // Rutas limpias: /cotizador.html → /cotizador · /aula/index.html → /aula/
+    const ruta = clip(d.r, 300).replace(/\/index\.html$/, "/").replace(/\.html$/, "");
     if (!ruta.startsWith("/") || ruta.startsWith("/panel") || ruta.startsWith("/admin")) return ok();
     const cf = request.cf || {};
     let ref = clip(d.f, 300);
@@ -520,7 +536,10 @@ async function handleBeacon(request, env, url, route, method) {
       cf.latitude != null ? Number(cf.latitude) : null, cf.longitude != null ? Number(cf.longitude) : null,
       clip(request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for") || "", 64),
       dispositivo, so, navegador, clip(d.s, 20), clip(d.l, 12), usuario).run();
-    if (Math.random() < 0.01) await env.DB.prepare("DELETE FROM visitas WHERE ts < ?").bind(Date.now() - 400 * 86400 * 1000).run();
+    if (Math.random() < 0.01) {
+      const limite = Date.now() - 400 * 86400 * 1000;
+      await env.DB.batch([env.DB.prepare("DELETE FROM visitas WHERE ts < ?").bind(limite), env.DB.prepare("DELETE FROM secciones WHERE ts < ?").bind(limite)]);
+    }
   } catch { /* las estadísticas nunca deben romper el sitio */ }
   return ok();
 }
@@ -539,17 +558,17 @@ async function handlePanelDb(request, env, url, route, method) {
     const hoy0 = Math.floor((Date.now() + tz) / 86400000) * 86400000 - tz;
     const desde = hoy0 - (dias - 1) * 86400000;
     if (route === "estadisticas/csv") {
-      const rows = (await DB.prepare("SELECT ts, ruta, titulo, pais, region, ciudad, ip, dispositivo, so, navegador, pantalla, idioma, duracion, ref, usuario FROM visitas WHERE ts >= ? ORDER BY ts DESC LIMIT 20000").bind(desde).all()).results || [];
-      const head = ["fecha_hora_gt", "pagina", "titulo", "pais", "region", "ciudad", "ip", "dispositivo", "sistema", "navegador", "pantalla", "idioma", "segundos", "llego_desde", "alumno"];
+      const rows = (await DB.prepare("SELECT ts, ruta, titulo, pais, region, ciudad, ip, dispositivo, so, navegador, pantalla, idioma, duracion, ref, usuario, vid, (SELECT GROUP_CONCAT(seccion || ' ' || segundos || 's', '; ') FROM secciones s WHERE s.pid = visitas.pid) AS secciones FROM visitas WHERE ts >= ? ORDER BY ts DESC LIMIT 20000").bind(desde).all()).results || [];
+      const head = ["fecha_hora_gt", "pagina", "titulo", "secciones_vistas", "segundos", "pais", "region", "ciudad", "ip", "dispositivo", "sistema", "navegador", "pantalla", "idioma", "llego_desde", "visitante", "alumno"];
       const esc = (v) => { const t = String(v == null ? "" : v); return /[",\n;]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t; };
       const fmt = (ts) => new Date(ts + tz).toISOString().replace("T", " ").slice(0, 19);
-      const lines = [head.join(",")].concat(rows.map((r) => [fmt(r.ts), r.ruta, r.titulo, r.pais, r.region, r.ciudad, r.ip, r.dispositivo, r.so, r.navegador, r.pantalla, r.idioma, r.duracion, r.ref, r.usuario].map(esc).join(",")));
+      const lines = [head.join(",")].concat(rows.map((r) => [fmt(r.ts), r.ruta, r.titulo, r.secciones, r.duracion, r.pais, r.region, r.ciudad, r.ip, r.dispositivo, r.so, r.navegador, r.pantalla, r.idioma, r.ref || "directo", (r.vid || "").slice(0, 8), r.usuario].map(esc).join(",")));
       return new Response("\ufeff" + lines.join("\n"), { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="visitas-techrevive-${dias}dias.csv"`, "Cache-Control": "no-store" } });
     }
     const q = (sql, ...b) => DB.prepare(sql).bind(...b);
     const W = "FROM visitas WHERE ts >= ?";
     const res = await DB.batch([
-      q(`SELECT COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes, COUNT(DISTINCT sid) AS sesiones, COALESCE(SUM(duracion),0) AS tiempo, COUNT(DISTINCT pais) AS paises, COUNT(DISTINCT usuario) AS alumnos ${W}`, desde),
+      q(`SELECT COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes, COUNT(DISTINCT sid) AS sesiones, COALESCE(SUM(duracion),0) AS tiempo, COUNT(DISTINCT pais) AS paises, COUNT(DISTINCT usuario) AS alumnos, COUNT(DISTINCT ruta) AS paginas ${W}`, desde),
       q(`SELECT CAST((ts + ${tz}) / 86400000 AS INTEGER) AS d, COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes ${W} GROUP BY d ORDER BY d`, desde),
       q(`SELECT ruta, MAX(titulo) AS titulo, COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes, CAST(AVG(duracion) AS INTEGER) AS prom ${W} GROUP BY ruta ORDER BY visitas DESC LIMIT 30`, desde),
       q(`SELECT pais, COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes ${W} GROUP BY pais ORDER BY visitas DESC LIMIT 30`, desde),
@@ -557,18 +576,27 @@ async function handlePanelDb(request, env, url, route, method) {
       q(`SELECT dispositivo AS k, COUNT(*) AS n ${W} GROUP BY k ORDER BY n DESC`, desde),
       q(`SELECT navegador AS k, COUNT(*) AS n ${W} GROUP BY k ORDER BY n DESC LIMIT 12`, desde),
       q(`SELECT so AS k, COUNT(*) AS n ${W} GROUP BY k ORDER BY n DESC LIMIT 12`, desde),
-      q(`SELECT ref AS k, COUNT(*) AS n ${W} AND ref <> '' GROUP BY k ORDER BY n DESC LIMIT 15`, desde),
-      q(`SELECT ROUND(lat, 1) AS lat, ROUND(lon, 1) AS lon, MAX(ciudad) AS ciudad, MAX(pais) AS pais, COUNT(*) AS n ${W} AND lat IS NOT NULL GROUP BY ROUND(lat, 1), ROUND(lon, 1) ORDER BY n DESC LIMIT 300`, desde),
+      q(`SELECT COALESCE(ref, '') AS k, COUNT(*) AS n ${W} GROUP BY k ORDER BY n DESC LIMIT 15`, desde),
+      q(`SELECT ROUND(lat, 1) AS lat, ROUND(lon, 1) AS lon, MAX(ciudad) AS ciudad, MAX(region) AS region, MAX(pais) AS pais, COUNT(*) AS n, COUNT(DISTINCT vid) AS p ${W} AND lat IS NOT NULL GROUP BY ROUND(lat, 1), ROUND(lon, 1) ORDER BY n DESC LIMIT 300`, desde),
       q(`SELECT CAST(((ts + ${tz}) % 86400000) / 3600000 AS INTEGER) AS h, COUNT(*) AS n ${W} GROUP BY h`, desde),
-      q(`SELECT ts, ruta, titulo, pais, region, ciudad, ip, dispositivo, so, navegador, duracion, ref, usuario, vid ${W} ORDER BY ts DESC LIMIT 300`, desde),
+      q(`SELECT pid, ts, ruta, titulo, pais, region, ciudad, ip, dispositivo, so, navegador, pantalla, duracion, ref, usuario, vid, (SELECT MIN(v2.ts) FROM visitas v2 WHERE v2.sid = visitas.sid AND visitas.sid <> '') AS inicio ${W} ORDER BY ts DESC LIMIT 300`, desde),
+      q(`SELECT SUM(CASE WHEN ts >= ? THEN 1 ELSE 0 END) AS hoy, SUM(CASE WHEN ts >= ? THEN 1 ELSE 0 END) AS semana, COUNT(*) AS total, COUNT(DISTINCT vid) AS visitantes, MIN(ts) AS primera FROM visitas`, hoy0, hoy0 - 6 * 86400000),
+      q(`SELECT v.ruta AS ruta, MAX(v.titulo) AS titulo, s.seccion AS seccion, SUM(s.segundos) AS tiempo, COUNT(*) AS veces FROM secciones s JOIN visitas v ON v.pid = s.pid WHERE v.ts >= ? GROUP BY v.ruta, s.seccion ORDER BY tiempo DESC LIMIT 40`, desde),
+      q(`SELECT pid, seccion, segundos FROM secciones WHERE pid IN (SELECT pid FROM visitas WHERE ts >= ? ORDER BY ts DESC LIMIT 300) ORDER BY segundos DESC`, desde),
     ]);
     const r = (i) => res[i].results || [];
     const tot = r(0)[0] || {};
+    const T = r(12)[0] || {};
+    const porPid = {};
+    for (const x of r(14)) (porPid[x.pid] = porPid[x.pid] || []).push({ s: x.seccion, t: x.segundos });
+    const detalle = r(11).map((x) => { const o = { ...x, secciones: porPid[x.pid] || [] }; delete o.pid; return o; });
     return json({
       dias, desde,
-      resumen: { visitas: tot.visitas || 0, visitantes: tot.visitantes || 0, sesiones: tot.sesiones || 0, tiempo: tot.tiempo || 0, paises: tot.paises || 0, alumnos: tot.alumnos || 0 },
+      resumen: { visitas: tot.visitas || 0, visitantes: tot.visitantes || 0, sesiones: tot.sesiones || 0, tiempo: tot.tiempo || 0, paises: tot.paises || 0, alumnos: tot.alumnos || 0, paginas: tot.paginas || 0 },
+      totales: { hoy: T.hoy || 0, semana: T.semana || 0, total: T.total || 0, visitantes: T.visitantes || 0, primera: T.primera || null },
+      secciones: r(13),
       porDia: r(1).map((x) => ({ fecha: new Date(x.d * 86400000).toISOString().slice(0, 10), visitas: x.visitas, visitantes: x.visitantes })),
-      paginas: r(2), paises: r(3), ciudades: r(4), dispositivos: r(5), navegadores: r(6), sistemas: r(7), referentes: r(8), mapa: r(9), horas: r(10), detalle: r(11),
+      paginas: r(2), paises: r(3), ciudades: r(4), dispositivos: r(5), navegadores: r(6), sistemas: r(7), referentes: r(8), mapa: r(9), horas: r(10), detalle,
     });
   }
 
