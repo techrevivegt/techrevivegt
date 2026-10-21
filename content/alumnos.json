@@ -1,26 +1,17 @@
 {
   "alumnos": [
     {
-      "nombre": "Cuenta de demostración",
-      "usuario": "demo",
-      "contrasena": "Jade-Antigua-246",
-      "cursos": ["todos"],
+      "nombre": "Elías Cruz",
+      "usuario": "eliascruz90",
+      "contrasena": "260490",
+      "cursos": [
+        "Reparacion de computadoras"
+      ],
       "activo": true,
-      "vence": "",
-      "telefono": "",
-      "correo": "",
-      "notas": "Cuenta para probar el aula. Ve todos los cursos. Desactívala o bórrala cuando ya no la necesites."
-    },
-    {
-      "nombre": "Alumno de prueba",
-      "usuario": "alumno.prueba",
-      "contrasena": "Quetzal-Azul-873",
-      "cursos": ["computacion-basica"],
-      "activo": true,
-      "vence": "2027-06-30",
-      "telefono": "",
-      "correo": "",
-      "notas": "Ejemplo de alumno con un solo curso y fecha de vencimiento."
+      "vence": "2026-10-25",
+      "telefono": "58567755",
+      "correo": "eliascruz2690@gmail.com",
+      "notas": ""
     }
   ]
 }
