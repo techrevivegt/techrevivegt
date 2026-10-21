@@ -16,6 +16,9 @@
     "GITHUB_REPO": "techrevivegt/techrevivegt",
     "GITHUB_BRANCH": "main"
   }
+  // La base de datos (estadísticas, certificados y progreso del aula) NO se
+  // escribe aquí: build.py la agrega sola al publicar si pegaste su ID en
+  // Panel → Configuración general → «ID de la base de datos».
   // Los secretos PANEL_PASSWORD y GITHUB_TOKEN se agregan en Cloudflare:
   // tu Worker → Settings → Variables and Secrets → Add → tipo "Secret".
 }

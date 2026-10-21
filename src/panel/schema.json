@@ -136,6 +136,12 @@
           "description": "Déjalo VACÍO para usar el aula virtual propia del sitio (/aula/). Solo escribe un enlace si prefieres Google Classroom, Moodle u otra plataforma."
         },
         {
+          "name": "base_datos",
+          "label": "🗄️ ID de la base de datos (estadísticas y certificados)",
+          "type": "string",
+          "description": "Activa las estadísticas de visitas, los certificados y el progreso del aula guardado en la cuenta del alumno. En Cloudflare: Storage & databases → D1 → Create database → nombre techrevive-datos → copia el «Database ID» (ej. 1a2b3c4d-…) y pégalo aquí. Déjalo vacío si aún no la creas: el sitio funciona igual."
+        },
+        {
           "name": "formulario",
           "label": "📨 Formularios",
           "type": "object",
@@ -185,6 +191,12 @@
           ]
         }
       ]
+    },
+    {
+      "id": "estadisticas",
+      "label": "📊 Estadísticas de visitas",
+      "type": "custom",
+      "view": "estadisticas"
     },
     {
       "group": "📄 Páginas",
@@ -1925,68 +1937,126 @@
       "group": "🖥️ Aula virtual",
       "items": [
         {
-          "id": "aula",
-          "label": "📘 Cursos del aula",
-          "type": "file",
-          "path": "content/aula.json",
-          "fields": [
+          "id": "aula-cursos",
+          "label": "📚 Cursos del aula",
+          "type": "collection",
+          "path": "content/aula-cursos",
+          "itemLabel": "curso",
+          "itemsLabel": "cursos",
+          "sort": "orden",
+          "wrap": "flat",
+          "wrapTitle": "Datos del curso",
+          "intro": "Cada curso es un archivo. El nombre del archivo es su identificador (lo que pones en «Cursos» de cada alumno) y su dirección: /aula/identificador/.",
+          "columns": [
             {
-              "name": "habilitada",
-              "label": "Aula virtual activa",
-              "type": "boolean",
-              "default": true,
-              "description": "Si la desactivas, el aula deja de mostrarse y el botón del sitio vuelve a decir «Próximamente»."
+              "name": "titulo",
+              "label": "Curso"
             },
             {
-              "name": "nombre",
-              "label": "Nombre del aula",
+              "name": "orden",
+              "label": "Orden"
+            },
+            {
+              "name": "nivel",
+              "label": "Nivel"
+            },
+            {
+              "name": "horas",
+              "label": "Horas"
+            },
+            {
+              "name": "modulos",
+              "label": "Lecciones",
+              "type": "count"
+            },
+            {
+              "name": "publicado",
+              "label": "Estado",
+              "type": "estado",
+              "off": "Oculto"
+            }
+          ],
+          "newDefaults": {
+            "publicado": true,
+            "certificado": true,
+            "nivel": "Principiante",
+            "docente": "Equipo de capacitación TechRevive",
+            "modulos": []
+          },
+          "fields": [
+            {
+              "name": "titulo",
+              "label": "Nombre del curso",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "publicado",
+              "label": "Publicado",
+              "type": "boolean",
+              "default": true
+            },
+            {
+              "name": "orden",
+              "label": "Orden en el aula",
+              "type": "number",
+              "description": "1 = primero. Los cursos se muestran de menor a mayor."
+            },
+            {
+              "name": "descripcion",
+              "label": "Descripción",
+              "type": "text"
+            },
+            {
+              "name": "imagen",
+              "label": "Imagen de portada",
+              "type": "image"
+            },
+            {
+              "name": "docente",
+              "label": "Docente / instructor",
               "type": "string"
             },
             {
-              "name": "bienvenida",
-              "label": "Mensaje de bienvenida (en «Mis cursos»)",
-              "type": "text"
+              "name": "duracion",
+              "label": "Duración total",
+              "type": "string",
+              "description": "Ej. 6 semanas · 12 horas."
             },
             {
-              "name": "texto_ingreso",
-              "label": "Texto de la página de ingreso",
-              "type": "text"
+              "name": "horas",
+              "label": "Horas académicas (para el certificado)",
+              "type": "string",
+              "description": "Ej. 24. Aparece en el certificado como «Con una duración de 24 horas»."
             },
             {
-              "name": "nota_minima",
-              "label": "Nota mínima para aprobar cuestionarios (%)",
-              "type": "number",
-              "default": 70
+              "name": "nivel",
+              "label": "Nivel",
+              "type": "string"
             },
             {
-              "name": "avisos",
-              "label": "📢 Avisos para los alumnos",
-              "type": "object",
-              "list": {
-                "summary": "{fecha} · {titulo}"
-              },
-              "fields": [
-                {
-                  "name": "titulo",
-                  "label": "Título",
-                  "type": "string",
-                  "required": true
-                },
-                {
-                  "name": "texto",
-                  "label": "Texto",
-                  "type": "text"
-                },
-                {
-                  "name": "fecha",
-                  "label": "Fecha",
-                  "type": "date"
-                }
-              ]
+              "name": "certificado",
+              "label": "Entrega certificado al terminar",
+              "type": "boolean",
+              "default": true,
+              "description": "El alumno lo solicita al completar el curso y tú lo apruebas en «Certificados»."
             },
             {
-              "name": "cursos",
-              "label": "📚 Cursos",
+              "name": "requisitos",
+              "label": "Requisitos",
+              "type": "string",
+              "description": "Ej. Ninguno, o «Haber aprobado Computación básica»."
+            },
+            {
+              "name": "objetivos",
+              "label": "Lo que aprenderás",
+              "type": "string",
+              "list": true,
+              "description": "Frases cortas; se muestran en la página del curso."
+            },
+            {
+              "name": "modulos",
+              "label": "Módulos",
               "type": "object",
               "list": {
                 "summary": "{titulo}"
@@ -1994,195 +2064,155 @@
               "fields": [
                 {
                   "name": "titulo",
-                  "label": "Nombre del curso",
+                  "label": "Nombre del módulo",
                   "type": "string",
                   "required": true
                 },
                 {
-                  "name": "id",
-                  "label": "Identificador (para asignarlo a alumnos)",
-                  "type": "string",
-                  "description": "Corto, sin espacios ni tildes, ej. computacion-basica. Es la dirección del curso (/aula/computacion-basica/). Evita cambiarlo después: los alumnos lo tienen asignado y perderían su progreso."
-                },
-                {
-                  "name": "publicado",
-                  "label": "Publicado",
-                  "type": "boolean",
-                  "default": true
-                },
-                {
-                  "name": "descripcion",
-                  "label": "Descripción",
-                  "type": "text"
-                },
-                {
-                  "name": "imagen",
-                  "label": "Imagen de portada",
-                  "type": "image"
-                },
-                {
-                  "name": "docente",
-                  "label": "Docente / instructor",
-                  "type": "string"
-                },
-                {
-                  "name": "duracion",
-                  "label": "Duración total",
-                  "type": "string",
-                  "description": "Ej. 6 semanas · 12 horas."
-                },
-                {
-                  "name": "nivel",
-                  "label": "Nivel",
-                  "type": "string"
-                },
-                {
-                  "name": "modulos",
-                  "label": "Módulos",
+                  "name": "lecciones",
+                  "label": "Lecciones",
                   "type": "object",
                   "list": {
-                    "summary": "{titulo}"
+                    "summary": "{titulo} · {tipo}"
                   },
                   "fields": [
                     {
                       "name": "titulo",
-                      "label": "Nombre del módulo",
+                      "label": "Título de la lección",
                       "type": "string",
                       "required": true
                     },
                     {
-                      "name": "lecciones",
-                      "label": "Lecciones",
+                      "name": "tipo",
+                      "label": "Tipo",
+                      "type": "select",
+                      "options": [
+                        {
+                          "value": "video",
+                          "label": "🎬 Video"
+                        },
+                        {
+                          "value": "lectura",
+                          "label": "📖 Lectura"
+                        },
+                        {
+                          "value": "cuestionario",
+                          "label": "📝 Cuestionario"
+                        },
+                        {
+                          "value": "tarea",
+                          "label": "📤 Tarea"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "examen_final",
+                      "label": "Es el examen final del curso",
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Solo para cuestionarios. Para pedir el certificado hay que aprobarlo."
+                    },
+                    {
+                      "name": "duracion",
+                      "label": "Duración aproximada",
+                      "type": "string",
+                      "description": "Ej. 10 min."
+                    },
+                    {
+                      "name": "video",
+                      "label": "Enlace del video (opcional)",
+                      "type": "string",
+                      "description": "Pega el enlace de YouTube, Vimeo o Google Drive (compartido como «Cualquier persona con el enlace»). Tip: en YouTube súbelo como «No listado» para que solo lo vean tus alumnos."
+                    },
+                    {
+                      "name": "contenido",
+                      "label": "Contenido / explicación",
+                      "type": "rich-text"
+                    },
+                    {
+                      "name": "materiales",
+                      "label": "Materiales para descargar",
                       "type": "object",
                       "list": {
-                        "summary": "{titulo} · {tipo}"
+                        "summary": "{titulo}"
                       },
                       "fields": [
                         {
                           "name": "titulo",
-                          "label": "Título de la lección",
+                          "label": "Nombre del material",
+                          "type": "string"
+                        },
+                        {
+                          "name": "archivo",
+                          "label": "Archivo (PDF, Word, Excel, PowerPoint…)",
+                          "type": "file",
+                          "description": "Sube el archivo (máx. 15 MB) o elige uno ya subido."
+                        },
+                        {
+                          "name": "enlace",
+                          "label": "…o un enlace externo",
+                          "type": "string",
+                          "description": "Opcional: Google Drive, un sitio web, etc. Se usa si no hay archivo."
+                        }
+                      ]
+                    },
+                    {
+                      "name": "preguntas",
+                      "label": "Preguntas (solo para cuestionarios)",
+                      "type": "object",
+                      "list": {
+                        "summary": "{pregunta}"
+                      },
+                      "fields": [
+                        {
+                          "name": "pregunta",
+                          "label": "Pregunta",
                           "type": "string",
                           "required": true
                         },
                         {
-                          "name": "tipo",
-                          "label": "Tipo",
-                          "type": "select",
-                          "options": [
-                            {
-                              "value": "video",
-                              "label": "🎬 Video"
-                            },
-                            {
-                              "value": "lectura",
-                              "label": "📖 Lectura"
-                            },
-                            {
-                              "value": "cuestionario",
-                              "label": "📝 Cuestionario"
-                            },
-                            {
-                              "value": "tarea",
-                              "label": "📤 Tarea"
-                            }
-                          ]
-                        },
-                        {
-                          "name": "duracion",
-                          "label": "Duración aproximada",
+                          "name": "opciones",
+                          "label": "Opciones de respuesta",
                           "type": "string",
-                          "description": "Ej. 10 min."
+                          "list": true
                         },
                         {
-                          "name": "video",
-                          "label": "Enlace del video (opcional)",
-                          "type": "string",
-                          "description": "Pega el enlace de YouTube, Vimeo o Google Drive (compartido como «Cualquier persona con el enlace»). Tip: en YouTube súbelo como «No listado» para que solo lo vean tus alumnos."
+                          "name": "correcta",
+                          "label": "Número de la opción correcta",
+                          "type": "number",
+                          "description": "1 = la primera opción, 2 = la segunda, etc."
                         },
                         {
-                          "name": "contenido",
-                          "label": "Contenido / explicación",
-                          "type": "rich-text"
-                        },
-                        {
-                          "name": "materiales",
-                          "label": "Materiales para descargar",
-                          "type": "object",
-                          "list": {
-                            "summary": "{titulo}"
-                          },
-                          "fields": [
-                            {
-                              "name": "titulo",
-                              "label": "Nombre del material",
-                              "type": "string"
-                            },
-                            {
-                              "name": "archivo",
-                              "label": "Archivo (PDF, Word, Excel, PowerPoint…)",
-                              "type": "file",
-                              "description": "Sube el archivo (máx. 15 MB) o elige uno ya subido."
-                            },
-                            {
-                              "name": "enlace",
-                              "label": "…o un enlace externo",
-                              "type": "string",
-                              "description": "Opcional: Google Drive, un sitio web, etc. Se usa si no hay archivo."
-                            }
-                          ]
-                        },
-                        {
-                          "name": "preguntas",
-                          "label": "Preguntas (solo para cuestionarios)",
-                          "type": "object",
-                          "list": {
-                            "summary": "{pregunta}"
-                          },
-                          "fields": [
-                            {
-                              "name": "pregunta",
-                              "label": "Pregunta",
-                              "type": "string",
-                              "required": true
-                            },
-                            {
-                              "name": "opciones",
-                              "label": "Opciones de respuesta",
-                              "type": "string",
-                              "list": true
-                            },
-                            {
-                              "name": "correcta",
-                              "label": "Número de la opción correcta",
-                              "type": "number",
-                              "description": "1 = la primera opción, 2 = la segunda, etc."
-                            },
-                            {
-                              "name": "explicacion",
-                              "label": "Explicación (se muestra al revisar)",
-                              "type": "text"
-                            }
-                          ]
-                        },
-                        {
-                          "name": "fecha_limite",
-                          "label": "Fecha límite (solo para tareas)",
-                          "type": "date",
-                          "default": ""
-                        },
-                        {
-                          "name": "enlace_entrega",
-                          "label": "Enlace para entregar (opcional, solo tareas)",
-                          "type": "string",
-                          "description": "Ej. un Google Forms. Siempre aparece también el botón «Enviar por WhatsApp»."
+                          "name": "explicacion",
+                          "label": "Explicación (se muestra al revisar)",
+                          "type": "text"
                         }
                       ]
+                    },
+                    {
+                      "name": "fecha_limite",
+                      "label": "Fecha límite (solo para tareas)",
+                      "type": "date",
+                      "default": ""
+                    },
+                    {
+                      "name": "enlace_entrega",
+                      "label": "Enlace para entregar (opcional, solo tareas)",
+                      "type": "string",
+                      "description": "Ej. un Google Forms. Siempre aparece también el botón «Enviar por WhatsApp»."
                     }
                   ]
                 }
-              ]
+              ],
+              "description": "Cada módulo agrupa lecciones. Ojo: si cambias el título de una lección, el progreso de esa lección se reinicia para los alumnos."
             }
           ]
+        },
+        {
+          "id": "certificados",
+          "label": "🏅 Certificados",
+          "type": "custom",
+          "view": "certificados"
         },
         {
           "id": "alumnos",
@@ -2254,6 +2284,138 @@
                   "name": "notas",
                   "label": "Notas internas (el alumno no las ve)",
                   "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "aula",
+          "label": "⚙️ Ajustes del aula y certificado",
+          "type": "file",
+          "path": "content/aula.json",
+          "fields": [
+            {
+              "name": "habilitada",
+              "label": "Aula virtual activa",
+              "type": "boolean",
+              "default": true,
+              "description": "Si la desactivas, el aula deja de mostrarse y el botón del sitio vuelve a decir «Próximamente»."
+            },
+            {
+              "name": "nombre",
+              "label": "Nombre del aula",
+              "type": "string"
+            },
+            {
+              "name": "bienvenida",
+              "label": "Mensaje de bienvenida (en «Mis cursos»)",
+              "type": "text"
+            },
+            {
+              "name": "texto_ingreso",
+              "label": "Texto de la página de ingreso",
+              "type": "text"
+            },
+            {
+              "name": "nota_minima",
+              "label": "Nota mínima para aprobar cuestionarios y exámenes (%)",
+              "type": "number",
+              "default": 70
+            },
+            {
+              "name": "avisos",
+              "label": "📢 Avisos para los alumnos",
+              "type": "object",
+              "list": {
+                "summary": "{fecha} · {titulo}"
+              },
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "texto",
+                  "label": "Texto",
+                  "type": "text"
+                },
+                {
+                  "name": "fecha",
+                  "label": "Fecha",
+                  "type": "date"
+                }
+              ]
+            },
+            {
+              "name": "certificado",
+              "label": "🏅 Diseño del certificado",
+              "type": "object",
+              "description": "Textos y firmas que aparecen en todos los certificados. Los nombres de las firmas son ejemplos: cámbialos por los reales.",
+              "fields": [
+                {
+                  "name": "titulo",
+                  "label": "Título grande",
+                  "type": "string",
+                  "default": "Certificado"
+                },
+                {
+                  "name": "subtitulo",
+                  "label": "Subtítulo",
+                  "type": "string",
+                  "default": "de finalización"
+                },
+                {
+                  "name": "texto_otorga",
+                  "label": "Texto antes del nombre",
+                  "type": "string",
+                  "default": "Se otorga el presente certificado a"
+                },
+                {
+                  "name": "texto_curso",
+                  "label": "Texto antes del curso",
+                  "type": "string",
+                  "default": "por haber completado satisfactoriamente el curso"
+                },
+                {
+                  "name": "lugar",
+                  "label": "Lugar (aparece junto a la fecha)",
+                  "type": "string",
+                  "default": "Guatemala"
+                },
+                {
+                  "name": "logo",
+                  "label": "Logo del certificado",
+                  "type": "image",
+                  "description": "Se recomienda el logo horizontal sobre fondo blanco."
+                },
+                {
+                  "name": "firmas",
+                  "label": "Firmas (máximo 3)",
+                  "type": "object",
+                  "list": {
+                    "summary": "{nombre} · {cargo}"
+                  },
+                  "fields": [
+                    {
+                      "name": "nombre",
+                      "label": "Nombre",
+                      "type": "string"
+                    },
+                    {
+                      "name": "cargo",
+                      "label": "Cargo",
+                      "type": "string"
+                    },
+                    {
+                      "name": "imagen",
+                      "label": "Imagen de la firma (opcional)",
+                      "type": "image",
+                      "description": "Foto o escaneo de la firma, de preferencia PNG con fondo transparente."
+                    }
+                  ]
                 }
               ]
             }

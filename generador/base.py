@@ -82,6 +82,8 @@ def img(p):
 
 # ------------------------------------------------------------------ Íconos
 _EXTRA = {
+    "award": '<circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/>',
+    "target": '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
     "eye": '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
     "heart": '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
     "star": '<path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>',
@@ -405,6 +407,7 @@ def head(slug, title, desc, image="img/hero.jpg", jsonld=None, preload=None, noi
   <link rel="stylesheet" href="css/styles.css" />{ld}
   <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/visitas.js" defer></script>
 </head>'''
 
 

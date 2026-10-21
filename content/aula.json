@@ -1,7 +1,7 @@
 {
   "habilitada": true,
   "nombre": "Aula virtual TechRevive",
-  "bienvenida": "Aquí encontrarás tus cursos, clases, materiales y cuestionarios. Avanza a tu ritmo: tu progreso se guarda en este dispositivo.",
+  "bienvenida": "Aquí encontrarás tus cursos, clases, materiales, cuestionarios y exámenes. Avanza a tu ritmo: tu progreso se guarda en tu cuenta y, al terminar cada curso, puedes solicitar tu certificado.",
   "nota_minima": 70,
   "texto_ingreso": "Ingresa con el usuario y la contraseña que te enviamos al inscribirte.",
   "avisos": [
@@ -11,194 +11,24 @@
       "fecha": "2026-10-20"
     }
   ],
-  "cursos": [
-    {
-      "id": "computacion-basica",
-      "titulo": "Computación básica",
-      "publicado": true,
-      "descripcion": "Aprende a usar la computadora con confianza: sus partes, Windows, cómo organizar tus archivos y cómo navegar por internet de forma segura.",
-      "imagen": "/img/aprender.jpg",
-      "docente": "Equipo de capacitación TechRevive",
-      "duracion": "4 semanas",
-      "nivel": "Principiante",
-      "modulos": [
-        {
-          "titulo": "Conociendo tu computadora",
-          "lecciones": [
-            {
-              "titulo": "¿Qué es una computadora?",
-              "tipo": "video",
-              "duracion": "8 min",
-              "video": "https://www.youtube.com/watch?v=xL8C5CIxDts",
-              "contenido": "<p>Bienvenido a tu primera clase. Mira el video y después lee el resumen.</p><h3>Resumen</h3><p>Una computadora es una máquina que <strong>recibe datos</strong> (entrada), los <strong>procesa</strong> siguiendo instrucciones, los <strong>guarda</strong> y nos <strong>muestra resultados</strong> (salida).</p><ul><li><strong>Hardware:</strong> todo lo que puedes tocar (pantalla, teclado, mouse).</li><li><strong>Software:</strong> los programas que le dicen qué hacer (Windows, el navegador, Word).</li></ul><p><em>Video: «Microaprendizaje: ¿Qué es una computadora?», Educ.ar.</em></p>",
-              "materiales": [
-                { "titulo": "Guía rápida: partes de la computadora (PDF)", "archivo": "/aula/archivos/guia-partes-computadora.pdf", "enlace": "" }
-              ]
-            },
-            {
-              "titulo": "Partes de una computadora",
-              "tipo": "lectura",
-              "duracion": "10 min",
-              "contenido": "<p>Todas las computadoras, sean de escritorio o laptop, tienen partes que cumplen cuatro funciones: <strong>entrada, proceso, almacenamiento y salida</strong>.</p><h3>Dispositivos de entrada</h3><ul><li><strong>Teclado:</strong> para escribir y dar órdenes.</li><li><strong>Mouse o touchpad:</strong> para señalar, hacer clic y arrastrar.</li><li><strong>Micrófono y cámara:</strong> para videollamadas y grabaciones.</li></ul><h3>Proceso</h3><ul><li><strong>Procesador (CPU):</strong> es el «cerebro»; ejecuta las instrucciones.</li><li><strong>Memoria RAM:</strong> guarda temporalmente lo que estás usando. Se borra al apagar.</li></ul><h3>Almacenamiento</h3><ul><li><strong>Disco duro (HDD) o SSD:</strong> guarda tus archivos y programas aunque apagues el equipo. Un SSD es mucho más rápido.</li><li><strong>Memorias USB y discos externos:</strong> para llevar o respaldar información.</li></ul><h3>Dispositivos de salida</h3><ul><li><strong>Pantalla o monitor</strong>, <strong>bocinas o audífonos</strong> e <strong>impresora</strong>.</li></ul><blockquote>Consejo: si tu computadora está lenta, muchas veces el problema no es el procesador, sino poca memoria RAM o un disco duro antiguo.</blockquote>",
-              "materiales": []
-            },
-            {
-              "titulo": "Encender, apagar y cuidar tu equipo",
-              "tipo": "lectura",
-              "duracion": "7 min",
-              "contenido": "<h3>Encender</h3><p>Presiona una sola vez el botón de encendido y espera a que aparezca la pantalla de inicio. No lo presiones varias veces.</p><h3>Apagar correctamente</h3><ol><li>Guarda tus documentos y cierra los programas.</li><li>Haz clic en <strong>Inicio</strong> → <strong>Iniciar/Apagar</strong> → <strong>Apagar</strong>.</li><li>Espera a que la pantalla y las luces se apaguen antes de desconectar.</li></ol><p>Mantener presionado el botón de encendido solo debe usarse si el equipo no responde, porque puedes perder información.</p><h3>Cuidados básicos</h3><ul><li>Usa la computadora sobre superficies firmes, no sobre la cama: las rejillas de ventilación deben quedar libres.</li><li>Mantén líquidos y comida lejos del teclado.</li><li>Conecta el equipo a un regulador o UPS para protegerlo de variaciones de energía.</li><li>Haz un mantenimiento preventivo al menos una vez al año.</li></ul>",
-              "materiales": []
-            },
-            {
-              "titulo": "Cuestionario: partes de la computadora",
-              "tipo": "cuestionario",
-              "duracion": "5 min",
-              "contenido": "<p>Responde las preguntas y pulsa <strong>Revisar respuestas</strong>. Puedes intentarlo las veces que quieras.</p>",
-              "preguntas": [
-                { "pregunta": "¿Cuál de estos es un dispositivo de entrada?", "opciones": ["Monitor", "Teclado", "Impresora", "Bocinas"], "correcta": 2, "explicacion": "El teclado sirve para introducir información; los demás muestran resultados (salida)." },
-                { "pregunta": "¿Qué parte se conoce como el «cerebro» de la computadora?", "opciones": ["La memoria RAM", "El disco duro", "El procesador (CPU)", "La tarjeta de video"], "correcta": 3, "explicacion": "El procesador ejecuta las instrucciones de los programas." },
-                { "pregunta": "¿Qué pasa con la información de la memoria RAM al apagar el equipo?", "opciones": ["Se guarda en la nube", "Se borra", "Pasa a la impresora", "Nada, se queda igual"], "correcta": 2, "explicacion": "La RAM es memoria temporal: se vacía al apagar. Por eso hay que guardar los documentos." },
-                { "pregunta": "¿Dónde se guardan tus archivos aunque apagues la computadora?", "opciones": ["En el disco duro o SSD", "En la memoria RAM", "En el monitor", "En el mouse"], "correcta": 1, "explicacion": "El disco duro o SSD es el almacenamiento permanente." },
-                { "pregunta": "¿Cuál es la forma correcta de apagar la computadora?", "opciones": ["Desconectar el cable", "Mantener presionado el botón de encendido", "Inicio → Iniciar/Apagar → Apagar", "Cerrar la tapa y desconectar"], "correcta": 3, "explicacion": "Así Windows cierra todo de forma ordenada y no se pierde información." }
-              ],
-              "materiales": []
-            }
-          ]
-        },
-        {
-          "titulo": "Windows y tus archivos",
-          "lecciones": [
-            {
-              "titulo": "El escritorio de Windows",
-              "tipo": "lectura",
-              "duracion": "8 min",
-              "contenido": "<p>El <strong>escritorio</strong> es la primera pantalla que ves al encender. Desde ahí llegas a todo.</p><ul><li><strong>Botón Inicio:</strong> abre el menú con tus programas y la opción de apagar.</li><li><strong>Barra de tareas:</strong> la franja inferior; muestra los programas abiertos y los anclados.</li><li><strong>Área de notificaciones:</strong> hora, volumen, internet y batería.</li><li><strong>Íconos:</strong> accesos directos a programas, carpetas o archivos.</li></ul><h3>Atajos que te ahorran tiempo</h3><ul><li><strong>Windows + E:</strong> abre el Explorador de archivos.</li><li><strong>Windows + D:</strong> muestra el escritorio.</li><li><strong>Alt + Tab:</strong> cambia entre ventanas abiertas.</li><li><strong>Ctrl + C / Ctrl + V:</strong> copiar y pegar.</li></ul>",
-              "materiales": []
-            },
-            {
-              "titulo": "Carpetas y archivos: organiza tu información",
-              "tipo": "lectura",
-              "duracion": "12 min",
-              "contenido": "<p>Un <strong>archivo</strong> es un documento, foto o video. Una <strong>carpeta</strong> sirve para agruparlos, como en un archivo de oficina.</p><h3>Crear una carpeta</h3><ol><li>Abre el Explorador de archivos (<strong>Windows + E</strong>).</li><li>Entra a <strong>Documentos</strong>.</li><li>Haz clic derecho en un espacio vacío → <strong>Nuevo</strong> → <strong>Carpeta</strong>.</li><li>Escribe el nombre y presiona <strong>Enter</strong>.</li></ol><h3>Buenas prácticas</h3><ul><li>Usa nombres claros: <em>Facturas 2026</em> en lugar de <em>Nueva carpeta (3)</em>.</li><li>Agrupa por tema o por año.</li><li>Evita guardar todo en el escritorio: lo vuelve lento y desordenado.</li><li>Haz una copia de respaldo de lo importante en un disco externo o en la nube.</li></ul>",
-              "materiales": []
-            },
-            {
-              "titulo": "Tarea: crea tu estructura de carpetas",
-              "tipo": "tarea",
-              "duracion": "20 min",
-              "contenido": "<p>Pon en práctica lo aprendido:</p><ol><li>En <strong>Documentos</strong>, crea una carpeta llamada <strong>Curso TechRevive</strong>.</li><li>Dentro de ella, crea tres carpetas: <strong>Módulo 1</strong>, <strong>Módulo 2</strong> y <strong>Módulo 3</strong>.</li><li>Guarda en <strong>Módulo 1</strong> la guía PDF que descargaste en la primera clase.</li><li>Toma una captura de pantalla de tus carpetas (tecla <strong>Windows + Shift + S</strong>).</li></ol><p>Envíanos la captura con el botón de entrega.</p>",
-              "fecha_limite": "",
-              "enlace_entrega": "",
-              "materiales": []
-            }
-          ]
-        },
-        {
-          "titulo": "Internet seguro",
-          "lecciones": [
-            {
-              "titulo": "Navegar y buscar información",
-              "tipo": "lectura",
-              "duracion": "9 min",
-              "contenido": "<p>El <strong>navegador</strong> (Chrome, Edge, Firefox) es el programa para entrar a páginas web.</p><h3>Buscar mejor</h3><ul><li>Escribe palabras clave: <em>horario agencia banco zona 1</em>.</li><li>Usa comillas para una frase exacta: <em>\"cómo respaldar fotos\"</em>.</li><li>Revisa la dirección: las páginas oficiales suelen terminar en <strong>.gob.gt</strong>, <strong>.edu.gt</strong> o son del dominio de la empresa.</li></ul><h3>Pestañas</h3><p><strong>Ctrl + T</strong> abre una pestaña nueva y <strong>Ctrl + W</strong> la cierra.</p>",
-              "materiales": []
-            },
-            {
-              "titulo": "Contraseñas seguras y estafas comunes",
-              "tipo": "lectura",
-              "duracion": "10 min",
-              "contenido": "<h3>Contraseñas</h3><ul><li>Usa frases largas: <em>Mi-perro-come-mango-2026</em> es más segura que <em>Juan123</em>.</li><li>No repitas la misma contraseña en todos lados.</li><li>Activa la verificación en dos pasos en tu correo y WhatsApp.</li></ul><h3>Estafas comunes</h3><ul><li><strong>Mensajes de premio o herencia:</strong> nadie regala dinero por WhatsApp.</li><li><strong>«Su cuenta será bloqueada»:</strong> los bancos no piden claves por mensaje ni llamada.</li><li><strong>Enlaces raros:</strong> revisa la dirección antes de hacer clic.</li><li><strong>Códigos de verificación:</strong> nunca compartas el código que te llega por SMS.</li></ul><blockquote>Regla de oro: si te apuran o te piden datos personales, detente y verifica por otro medio.</blockquote>",
-              "materiales": []
-            },
-            {
-              "titulo": "Cuestionario final",
-              "tipo": "cuestionario",
-              "duracion": "6 min",
-              "contenido": "<p>Demuestra lo que aprendiste en el curso.</p>",
-              "preguntas": [
-                { "pregunta": "¿Qué atajo abre el Explorador de archivos?", "opciones": ["Ctrl + P", "Windows + E", "Alt + F4", "Ctrl + Z"], "correcta": 2, "explicacion": "Windows + E abre el Explorador de archivos." },
-                { "pregunta": "¿Cuál es la contraseña más segura?", "opciones": ["123456", "Maria1990", "Mi-perro-come-mango-2026", "contraseña"], "correcta": 3, "explicacion": "Las frases largas con varias palabras son difíciles de adivinar." },
-                { "pregunta": "Te llega un SMS con un código y luego te llaman pidiéndolo. ¿Qué haces?", "opciones": ["Se lo doy si es amable", "No lo comparto nunca", "Lo publico en Facebook", "Se lo doy solo si dice ser del banco"], "correcta": 2, "explicacion": "Ese código permite entrar a tus cuentas. Nunca se comparte." },
-                { "pregunta": "¿Dónde conviene guardar tus documentos?", "opciones": ["Todo en el escritorio", "En carpetas con nombres claros", "En la papelera de reciclaje", "En la memoria RAM"], "correcta": 2, "explicacion": "Las carpetas ordenadas facilitan encontrar y respaldar tu información." }
-              ],
-              "materiales": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "mantenimiento-preventivo",
-      "titulo": "Mantenimiento preventivo de computadoras",
-      "publicado": true,
-      "descripcion": "Aprende a limpiar, optimizar y cuidar computadoras de escritorio y laptops para alargar su vida útil y evitar fallas costosas.",
-      "imagen": "/img/tecnico.jpg",
-      "docente": "Técnicos de TechRevive",
-      "duracion": "3 semanas",
-      "nivel": "Intermedio",
-      "modulos": [
-        {
-          "titulo": "Fundamentos",
-          "lecciones": [
-            {
-              "titulo": "¿Por qué hacer mantenimiento preventivo?",
-              "tipo": "lectura",
-              "duracion": "8 min",
-              "contenido": "<p>El polvo, el calor y los programas acumulados son las causas más comunes de lentitud y fallas. El mantenimiento preventivo busca <strong>evitar el problema antes de que ocurra</strong>.</p><h3>Beneficios</h3><ul><li>Menos temperatura: el equipo no se apaga solo ni se pone lento.</li><li>Mayor vida útil del procesador, la batería y el disco.</li><li>Detectar a tiempo un disco que está fallando y respaldar la información.</li></ul><h3>¿Cada cuánto?</h3><ul><li><strong>Hogar u oficina limpia:</strong> una vez al año.</li><li><strong>Ambientes con polvo, mascotas o uso intensivo:</strong> cada 6 meses.</li></ul>",
-              "materiales": []
-            },
-            {
-              "titulo": "Herramientas y seguridad",
-              "tipo": "lectura",
-              "duracion": "10 min",
-              "contenido": "<h3>Herramientas básicas</h3><ul><li>Juego de destornilladores de precisión (Phillips y Torx).</li><li>Brocha suave y aire comprimido.</li><li>Alcohol isopropílico (90 % o más) y paños de microfibra.</li><li>Pasta térmica de buena calidad.</li><li>Pulsera antiestática y espátula plástica.</li></ul><h3>Reglas de seguridad</h3><ol><li>Apaga y desconecta el equipo; en laptops, desconecta la batería si es posible.</li><li>Descárgate de electricidad estática tocando una superficie metálica o usando la pulsera.</li><li>Fotografía cada paso para recordar dónde va cada tornillo y cable.</li><li>Nunca uses aspiradora directamente sobre la placa: genera estática.</li></ol>",
-              "materiales": [
-                { "titulo": "Bitácora de mantenimiento para imprimir (PDF)", "archivo": "/aula/archivos/bitacora-mantenimiento.pdf", "enlace": "" }
-              ]
-            },
-            {
-              "titulo": "Cuestionario: fundamentos",
-              "tipo": "cuestionario",
-              "duracion": "5 min",
-              "contenido": "<p>Comprueba lo aprendido en este módulo.</p>",
-              "preguntas": [
-                { "pregunta": "¿Cuál es una causa común de que una laptop se apague sola?", "opciones": ["Tener muchos íconos", "Sobrecalentamiento por polvo", "Usar el mouse", "El fondo de pantalla"], "correcta": 2, "explicacion": "El polvo tapa el ventilador y el equipo se apaga para protegerse del calor." },
-                { "pregunta": "¿Qué alcohol se recomienda para limpiar componentes?", "opciones": ["Alcohol en gel", "Alcohol isopropílico 90 % o más", "Alcohol etílico con perfume", "Agua con jabón"], "correcta": 2, "explicacion": "El isopropílico se evapora rápido y no deja residuos." },
-                { "pregunta": "¿Qué NO se debe hacer al limpiar el interior?", "opciones": ["Usar brocha suave", "Fotografiar los pasos", "Aspirar directamente la placa", "Desconectar el equipo"], "correcta": 3, "explicacion": "La aspiradora genera electricidad estática que puede dañar componentes." }
-              ],
-              "materiales": []
-            }
-          ]
-        },
-        {
-          "titulo": "Limpieza y software",
-          "lecciones": [
-            {
-              "titulo": "Limpieza física paso a paso",
-              "tipo": "lectura",
-              "duracion": "15 min",
-              "contenido": "<ol><li><strong>Exterior:</strong> limpia carcasa, pantalla y teclado con microfibra apenas húmeda.</li><li><strong>Abrir:</strong> retira la tapa inferior (laptop) o lateral (PC) siguiendo tus fotos.</li><li><strong>Ventiladores:</strong> sujétalos con un dedo para que no giren y limpia con brocha y aire comprimido.</li><li><strong>Disipador:</strong> retira el polvo acumulado entre las aletas.</li><li><strong>Pasta térmica:</strong> limpia la pasta vieja con alcohol isopropílico y aplica una gota del tamaño de un grano de arroz.</li><li><strong>Cerrar y probar:</strong> arma, enciende y revisa que el ventilador gire y la temperatura sea normal.</li></ol><blockquote>Una temperatura de procesador en reposo entre 35 °C y 55 °C es normal en la mayoría de equipos.</blockquote>",
-              "materiales": []
-            },
-            {
-              "titulo": "Mantenimiento de software",
-              "tipo": "lectura",
-              "duracion": "12 min",
-              "contenido": "<ul><li><strong>Actualizaciones:</strong> instala las de Windows y de los controladores (drivers).</li><li><strong>Programas de inicio:</strong> en el Administrador de tareas (<strong>Ctrl + Shift + Esc</strong>) → pestaña <strong>Inicio</strong>, desactiva lo que no necesitas.</li><li><strong>Archivos temporales:</strong> usa <strong>Liberador de espacio en disco</strong> o <strong>Configuración → Sistema → Almacenamiento</strong>.</li><li><strong>Antivirus:</strong> Windows Defender es suficiente para la mayoría; ejecuta un análisis completo.</li><li><strong>Salud del disco:</strong> revisa el estado SMART con una herramienta de diagnóstico; si aparece «Precaución», respalda y cambia el disco.</li></ul>",
-              "materiales": []
-            },
-            {
-              "titulo": "Tarea: bitácora de mantenimiento",
-              "tipo": "tarea",
-              "duracion": "40 min",
-              "contenido": "<p>Realiza un mantenimiento preventivo a una computadora (puede ser la tuya) y completa la <strong>bitácora</strong> del módulo 1.</p><ol><li>Anota marca, modelo y temperatura antes de empezar.</li><li>Registra cada paso realizado.</li><li>Anota la temperatura al terminar.</li><li>Toma fotos del antes y el después.</li></ol><p>Envía la bitácora y las fotos con el botón de entrega.</p>",
-              "fecha_limite": "",
-              "enlace_entrega": "",
-              "materiales": []
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "certificado": {
+    "titulo": "Certificado",
+    "subtitulo": "de finalización",
+    "texto_otorga": "Se otorga el presente certificado a",
+    "texto_curso": "por haber completado satisfactoriamente el curso",
+    "lugar": "Guatemala",
+    "logo": "/img/logo-techrevive.png",
+    "firmas": [
+      {
+        "nombre": "Nombre del director(a)",
+        "cargo": "Dirección general · TechRevive",
+        "imagen": ""
+      },
+      {
+        "nombre": "Nombre del instructor(a)",
+        "cargo": "Coordinación de capacitación",
+        "imagen": ""
+      }
+    ]
+  }
 }

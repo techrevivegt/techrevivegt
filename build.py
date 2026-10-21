@@ -32,13 +32,51 @@ def preparar_salida():
     with open(os.path.join(OUT, "css", "styles.css"), "w", encoding="utf-8") as f:
         f.write(css)
     shutil.copy(os.path.join(SRC, "css", "aula.css"), os.path.join(OUT, "css", "aula.css"))
+    shutil.copy(os.path.join(SRC, "css", "certificado.css"), os.path.join(OUT, "css", "certificado.css"))
+
+
+def configurar_base_datos():
+    """Conecta la base de datos D1 (estadísticas, certificados y progreso del aula).
+
+    El ID se toma de la variable D1_DATABASE_ID (si existe) o del panel:
+    Configuración general → «ID de la base de datos». Solo en Cloudflare (WORKERS_CI=1)
+    se agrega la sección d1_databases a wrangler.jsonc antes de publicar; en tu
+    computadora no se modifica nada. Un ID mal escrito se ignora con un aviso para
+    que la publicación nunca falle por eso.
+    """
+    import re
+    db_id = (os.environ.get("D1_DATABASE_ID") or g(CFG, "base_datos") or "").strip()
+    if not db_id:
+        print("ℹ Base de datos: sin conectar (estadísticas y certificados desactivados). "
+              "Pega su ID en Panel → Configuración general para activarlos.")
+        return
+    if not re.fullmatch(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", db_id):
+        WARNINGS.append(f"El «ID de la base de datos» ({db_id[:40]}) no tiene el formato correcto "
+                        "(ej. 1a2b3c4d-1234-5678-9abc-1234567890ab). Se publicó sin base de datos.")
+        return
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wrangler.jsonc")
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    if '"d1_databases"' in text:
+        print("ℹ Base de datos: wrangler.jsonc ya tiene d1_databases; se respeta tal cual.")
+        return
+    if os.environ.get("WORKERS_CI") != "1":
+        print(f"ℹ Base de datos: ID {db_id[:8]}… válido. Se conectará al publicar en Cloudflare.")
+        return
+    bloque = ('  ,"d1_databases": [\n'
+              f'    {{ "binding": "DB", "database_name": "techrevive-datos", "database_id": "{db_id}" }}\n'
+              '  ]\n')
+    fin = text.rstrip().rfind("}")
+    text = text[:fin] + bloque + text[fin:]
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+    print(f"✔ Base de datos conectada (ID {db_id[:8]}…).")
 
 
 def aula_propia():
     """True si el aula virtual propia (content/aula.json) está habilitada y tiene cursos."""
-    a = sb.load("aula.json", default={}) or {}
-    return isinstance(a, dict) and a.get("habilitada", True) is not False and any(
-        isinstance(c, dict) and c.get("publicado", True) is not False for c in (a.get("cursos") or []))
+    import aula as pa
+    return pa.habilitada()
 
 
 def escribir_config():
@@ -114,6 +152,7 @@ def main():
     with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as f:
         f.write(f"User-agent: *\nAllow: /\nDisallow: /panel/\nDisallow: /api/\nDisallow: /aula/\n\nSitemap: {SITE_URL}/sitemap.xml\n")
 
+    configurar_base_datos()
     for w in dict.fromkeys(WARNINGS):
         print("⚠ Aviso:", w)
     print(f"✔ {len(PAGES) + 1} páginas generadas en _site/")

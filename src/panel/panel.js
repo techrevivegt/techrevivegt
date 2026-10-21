@@ -229,6 +229,7 @@
     S.view = { section: sec.id, entry: parts[1] || null };
     markNav();
     if (sec.type === "collection") return parts[1] ? openEntry(sec, parts[1]) : renderCollection(sec);
+    if (sec.type === "custom") { saveBtn.hidden = true; setTitle(stripEmoji(sec.label), sec.group ? stripEmoji(sec.group) : "Panel"); return (VIEWS[sec.view] || renderHome)(sec); }
     return openFile(sec);
   }
 
@@ -255,7 +256,10 @@
         q("#/servicios", "🛠️", "Servicios", "Edita, agrega o quita servicios y su página."),
         q("#/cursos", "📚", "Cursos", "La lista de cursos y sus temas."),
         q("#/blog/nuevo", "📝", "Escribir un artículo", "Crea una nueva entrada para el blog."),
-        q("#/galeria", "🖼️", "Galería de fotos", "Sube y organiza tus fotos.")),
+        q("#/galeria", "🖼️", "Galería de fotos", "Sube y organiza tus fotos."),
+        q("#/estadisticas", "📊", "Estadísticas de visitas", "Quién visita tu sitio, desde dónde y cuánto tiempo."),
+        q("#/certificados", "🏅", "Certificados", "Aprueba solicitudes y emite certificados."),
+        q("#/aula-cursos", "🎓", "Cursos del aula", "Lecciones, videos, cuestionarios y exámenes.")),
       h("h2", { class: "sr-only" }, "Último cambio"), last,
       h("div", { class: "tips" },
         h("div", { class: "tip" }, h("h3", {}, "👁️ Ocultar una sección"), h("p", {}, "Muchas secciones tienen el interruptor «Mostrar». Apágalo para ocultarla sin borrar su contenido.")),
@@ -749,32 +753,48 @@
     return h("div", { class: "field" }, ...labelEl(f, id), h("div", { class: "rte" }, bar, area));
   }
 
-  /* ───────── blog (colección) ───────── */
+  /* ───────── colecciones (blog y cursos del aula) ───────── */
+  // Cada colección define en schema.json: itemLabel (singular), itemsLabel (plural), columns, sort y newDefaults.
+  const colLabel = (sec) => sec.itemLabel || "artículo";
+  const colLabels = (sec) => sec.itemsLabel || "artículos";
+  function cellValue(col, d) {
+    const v = d[col.name];
+    if (col.type === "estado") return v === false ? h("span", { class: "badge badge--off" }, col.off || "Borrador") : h("span", { class: "badge badge--ok" }, col.on || "Publicado");
+    if (col.type === "count") return String(typeof col.count === "function" ? col.count(d) : countLessons(d));
+    return v == null ? "" : String(v);
+  }
+  const countLessons = (d) => (Array.isArray(d.modulos) ? d.modulos : []).reduce((n, m) => n + ((m && Array.isArray(m.lecciones)) ? m.lecciones.length : 0), 0);
+
   async function renderCollection(sec) {
-    setTitle(stripEmoji(sec.label), "Artículos");
+    setTitle(stripEmoji(sec.label), sec.group ? stripEmoji(sec.group) : colLabels(sec).replace(/^./, (c) => c.toUpperCase()));
     saveBtn.hidden = true;
-    contentEl.replaceChildren(loading("Cargando artículos…"));
+    contentEl.replaceChildren(loading(`Cargando ${colLabels(sec)}…`));
     try {
-      const r = await api("GET", "entradas");
+      const r = await api("GET", `entradas?carpeta=${encodeURIComponent(sec.path)}`);
       S.blogCache = r.items;
-      const items = r.items.filter((x) => x.datos).sort((a, b) => String(b.datos.fecha || "").localeCompare(String(a.datos.fecha || "")));
+      const cols = sec.columns || [{ name: "titulo", label: "Título", strong: true }, { name: "categoria", label: "Categoría" }, { name: "fecha", label: "Fecha" }, { name: "publicado", label: "Estado", type: "estado" }];
+      const sortKey = sec.sort || "-fecha";
+      const desc = sortKey.startsWith("-"), key = sortKey.replace(/^-/, "");
+      const items = r.items.filter((x) => x.datos).sort((a, b) => {
+        const va = a.datos[key], vb = b.datos[key];
+        const c = (typeof va === "number" || typeof vb === "number") ? (Number(va) || 999) - (Number(vb) || 999) : String(va || "").localeCompare(String(vb || ""));
+        return desc ? -c : c;
+      });
       const tbody = h("tbody", {});
       items.forEach((x) => {
         const file = x.ruta.split("/").pop().replace(/\.json$/, "");
         const tr = h("tr", { tabindex: "0", onclick: () => { location.hash = `#/${sec.id}/${encodeURIComponent(file)}`; }, onkeydown: (e) => { if (e.key === "Enter") tr.click(); } },
-          h("td", {}, h("strong", {}, x.datos.titulo || file)),
-          h("td", {}, x.datos.categoria || ""),
-          h("td", {}, x.datos.fecha || ""),
-          h("td", {}, x.datos.publicado === false ? h("span", { class: "badge badge--off" }, "Borrador") : h("span", { class: "badge badge--ok" }, "Publicado")));
+          ...cols.map((c, i) => h("td", {}, i === 0 ? h("strong", {}, x.datos[c.name] || file) : cellValue(c, x.datos))));
         tbody.append(tr);
       });
       const broken = r.items.filter((x) => !x.datos);
       contentEl.replaceChildren(...[
-        h("div", { class: "toolbar" }, h("p", { class: "intro", style: "margin:0" }, `${items.length} artículo(s). Haz clic en uno para editarlo.`),
-          h("a", { class: "btn btn--primary", href: `#/${sec.id}/nuevo` }, "＋ Nuevo artículo")),
+        sec.intro ? h("p", { class: "intro" }, sec.intro) : null,
+        h("div", { class: "toolbar" }, h("p", { class: "intro", style: "margin:0" }, `${items.length} ${colLabels(sec)}. Haz clic en uno para editarlo.`),
+          h("a", { class: "btn btn--primary", href: `#/${sec.id}/nuevo` }, `＋ Nuevo ${colLabel(sec)}`)),
         broken.length ? h("div", { class: "alert alert--error" }, `Hay ${broken.length} archivo(s) con error de formato: ${broken.map((b) => b.ruta).join(", ")}`) : null,
-        items.length ? h("table", { class: "table" }, h("thead", {}, h("tr", {}, h("th", {}, "Título"), h("th", {}, "Categoría"), h("th", {}, "Fecha"), h("th", {}, "Estado"))), tbody)
-          : h("div", { class: "card card--flat is-open" }, h("div", { class: "card__body", style: "display:block;padding:24px" }, "Todavía no hay artículos. Pulsa «Nuevo artículo» para escribir el primero."))].filter(Boolean));
+        items.length ? h("div", { class: "table-wrap" }, h("table", { class: "table" }, h("thead", {}, h("tr", {}, ...cols.map((c) => h("th", {}, c.label)))), tbody))
+          : h("div", { class: "card card--flat is-open" }, h("div", { class: "card__body", style: "display:block;padding:24px" }, `Todavía no hay ${colLabels(sec)}. Pulsa «Nuevo ${colLabel(sec)}» para crear el primero.`))].filter(Boolean));
     } catch (e) {
       if (e.message !== "sesión") contentEl.replaceChildren(h("div", { class: "alert alert--error" }, e.message));
     }
@@ -784,49 +804,355 @@
     saveBtn.hidden = false;
     const back = h("a", { href: `#/${sec.id}`, class: "btn btn--ghost btn--sm" }, "← Volver a la lista");
     if (file === "nuevo") {
-      setTitle("Nuevo artículo", stripEmoji(sec.label));
+      setTitle(`Nuevo ${colLabel(sec)}`, stripEmoji(sec.label));
       S.path = null; S.sha = null; S.isNew = true;
       S.doc = emptyFor({ type: "object", fields: sec.fields });
-      S.doc.publicado = true; S.doc.fecha = today();
+      Object.assign(S.doc, sec.newDefaults || { publicado: true });
+      if (!sec.newDefaults || "fecha" in (sec.newDefaults || {})) { if (sec.fields.some((f) => f.name === "fecha")) S.doc.fecha = today(); }
       renderEditor({ ...sec, fields: sec.fields.map((f) => ({ ...f })) }, h("div", { class: "toolbar" }, back));
-      wrapEntryFields();
+      wrapEntryFields(sec);
       return;
     }
-    setTitle("Editar artículo", stripEmoji(sec.label));
+    setTitle(`Editar ${colLabel(sec)}`, stripEmoji(sec.label));
     contentEl.replaceChildren(loading());
     try {
       const path = `${sec.path}/${file}.json`;
       const r = await api("GET", `archivo?ruta=${encodeURIComponent(path)}`);
-      if (!r.existe) { toast("Ese artículo ya no existe.", "error"); location.hash = `#/${sec.id}`; return; }
+      if (!r.existe) { toast(`Ese ${colLabel(sec)} ya no existe.`, "error"); location.hash = `#/${sec.id}`; return; }
       S.path = path; S.sha = r.sha; S.isNew = false; S.doc = r.datos || {};
-      setTitle(S.doc.titulo || "Editar artículo", stripEmoji(sec.label));
-      const del = h("button", { class: "btn btn--danger btn--sm", type: "button", onclick: () => deleteEntry(sec) }, "🗑 Eliminar artículo");
-      renderEditor(sec, h("div", { class: "toolbar" }, back, del));
-      wrapEntryFields();
+      setTitle(S.doc.titulo || `Editar ${colLabel(sec)}`, stripEmoji(sec.label));
+      const del = h("button", { class: "btn btn--danger btn--sm", type: "button", onclick: () => deleteEntry(sec) }, `🗑 Eliminar ${colLabel(sec)}`);
+      const extra = sec.id === "aula-cursos" ? h("span", { class: "muted-sm" }, `Identificador: ${file} · dirección /aula/${file}/`) : null;
+      renderEditor(sec, h("div", { class: "toolbar" }, h("div", { class: "toolbar__left" }, back, extra), del));
+      wrapEntryFields(sec);
     } catch (e) {
       if (e.message !== "sesión") contentEl.replaceChildren(h("div", { class: "alert alert--error" }, e.message));
     }
   }
 
   // En los artículos, los campos se muestran juntos en una sola tarjeta.
-  function wrapEntryFields() {
+  // En los cursos, solo se juntan los datos generales; los módulos quedan en su propia tarjeta.
+  function wrapEntryFields(sec) {
     const editor = contentEl.querySelector(".editor");
-    const cards = [...editor.querySelectorAll(":scope > .card")];
+    const flatOnly = sec && sec.wrap === "flat";
+    const cards = [...editor.querySelectorAll(flatOnly ? ":scope > .card.card--flat" : ":scope > .card")];
     if (!cards.length) return;
-    const card = h("section", { class: "card is-open" }, h("div", { class: "card__body", style: "display:block;padding-top:18px" }));
-    cards.forEach((c) => { const b = c.querySelector(".card__body"); while (b.firstChild) card.firstChild.append(b.firstChild); c.remove(); });
-    editor.append(card);
+    const card = h("section", { class: "card is-open" }, flatOnly ? h("div", { class: "card__head card__head--static" }, h("h2", {}, sec.wrapTitle || "Datos generales")) : null,
+      h("div", { class: "card__body", style: "display:block;padding-top:18px" }));
+    const body = card.lastChild;
+    cards[0].before(card);
+    cards.forEach((c) => { const b = c.querySelector(".card__body"); while (b.firstChild) body.append(b.firstChild); c.remove(); });
+    if (flatOnly) editor.querySelectorAll(":scope > .card:not(.card--flat)").forEach((c) => { if (c !== card) c.classList.add("is-open"); });
   }
 
   async function deleteEntry(sec) {
-    if (!confirm(`¿Eliminar el artículo «${S.doc.titulo || ""}»? Esta acción no se puede deshacer desde el panel.`)) return;
+    if (!confirm(`¿Eliminar el ${colLabel(sec)} «${S.doc.titulo || ""}»? Esta acción no se puede deshacer desde el panel.`)) return;
     try {
       const r = await api("DELETE", `archivo?ruta=${encodeURIComponent(S.path)}&sha=${encodeURIComponent(S.sha)}`);
       setDirty(false);
-      toast("Artículo eliminado. El sitio se actualizará en 1 o 2 minutos.", "ok");
+      toast(`${colLabel(sec).replace(/^./, (c) => c.toUpperCase())} eliminado. El sitio se actualizará en 1 o 2 minutos.`, "ok");
       watchPublish(r.commit);
       location.hash = `#/${sec.id}`;
     } catch (e) { if (e.message !== "sesión") toast(e.message, "error", 8000); }
+  }
+
+  /* ───────── vistas especiales: estadísticas y certificados ───────── */
+  const VIEWS = { estadisticas: renderStats, certificados: renderCerts };
+  const fmtN = (n) => Number(n || 0).toLocaleString("es-GT");
+  function fmtDur(s) {
+    s = Math.round(Number(s) || 0);
+    if (s < 60) return `${s} s`;
+    const hh = Math.floor(s / 3600), mm = Math.floor((s % 3600) / 60), ss = s % 60;
+    return hh ? `${hh} h ${mm} min` : `${mm} min${ss && mm < 10 ? ` ${ss} s` : ""}`;
+  }
+  const fmtDT = (ts) => ts ? new Date(ts).toLocaleString("es-GT", { timeZone: "America/Guatemala", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
+  const fmtD = (ts) => ts ? new Date(ts).toLocaleDateString("es-GT", { timeZone: "America/Guatemala", day: "numeric", month: "short", year: "numeric" }) : "";
+  let regionNames = null;
+  try { regionNames = new Intl.DisplayNames(["es"], { type: "region" }); } catch { /* navegador antiguo */ }
+  const countryName = (cc) => { if (!cc) return "Desconocido"; if (cc === "XX" || cc === "T1") return "Desconocido"; try { return regionNames ? regionNames.of(cc) : cc; } catch { return cc; } };
+  const flag = (cc) => (cc && /^[A-Z]{2}$/.test(cc) && cc !== "XX" && cc !== "T1") ? String.fromCodePoint(...[...cc].map((c) => 127397 + c.charCodeAt(0))) : "🌐";
+  const devIcon = (d) => ({ Celular: "📱", Tablet: "📟", Computadora: "💻" }[d] || "🖥️");
+
+  function dbError(e) {
+    if (e.data && e.data.sinBase) {
+      return h("div", { class: "alert alert--info db-setup" }, h("strong", {}, "Falta conectar la base de datos (gratis, una sola vez). "),
+        "Con ella se activan las estadísticas de visitas, los certificados y el progreso del aula guardado en la cuenta de cada alumno.",
+        h("ol", {},
+          h("li", {}, "En Cloudflare entra a ", h("b", {}, "Storage & databases → D1 SQL database → Create database"), ", ponle de nombre ", h("code", {}, "techrevive-datos"), " y pulsa ", h("b", {}, "Create"), "."),
+          h("li", {}, "Copia el ", h("b", {}, "Database ID"), " (se ve así: 1a2b3c4d-1234-…)."),
+          h("li", {}, "Dale permiso a la publicación: ", h("b", {}, "tu perfil (arriba a la derecha) → API Tokens"), " → el token «Workers Builds…» → ", h("b", {}, "Edit → + Add more → Account · D1 · Edit"), " → Continue → Update token."),
+          h("li", {}, "Aquí en el panel: ", h("a", { href: "#configuracion" }, "⚙️ Configuración general"), " → «ID de la base de datos» → pega el ID → ", h("b", {}, "Guardar cambios"), ". En 1–2 minutos esta sección empieza a funcionar.")),
+        h("small", {}, "Si después de guardar la publicación falla (Cloudflare → techrevive → Deployments en rojo), borra el ID en Configuración general y guarda: el sitio vuelve a publicarse como antes."));
+    }
+    return h("div", { class: "alert alert--error" }, e.message);
+  }
+
+  function rankList(title, rows, opts = {}) {
+    const max = Math.max(1, ...rows.map((r) => r.n));
+    const total = opts.total || rows.reduce((a, r) => a + r.n, 0) || 1;
+    return h("section", { class: "stat-card" }, h("h3", {}, title),
+      rows.length ? h("ul", { class: "rank" }, ...rows.slice(0, opts.limit || 8).map((r) => h("li", {},
+        h("div", { class: "rank__top" }, h("span", { class: "rank__label", title: r.title || r.label }, r.label), h("span", { class: "rank__n" }, fmtN(r.n), h("small", {}, ` ${Math.round(r.n * 100 / total)}%`))),
+        h("div", { class: "rank__bar" }, h("span", { style: `width:${Math.max(2, r.n * 100 / max)}%` })))))
+        : h("p", { class: "muted-sm" }, "Sin datos en este periodo."));
+  }
+
+  function dayChart(porDia, desde, dias) {
+    const map = new Map(porDia.map((d) => [d.fecha, d]));
+    const days = [];
+    for (let i = 0; i < dias; i++) {
+      const key = new Date(desde + i * 86400000 - 6 * 3600 * 1000).toISOString().slice(0, 10);
+      days.push(map.get(key) || { fecha: key, visitas: 0, visitantes: 0 });
+    }
+    const W = 900, H = 220, pad = { l: 36, r: 8, t: 12, b: 26 };
+    const peak = Math.max(4, ...days.map((d) => d.visitas));
+    const unit = Math.ceil(peak / 4 / Math.pow(10, Math.floor(Math.log10(peak / 4)))) * Math.pow(10, Math.floor(Math.log10(peak / 4)));
+    const tick = [1, 2, 3, 5, 10].map((m) => m * Math.pow(10, Math.floor(Math.log10(unit)))).find((t) => t >= unit) || unit;
+    const max = tick * 4;
+    const step = (W - pad.l - pad.r) / days.length, bw = Math.max(2, step * 0.7);
+    const y = (v) => pad.t + (H - pad.t - pad.b) * (1 - v / max);
+    let svg = "";
+    for (let g = 0; g <= 4; g++) { const v = tick * g, yy = y(v); svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${yy}" y2="${yy}" class="grid"/><text x="${pad.l - 6}" y="${yy + 4}" text-anchor="end">${v}</text>`; }
+    const every = Math.ceil(days.length / 10);
+    days.forEach((d, i) => {
+      const x = pad.l + i * step + (step - bw) / 2;
+      const label = new Date(d.fecha + "T12:00:00").toLocaleDateString("es-GT", { day: "numeric", month: "short" });
+      svg += `<g><title>${label}: ${d.visitas} visitas · ${d.visitantes} visitantes</title><rect x="${x}" y="${y(d.visitas)}" width="${bw}" height="${Math.max(0, H - pad.b - y(d.visitas))}" rx="2" class="b1"/><rect x="${x + bw * 0.2}" y="${y(d.visitantes)}" width="${bw * 0.6}" height="${Math.max(0, H - pad.b - y(d.visitantes))}" rx="2" class="b2"/></g>`;
+      if (i % every === 0) svg += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${label}</text>`;
+    });
+    return h("div", { class: "chart", html: `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Visitas por día">${svg}</svg>` });
+  }
+
+  function hourChart(horas) {
+    const m = new Map(horas.map((x) => [x.h, x.n]));
+    const vals = Array.from({ length: 24 }, (_, i) => m.get(i) || 0);
+    const max = Math.max(1, ...vals);
+    return h("section", { class: "stat-card" }, h("h3", {}, "🕑 Horario de visitas (hora de Guatemala)"),
+      h("div", { class: "hours" }, ...vals.map((v, i) => h("div", { class: "hours__col", title: `${i}:00 – ${i}:59 · ${v} visitas` },
+        h("span", { style: `height:${Math.max(3, v * 100 / max)}%` }), h("small", {}, i % 3 === 0 ? String(i) : "")))));
+  }
+
+  function loadLeaflet() {
+    if (window.L) return Promise.resolve(window.L);
+    if (S.leafletP) return S.leafletP;
+    S.leafletP = new Promise((res, rej) => {
+      const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"; document.head.append(css);
+      const js = document.createElement("script"); js.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      js.onload = () => res(window.L); js.onerror = () => { S.leafletP = null; rej(new Error("No se pudo cargar el mapa.")); };
+      document.head.append(js);
+    });
+    return S.leafletP;
+  }
+
+  function mapCard(points) {
+    const box = h("div", { class: "map" }, h("p", { class: "muted-sm", style: "padding:16px" }, points.length ? "Cargando mapa…" : "Sin ubicaciones en este periodo."));
+    if (points.length) {
+      loadLeaflet().then((L) => {
+        box.replaceChildren();
+        const map = L.map(box, { scrollWheelZoom: false, worldCopyJump: true }).setView([15.5, -90.3], 3);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(map);
+        const max = Math.max(...points.map((p) => p.n));
+        const layer = L.featureGroup().addTo(map);
+        points.forEach((p) => {
+          L.circleMarker([p.lat, p.lon], { radius: 5 + 14 * Math.sqrt(p.n / max), color: "#1D4ED8", weight: 1.5, fillColor: "#3B82F6", fillOpacity: 0.45 })
+            .bindTooltip(`${flag(p.pais)} ${p.ciudad || countryName(p.pais)} · ${fmtN(p.n)} visitas`).addTo(layer);
+        });
+        if (points.length > 1) map.fitBounds(layer.getBounds().pad(0.3), { maxZoom: 7 }); else map.setView([points[0].lat, points[0].lon], 7);
+        setTimeout(() => map.invalidateSize(), 200);
+      }).catch((e) => { box.replaceChildren(h("p", { class: "muted-sm", style: "padding:16px" }, e.message)); });
+    }
+    return h("section", { class: "stat-card stat-card--wide" }, h("h3", {}, "🗺️ Mapa de visitantes"), box);
+  }
+
+  async function renderStats(sec) {
+    const dias = Number(sessionStorage.getItem("tr-stats-dias")) || 30;
+    const periods = [[1, "Hoy"], [7, "7 días"], [30, "30 días"], [90, "90 días"], [365, "1 año"]];
+    const noTrack = localStorage.getItem("tr-noseguir") === "1";
+    const toolbar = h("div", { class: "toolbar" },
+      h("div", { class: "seg", role: "group", "aria-label": "Periodo" }, ...periods.map(([d, l]) => h("button", { type: "button", class: d === dias ? "is-on" : "", onclick: () => { sessionStorage.setItem("tr-stats-dias", d); renderStats(sec); } }, l))),
+      h("div", { class: "toolbar__left" },
+        h("label", { class: "check-inline", title: "Tus propias visitas desde este navegador no se contarán" },
+          h("input", { type: "checkbox", checked: noTrack, onchange: (e) => { if (e.target.checked) localStorage.setItem("tr-noseguir", "1"); else localStorage.removeItem("tr-noseguir"); toast(e.target.checked ? "Listo: tus visitas desde este navegador ya no se cuentan." : "Tus visitas desde este navegador se volverán a contar.", "ok"); } }),
+          " No contar mis visitas"),
+        h("a", { class: "btn btn--ghost btn--sm", href: `/api/estadisticas/csv?dias=${dias}` }, "⬇ Exportar CSV"),
+        h("button", { class: "btn btn--ghost btn--sm", type: "button", onclick: () => renderStats(sec) }, "↻ Actualizar")));
+    contentEl.replaceChildren(toolbar, loading("Calculando estadísticas…"));
+    let d;
+    try { d = await api("GET", `estadisticas?dias=${dias}`); } catch (e) { if (e.message !== "sesión") contentEl.replaceChildren(toolbar, dbError(e)); return; }
+    const R = d.resumen;
+    const kpi = (emoji, label, value, hint) => h("div", { class: "kpi" }, h("span", { class: "kpi__emoji" }, emoji), h("div", {}, h("strong", {}, value), h("span", {}, label), hint ? h("small", {}, hint) : null));
+    const kpis = h("div", { class: "kpis" },
+      kpi("👁️", "Visitas (páginas vistas)", fmtN(R.visitas)),
+      kpi("🧑", "Visitantes únicos", fmtN(R.visitantes)),
+      kpi("⏱️", "Tiempo total en el sitio", fmtDur(R.tiempo)),
+      kpi("⌛", "Tiempo promedio por visitante", fmtDur(R.visitantes ? R.tiempo / R.visitantes : 0)),
+      kpi("📄", "Páginas por visita", R.sesiones ? (R.visitas / R.sesiones).toFixed(1) : "0"),
+      kpi("🎓", "Alumnos del aula activos", fmtN(R.alumnos), "con sesión iniciada"));
+    if (!R.visitas) {
+      contentEl.replaceChildren(toolbar, kpis, h("div", { class: "alert alert--info" }, "Todavía no hay visitas registradas en este periodo. Las visitas empiezan a contarse desde que se publica esta versión del sitio. Abre tu sitio en otra pestaña (o desde tu celular) y vuelve a actualizar."));
+      return;
+    }
+    const pages = h("section", { class: "stat-card stat-card--wide" }, h("h3", {}, "📄 Páginas más visitadas"),
+      h("div", { class: "table-wrap" }, h("table", { class: "table table--compact table--static" },
+        h("thead", {}, h("tr", {}, h("th", {}, "Página"), h("th", { class: "num" }, "Visitas"), h("th", { class: "num" }, "Visitantes"), h("th", { class: "num" }, "Tiempo prom."))),
+        h("tbody", {}, ...d.paginas.map((p) => h("tr", {}, h("td", {}, h("a", { href: p.ruta, target: "_blank", rel: "noopener" }, (p.titulo || p.ruta).replace(/\s*\|\s*TechRevive$/, "")), h("small", { class: "muted-sm block" }, p.ruta)),
+          h("td", { class: "num" }, fmtN(p.visitas)), h("td", { class: "num" }, fmtN(p.visitantes)), h("td", { class: "num" }, fmtDur(p.prom))))))));
+    const rows = d.detalle;
+    const tbody = h("tbody", {});
+    const paintRows = (q) => {
+      q = (q || "").toLowerCase();
+      const list = q ? rows.filter((r) => [r.ruta, r.titulo, r.ciudad, r.region, countryName(r.pais), r.ip, r.navegador, r.so, r.dispositivo, r.ref, r.usuario].join(" ").toLowerCase().includes(q)) : rows;
+      tbody.replaceChildren(...list.map((r) => h("tr", {},
+        h("td", { class: "nowrap" }, fmtDT(r.ts)),
+        h("td", {}, h("span", { title: r.titulo || "" }, r.ruta)),
+        h("td", {}, `${flag(r.pais)} ${[r.ciudad, r.region].filter(Boolean).join(", ") || countryName(r.pais)}`, h("small", { class: "muted-sm block" }, countryName(r.pais))),
+        h("td", {}, `${devIcon(r.dispositivo)} ${r.dispositivo || ""}`, h("small", { class: "muted-sm block" }, r.so || "")),
+        h("td", {}, r.navegador || ""),
+        h("td", { class: "mono" }, r.ip || ""),
+        h("td", { class: "num nowrap" }, r.duracion ? fmtDur(r.duracion) : "—"),
+        h("td", {}, r.ref || h("span", { class: "muted-sm" }, "Directo / interno")),
+        h("td", {}, r.usuario ? h("span", { class: "badge badge--ok" }, r.usuario) : ""))));
+    };
+    paintRows("");
+    const detail = h("section", { class: "stat-card stat-card--wide" },
+      h("div", { class: "stat-card__head" }, h("h3", {}, `🧾 Últimas visitas (${rows.length})`), h("input", { type: "search", class: "input input--sm", placeholder: "Buscar ciudad, IP, página…", oninput: (e) => paintRows(e.target.value) })),
+      h("div", { class: "table-wrap table-wrap--scroll" }, h("table", { class: "table table--compact table--static" },
+        h("thead", {}, h("tr", {}, ...["Fecha y hora", "Página", "Ubicación", "Dispositivo", "Navegador", "IP", "Tiempo", "Llegó desde", "Alumno"].map((t) => h("th", {}, t)))), tbody)),
+      h("p", { class: "muted-sm", style: "margin:10px 0 0" }, "La ubicación es aproximada (por la conexión a internet). Para ver todas las visitas del periodo usa «Exportar CSV» (se abre en Excel)."));
+    contentEl.replaceChildren(toolbar, kpis,
+      h("section", { class: "stat-card stat-card--wide" }, h("div", { class: "stat-card__head" }, h("h3", {}, "📈 Visitas por día"), h("div", { class: "legend" }, h("span", { class: "lg1" }, "Visitas"), h("span", { class: "lg2" }, "Visitantes únicos"))), dayChart(d.porDia, d.desde, d.dias)),
+      h("div", { class: "stat-grid" },
+        rankList("🌎 Países", d.paises.map((x) => ({ label: `${flag(x.pais)} ${countryName(x.pais)}`, n: x.visitas })), { total: R.visitas }),
+        rankList("📍 Ciudades / regiones", d.ciudades.map((x) => ({ label: `${flag(x.pais)} ${[x.ciudad, x.region].filter(Boolean).join(", ") || countryName(x.pais)}`, n: x.visitas })), { total: R.visitas }),
+        rankList("📱 Dispositivos", d.dispositivos.map((x) => ({ label: `${devIcon(x.k)} ${x.k}`, n: x.n }))),
+        rankList("🌐 Navegadores", d.navegadores.map((x) => ({ label: x.k, n: x.n }))),
+        rankList("🖥️ Sistemas operativos", d.sistemas.map((x) => ({ label: x.k, n: x.n }))),
+        rankList("🔗 Llegaron desde", d.referentes.map((x) => ({ label: x.k, n: x.n })), { total: R.visitas })),
+      mapCard(d.mapa), hourChart(d.horas), pages, detail);
+  }
+
+  /* ── Certificados ── */
+  const certEstado = { solicitado: ["⏳ Pendiente", "badge--warn"], aprobado: ["✓ Emitido", "badge--ok"], rechazado: ["✕ Rechazado", "badge--off"], revocado: ["⊘ Anulado", "badge--bad"] };
+  const certLink = (id) => `${location.origin}/certificado?c=${id}`;
+
+  async function renderCerts(sec) {
+    const tab = sessionStorage.getItem("tr-cert-tab") || "pendientes";
+    contentEl.replaceChildren(loading("Cargando certificados…"));
+    let d;
+    try { d = await api("GET", "certificados"); } catch (e) { if (e.message !== "sesión") contentEl.replaceChildren(dbError(e)); return; }
+    const pend = d.items.filter((x) => x.estado === "solicitado");
+    const tabs = [["pendientes", `⏳ Solicitudes${pend.length ? ` (${pend.length})` : ""}`], ["emitidos", "🏅 Certificados"], ["manual", "✍️ Emitir manualmente"], ["progreso", "📊 Progreso de alumnos"]];
+    const go = (t) => { sessionStorage.setItem("tr-cert-tab", t); renderCerts(sec); };
+    const bar = h("div", { class: "seg seg--tabs", role: "tablist" }, ...tabs.map(([k, l]) => h("button", { type: "button", role: "tab", "aria-selected": k === tab ? "true" : "false", class: k === tab ? "is-on" : "", onclick: () => go(k) }, l)));
+    const body = h("div", {});
+    contentEl.replaceChildren(bar, body);
+    const act = async (payload, okMsg) => {
+      try { await api("PUT", "certificados", payload); toast(okMsg, "ok"); renderCerts(sec); } catch (e) { if (e.message !== "sesión") toast(e.message, "error", 8000); }
+    };
+
+    if (tab === "pendientes") {
+      if (!pend.length) { body.append(h("div", { class: "alert alert--info" }, "No hay solicitudes pendientes. Cuando un alumno termine un curso y pida su certificado, aparecerá aquí para que lo revises y lo apruebes.")); return; }
+      body.append(h("p", { class: "intro" }, "Revisa el nombre (tildes, apellidos) antes de aprobar. Al aprobar, el alumno ve su certificado en el aula y puede imprimirlo."));
+      pend.forEach((c) => {
+        const name = h("input", { class: "input", value: c.nombre, maxlength: "90", "aria-label": "Nombre en el certificado" });
+        const horas = h("input", { class: "input input--sm", value: c.horas || "", maxlength: "20", style: "max-width:120px", "aria-label": "Horas" });
+        const p = c.progreso || {};
+        body.append(h("article", { class: "cert-req" },
+          h("div", { class: "cert-req__main" },
+            h("label", { class: "field__label" }, "Nombre en el certificado"), name,
+            h("p", { class: "cert-req__meta" }, h("strong", {}, c.curso_titulo), ` · alumno: ${c.usuario || "—"} · solicitado ${fmtDT(c.solicitado)}`),
+            h("p", { class: "cert-req__meta" }, `Progreso: ${p.hechas ?? "?"} de ${p.total ?? "?"} lecciones`, p.nota != null ? ` · nota de evaluación: ${p.nota}%` : "", p.faltan > 0 ? h("span", { class: "badge badge--warn", style: "margin-left:6px" }, `le faltan ${p.faltan}`) : h("span", { class: "badge badge--ok", style: "margin-left:6px" }, "curso completo"))),
+          h("div", { class: "cert-req__side" },
+            h("label", { class: "field__label" }, "Horas"), horas,
+            h("div", { class: "cert-req__btns" },
+              h("button", { class: "btn btn--primary btn--sm", type: "button", onclick: () => act({ id: c.id, accion: "aprobar", nombre: name.value, horas: horas.value }, "✅ Certificado aprobado.") }, "✓ Aprobar"),
+              h("button", { class: "btn btn--danger btn--sm", type: "button", onclick: () => { const m = prompt("Motivo del rechazo (el alumno lo verá):", ""); if (m !== null) act({ id: c.id, accion: "rechazar", motivo: m }, "Solicitud rechazada."); } }, "✕ Rechazar")))));
+      });
+      return;
+    }
+
+    if (tab === "emitidos") {
+      const list = d.items.filter((x) => x.estado !== "solicitado");
+      if (!list.length) { body.append(h("div", { class: "alert alert--info" }, "Todavía no hay certificados emitidos.")); return; }
+      const tbody = h("tbody", {});
+      const paint = (q) => {
+        q = (q || "").toLowerCase();
+        tbody.replaceChildren(...list.filter((c) => !q || [c.id, c.nombre, c.curso_titulo, c.usuario].join(" ").toLowerCase().includes(q)).map((c) => {
+          const [lbl, cls] = certEstado[c.estado] || [c.estado, "badge--off"];
+          const actions = h("div", { class: "row-actions" });
+          if (c.estado === "aprobado") {
+            actions.append(
+              h("a", { class: "btn btn--ghost btn--sm", href: `/certificado?c=${c.id}`, target: "_blank", rel: "noopener" }, "👁 Ver"),
+              h("button", { class: "btn btn--ghost btn--sm", type: "button", onclick: () => { navigator.clipboard.writeText(certLink(c.id)).then(() => toast("Enlace copiado.", "ok")); } }, "🔗 Copiar enlace"),
+              h("button", { class: "btn btn--ghost btn--sm", type: "button", onclick: () => { const n = prompt("Corregir el nombre del participante:", c.nombre); if (n && n.trim() && n !== c.nombre) act({ id: c.id, accion: "editar", nombre: n }, "Nombre corregido."); } }, "✎ Nombre"),
+              h("button", { class: "btn btn--danger btn--sm", type: "button", onclick: () => { const m = prompt("¿Anular este certificado? Dejará de ser válido al verificarlo. Motivo:", ""); if (m !== null) act({ id: c.id, accion: "revocar", motivo: m }, "Certificado anulado."); } }, "⊘ Anular"));
+          } else {
+            if (c.estado === "revocado") actions.append(h("button", { class: "btn btn--ghost btn--sm", type: "button", onclick: () => act({ id: c.id, accion: "restaurar" }, "Certificado restaurado.") }, "↺ Restaurar"));
+            actions.append(h("button", { class: "btn btn--danger btn--sm", type: "button", onclick: async () => {
+              if (!confirm("¿Eliminar definitivamente este registro?")) return;
+              try { await api("DELETE", `certificados?id=${encodeURIComponent(c.id)}`); toast("Eliminado.", "ok"); renderCerts(sec); } catch (e) { if (e.message !== "sesión") toast(e.message, "error"); }
+            } }, "🗑"));
+          }
+          return h("tr", {}, h("td", { class: "mono nowrap" }, c.id), h("td", {}, h("strong", {}, c.nombre), c.usuario ? h("small", { class: "muted-sm block" }, c.usuario) : null),
+            h("td", {}, c.curso_titulo, c.horas ? h("small", { class: "muted-sm block" }, /[a-z]/i.test(c.horas) ? c.horas : `${c.horas} horas`) : null),
+            h("td", { class: "nowrap" }, c.fecha ? fmtD(new Date(c.fecha + "T12:00:00").getTime()) : fmtD(c.emitido)),
+            h("td", {}, h("span", { class: `badge ${cls}` }, lbl), c.motivo ? h("small", { class: "muted-sm block" }, c.motivo) : null, c.origen === "manual" ? h("small", { class: "muted-sm block" }, "emitido manualmente") : null),
+            h("td", {}, actions));
+        }));
+      };
+      paint("");
+      body.append(h("div", { class: "toolbar" }, h("p", { class: "intro", style: "margin:0" }, `${list.length} registro(s).`), h("input", { type: "search", class: "input input--sm", placeholder: "Buscar nombre, curso o código…", oninput: (e) => paint(e.target.value) })),
+        h("div", { class: "table-wrap" }, h("table", { class: "table table--compact table--static" }, h("thead", {}, h("tr", {}, ...["Código", "Participante", "Curso", "Fecha", "Estado", ""].map((t) => h("th", {}, t)))), tbody)));
+      return;
+    }
+
+    if (tab === "manual") {
+      const f = { nombre: h("input", { class: "input", maxlength: "90", required: true }), curso: h("select", { class: "input" }, h("option", { value: "" }, "— Elige un curso —"), ...d.cursos.map((c) => h("option", { value: c.id }, c.titulo)), h("option", { value: "__otro" }, "Otro curso o taller (escribir)…")),
+        otro: h("input", { class: "input", maxlength: "90", placeholder: "Ej. Taller presencial de Excel" }), horas: h("input", { class: "input", maxlength: "20", placeholder: "Ej. 20" }), fecha: h("input", { class: "input", type: "date", value: today() }) };
+      const otroBox = h("div", { class: "field", hidden: true }, h("label", {}, "Nombre del curso o taller"), f.otro);
+      f.curso.addEventListener("change", () => { otroBox.hidden = f.curso.value !== "__otro"; const c = d.cursos.find((x) => x.id === f.curso.value); if (c && c.horas) f.horas.value = String(c.horas).replace(/\s*horas?$/i, ""); });
+      const out = h("div", {});
+      const btn = h("button", { class: "btn btn--primary", type: "submit" }, "🏅 Emitir certificado");
+      const form = h("form", { class: "card is-open", onsubmit: async (e) => {
+        e.preventDefault();
+        const isOtro = f.curso.value === "__otro";
+        const cur = d.cursos.find((x) => x.id === f.curso.value);
+        const payload = { nombre: f.nombre.value, curso: isOtro ? "" : f.curso.value, curso_titulo: isOtro ? f.otro.value : (cur ? cur.titulo : ""), horas: f.horas.value, fecha: f.fecha.value };
+        if (!payload.nombre.trim() || !payload.curso_titulo.trim()) { toast("Escribe el nombre y elige el curso.", "error"); return; }
+        btn.disabled = true;
+        try {
+          const r = await api("POST", "certificados", payload);
+          out.replaceChildren(h("div", { class: "alert alert--info" }, "✅ Certificado emitido con el código ", h("strong", {}, r.id), ". ", h("a", { href: `/certificado?c=${r.id}`, target: "_blank", rel: "noopener" }, "Verlo e imprimirlo ↗"), " · Enlace para compartir: ", h("code", {}, certLink(r.id))));
+          f.nombre.value = "";
+        } catch (err) { if (err.message !== "sesión") toast(err.message, "error"); } finally { btn.disabled = false; }
+      } }, h("div", { class: "card__body", style: "display:block;padding-top:18px" },
+        h("p", { class: "intro" }, "Para cursos presenciales o personas que no usaron el aula. El certificado queda emitido de inmediato y se puede verificar con su código."),
+        h("div", { class: "field" }, h("label", {}, "Nombre completo del participante"), f.nombre),
+        h("div", { class: "field" }, h("label", {}, "Curso"), f.curso), otroBox,
+        h("div", { class: "grid-2" }, h("div", { class: "field" }, h("label", {}, "Horas (opcional)"), f.horas), h("div", { class: "field" }, h("label", {}, "Fecha del certificado"), f.fecha)),
+        btn));
+      body.append(form, out);
+      return;
+    }
+
+    if (tab === "progreso") {
+      body.append(loading("Cargando progreso…"));
+      try {
+        const r = await api("GET", "alumnos/progreso");
+        if (!r.items.length) { body.replaceChildren(h("div", { class: "alert alert--info" }, "No hay alumnos. Agrégalos en «Alumnos y accesos».")); return; }
+        body.replaceChildren(h("p", { class: "intro" }, "Avance de cada alumno según lo guardado en el servidor (se actualiza cuando el alumno entra al aula)."),
+          h("div", { class: "table-wrap" }, h("table", { class: "table table--compact table--static" },
+            h("thead", {}, h("tr", {}, h("th", {}, "Alumno"), h("th", {}, "Última actividad"), h("th", {}, "Cursos"))),
+            h("tbody", {}, ...r.items.map((a) => h("tr", {},
+              h("td", {}, h("strong", {}, a.nombre), h("small", { class: "muted-sm block" }, a.usuario + (a.activo === false ? " · desactivado" : "") + (a.vence ? ` · vence ${a.vence}` : ""))),
+              h("td", { class: "nowrap" }, a.ultima ? fmtDT(a.ultima) : h("span", { class: "muted-sm" }, "Sin actividad")),
+              h("td", {}, ...a.cursos.map((c) => {
+                const pct = c.total ? Math.round(c.hechas * 100 / c.total) : 0;
+                return h("div", { class: "prog" }, h("span", { class: "prog__t" }, c.titulo), h("span", { class: "prog__bar" }, h("i", { style: `width:${pct}%` })), h("span", { class: "prog__n" }, `${c.hechas}/${c.total}`),
+                  c.certificado ? h("span", { class: `badge ${(certEstado[c.certificado] || [])[1] || ""}` }, (certEstado[c.certificado] || [c.certificado])[0]) : null);
+              }))))))));
+      } catch (e) { if (e.message !== "sesión") body.replaceChildren(dbError(e)); }
+    }
   }
 
   /* ───────── guardar ───────── */
@@ -854,7 +1180,7 @@
     }
     let path = S.path;
     if (sec.type === "collection" && S.isNew) {
-      const base = slugify(S.doc[sec.primary || "titulo"]) || `articulo-${Date.now().toString(36)}`;
+      const base = slugify(S.doc[sec.primary || "titulo"]).slice(0, 50).replace(/-+$/, "") || `${slugify(colLabel(sec))}-${Date.now().toString(36)}`;
       const existing = new Set((S.blogCache || []).map((x) => x.ruta));
       let name = base, n = 2;
       while (existing.has(`${sec.path}/${name}.json`)) name = `${base}-${n++}`;
@@ -863,7 +1189,7 @@
     saveBtn.disabled = true;
     saveBtn.replaceChildren(h("span", { class: "spinner" }), " Guardando…");
     try {
-      const label = sec.type === "collection" ? `artículo «${S.doc.titulo || ""}»` : stripEmoji(sec.label);
+      const label = sec.type === "collection" ? `${colLabel(sec)} «${S.doc.titulo || ""}»` : stripEmoji(sec.label);
       const r = await api("PUT", "archivo", { ruta: path, datos: S.doc, sha: S.sha, mensaje: `Panel: ${S.isNew ? "crear" : "actualizar"} ${label}` });
       S.sha = r.sha; S.path = path;
       const wasNew = S.isNew; S.isNew = false;

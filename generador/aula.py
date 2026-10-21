@@ -2,7 +2,8 @@
 """
 Aula virtual propia (/aula/).
 
-- Lee content/aula.json (cursos, módulos y lecciones) y content/alumnos.json (accesos).
+- Lee content/aula.json (ajustes, avisos, certificado), content/aula-cursos/*.json (un archivo
+  por curso, con módulos y lecciones) y content/alumnos.json (accesos).
 - Genera _site/aula/: ingresar, tablero «Mis cursos», página de cada curso y de cada lección.
 - Copia src/aula-archivos/ → _site/aula/archivos/ (materiales descargables).
 - Escribe worker/aula-datos.js con los alumnos (contraseñas cifradas) para que el Worker
@@ -45,10 +46,10 @@ def cursos():
     if _CURSOS is not None:
         return _CURSOS
     out, seen = [], set()
-    for c in arr(g(A, "cursos", default=[])):
+    for c in raw_cursos():
         if not isinstance(c, dict) or not c.get("titulo") or c.get("publicado", True) is False:
             continue
-        cid = slugify(c.get("id") or c["titulo"])
+        cid = slugify(c.get("_file") or c.get("id") or c["titulo"])
         if cid in ("archivos", "ingresar", "index"):
             cid = "curso-" + cid
         while cid in seen:
@@ -67,6 +68,8 @@ def cursos():
                     ls_slug += "-2"
                 lseen.add(ls_slug)
                 tipo = l.get("tipo") if l.get("tipo") in TIPOS else ("video" if l.get("video") else "lectura")
+                if l.get("examen_final") and tipo != "cuestionario":
+                    WARNINGS.append(f"Aula: «{l['titulo']}» está marcado como examen final pero no es de tipo Cuestionario.")
                 item = dict(l, _slug=ls_slug, _tipo=tipo, _mod=mi, _mod_titulo=m.get("titulo") or f"Módulo {mi + 1}",
                             _url=f"/aula/{cid}/{ls_slug}", _key=f"{cid}/{ls_slug}")
                 ls.append(item)
@@ -81,6 +84,34 @@ def cursos():
             out.append(dict(c, _id=cid, _mods=mods, _lessons=lessons))
     _CURSOS = out
     return out
+
+
+def raw_cursos():
+    """Cursos de content/aula-cursos/ (uno por archivo, ordenados) y los antiguos de aula.json."""
+    out = []
+    folder = os.path.join(CONTENT, "aula-cursos")
+    if os.path.isdir(folder):
+        for fn in sorted(os.listdir(folder)):
+            if not fn.endswith(".json"):
+                continue
+            c = load(os.path.join("aula-cursos", fn), default=None)
+            if isinstance(c, dict):
+                out.append(dict(c, _file=fn[:-5]))
+            else:
+                WARNINGS.append(f"Aula: el curso content/aula-cursos/{fn} tiene un error de formato y no se publicó.")
+    out.sort(key=lambda c: (precio_num(c.get("orden")) or 999, str(c.get("titulo") or "")))
+    return out + [c for c in arr(g(A, "cursos", default=[])) if isinstance(c, dict)]
+
+
+def horas_txt(c):
+    h = str(c.get("horas") or "").strip()
+    if not h:
+        return ""
+    return h if re.search(r"[a-z]", h, re.I) else f"{h} horas"
+
+
+def cert_on(c):
+    return c.get("certificado", True) is not False
 
 
 def img_abs(v, default="/img/aula-virtual.jpg"):
@@ -166,6 +197,7 @@ def shell(title, body, cls="", user=True, extra_head=""):
   <link rel="stylesheet" href="/css/aula.css" />{extra_head}
   <script src="/js/config.js" defer></script>
   <script src="/js/aula.js" defer></script>
+  <script src="/js/visitas.js" defer></script>
 </head>
 <body class="aula {cls}">
   {sprite()}
@@ -249,7 +281,7 @@ def outline(c, current=None):
         items = "".join(
             f'<li><a href="{l["_url"]}" class="aula-ol__item{" is-current" if current is l else ""}" data-key="{e(l["_key"])}"'
             f'{" aria-current=\"page\"" if current is l else ""}><span class="aula-ol__icon">{lesson_icon(l)}</span>'
-            f'<span class="aula-ol__text">{e(l["titulo"])}<small>{e(TIPOS[l["_tipo"]][1])}{" · " + e(l.get("duracion")) if l.get("duracion") else ""}</small></span>'
+            f'<span class="aula-ol__text">{e(l["titulo"])}<small>{"Examen final" if l.get("examen_final") else e(TIPOS[l["_tipo"]][1])}{" · " + e(l.get("duracion")) if l.get("duracion") else ""}</small></span>'
             f'<span class="aula-ol__check" aria-hidden="true">{icon("check")}</span></a></li>' for l in m["lecciones"])
         open_attr = " open" if (current is None or current["_mod"] == m["lecciones"][0]["_mod"]) else ""
         mods.append(f'''<details class="aula-ol__mod"{open_attr}><summary><span class="aula-ol__modnum">Módulo {mi + 1}</span>{e(m["titulo"])}<span class="aula-ol__modcount" data-mod-count></span></summary><ul>{items}</ul></details>''')
@@ -259,6 +291,31 @@ def outline(c, current=None):
 def build_curso(c):
     keys = [l["_key"] for l in c["_lessons"]]
     meta = "".join(f'<li>{icon(ic)} {e(v)}</li>' for ic, v in (("user", c.get("docente")), ("clock", c.get("duracion")), ("trend", c.get("nivel"))) if v)
+    if horas_txt(c) and cert_on(c):
+        meta += f'<li>{icon("award", "check")} Certificado · {e(horas_txt(c))}</li>'
+    objetivos = [str(x) for x in arr(c.get("objetivos")) if str(x).strip()]
+    obj_html = (f'<section class="aula-card aula-goals"><h2>{icon("target", "check")} Lo que aprenderás</h2><ul>'
+                + "".join(f'<li>{icon("check")}<span>{e(x)}</span></li>' for x in objetivos) + '</ul></section>') if objetivos else ""
+    req = str(c.get("requisitos") or "").strip()
+    req_html = f'<p class="aula-req"><strong>Requisitos:</strong> {e(req)}</p>' if req else ""
+    exams = [l["_key"] for l in c["_lessons"] if l.get("examen_final")]
+    cert_html = ""
+    if cert_on(c):
+        need = "todas las lecciones y aprueba el examen final" if exams else "todas las lecciones (y aprueba los cuestionarios)"
+        cert_html = f'''<section class="aula-card aula-cert" id="certificado" data-cert data-curso="{e(c["_id"])}" data-keys='{e(json.dumps([l["_key"] for l in c["_lessons"]]))}'>
+        <div class="aula-cert__icon">{icon("award", "check")}</div>
+        <div class="aula-cert__body">
+          <h2>Certificado del curso</h2>
+          <p data-cert-msg>Completa {need} para solicitar tu certificado con tu nombre{(" (" + e(horas_txt(c)) + ")") if horas_txt(c) else ""}.</p>
+          <form class="aula-cert__form" data-cert-form hidden>
+            <label for="cert-nombre-{e(c["_id"])}">Tu nombre completo, tal como debe aparecer en el certificado</label>
+            <input id="cert-nombre-{e(c["_id"])}" name="nombre" maxlength="90" autocomplete="name" required />
+            <p class="aula-cert__hint">Revísalo bien: tildes, mayúsculas y los dos apellidos si los usas.</p>
+            <div class="aula-cert__btns"><button type="submit" class="btn btn--primary btn--sm">Enviar solicitud</button><button type="button" class="btn btn--outline btn--sm" data-cert-cancel>Cancelar</button></div>
+          </form>
+          <div class="aula-cert__actions" data-cert-actions></div>
+        </div>
+      </section>'''
     total = len(c["_lessons"])
     body = f'''    <section class="aula-course-hero">
       <div class="aula-wrap aula-course-hero__inner">
@@ -276,8 +333,17 @@ def build_curso(c):
       </div>
     </section>
     <section class="aula-wrap aula-course-body">
-      <h2 class="aula-h2">Contenido del curso</h2>
-      <div class="aula-ol aula-ol--page">{outline(c)}</div>
+      <div class="aula-course-cols">
+        <div>
+          <h2 class="aula-h2">Contenido del curso</h2>
+          {req_html}
+          <div class="aula-ol aula-ol--page">{outline(c)}</div>
+        </div>
+        <aside class="aula-course-aside">
+          {cert_html}
+          {obj_html}
+        </aside>
+      </div>
     </section>'''
     write(os.path.join(c["_id"], "index.html"), shell(c["titulo"], body, cls="aula--curso"))
 
@@ -370,6 +436,12 @@ def build_leccion(c, l):
     nxt = (f'<a href="{next_l["_url"]}" class="aula-pager__btn aula-pager__btn--next"><small>Siguiente</small><span>{e(next_l["titulo"])}</span></a>'
            if next_l else f'<a href="/aula/{c["_id"]}/" class="aula-pager__btn aula-pager__btn--next"><small>Terminaste</small><span>Volver al curso</span></a>')
     keys = [x["_key"] for x in c["_lessons"]]
+    if l["_tipo"] == "cuestionario":
+        done_html = (f'<div class="aula-done aula-done--quiz"><p data-quiz-state>{icon("clipboard")} Esta lección se completa automáticamente cuando apruebas el '
+                     f'{"examen" if l.get("examen_final") else "cuestionario"} con {int(precio_num(g(A, "nota_minima") or 70)) or 70}% o más.</p>'
+                     f'<button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false" hidden>{icon("check")} <span>Marcar como completada</span></button></div>')
+    else:
+        done_html = f'<div class="aula-done"><button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false">{icon("check")} <span>Marcar como completada</span></button></div>'
     body = f'''    <div class="aula-lesson" data-lesson="{e(l["_key"])}" data-tipo="{l["_tipo"]}" data-curso-titulo="{e(c["titulo"])}" data-titulo="{e(l["titulo"])}">
       <aside class="aula-side" id="aula-side" aria-label="Contenido del curso">
         <div class="aula-side__head">
@@ -384,16 +456,14 @@ def build_leccion(c, l):
         <button type="button" class="aula-side-toggle" aria-controls="aula-side" aria-expanded="false">{icon("layers")} Contenido del curso</button>
         <nav class="aula-crumbs" aria-label="Ruta"><a href="/aula/">Mis cursos</a>{icon("chevron")}<a href="/aula/{c["_id"]}/">{e(c["titulo"])}</a>{icon("chevron")}<span>{e(l["_mod_titulo"])}</span></nav>
         <header class="aula-main__head">
-          <p class="aula-badge aula-badge--{l["_tipo"]}">{icon(tipo_ic)} {e(tipo_txt)}{" · " + e(l.get("duracion")) if l.get("duracion") else ""}<span>Lección {l["_n"]} de {len(c["_lessons"])}</span></p>
+          <p class="aula-badge aula-badge--{l["_tipo"]}">{icon(tipo_ic)} {"Examen final" if l.get("examen_final") else e(tipo_txt)}{" · " + e(l.get("duracion")) if l.get("duracion") else ""}<span>Lección {l["_n"]} de {len(c["_lessons"])}</span></p>
           <h1>{e(l["titulo"])}</h1>
         </header>
         {media}
         {contenido}
         {extra}
         {mats_html}
-        <div class="aula-done">
-          <button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false">{icon("check")} <span>Marcar como completada</span></button>
-        </div>
+        {done_html}
         <nav class="aula-pager" aria-label="Lecciones">{prev}{nxt}</nav>
       </article>
     </div>'''
@@ -407,6 +477,7 @@ def build_tablero():
         "total": len(c["_lessons"]), "keys": [l["_key"] for l in c["_lessons"]],
         "titulos": {l["_key"]: l["titulo"] for l in c["_lessons"]},
         "urls": {l["_key"]: l["_url"] for l in c["_lessons"]}, "url": f'/aula/{c["_id"]}/',
+        "certificado": cert_on(c), "horas": horas_txt(c),
     } for c in cursos()]
     avisos = [a for a in arr(g(A, "avisos", default=[])) if isinstance(a, dict) and (a.get("titulo") or a.get("texto"))]
     avisos.sort(key=lambda a: str(a.get("fecha") or ""), reverse=True)
@@ -437,6 +508,10 @@ def build_tablero():
           <div class="aula-courses" data-courses><p class="aula-empty">Cargando tus cursos…</p></div>
         </section>
         <aside class="aula-dash__side">
+          <section class="aula-card aula-mycerts" data-mycerts hidden>
+            <h2>{icon("award", "check")} Mis certificados</h2>
+            <ul data-mycerts-list></ul>
+          </section>
           {av_sec}
           <section class="aula-card aula-help">
             <h2>{icon("headset")} ¿Necesitas ayuda?</h2>
@@ -482,7 +557,14 @@ def datos_worker():
         alumnos[u] = {"n": str(a.get("nombre") or u), "s": salt,
                       "h": hashlib.sha256(f"{salt}:{pw}".encode("utf-8")).hexdigest(),
                       "c": acc, "a": a.get("activo", True) is not False, "v": str(a.get("vence") or "")[:10]}
-    data = {"k": secrets.token_hex(24), "cursos": list(ids.keys()), "alumnos": alumnos}
+    cdata = {}
+    for cid, c in ids.items():
+        cdata[cid] = {"t": c["titulo"], "h": horas_txt(c), "c": cert_on(c),
+                      "l": [l["_key"] for l in c["_lessons"]],
+                      "q": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario"],
+                      "x": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario" and l.get("examen_final")]}
+    minimo = int(precio_num(g(A, "nota_minima") or 70)) or 70
+    data = {"k": secrets.token_hex(24), "m": minimo, "cursos": cdata, "alumnos": alumnos}
     js = ("// Archivo generado automáticamente por build.py en cada publicación (no se sube a GitHub).\n"
           "// Contiene los alumnos del aula virtual con sus contraseñas cifradas.\n"
           "export default " + json.dumps(data, ensure_ascii=False) + ";\n")
@@ -491,12 +573,105 @@ def datos_worker():
     return len(alumnos)
 
 
+# ------------------------------------------------------------------ Certificado público
+CERT_DEF = {
+    "titulo": "Certificado",
+    "subtitulo": "de finalización",
+    "texto_otorga": "Se otorga el presente certificado a",
+    "texto_curso": "por haber completado satisfactoriamente el curso",
+    "lugar": "Guatemala",
+    "logo": "/img/logo-techrevive.png",
+    "firmas": [
+        {"nombre": "Nombre del director(a)", "cargo": "Dirección general · TechRevive", "imagen": ""},
+        {"nombre": "Nombre del instructor(a)", "cargo": "Coordinación de capacitación", "imagen": ""},
+    ],
+}
+
+
+def cert_config():
+    cfg = g(A, "certificado", default={})
+    cfg = cfg if isinstance(cfg, dict) else {}
+    out = {k: (cfg.get(k) if str(cfg.get(k) or "").strip() else v) for k, v in CERT_DEF.items() if k != "firmas"}
+    out["logo"] = img_abs(out["logo"], "/img/logo-techrevive.png")
+    firmas = [f for f in arr(cfg.get("firmas")) if isinstance(f, dict) and (f.get("nombre") or f.get("cargo"))]
+    out["firmas"] = [{"nombre": f.get("nombre") or "", "cargo": f.get("cargo") or "",
+                      "imagen": img_abs(f.get("imagen"), "") if f.get("imagen") else ""} for f in (firmas or CERT_DEF["firmas"])][:3]
+    return out
+
+
+def build_certificado():
+    cfg = cert_config()
+    body = f'''<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Certificado · TechRevive</title>
+  <meta name="description" content="Verifica la autenticidad de un certificado emitido por TechRevive." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#071233" />
+  <link rel="icon" href="/{e(FAVICON)}" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/certificado.css" />
+  <script src="/js/qrcode.js" defer></script>
+  <script src="/js/certificado.js" defer></script>
+  <script src="/js/visitas.js" defer></script>
+</head>
+<body class="certp">
+  <header class="certp__bar">
+    <a href="/" class="certp__brand"><img src="/{e(LOGO_IMG)}" width="32" height="32" alt="" /> <span>TECH<b>REVIVE</b></span></a>
+    <div class="certp__tools" data-tools hidden>
+      <button type="button" class="certp__btn certp__btn--primary" data-print>Imprimir o guardar PDF</button>
+      <button type="button" class="certp__btn" data-copy>Copiar enlace</button>
+      <a class="certp__btn" data-wa target="_blank" rel="noopener" href="#">Compartir por WhatsApp</a>
+    </div>
+  </header>
+  <main class="certp__main">
+    <section class="certp__state" data-state="buscar">
+      <h1>Verificar un certificado</h1>
+      <p>Escribe el código que aparece en la parte inferior del certificado (por ejemplo, TR-AB12-CD34).</p>
+      <form class="certp__form" data-form><input name="c" placeholder="TR-XXXX-XXXX" maxlength="12" autocomplete="off" aria-label="Código del certificado" required /><button class="certp__btn certp__btn--primary">Verificar</button></form>
+      <p class="certp__msg" data-msg role="status"></p>
+    </section>
+    <div class="certp__verified" data-verified hidden>✓ Certificado auténtico emitido por TechRevive · Código <strong data-code></strong></div>
+    <div class="certp__stage" data-stage hidden>
+      <article class="cert" data-cert aria-label="Certificado">
+        <div class="cert__frame">
+          <div class="cert__corner cert__corner--tl"></div><div class="cert__corner cert__corner--br"></div>
+          <img class="cert__logo" src="{e(cfg["logo"])}" alt="TechRevive" />
+          <p class="cert__title">{e(cfg["titulo"])}</p>
+          <p class="cert__subtitle">{e(cfg["subtitulo"])}</p>
+          <p class="cert__lead">{e(cfg["texto_otorga"])}</p>
+          <p class="cert__name" data-f="nombre"></p>
+          <p class="cert__lead">{e(cfg["texto_curso"])}</p>
+          <p class="cert__course" data-f="curso"></p>
+          <p class="cert__detail" data-f="detalle"></p>
+          <div class="cert__signs">{"".join(f'<div class="cert__sign">{(chr(60) + "img src=" + chr(34) + e(f["imagen"]) + chr(34) + " alt=" + chr(34) + chr(34) + " />") if f["imagen"] else ""}<span class="cert__line"></span><strong>{e(f["nombre"])}</strong><small>{e(f["cargo"])}</small></div>' for f in cfg["firmas"])}</div>
+          <footer class="cert__foot">
+            <div class="cert__qr" data-qr></div>
+            <div><strong>Código: <span data-f="id"></span></strong><span>Verifica su autenticidad en <span data-f="url"></span></span></div>
+          </footer>
+        </div>
+      </article>
+    </div>
+  </main>
+  <script type="application/json" id="cert-config">{json.dumps({"lugar": cfg["lugar"]}, ensure_ascii=False).replace("<", "\\u003c")}</script>
+</body>
+</html>
+'''
+    with open(os.path.join(OUT, "certificado.html"), "w", encoding="utf-8") as f:
+        f.write(body)
+
+
 def build_aula_virtual():
     os.makedirs(AULA_OUT, exist_ok=True)
     src = os.path.join(SRC, "aula-archivos")
     if os.path.isdir(src):
         shutil.copytree(src, os.path.join(AULA_OUT, "archivos"), dirs_exist_ok=True)
     n = datos_worker()
+    build_certificado()
     if not habilitada():
         return 0
     build_ingresar()

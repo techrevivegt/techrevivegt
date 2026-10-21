@@ -14,6 +14,10 @@
  *   GITHUB_BRANCH   (texto)   rama, normalmente main
  *   AULA_SECRET     (Secret, opcional) clave para firmar las sesiones del aula virtual
  *
+ * Base de datos (D1, binding DB): progreso de los alumnos, certificados y
+ * estadísticas de visitas. Cloudflare la crea sola en la primera publicación
+ * (ver d1_databases en wrangler.jsonc). Las tablas se crean solas al usarla.
+ *
  * Aula virtual (/aula/*): solo entra quien tenga usuario y contraseña en
  * content/alumnos.json (se editan en el panel → Aula virtual → Alumnos).
  * build.py convierte esa lista en worker/aula-datos.js con las contraseñas cifradas.
@@ -28,11 +32,13 @@ const MAX_IMAGE_BYTES = 6 * 1024 * 1024;
 const ALLOWED_PATHS = [
   /^content\/[a-z0-9_-]+\.json$/,
   /^content\/blog\/[a-z0-9_-]+\.json$/,
+  /^content\/aula-cursos\/[a-z0-9_-]+\.json$/,
 ];
+const COLLECTIONS = ["content/blog", "content/aula-cursos"];
 const IMAGE_PATH = /^src\/img\/[a-z0-9_-]+\.(jpg|jpeg|png|webp|gif)$/;
 const DOC_PATH = /^src\/aula-archivos\/[a-z0-9_-]+\.(pdf|docx?|xlsx?|pptx?|zip|txt)$/;
 const MAX_DOC_BYTES = 15 * 1024 * 1024;
-const ALLOWED_DIRS = ["content/blog", "src/img", "src/aula-archivos"];
+const ALLOWED_DIRS = ["content/blog", "content/aula-cursos", "src/img", "src/aula-archivos"];
 
 const AULA_COOKIE = "tr_aula";
 const AULA_DAYS = 14;
@@ -64,6 +70,8 @@ async function handleApi(request, env, url) {
   const route = url.pathname.replace(/^\/api\//, "").replace(/\/$/, "");
   const method = request.method.toUpperCase();
 
+  if (route === "v" || route === "v/fin") return handleBeacon(request, env, url, route, method);
+  if (route === "certificado" && method === "GET") return publicCertificate(env, url);
   if (route.startsWith("aula/")) return handleAulaApi(request, env, url, route, method);
 
   // Protección CSRF básica: las llamadas que modifican deben venir del panel.
@@ -104,6 +112,11 @@ async function handleApi(request, env, url) {
   // A partir de aquí todo requiere sesión iniciada.
   const session = await readSession(request, env);
   if (!session) return json({ error: "Tu sesión terminó. Vuelve a entrar con tu contraseña.", login: true }, 401);
+
+  // Estadísticas, certificados y progreso de alumnos (base de datos, no necesitan GitHub).
+  if (route === "estadisticas" || route === "estadisticas/csv" || route === "certificados" || route === "alumnos/progreso") {
+    return handlePanelDb(request, env, url, route, method);
+  }
   if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) {
     return json({ error: "Falta configurar GITHUB_TOKEN o GITHUB_REPO en Cloudflare (Settings → Variables and Secrets)." }, 500);
   }
@@ -147,13 +160,22 @@ async function handleApi(request, env, url) {
   }
 
   if (route === "entradas" && method === "GET") {
-    // Lista los artículos del blog con sus datos principales (para la tabla).
-    const list = await gh(env, `contents/content/blog?ref=${encodeURIComponent(branch(env))}`, {}, true);
+    // Lista los elementos de una colección (blog o cursos del aula) con sus datos (para la tabla).
+    const dir = url.searchParams.get("carpeta") || "content/blog";
+    if (!COLLECTIONS.includes(dir)) return json({ error: "Carpeta no permitida." }, 403);
+    const list = await gh(env, `contents/${encodePath(dir)}?ref=${encodeURIComponent(branch(env))}`, {}, true);
     const files = Array.isArray(list) ? list.filter((x) => x.type === "file" && x.name.endsWith(".json")) : [];
     const items = await Promise.all(files.map(async (f) => {
       try {
         const file = await ghGetFile(env, f.path);
-        return { ruta: f.path, sha: file.sha, datos: JSON.parse(file.text) };
+        let datos = JSON.parse(file.text);
+        if (dir === "content/aula-cursos" && datos && typeof datos === "object") {
+          // Para la tabla basta un resumen (los cursos completos pesan mucho).
+          const mods = Array.isArray(datos.modulos) ? datos.modulos : [];
+          datos = { titulo: datos.titulo, orden: datos.orden, nivel: datos.nivel, horas: datos.horas, publicado: datos.publicado,
+            modulos: mods.map((m) => ({ lecciones: (m && Array.isArray(m.lecciones) ? m.lecciones : []).map(() => 0) })) };
+        }
+        return { ruta: f.path, sha: file.sha, datos };
       } catch {
         return { ruta: f.path, sha: f.sha, datos: null, error: true };
       }
@@ -197,7 +219,12 @@ async function handleApi(request, env, url) {
 /* ───────────────────────── Aula virtual ───────────────────────── */
 
 const AULA_USERS = (AULA && AULA.alumnos) || {};
-const AULA_COURSES = (AULA && AULA.cursos) || [];
+// cursos: { id: { t: título, h: horas, l: [lecciones], q: [cuestionarios], x: [exámenes finales], c: entrega certificado } }
+const AULA_COURSE_DATA = (AULA && AULA.cursos && !Array.isArray(AULA.cursos)) ? AULA.cursos : {};
+const AULA_COURSES = Array.isArray(AULA && AULA.cursos) ? AULA.cursos : Object.keys(AULA_COURSE_DATA);
+const AULA_MIN = Number(AULA && AULA.m) || 70;
+const LESSON_COURSE = {};
+for (const [cid, c] of Object.entries(AULA_COURSE_DATA)) for (const k of c.l || []) LESSON_COURSE[k] = cid;
 
 function todayGT() {
   try { return new Date().toLocaleDateString("en-CA", { timeZone: "America/Guatemala" }); }
@@ -280,7 +307,71 @@ async function handleAulaApi(request, env, url, route, method) {
   if (route === "aula/yo" && method === "GET") {
     const s = await aulaSession(request, env);
     if (!s) return json({ error: "Inicia sesión para entrar al aula." }, 401);
-    return json({ usuario: s.usuario, nombre: s.user.n, cursos: s.user.c, vence: s.user.v || "" });
+    return json({ usuario: s.usuario, nombre: s.user.n, cursos: s.user.c, vence: s.user.v || "", servidor: Boolean(env.DB) });
+  }
+
+  // Lo que sigue necesita sesión de alumno y la base de datos.
+  const s = await aulaSession(request, env);
+  if (!s) return json({ error: "Inicia sesión para entrar al aula." }, 401);
+  if (!env.DB) return json({ error: "La base de datos del aula todavía no está conectada.", sinBase: true }, 503);
+  await ensureSchema(env);
+
+  if (route === "aula/progreso" && method === "GET") {
+    const rows = (await env.DB.prepare("SELECT leccion, ts, nota FROM progreso WHERE usuario = ?").bind(s.usuario).all()).results || [];
+    const hechas = {}, notas = {};
+    for (const r of rows) { if (r.ts) hechas[r.leccion] = r.ts; if (r.nota != null) notas[r.leccion] = r.nota; }
+    return json({ hechas, notas });
+  }
+
+  if (route === "aula/progreso" && method === "POST") {
+    const body = await readJson(request);
+    const items = Array.isArray(body.items) ? body.items.slice(0, 400) : [];
+    const stmts = [];
+    for (const it of items) {
+      const key = String(it.leccion || "");
+      const cid = LESSON_COURSE[key];
+      if (!cid || !aulaHasCourse(s.user, cid)) continue;
+      const c = AULA_COURSE_DATA[cid];
+      const isQuiz = (c.q || []).includes(key);
+      const nota = it.nota == null ? null : Math.max(0, Math.min(100, Math.round(Number(it.nota) || 0)));
+      if (it.hecho === false) {
+        if (!isQuiz) stmts.push(env.DB.prepare("DELETE FROM progreso WHERE usuario = ? AND leccion = ?").bind(s.usuario, key));
+        continue;
+      }
+      if (isQuiz && (nota == null || nota < AULA_MIN)) continue; // un cuestionario solo cuenta si se aprueba
+      const ts = Math.min(Number(it.ts) || Date.now(), Date.now());
+      stmts.push(env.DB.prepare(
+        "INSERT INTO progreso (usuario, leccion, ts, nota) VALUES (?, ?, ?, ?) " +
+        "ON CONFLICT(usuario, leccion) DO UPDATE SET nota = CASE WHEN excluded.nota IS NULL THEN progreso.nota " +
+        "WHEN progreso.nota IS NULL OR excluded.nota > progreso.nota THEN excluded.nota ELSE progreso.nota END"
+      ).bind(s.usuario, key, ts, nota));
+    }
+    if (stmts.length) await env.DB.batch(stmts);
+    return json({ ok: true, guardados: stmts.length });
+  }
+
+  if (route === "aula/certificados" && method === "GET") {
+    const rows = (await env.DB.prepare("SELECT id, curso, curso_titulo, nombre, estado, motivo, solicitado, emitido FROM certificados WHERE usuario = ? ORDER BY solicitado DESC").bind(s.usuario).all()).results || [];
+    return json({ items: rows });
+  }
+
+  if (route === "aula/certificados" && method === "POST") {
+    const body = await readJson(request);
+    const cid = String(body.curso || "");
+    const c = AULA_COURSE_DATA[cid];
+    if (!c || !aulaHasCourse(s.user, cid)) return json({ error: "No tienes acceso a ese curso." }, 403);
+    if (c.c === false) return json({ error: "Este curso no entrega certificado." }, 400);
+    const prev = await env.DB.prepare("SELECT id, estado FROM certificados WHERE usuario = ? AND curso = ? AND estado IN ('solicitado','aprobado') LIMIT 1").bind(s.usuario, cid).first();
+    if (prev) return json({ ok: true, id: prev.id, estado: prev.estado });
+    const st = await courseStatus(env, s.usuario, cid);
+    if (st.faltanSinExamen > 0) return json({ error: `Te faltan ${st.faltanSinExamen} lección(es) por completar.` }, 400);
+    if (st.examenPendiente) return json({ error: "Primero aprueba el examen final del curso." }, 400);
+    if (st.faltan > 0) return json({ error: `Te faltan ${st.faltan} lección(es) por completar.` }, 400);
+    const nombre = cleanName(body.nombre) || s.user.n;
+    const id = certId();
+    await env.DB.prepare("INSERT INTO certificados (id, usuario, nombre, curso, curso_titulo, horas, nota, estado, origen, solicitado) VALUES (?, ?, ?, ?, ?, ?, ?, 'solicitado', 'aula', ?)")
+      .bind(id, s.usuario, nombre, cid, c.t, String(c.h || ""), st.nota, Date.now()).run();
+    return json({ ok: true, id, estado: "solicitado" });
   }
 
   return json({ error: "Ruta no encontrada." }, 404);
@@ -308,6 +399,239 @@ async function handleAulaPage(request, env, url) {
   headers.set("Cache-Control", "private, no-store");
   headers.set("X-Robots-Tag", "noindex, nofollow");
   return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
+}
+
+/* ───────────────────────── Base de datos (D1) ───────────────────────── */
+
+let schemaReady = null;
+function ensureSchema(env) {
+  if (!schemaReady) {
+    schemaReady = env.DB.batch([
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS visitas (id INTEGER PRIMARY KEY AUTOINCREMENT, pid TEXT UNIQUE, ts INTEGER NOT NULL, vid TEXT, sid TEXT, ruta TEXT, titulo TEXT, ref TEXT, pais TEXT, region TEXT, ciudad TEXT, lat REAL, lon REAL, ip TEXT, dispositivo TEXT, so TEXT, navegador TEXT, pantalla TEXT, idioma TEXT, duracion INTEGER DEFAULT 0, usuario TEXT)"),
+      env.DB.prepare("CREATE INDEX IF NOT EXISTS visitas_ts ON visitas(ts)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS progreso (usuario TEXT NOT NULL, leccion TEXT NOT NULL, ts INTEGER NOT NULL, nota INTEGER, PRIMARY KEY (usuario, leccion))"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS certificados (id TEXT PRIMARY KEY, usuario TEXT, nombre TEXT NOT NULL, curso TEXT, curso_titulo TEXT NOT NULL, horas TEXT, nota INTEGER, estado TEXT NOT NULL, origen TEXT, motivo TEXT, solicitado INTEGER, emitido INTEGER, fecha TEXT)"),
+      env.DB.prepare("CREATE INDEX IF NOT EXISTS cert_usuario ON certificados(usuario, curso)"),
+    ]).catch((e) => { schemaReady = null; throw e; });
+  }
+  return schemaReady;
+}
+
+function certId() {
+  const abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const b = crypto.getRandomValues(new Uint8Array(8));
+  const c = [...b].map((x) => abc[x % abc.length]).join("");
+  return `TR-${c.slice(0, 4)}-${c.slice(4)}`;
+}
+
+function cleanName(v) {
+  return String(v || "").replace(/<[^>]*>/g, "").replace(/[<>\u0000-\u001f]/g, "").replace(/\s+/g, " ").trim().slice(0, 90);
+}
+
+async function courseStatus(env, usuario, cid) {
+  const c = AULA_COURSE_DATA[cid] || { l: [], q: [], x: [] };
+  const rows = (await env.DB.prepare("SELECT leccion, ts, nota FROM progreso WHERE usuario = ?").bind(usuario).all()).results || [];
+  const map = new Map(rows.map((r) => [r.leccion, r]));
+  const hechas = (c.l || []).filter((k) => map.has(k)).length;
+  const exams = c.x && c.x.length ? c.x : [];
+  const faltanSinExamen = (c.l || []).filter((k) => !map.has(k) && !exams.includes(k)).length;
+  const examenPendiente = exams.some((k) => !map.has(k));
+  const notas = (exams.length ? exams : c.q || []).map((k) => map.get(k)).filter((r) => r && r.nota != null).map((r) => r.nota);
+  const nota = notas.length ? Math.round(notas.reduce((a, b) => a + b, 0) / notas.length) : null;
+  const last = rows.filter((r) => LESSON_COURSE[r.leccion] === cid).reduce((m, r) => Math.max(m, r.ts || 0), 0);
+  return { total: (c.l || []).length, hechas, faltan: (c.l || []).length - hechas, faltanSinExamen, examenPendiente, nota, ultima: last || null };
+}
+
+async function publicCertificate(env, url) {
+  const id = String(url.searchParams.get("c") || "").toUpperCase().trim();
+  if (!/^TR-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(id)) return json({ error: "Código no válido." }, 400);
+  if (!env.DB) return json({ error: "Servicio no disponible." }, 503);
+  await ensureSchema(env);
+  const r = await env.DB.prepare("SELECT id, nombre, curso_titulo, horas, estado, emitido, fecha FROM certificados WHERE id = ?").bind(id).first();
+  if (!r || (r.estado !== "aprobado" && r.estado !== "revocado")) return json({ error: "No encontramos un certificado con ese código." }, 404);
+  if (r.estado === "revocado") return json({ id: r.id, revocado: true });
+  return json({ id: r.id, nombre: r.nombre, curso: r.curso_titulo, horas: r.horas || "", fecha: r.fecha || "", emitido: r.emitido });
+}
+
+/* ───────────── Estadísticas de visitas ───────────── */
+
+const BOT_RE = /bot|crawl|spider|slurp|facebookexternalhit|embedly|preview|monitor|headless|lighthouse|pingdom|uptime|curl|wget|python|axios|node-fetch|go-http/i;
+
+function parseUA(ua) {
+  ua = ua || "";
+  let dispositivo = "Computadora";
+  if (/iPad|Tablet|PlayBook|Silk|(Android(?!.*Mobile))/i.test(ua)) dispositivo = "Tablet";
+  else if (/Mobi|iPhone|iPod|Android|Windows Phone/i.test(ua)) dispositivo = "Celular";
+  let so = "Otro", m;
+  if ((m = ua.match(/Android (\d+)/))) so = `Android ${m[1]}`;
+  else if ((m = ua.match(/(?:iPhone|CPU) OS (\d+)/))) so = `iOS ${m[1]}`;
+  else if (/iPad/.test(ua)) so = "iPadOS";
+  else if (/Windows NT 10/.test(ua)) so = "Windows 10/11";
+  else if (/Windows NT 6\.[23]/.test(ua)) so = "Windows 8";
+  else if (/Windows NT 6\.1/.test(ua)) so = "Windows 7";
+  else if (/Windows/.test(ua)) so = "Windows";
+  else if (/CrOS/.test(ua)) so = "ChromeOS";
+  else if (/Mac OS X/.test(ua)) so = "macOS";
+  else if (/Linux/.test(ua)) so = "Linux";
+  let navegador = "Otro";
+  if (/FBAN|FBAV|FB_IAB/.test(ua)) navegador = "Facebook (app)";
+  else if (/Instagram/.test(ua)) navegador = "Instagram (app)";
+  else if (/TikTok|musical_ly|BytedanceWebview/i.test(ua)) navegador = "TikTok (app)";
+  else if (/WhatsApp/i.test(ua)) navegador = "WhatsApp";
+  else if (/Edg(e|A|iOS)?\//.test(ua)) navegador = "Edge";
+  else if (/OPR\/|Opera/.test(ua)) navegador = "Opera";
+  else if (/SamsungBrowser/.test(ua)) navegador = "Samsung Internet";
+  else if (/Firefox|FxiOS/.test(ua)) navegador = "Firefox";
+  else if (/Chrome|CriOS/.test(ua)) navegador = "Chrome";
+  else if (/Safari/.test(ua)) navegador = "Safari";
+  return { dispositivo, so, navegador };
+}
+
+const clip = (v, n) => String(v == null ? "" : v).slice(0, n);
+
+async function handleBeacon(request, env, url, route, method) {
+  const ok = () => new Response(null, { status: 204, headers: { "Cache-Control": "no-store" } });
+  if (method !== "POST" || !env.DB) return ok();
+  const ua = request.headers.get("user-agent") || "";
+  if (BOT_RE.test(ua)) return ok();
+  let d;
+  try { d = JSON.parse((await request.text()).slice(0, 4000)); } catch { return ok(); }
+  if (!d || !/^[a-z0-9-]{8,40}$/i.test(String(d.pid || ""))) return ok();
+  try {
+    await ensureSchema(env);
+    if (route === "v/fin") {
+      const dur = Math.max(0, Math.min(4 * 3600, Math.round(Number(d.d) || 0)));
+      await env.DB.prepare("UPDATE visitas SET duracion = MAX(duracion, ?) WHERE pid = ? AND ts > ?").bind(dur, d.pid, Date.now() - 6 * 3600 * 1000).run();
+      return ok();
+    }
+    const ruta = clip(d.r, 300);
+    if (!ruta.startsWith("/") || ruta.startsWith("/panel") || ruta.startsWith("/admin")) return ok();
+    const cf = request.cf || {};
+    let ref = clip(d.f, 300);
+    try { const rh = new URL(ref).hostname; ref = rh === url.hostname ? "" : rh.replace(/^www\./, ""); } catch { ref = ""; }
+    const { dispositivo, so, navegador } = parseUA(ua);
+    let usuario = null;
+    if (ruta.startsWith("/aula")) { const s = await aulaSession(request, env); if (s) usuario = s.usuario; }
+    await env.DB.prepare(
+      "INSERT OR IGNORE INTO visitas (pid, ts, vid, sid, ruta, titulo, ref, pais, region, ciudad, lat, lon, ip, dispositivo, so, navegador, pantalla, idioma, usuario) " +
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    ).bind(d.pid, Date.now(), clip(d.vid, 40), clip(d.sid, 40), ruta, clip(d.t, 160), ref,
+      clip(cf.country, 2), clip(cf.region, 80), clip(cf.city, 80),
+      cf.latitude != null ? Number(cf.latitude) : null, cf.longitude != null ? Number(cf.longitude) : null,
+      clip(request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for") || "", 64),
+      dispositivo, so, navegador, clip(d.s, 20), clip(d.l, 12), usuario).run();
+    if (Math.random() < 0.01) await env.DB.prepare("DELETE FROM visitas WHERE ts < ?").bind(Date.now() - 400 * 86400 * 1000).run();
+  } catch { /* las estadísticas nunca deben romper el sitio */ }
+  return ok();
+}
+
+/* ───────────── Panel: estadísticas, certificados, progreso ───────────── */
+
+async function handlePanelDb(request, env, url, route, method) {
+  if (!env.DB) return json({ error: "La base de datos todavía no está conectada. Pega su ID en Panel → Configuración general → «ID de la base de datos».", sinBase: true }, 503);
+  await ensureSchema(env);
+  const DB = env.DB;
+
+  if (route === "estadisticas" || route === "estadisticas/csv") {
+    const dias = Math.max(1, Math.min(400, Number(url.searchParams.get("dias")) || 30));
+    // Los días se cuentan en hora de Guatemala (UTC-6).
+    const tz = -6 * 3600 * 1000;
+    const hoy0 = Math.floor((Date.now() + tz) / 86400000) * 86400000 - tz;
+    const desde = hoy0 - (dias - 1) * 86400000;
+    if (route === "estadisticas/csv") {
+      const rows = (await DB.prepare("SELECT ts, ruta, titulo, pais, region, ciudad, ip, dispositivo, so, navegador, pantalla, idioma, duracion, ref, usuario FROM visitas WHERE ts >= ? ORDER BY ts DESC LIMIT 20000").bind(desde).all()).results || [];
+      const head = ["fecha_hora_gt", "pagina", "titulo", "pais", "region", "ciudad", "ip", "dispositivo", "sistema", "navegador", "pantalla", "idioma", "segundos", "llego_desde", "alumno"];
+      const esc = (v) => { const t = String(v == null ? "" : v); return /[",\n;]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t; };
+      const fmt = (ts) => new Date(ts + tz).toISOString().replace("T", " ").slice(0, 19);
+      const lines = [head.join(",")].concat(rows.map((r) => [fmt(r.ts), r.ruta, r.titulo, r.pais, r.region, r.ciudad, r.ip, r.dispositivo, r.so, r.navegador, r.pantalla, r.idioma, r.duracion, r.ref, r.usuario].map(esc).join(",")));
+      return new Response("\ufeff" + lines.join("\n"), { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="visitas-techrevive-${dias}dias.csv"`, "Cache-Control": "no-store" } });
+    }
+    const q = (sql, ...b) => DB.prepare(sql).bind(...b);
+    const W = "FROM visitas WHERE ts >= ?";
+    const res = await DB.batch([
+      q(`SELECT COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes, COUNT(DISTINCT sid) AS sesiones, COALESCE(SUM(duracion),0) AS tiempo, COUNT(DISTINCT pais) AS paises, COUNT(DISTINCT usuario) AS alumnos ${W}`, desde),
+      q(`SELECT CAST((ts + ${tz}) / 86400000 AS INTEGER) AS d, COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes ${W} GROUP BY d ORDER BY d`, desde),
+      q(`SELECT ruta, MAX(titulo) AS titulo, COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes, CAST(AVG(duracion) AS INTEGER) AS prom ${W} GROUP BY ruta ORDER BY visitas DESC LIMIT 30`, desde),
+      q(`SELECT pais, COUNT(*) AS visitas, COUNT(DISTINCT vid) AS visitantes ${W} GROUP BY pais ORDER BY visitas DESC LIMIT 30`, desde),
+      q(`SELECT ciudad, region, pais, COUNT(*) AS visitas ${W} GROUP BY ciudad, region, pais ORDER BY visitas DESC LIMIT 30`, desde),
+      q(`SELECT dispositivo AS k, COUNT(*) AS n ${W} GROUP BY k ORDER BY n DESC`, desde),
+      q(`SELECT navegador AS k, COUNT(*) AS n ${W} GROUP BY k ORDER BY n DESC LIMIT 12`, desde),
+      q(`SELECT so AS k, COUNT(*) AS n ${W} GROUP BY k ORDER BY n DESC LIMIT 12`, desde),
+      q(`SELECT ref AS k, COUNT(*) AS n ${W} AND ref <> '' GROUP BY k ORDER BY n DESC LIMIT 15`, desde),
+      q(`SELECT ROUND(lat, 1) AS lat, ROUND(lon, 1) AS lon, MAX(ciudad) AS ciudad, MAX(pais) AS pais, COUNT(*) AS n ${W} AND lat IS NOT NULL GROUP BY ROUND(lat, 1), ROUND(lon, 1) ORDER BY n DESC LIMIT 300`, desde),
+      q(`SELECT CAST(((ts + ${tz}) % 86400000) / 3600000 AS INTEGER) AS h, COUNT(*) AS n ${W} GROUP BY h`, desde),
+      q(`SELECT ts, ruta, titulo, pais, region, ciudad, ip, dispositivo, so, navegador, duracion, ref, usuario, vid ${W} ORDER BY ts DESC LIMIT 300`, desde),
+    ]);
+    const r = (i) => res[i].results || [];
+    const tot = r(0)[0] || {};
+    return json({
+      dias, desde,
+      resumen: { visitas: tot.visitas || 0, visitantes: tot.visitantes || 0, sesiones: tot.sesiones || 0, tiempo: tot.tiempo || 0, paises: tot.paises || 0, alumnos: tot.alumnos || 0 },
+      porDia: r(1).map((x) => ({ fecha: new Date(x.d * 86400000).toISOString().slice(0, 10), visitas: x.visitas, visitantes: x.visitantes })),
+      paginas: r(2), paises: r(3), ciudades: r(4), dispositivos: r(5), navegadores: r(6), sistemas: r(7), referentes: r(8), mapa: r(9), horas: r(10), detalle: r(11),
+    });
+  }
+
+  if (route === "alumnos/progreso" && method === "GET") {
+    const rows = (await DB.prepare("SELECT usuario, leccion, ts, nota FROM progreso").all()).results || [];
+    const byUser = {};
+    for (const x of rows) (byUser[x.usuario] = byUser[x.usuario] || []).push(x);
+    const certs = (await DB.prepare("SELECT usuario, curso, estado FROM certificados WHERE usuario IS NOT NULL").all()).results || [];
+    const items = Object.entries(AULA_USERS).map(([u, info]) => {
+      const mine = byUser[u] || [];
+      const done = new Set(mine.map((x) => x.leccion));
+      const cursos = AULA_COURSES.filter((cid) => aulaHasCourse(info, cid)).map((cid) => {
+        const c = AULA_COURSE_DATA[cid] || { l: [] };
+        const h = (c.l || []).filter((k) => done.has(k)).length;
+        const cert = certs.find((z) => z.usuario === u && z.curso === cid && z.estado !== "rechazado");
+        return { id: cid, titulo: c.t || cid, hechas: h, total: (c.l || []).length, certificado: cert ? cert.estado : "" };
+      });
+      const ultima = mine.reduce((m, x) => Math.max(m, x.ts || 0), 0) || null;
+      return { usuario: u, nombre: info.n, activo: info.a, vence: info.v || "", ultima, cursos };
+    });
+    return json({ items });
+  }
+
+  if (route === "certificados") {
+    if (method === "GET") {
+      const rows = (await DB.prepare("SELECT * FROM certificados ORDER BY COALESCE(emitido, solicitado) DESC LIMIT 1000").all()).results || [];
+      for (const r of rows) {
+        if (r.estado === "solicitado" && r.usuario && r.curso) r.progreso = await courseStatus(env, r.usuario, r.curso);
+      }
+      const cursos = AULA_COURSES.map((cid) => ({ id: cid, titulo: (AULA_COURSE_DATA[cid] || {}).t || cid, horas: (AULA_COURSE_DATA[cid] || {}).h || "" }));
+      return json({ items: rows, cursos });
+    }
+    if (method === "POST") { // emisión manual (por ejemplo, cursos presenciales)
+      const b = await readJson(request);
+      const nombre = cleanName(b.nombre);
+      const cursoTitulo = cleanName(b.curso_titulo || (AULA_COURSE_DATA[b.curso] || {}).t);
+      if (!nombre || !cursoTitulo) return json({ error: "Escribe el nombre del participante y el curso." }, 400);
+      const id = certId();
+      const fecha = /^\d{4}-\d{2}-\d{2}$/.test(String(b.fecha || "")) ? b.fecha : todayGT();
+      await DB.prepare("INSERT INTO certificados (id, usuario, nombre, curso, curso_titulo, horas, estado, origen, solicitado, emitido, fecha) VALUES (?, ?, ?, ?, ?, ?, 'aprobado', 'manual', ?, ?, ?)")
+        .bind(id, b.usuario ? clip(b.usuario, 60) : null, nombre, b.curso ? clip(b.curso, 60) : null, cursoTitulo, clip(b.horas, 20), Date.now(), Date.now(), fecha).run();
+      return json({ ok: true, id });
+    }
+    if (method === "PUT") {
+      const b = await readJson(request);
+      const r = await DB.prepare("SELECT * FROM certificados WHERE id = ?").bind(String(b.id || "")).first();
+      if (!r) return json({ error: "No se encontró el certificado." }, 404);
+      const nombre = cleanName(b.nombre) || r.nombre;
+      const horas = b.horas != null ? clip(b.horas, 20) : r.horas;
+      const fecha = /^\d{4}-\d{2}-\d{2}$/.test(String(b.fecha || "")) ? b.fecha : (r.fecha || todayGT());
+      const accion = String(b.accion || "editar");
+      const estado = { aprobar: "aprobado", rechazar: "rechazado", revocar: "revocado", restaurar: "aprobado", editar: r.estado }[accion] || r.estado;
+      const emitido = estado === "aprobado" && !r.emitido ? Date.now() : r.emitido;
+      await DB.prepare("UPDATE certificados SET nombre = ?, horas = ?, fecha = ?, estado = ?, motivo = ?, emitido = ? WHERE id = ?")
+        .bind(nombre, horas, fecha, estado, clip(b.motivo, 300) || (accion === "editar" ? r.motivo : null), emitido, r.id).run();
+      return json({ ok: true, estado });
+    }
+    if (method === "DELETE") {
+      await DB.prepare("DELETE FROM certificados WHERE id = ?").bind(String(url.searchParams.get("id") || "")).run();
+      return json({ ok: true });
+    }
+  }
+  return json({ error: "Ruta no encontrada." }, 404);
 }
 
 /* ───────────────────────── GitHub ───────────────────────── */

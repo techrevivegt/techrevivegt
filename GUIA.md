@@ -73,6 +73,18 @@ En **Settings → Build** del mismo Worker debe estar (como ya lo tienes):
 
 Abre **`/panel`** en tu sitio, escribe tu contraseña y listo. Si falta algo de la configuración, el mismo panel te muestra qué falta (✅ / ⬜).
 
+### Paso 6 · Conectar la base de datos (estadísticas y certificados)
+
+Sin este paso el sitio, el panel y el aula funcionan igual; solo quedan apagadas las **estadísticas de visitas**, los **certificados** y el progreso del aula guardado en la cuenta del alumno. Es gratis (plan Free de Cloudflare) y se hace una sola vez:
+
+1. En Cloudflare: **Storage & databases → D1 SQL database → Create database**. Nombre: `techrevive-datos` → **Create**.
+2. Copia el **Database ID** (se ve así: `1a2b3c4d-1234-5678-9abc-1234567890ab`).
+3. Dale permiso a la publicación automática: **tu perfil (arriba a la derecha) → API Tokens** → el token llamado **«Workers Builds – …»** → **Edit** → **+ Add more** → **Account · D1 · Edit** → **Continue to summary** → **Update token**.
+4. En el panel: **⚙️ Configuración general → «ID de la base de datos»** → pega el ID → **Guardar cambios**.
+5. Espera a **"✓ Publicado"** y abre **📊 Estadísticas de visitas**. Las tablas se crean solas.
+
+> Si después de guardar el ID la publicación sale en rojo en **Deployments**, borra el ID en Configuración general y guarda: el sitio vuelve a publicarse como antes. Revisa el permiso del paso 3 y pégalo otra vez.
+
 ---
 
 ## Uso diario
@@ -94,8 +106,11 @@ Abre **`/panel`** en tu sitio, escribe tu contraseña y listo. Si falta algo de 
 | ❓ **Preguntas frecuentes** | Categorías y preguntas. |
 | 📚 **Cursos** | La lista de cursos (página de cursos, inscripción y portada). |
 | 🧑‍🏫 **Página de Capacitación** | Portada, enfoque, modalidades, pasos y preguntas. |
-| 📘 **Cursos del aula** | Aula virtual: cursos, módulos, lecciones (videos, lecturas, cuestionarios, tareas), materiales en PDF y avisos. |
+| 📊 **Estadísticas de visitas** | Solo consulta: visitas, visitantes, tiempo, países, ciudades, dispositivos, navegadores, mapa, páginas y detalle con IP. Exporta a Excel (CSV). |
+| 📘 **Cursos del aula** | Un archivo por curso: datos, objetivos, requisitos, horas del certificado, módulos y lecciones (videos, lecturas, cuestionarios, tareas, examen final) y materiales. |
+| 🏅 **Certificados** | Aprobar o rechazar solicitudes, ver y anular certificados, emitir uno a mano y ver el progreso de cada alumno. |
 | 👥 **Alumnos y accesos** | Quién puede entrar al aula: usuario, contraseña, cursos asignados, activo y fecha de vencimiento. |
+| ⚙️ **Ajustes del aula y certificado** | Bienvenida, avisos, nota mínima y el diseño del certificado: título, textos, lugar, logo y firmas. |
 | 📝 **Blog** | Crear, editar, borrar artículos. Apaga **Publicado** para dejarlo como borrador. |
 | 📣 **Novedades** | Comunicados y anuncios. |
 | 🖼️ **Galería** | Fotos con descripción y categoría. |
@@ -126,16 +141,37 @@ Abre **`/panel`** en tu sitio, escribe tu contraseña y listo. Si falta algo de 
 - El botón **Ingresar al aula virtual** del sitio lleva a `/aula/ingresar`. Cada alumno entra con **su** usuario y contraseña; sin sesión, ninguna página del aula, video o PDF es visible.
 - **Dar acceso a un alumno:** panel → **👥 Alumnos y accesos** → **+ Agregar** → nombre, usuario (ej. `maria.lopez`), contraseña (**🎲 Generar** y **Copiar**), cursos (el identificador, ej. `computacion-basica`, o `todos`) → **Guardar cambios**. En 1–2 minutos ya puede entrar. Envíale sus datos por WhatsApp.
 - **Quitar el acceso:** apaga **Acceso activo** o pon una fecha en **Acceso hasta**. Al día siguiente de esa fecha ya no puede entrar. Si estaba dentro, su sesión se cierra en la siguiente publicación.
-- **Crear un curso:** panel → **📘 Cursos del aula** → **Cursos → + Agregar** → nombre, **identificador** (corto, sin espacios ni tildes), imagen → **Módulos → + Agregar** → **Lecciones → + Agregar**.
+- **Cursos incluidos:** **Computación básica** (5 módulos, 22 lecciones, 20 horas) y **Reparación y mantenimiento de computadoras** (5 módulos, 25 lecciones, 30 horas). Ambos tienen lecturas, videos de YouTube en español (con el crédito del canal), cuestionarios, tareas, proyecto final y **examen final**. Los demás cursos del catálogo se agregan en próximas entregas.
+- **Crear un curso:** panel → **📘 Cursos del aula** → **+ Nuevo curso** → nombre → **Guardar cambios**. El identificador (ej. `ofimatica-word-excel-y-powerpoint`) se crea solo con el nombre: es el que pones en los **Cursos** de cada alumno. Después agrega **Módulos → Lecciones**. Un curso sin lecciones no aparece en el aula todavía.
 - **Tipos de lección:**
   - **Video:** pega el enlace de YouTube (súbelo como **No listado**), Vimeo o Google Drive. Se reproduce dentro del aula.
   - **Lectura:** solo el texto con formato.
   - **Cuestionario:** agrega **Preguntas**, cada una con sus opciones, el **número** de la correcta (1, 2, 3…) y una explicación. Se califica al instante; con la **nota mínima** (70 % por defecto) la lección queda completada.
+  - **Examen final:** un cuestionario con la casilla **Examen final** activada. Para pedir el certificado hay que aprobarlo con la nota mínima.
   - **Tarea:** instrucciones, fecha límite y, si quieres, un enlace de entrega (ej. Google Forms). Siempre aparece el botón **Enviar por WhatsApp**, que te llega con el nombre del alumno, el curso y la tarea.
 - **Materiales:** en cada lección, **Materiales → + Agregar → Subir archivo** (PDF, Word, Excel, PowerPoint, ZIP o TXT; máx. 15 MB). Para archivos más pesados usa un enlace de Google Drive.
-- El **progreso** (lecciones completadas y notas) se guarda en el navegador del alumno. Si cambia de computadora o borra sus datos, empieza de cero; sus accesos no se pierden.
+- El **progreso** (lecciones completadas y notas) se guarda en el navegador del alumno **y**, si la base de datos está conectada (Paso 6), también en su cuenta: puede cambiar de computadora o celular sin perder nada.
 - Cuentas de ejemplo incluidas: `demo` (todos los cursos) y `alumno.prueba` (solo Computación básica). Sus contraseñas están en el documento de accesos. **Desactívalas o bórralas** cuando ya no las necesites.
 - Si en algún momento prefieres Google Classroom o Moodle, pega su enlace en **Configuración general → Enlace de un aula externa**. El botón del sitio llevará ahí en lugar del aula propia.
+
+### Certificados (requiere el Paso 6)
+
+1. El alumno termina **todas** las lecciones y aprueba el examen final. En la página del curso aparece **Solicitar certificado**: escribe su nombre completo, lo confirma y envía.
+2. En el panel, **🏅 Certificados → Solicitudes** aparece con su avance y su nota. **Corrige el nombre si hace falta** (tildes, apellidos) y las horas → **✓ Aprobar** (o **✕ Rechazar** con un motivo; el alumno lo ve y puede volver a pedirlo).
+3. Al aprobarlo, el alumno lo ve en **Mis certificados** del aula y puede **imprimirlo o guardarlo en PDF** (hoja horizontal), copiar el enlace o compartirlo por WhatsApp.
+- Cada certificado tiene un **código** (ej. `TR-AB12-CD34`) y un **código QR**. Cualquiera puede verificarlo en `/certificado?c=CÓDIGO`. Si lo **anulas**, la verificación dirá que fue revocado (puedes restaurarlo).
+- **Emitir manualmente:** para cursos presenciales o talleres que no están en el aula: nombre, curso, horas y fecha.
+- **Progreso de alumnos:** cuántas lecciones lleva cada alumno en cada curso y su última actividad.
+- **Diseño:** **⚙️ Ajustes del aula y certificado → Certificado**. Cambia los textos, el lugar, el logo y las **firmas**: nombre, cargo y, si quieres, la imagen de la firma escaneada (PNG con fondo transparente). Las firmas incluidas son de ejemplo: **cámbialas por las reales**.
+- Al imprimir, desactiva **Encabezados y pies de página** en *Más opciones* y activa **Gráficos de fondo** para que salgan los colores.
+
+### Estadísticas de visitas (requiere el Paso 6)
+
+- **📊 Estadísticas de visitas** muestra: visitas, visitantes únicos, tiempo total y promedio, páginas por visita y alumnos activos. También: gráfica por día, países, ciudades, dispositivos, navegadores, sistemas, de dónde llegaron (Google, Facebook, WhatsApp…), mapa, horario, páginas más vistas y las últimas 300 visitas con fecha, página, ubicación, dispositivo, **IP**, tiempo y origen.
+- Elige el periodo: Hoy, 7, 30 o 90 días, o 1 año. **Exportar CSV** descarga todas las visitas del periodo para abrirlas en Excel.
+- **No contar mis visitas:** márcalo en cada navegador y celular que uses tú o tu equipo, para que sus visitas no inflen los números.
+- Las visitas de robots (Google, buscadores, vistas previas de enlaces) no se cuentan. La ubicación es aproximada (la da la conexión a internet). Se guardan 400 días.
+- **Privacidad:** se guarda la IP completa. Te recomendamos mencionarlo en una página de privacidad o en el pie del sitio.
 
 ### Seguridad
 
@@ -157,6 +193,8 @@ El panel muestra mensajes claros. Los más comunes:
 | "GitHub no encuentra el repositorio" | El token no incluye tu repositorio, o `GITHUB_REPO` en `wrangler.jsonc` está mal escrito. |
 | "Este contenido cambió desde que lo abriste" | Se guardó desde otra pestaña. Recarga la página (tus cambios sin guardar se pierden). |
 | "Tarda más de lo normal" | Revisa **Cloudflare → techrevive → Deployments**. Si hay uno en rojo, abre el registro y envíalo a tu desarrollador. El sitio anterior sigue en línea. |
+| "Falta conectar la base de datos" | Sigue el **Paso 6**. |
+| La publicación falla después de pegar el ID de la base de datos | Borra el ID en Configuración general y guarda. Revisa el permiso **D1 · Edit** del token (Paso 6, punto 3) y vuelve a pegarlo. |
 | `/panel` muestra el error 404 | Todavía no se publicó la versión con el panel: sube los archivos (Paso 1) y espera a que el despliegue diga **Success**. |
 
 ---
@@ -182,4 +220,7 @@ Textos fijos de: la página **Redes sociales** (los enlaces sí se editan), el *
   - `worker/index.js` atiende `/aula/*` gracias a `run_worker_first` en `wrangler.jsonc`. Usa la cookie firmada `tr_aula` (14 días, clave `AULA_SECRET` o `PANEL_PASSWORD`), la API `/api/aula/login|logout|yo` y la subida de materiales `/api/documento`.
   - Las respuestas del aula llevan `Cache-Control: private, no-store` y `X-Robots-Tag: noindex`, y `/aula/` está en `Disallow` de `robots.txt`.
   - La interfaz está en `src/js/aula.js` y `src/css/aula.css`.
+- **Base de datos (D1):** `wrangler.jsonc` **no** lleva `d1_databases`. `build.py` (función `configurar_base_datos`) la agrega en Cloudflare (`WORKERS_CI=1`) con el ID de `content/configuracion.json → base_datos` o de la variable `D1_DATABASE_ID`, y valida su formato. Se evita así el aprovisionamiento automático, que necesita permiso D1 en el token de Workers Builds (el token por defecto no lo tiene). El Worker crea las tablas `visitas`, `progreso` y `certificados` con `CREATE TABLE IF NOT EXISTS`. Sin `env.DB`, las rutas devuelven 503 `{sinBase:true}` y el aula usa solo `localStorage`.
+- **Cursos del aula:** `content/aula-cursos/<id>.json` (uno por curso; el panel los lista con `entradas?carpeta=content/aula-cursos`). `content/aula.json` guarda los ajustes y el diseño del certificado. `generador/aula.py` también escribe `_site/certificado.html` (`src/js/certificado.js`, `src/js/qrcode.js`, `src/css/certificado.css`).
+- **Visitas:** `src/js/visitas.js` envía `/api/v` y `/api/v/fin` (sendBeacon). El país, la ciudad, las coordenadas y la IP vienen de `request.cf` y de `CF-Connecting-IP`.
 - `.pages.yml` sigue presente por compatibilidad con Pages CMS, pero ya no es necesario.

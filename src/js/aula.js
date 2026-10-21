@@ -1,6 +1,8 @@
 /* ==========================================================================
    TECHREVIVE · Aula virtual
-   El progreso (lecciones completadas, cuestionarios) se guarda en este dispositivo.
+   El progreso (lecciones completadas, cuestionarios) se guarda en este dispositivo
+   y, si la base de datos está conectada, también en el servidor (así el alumno
+   lo ve en cualquier dispositivo y puede pedir su certificado).
    ========================================================================== */
 (function () {
   "use strict";
@@ -31,6 +33,118 @@
   function read(name, def) { try { return JSON.parse(localStorage.getItem(store(name)) || "null") || def; } catch (e) { return def; } }
   function write(name, val) { try { localStorage.setItem(store(name), JSON.stringify(val)); } catch (e) { /* sin espacio */ } }
   function done() { return read("hechas", {}); }
+
+  /* ---------- Progreso en el servidor ---------- */
+  function api(method, path, body) {
+    return fetch("/api/aula/" + path, {
+      method: method, credentials: "same-origin", cache: "no-store",
+      headers: body ? { "Content-Type": "application/json", "x-aula": "1" } : { "x-aula": "1" },
+      body: body ? JSON.stringify(body) : undefined,
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) {
+        if (!r.ok) { var e = new Error(d.error || "Error del servidor"); e.status = r.status; throw e; }
+        return d;
+      });
+    });
+  }
+  function online() { return USER && USER.servidor; }
+  function pushProgress(items) {
+    if (!online() || !items.length) return Promise.resolve();
+    return api("POST", "progreso", { items: items }).catch(function () { /* se reintenta en la próxima visita */ });
+  }
+  // Une lo guardado en este dispositivo con lo del servidor (en ambos sentidos).
+  function syncProgress() {
+    if (!online()) return Promise.resolve(false);
+    return api("GET", "progreso").then(function (srv) {
+      var d = done(), notas = read("notas", {}), up = [], changed = false;
+      Object.keys(srv.hechas || {}).forEach(function (k) { if (!d[k]) { d[k] = srv.hechas[k]; changed = true; } });
+      Object.keys(srv.notas || {}).forEach(function (k) { if ((notas[k] || 0) < srv.notas[k]) { notas[k] = srv.notas[k]; changed = true; } });
+      Object.keys(d).forEach(function (k) { if (!(srv.hechas || {})[k]) up.push({ leccion: k, hecho: true, ts: d[k], nota: notas[k] }); });
+      if (changed) { write("hechas", d); write("notas", notas); }
+      pushProgress(up);
+      return changed;
+    }).catch(function () { return false; });
+  }
+
+  /* ---------- Certificados ---------- */
+  var CERTS = null;
+  function loadCerts() {
+    if (!online()) return Promise.resolve([]);
+    if (CERTS) return Promise.resolve(CERTS);
+    return api("GET", "certificados").then(function (r) { CERTS = r.items || []; return CERTS; }).catch(function () { return []; });
+  }
+  function certFor(curso) {
+    var list = (CERTS || []).filter(function (c) { return c.curso === curso; });
+    return list.filter(function (c) { return c.estado === "aprobado"; })[0] || list.filter(function (c) { return c.estado === "solicitado"; })[0] || list[0] || null;
+  }
+  function certUrl(id) { return "/certificado?c=" + encodeURIComponent(id); }
+
+  function initCertCard() {
+    var box = $("[data-cert]");
+    if (!box) return;
+    var curso = box.getAttribute("data-curso"), keys = JSON.parse(box.getAttribute("data-keys") || "[]");
+    var msg = $("[data-cert-msg]", box), actions = $("[data-cert-actions]", box), form = $("[data-cert-form]", box);
+    var original = msg.textContent;
+    function render() {
+      var d = done(), n = keys.filter(function (k) { return d[k]; }).length, complete = n === keys.length;
+      var c = certFor(curso);
+      box.className = "aula-card aula-cert";
+      actions.innerHTML = ""; form.hidden = true;
+      if (c && c.estado === "aprobado") {
+        box.classList.add("is-ready");
+        msg.innerHTML = "¡Felicidades! Tu certificado a nombre de <strong>" + esc(c.nombre) + "</strong> está listo.";
+        actions.innerHTML = '<a class="btn btn--primary btn--sm" href="' + certUrl(c.id) + '" target="_blank" rel="noopener">Ver e imprimir certificado</a>';
+        return;
+      }
+      if (c && c.estado === "solicitado") {
+        box.classList.add("is-pending");
+        msg.innerHTML = "Recibimos tu solicitud a nombre de <strong>" + esc(c.nombre) + "</strong>. La estamos revisando; te avisaremos cuando esté lista.";
+        return;
+      }
+      if (!online()) { msg.textContent = original + " La solicitud en línea aún no está activada: cuando termines, escríbenos por WhatsApp y te lo preparamos."; return; }
+      if (!complete) { msg.textContent = original + " Llevas " + n + " de " + keys.length + " lecciones."; return; }
+      box.classList.add("is-unlocked");
+      msg.innerHTML = (c && c.estado === "rechazado" ? "Tu solicitud anterior no fue aprobada" + (c.motivo ? ": <em>" + esc(c.motivo) + "</em>" : ".") + " Puedes enviarla de nuevo. " : "¡Completaste el curso! ") + "Ya puedes solicitar tu certificado.";
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "btn btn--primary btn--sm"; b.textContent = "Solicitar certificado";
+      b.onclick = function () { form.hidden = false; b.hidden = true; form.elements.nombre.value = (c && c.nombre) || USER.nombre || ""; form.elements.nombre.focus(); };
+      actions.appendChild(b);
+    }
+    $("[data-cert-cancel]", box).onclick = function () { render(); };
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var nombre = form.elements.nombre.value.trim().replace(/\s+/g, " ");
+      if (nombre.split(" ").length < 2) { alert("Escribe tu nombre completo (nombre y apellido)."); return; }
+      if (!confirm("Tu certificado dirá:\n\n" + nombre + "\n\n¿Está bien escrito?")) return;
+      var btn = $('button[type="submit"]', form); btn.disabled = true; btn.textContent = "Enviando…";
+      // primero se asegura de que el servidor tenga todo el progreso
+      var d = done(), notas = read("notas", {});
+      pushProgress(keys.filter(function (k) { return d[k]; }).map(function (k) { return { leccion: k, hecho: true, ts: d[k], nota: notas[k] }; }))
+        .then(function () { return api("POST", "certificados", { curso: curso, nombre: nombre }); })
+        .then(function () { CERTS = null; return loadCerts(); })
+        .then(render)
+        .catch(function (e) { alert(e.message); })
+        .finally(function () { btn.disabled = false; btn.textContent = "Enviar solicitud"; });
+    });
+    box.__render = render;
+    render();
+    loadCerts().then(render);
+  }
+
+  function renderMyCerts() {
+    var sec = $("[data-mycerts]");
+    if (!sec) return;
+    loadCerts().then(function (list) {
+      list = list.filter(function (c) { return c.estado === "aprobado" || c.estado === "solicitado"; });
+      if (!list.length) return;
+      $("[data-mycerts-list]", sec).innerHTML = list.map(function (c) {
+        return c.estado === "aprobado"
+          ? '<li><a href="' + certUrl(c.id) + '" target="_blank" rel="noopener"><strong>' + esc(c.curso_titulo) + '</strong><span>Ver e imprimir →</span></a></li>'
+          : '<li><strong>' + esc(c.curso_titulo) + '</strong><span class="aula-mycerts__pending">En revisión</span></li>';
+      }).join("");
+      sec.hidden = false;
+    });
+  }
 
   function getUser() {
     try {
@@ -160,6 +274,7 @@
       return '<article class="aula-course">' +
         '<a href="' + esc(c.url) + '" class="aula-course__media"><img src="' + esc(c.imagen) + '" alt="" loading="lazy" />' +
         (pct === 100 ? '<span class="aula-course__done">✓ Completado</span>' : "") + "</a>" +
+        (function () { var ce = c.certificado && certFor(c.id); return ce && ce.estado === "aprobado" ? '<a class="aula-course__cert" href="' + certUrl(ce.id) + '" target="_blank" rel="noopener">🏅 Ver certificado</a>' : (pct === 100 && c.certificado && !ce && online() ? '<a class="aula-course__cert aula-course__cert--ask" href="' + esc(c.url) + '#certificado">🏅 Solicitar certificado</a>' : ""); })() +
         '<div class="aula-course__body"><p class="aula-course__meta">' + meta + "</p>" +
         '<h3><a href="' + esc(c.url) + '">' + esc(c.titulo) + "</a></h3>" +
         '<p class="aula-course__desc">' + esc(c.descripcion) + "</p>" +
@@ -179,16 +294,18 @@
   }
 
   /* ---------- Lección ---------- */
-  var lesson = $("[data-lesson]");
+  var lesson = $("[data-lesson]"), lessonPaint = null;
   function initLesson() {
     if (!lesson) return;
     var key = lesson.getAttribute("data-lesson");
     write("ultima", { url: location.pathname, titulo: lesson.getAttribute("data-titulo"), curso: lesson.getAttribute("data-curso-titulo") });
     var btn = $("[data-done]");
-    function setDone(v) {
+    var isQuiz = lesson.getAttribute("data-tipo") === "cuestionario";
+    function setDone(v, nota) {
       var d = done();
-      if (v) d[key] = Date.now(); else delete d[key];
+      if (v) d[key] = d[key] || Date.now(); else delete d[key];
       write("hechas", d);
+      pushProgress([{ leccion: key, hecho: !!v, ts: d[key], nota: nota }]);
       paint();
     }
     function paint() {
@@ -196,9 +313,14 @@
       btn.classList.toggle("is-on", on);
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       $("span", btn).textContent = on ? "Lección completada" : "Marcar como completada";
+      if (isQuiz) {
+        btn.hidden = !on; btn.disabled = true;
+        var st = $("[data-quiz-state]"); if (st) st.hidden = on;
+      }
       paintProgress();
     }
-    btn.addEventListener("click", function () { setDone(!done()[key]); });
+    lessonPaint = paint;
+    btn.addEventListener("click", function () { if (!isQuiz) setDone(!done()[key]); });
     paint();
     // lecciones de lectura y video: se marcan solas al llegar al final de la página
     if (["lectura", "video"].indexOf(lesson.getAttribute("data-tipo")) > -1 && "IntersectionObserver" in window) {
@@ -269,7 +391,7 @@
       result.className = "quiz__result " + (pass ? "is-pass" : "is-fail"); result.hidden = false;
       result.innerHTML = "<strong>" + pct + "%</strong> · " + ok + " de " + qs.length + " correctas. " +
         (pass ? "¡Aprobaste! La lección quedó marcada como completada." : "Necesitas " + min + "% para aprobar. Revisa las explicaciones e inténtalo de nuevo.");
-      if (pass) setDone(true);
+      if (pass) setDone(true, notas[key]);
       $('button[type="submit"]', form).hidden = true; reset.hidden = false;
       result.scrollIntoView({ behavior: "smooth", block: "center" });
     });
@@ -285,7 +407,12 @@
   getUser().then(function (u) {
     if (!u) { location.href = "/aula/ingresar?volver=" + encodeURIComponent(location.pathname); return; }
     fillUser(u);
-    renderDashboard(); initLesson(); paintProgress();
+    renderDashboard(); initLesson(); paintProgress(); initCertCard();
+    syncProgress().then(function (changed) {
+      if (changed) { renderDashboard(); paintProgress(); if (lessonPaint) lessonPaint(); }
+      var cb = $("[data-cert]"); if (cb && cb.__render) cb.__render();
+      if ($("[data-courses]")) loadCerts().then(function () { renderDashboard(); renderMyCerts(); });
+    });
   }).catch(function () {
     // Sin servidor del aula (vista previa local): se muestra igual, sin datos del alumno.
     fillUser({ usuario: "vista-previa", nombre: "Vista previa", cursos: ["*"] });

@@ -1,0 +1,69 @@
+/* TECHREVIVE · Certificado (pantalla + impresión A4 horizontal) */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body.certp{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#0B1C4A;background:radial-gradient(1200px 600px at 80% -10%,#12307a 0,#071233 55%,#040A1C 100%);color:#e6ecff;min-height:100vh}
+.certp__bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px clamp(16px,4vw,40px);border-bottom:1px solid rgba(255,255,255,.08)}
+.certp__brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spacing:.04em}
+.certp__brand b{color:#38BDF8;font-weight:800}
+.certp__tools{display:flex;gap:8px;flex-wrap:wrap}
+.certp__tools[hidden]{display:none}
+.certp__btn{appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font:600 14px/1 Inter,sans-serif;padding:11px 16px;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.certp__btn:hover{background:rgba(255,255,255,.12)}
+.certp__btn--primary{background:#2563EB;border-color:#2563EB}
+.certp__btn--primary:hover{background:#1d4fd8}
+.certp__main{padding:clamp(18px,4vw,40px);max-width:1180px;margin:0 auto}
+.certp__state{max-width:560px;margin:8vh auto;text-align:center}
+.certp__state h1{font-family:Manrope,sans-serif;font-size:clamp(26px,4vw,34px);margin:0 0 10px}
+.certp__state p{color:#b8c4e6;line-height:1.6}
+.certp__form{display:flex;gap:8px;margin:22px 0 8px}
+.certp__form input{flex:1;min-width:0;padding:13px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(4,10,28,.6);color:#fff;font:600 16px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.certp__form input:focus{outline:2px solid #38BDF8;outline-offset:1px}
+.certp__msg{min-height:1.5em}
+.certp__msg.is-bad{color:#fca5a5}
+.certp__verified{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:0 auto 18px;padding:10px 16px;border-radius:999px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:#bbf7d0;font-size:14px;width:fit-content;max-width:100%;text-align:center}
+.certp__verified[hidden],.certp__stage[hidden],.certp__state[hidden]{display:none}
+.certp__stage{position:relative;width:100%;overflow:hidden}
+
+/* ---------- El certificado (tamaño real A4 horizontal) ---------- */
+.cert{width:297mm;height:210mm;background:#fff;color:#0B1C4A;transform-origin:top left;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;overflow:hidden}
+.cert::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 100% 0,rgba(56,189,248,.10) 0,transparent 38%),
+  radial-gradient(circle at 0 100%,rgba(37,99,235,.10) 0,transparent 40%),
+  repeating-linear-gradient(135deg,rgba(11,28,74,.025) 0 2px,transparent 2px 14px)}
+.cert__frame{position:absolute;inset:9mm;border:1.6mm solid #0B1C4A;display:flex;flex-direction:column;align-items:center;text-align:center;padding:11mm 20mm 8mm}
+.cert__frame::after{content:"";position:absolute;inset:2.2mm;border:.35mm solid #38BDF8;pointer-events:none}
+.cert__corner{position:absolute;width:34mm;height:34mm;pointer-events:none}
+.cert__corner--tl{top:-1.6mm;left:-1.6mm;background:linear-gradient(135deg,#2563EB 0 50%,transparent 50%)}
+.cert__corner--br{bottom:-1.6mm;right:-1.6mm;background:linear-gradient(315deg,#0B1C4A 0 50%,transparent 50%)}
+.cert__corner--tl::after,.cert__corner--br::after{content:"";position:absolute;width:20mm;height:20mm}
+.cert__corner--tl::after{top:0;left:0;background:linear-gradient(135deg,#38BDF8 0 50%,transparent 50%)}
+.cert__corner--br::after{bottom:0;right:0;background:linear-gradient(315deg,#2563EB 0 50%,transparent 50%)}
+.cert__logo{height:19mm;width:auto;max-width:90mm;object-fit:contain;position:relative}
+.cert__title{font-family:Manrope,Inter,sans-serif;font-weight:800;font-size:38pt;letter-spacing:.24em;margin:5mm 0 0;padding-left:.24em;color:#0B1C4A;line-height:1}
+.cert__subtitle{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:17pt;color:#2563EB;margin:1.5mm 0 0}
+.cert__lead{font-size:12.5pt;color:#3a4a72;margin:6mm 0 0}
+.cert__name{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:42pt;line-height:1.1;margin:3mm 0 0;padding:0 8mm 2.5mm;color:#071233;border-bottom:.5mm solid transparent;border-image:linear-gradient(90deg,transparent,#2563EB 20%,#38BDF8 80%,transparent) 1;min-width:150mm}
+.cert__course{font-family:Manrope,Inter,sans-serif;font-weight:800;font-size:22pt;color:#2563EB;margin:3mm 0 0;line-height:1.15;max-width:230mm}
+.cert__detail{font-size:11.5pt;color:#3a4a72;margin:3mm 0 0}
+.cert__signs{display:flex;justify-content:center;gap:24mm;margin-top:auto;padding-bottom:17mm;width:100%}
+.cert__sign{display:flex;flex-direction:column;align-items:center;width:68mm;position:relative}
+.cert__sign img{height:16mm;width:auto;max-width:60mm;object-fit:contain;margin-bottom:-3mm}
+.cert__line{display:block;width:100%;height:.35mm;background:#0B1C4A;margin:12mm 0 2mm}
+.cert__sign img+.cert__line{margin-top:1mm}
+.cert__sign strong{font-size:11pt;color:#0B1C4A}
+.cert__sign small{font-size:9pt;color:#5a6890;margin-top:.6mm}
+.cert__foot{position:absolute;left:50%;transform:translateX(-50%);bottom:4.5mm;white-space:nowrap;display:flex;align-items:center;gap:3.5mm;text-align:left;font-size:8pt;color:#5a6890}
+.cert__foot strong{display:block;color:#0B1C4A;font-size:8.5pt;letter-spacing:.04em}
+.cert__qr{width:14mm;height:14mm}
+.cert__qr svg{width:100%;height:100%;display:block}
+
+@media (max-width:640px){.certp__tools{width:100%}.certp__btn{flex:1;justify-content:center;font-size:13px;padding:10px}}
+
+@page{size:A4 landscape;margin:0}
+@media print{
+  body.certp{background:#fff}
+  .certp__bar,.certp__verified,.certp__state{display:none!important}
+  .certp__main{padding:0;max-width:none}
+  .certp__stage{height:auto!important;overflow:visible}
+  .cert{transform:none!important;box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}

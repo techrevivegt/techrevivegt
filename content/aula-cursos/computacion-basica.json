@@ -1,0 +1,599 @@
+{
+  "titulo": "Computación básica",
+  "publicado": true,
+  "orden": 1,
+  "descripcion": "Aprende a usar la computadora con confianza desde cero: sus partes, el mouse y el teclado, Windows, cómo organizar y respaldar tus archivos, internet, correo electrónico, videollamadas y cómo protegerte de estafas.",
+  "imagen": "/img/aprender.jpg",
+  "docente": "Equipo de capacitación TechRevive",
+  "duracion": "5 semanas",
+  "horas": "20",
+  "nivel": "Principiante",
+  "certificado": true,
+  "requisitos": "Ninguno. Solo necesitas acceso a una computadora con Windows e internet.",
+  "objetivos": [
+    "Identificar las partes de una computadora y para qué sirve cada una",
+    "Usar el mouse, el teclado y los atajos más útiles",
+    "Manejar Windows: ventanas, carpetas, archivos y respaldos",
+    "Navegar por internet y buscar información confiable",
+    "Crear una cuenta de correo y enviar mensajes profesionales con adjuntos",
+    "Participar en videollamadas con Meet, Zoom o WhatsApp Web",
+    "Protegerte con contraseñas seguras y reconocer estafas digitales"
+  ],
+  "modulos": [
+    {
+      "titulo": "Conociendo tu computadora",
+      "lecciones": [
+        {
+          "titulo": "¿Qué es una computadora?",
+          "tipo": "video",
+          "duracion": "8 min",
+          "video": "https://www.youtube.com/watch?v=xL8C5CIxDts",
+          "contenido": "<p>Una <strong>computadora</strong> es una máquina electrónica que recibe datos, los procesa siguiendo instrucciones (programas) y entrega un resultado. Escribir una carta, ver un video, hacer una videollamada o llevar las cuentas de un negocio: todo eso es <em>procesar información</em>.</p><h3>Las cuatro funciones básicas</h3><ol><li><strong>Entrada:</strong> le damos información (escribimos, hacemos clic, hablamos al micrófono).</li><li><strong>Proceso:</strong> la computadora trabaja con esa información.</li><li><strong>Almacenamiento:</strong> guarda los datos para usarlos después.</li><li><strong>Salida:</strong> nos muestra el resultado (en la pantalla, por las bocinas o impreso).</li></ol><h3>Tipos de computadoras que usarás</h3><ul><li><strong>De escritorio:</strong> tienen gabinete (la «torre»), monitor, teclado y mouse por separado. Son fáciles de reparar y ampliar.</li><li><strong>Laptop o portátil:</strong> todo en una sola pieza, con batería. Ideal para trabajar en distintos lugares.</li><li><strong>Todo en uno (All-in-One):</strong> la computadora va dentro del monitor.</li><li><strong>Tablets y celulares:</strong> también son computadoras, con pantalla táctil.</li></ul><blockquote>Mira el video y luego descarga la guía de las partes de la computadora: te servirá para la siguiente lección.</blockquote><p class=\"aula-credit\"><small>Video: Educar Portal (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>",
+          "materiales": [
+            {
+              "titulo": "Guía: partes de la computadora (PDF)",
+              "archivo": "/aula/archivos/guia-partes-computadora.pdf",
+              "enlace": ""
+            }
+          ]
+        },
+        {
+          "titulo": "Partes de una computadora",
+          "tipo": "lectura",
+          "duracion": "12 min",
+          "video": "",
+          "contenido": "<p>Todas las computadoras, sean de escritorio o laptop, tienen partes que cumplen las cuatro funciones que viste: <strong>entrada, proceso, almacenamiento y salida</strong>.</p><h3>Dispositivos de entrada</h3><ul><li><strong>Teclado:</strong> para escribir y dar órdenes.</li><li><strong>Mouse o touchpad:</strong> para señalar, hacer clic y arrastrar.</li><li><strong>Micrófono y cámara web:</strong> para videollamadas y grabaciones.</li><li><strong>Escáner:</strong> convierte un documento en papel en una imagen digital.</li></ul><h3>Proceso</h3><ul><li><strong>Procesador (CPU):</strong> es el «cerebro»; ejecuta las instrucciones. Marcas comunes: Intel (Core i3, i5, i7) y AMD (Ryzen 3, 5, 7).</li><li><strong>Memoria RAM:</strong> la «mesa de trabajo». Guarda temporalmente lo que estás usando y <em>se borra al apagar</em>. Hoy se recomiendan al menos 8 GB.</li></ul><h3>Almacenamiento</h3><ul><li><strong>Disco duro (HDD) o unidad de estado sólido (SSD):</strong> guarda tus archivos y programas aunque apagues el equipo. Un SSD es hasta 5 veces más rápido que un disco duro tradicional.</li><li><strong>Memorias USB y discos externos:</strong> para llevar o respaldar información.</li><li><strong>La nube</strong> (Google Drive, OneDrive): almacenamiento en internet.</li></ul><h3>Dispositivos de salida</h3><ul><li><strong>Monitor o pantalla</strong>, <strong>bocinas o audífonos</strong> e <strong>impresora</strong>.</li></ul><h3>¿Hardware o software?</h3><p>El <strong>hardware</strong> es todo lo que se puede tocar (teclado, pantalla, disco). El <strong>software</strong> son los programas que le dicen al hardware qué hacer (Windows, Word, el navegador).</p><blockquote>Consejo TechRevive: si tu computadora está lenta, muchas veces el problema no es el procesador, sino poca memoria RAM o un disco duro antiguo. Cambiar a un SSD suele ser la mejora más notable.</blockquote>"
+        },
+        {
+          "titulo": "Software: sistema operativo y programas",
+          "tipo": "lectura",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Sin software, una computadora es solo una caja de metal. Hay dos grandes tipos de programas:</p><h3>1. El sistema operativo</h3><p>Es el programa principal: arranca al encender el equipo, administra el hardware y te permite usar los demás programas. Los más comunes son:</p><ul><li><strong>Windows</strong> (Microsoft): el más usado en computadoras de escritorio y laptops. Versiones actuales: Windows 10 y Windows 11.</li><li><strong>macOS</strong> (Apple): en computadoras Mac.</li><li><strong>Android</strong> e <strong>iOS</strong>: en celulares y tablets.</li><li><strong>Linux</strong>: gratuito, muy usado en servidores y por usuarios avanzados.</li></ul><h3>2. Las aplicaciones o programas</h3><ul><li><strong>Navegadores:</strong> Google Chrome, Microsoft Edge, Firefox (para entrar a internet).</li><li><strong>Ofimática:</strong> Word, Excel y PowerPoint, o sus alternativas gratuitas Google Docs y LibreOffice.</li><li><strong>Comunicación:</strong> WhatsApp Web, Zoom, Google Meet, correo electrónico.</li><li><strong>Multimedia:</strong> reproductores de música y video, editores de fotos.</li><li><strong>Seguridad:</strong> antivirus como Microsoft Defender (ya viene en Windows).</li></ul><h3>Programas originales y descargas seguras</h3><p>Instala programas solo desde la <strong>Microsoft Store</strong> o desde la <strong>página oficial</strong> del fabricante. Los programas «pirata» o descargados de sitios dudosos son la causa número uno de virus que vemos en el taller.</p><h3>¿Qué versión de Windows tengo?</h3><ol><li>Presiona la tecla <kbd>Windows</kbd> + <kbd>R</kbd>.</li><li>Escribe <code>winver</code> y presiona <kbd>Enter</kbd>.</li><li>Aparecerá una ventana con la versión exacta.</li></ol>"
+        },
+        {
+          "titulo": "Encender, apagar y cuidar tu equipo",
+          "tipo": "lectura",
+          "duracion": "8 min",
+          "video": "",
+          "contenido": "<h3>Encender correctamente</h3><ol><li>Verifica que el equipo esté conectado (en laptop, que tenga batería o cargador).</li><li>Presiona <strong>una sola vez</strong> el botón de encendido. No lo mantengas presionado.</li><li>Espera a que aparezca la pantalla de inicio de Windows e ingresa tu contraseña o PIN.</li></ol><h3>Apagar correctamente</h3><p>Nunca apagues desconectando el cable o manteniendo presionado el botón (salvo que el equipo esté completamente trabado). Lo correcto es:</p><ol><li>Guarda tus documentos y cierra los programas.</li><li>Haz clic en <strong>Inicio</strong> → botón de <strong>Encendido</strong> ⏻ → <strong>Apagar</strong>.</li></ol><p><strong>Suspender</strong> deja el equipo «dormido» gastando muy poca energía para retomar rápido. <strong>Reiniciar</strong> apaga y vuelve a encender; úsalo cuando el equipo esté lento o después de instalar actualizaciones.</p><h3>Cuidados diarios</h3><ul><li>Usa un <strong>regulador de voltaje o UPS</strong>: en Guatemala las variaciones de energía dañan muchas fuentes de poder.</li><li>No comas ni bebas sobre el teclado.</li><li>No tapes las rejillas de ventilación; en laptop, no la uses sobre la cama o almohadas.</li><li>Limpia la pantalla con un paño de microfibra seco o apenas húmedo, nunca con alcohol fuerte ni limpiavidrios.</li><li>Haz un mantenimiento preventivo cada 6 a 12 meses.</li></ul><blockquote>Si tu equipo se apaga solo, hace ruidos extraños o se calienta demasiado, no esperes a que falle: tráelo a revisión.</blockquote>"
+        },
+        {
+          "titulo": "Cuestionario: conociendo tu computadora",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Cuál de estos es un dispositivo de ENTRADA?",
+              "opciones": [
+                "Monitor",
+                "Teclado",
+                "Impresora",
+                "Bocinas"
+              ],
+              "correcta": 2,
+              "explicacion": "El teclado sirve para ingresar información; los demás son de salida."
+            },
+            {
+              "pregunta": "¿Qué componente se considera el «cerebro» de la computadora?",
+              "opciones": [
+                "La memoria RAM",
+                "El disco duro",
+                "El procesador (CPU)",
+                "La fuente de poder"
+              ],
+              "correcta": 3,
+              "explicacion": "El procesador ejecuta las instrucciones de los programas."
+            },
+            {
+              "pregunta": "¿Qué pasa con la información de la memoria RAM al apagar el equipo?",
+              "opciones": [
+                "Se guarda para siempre",
+                "Se borra",
+                "Se envía a la nube",
+                "Se imprime"
+              ],
+              "correcta": 2,
+              "explicacion": "La RAM es memoria temporal: se vacía al apagar. Por eso hay que guardar los documentos."
+            },
+            {
+              "pregunta": "Windows, macOS y Android son ejemplos de…",
+              "opciones": [
+                "Navegadores",
+                "Antivirus",
+                "Sistemas operativos",
+                "Hardware"
+              ],
+              "correcta": 3,
+              "explicacion": "Son el programa principal que administra el equipo."
+            },
+            {
+              "pregunta": "¿Cuál es la forma correcta de apagar la computadora?",
+              "opciones": [
+                "Desconectar el cable",
+                "Mantener presionado el botón de encendido",
+                "Inicio → Encendido → Apagar",
+                "Cerrar la tapa del monitor"
+              ],
+              "correcta": 3,
+              "explicacion": "Así Windows cierra todo de forma ordenada y no se dañan archivos."
+            },
+            {
+              "pregunta": "¿Qué mejora suele hacer más rápida una computadora lenta y antigua?",
+              "opciones": [
+                "Cambiar el mouse",
+                "Cambiar el disco duro por un SSD",
+                "Comprar otro monitor",
+                "Usar otro fondo de pantalla"
+              ],
+              "correcta": 2,
+              "explicacion": "Un SSD es varias veces más rápido que un disco duro mecánico."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "El mouse y el teclado",
+      "lecciones": [
+        {
+          "titulo": "El mouse y el teclado",
+          "tipo": "video",
+          "duracion": "15 min",
+          "video": "https://www.youtube.com/watch?v=r3BcZpYYkRI",
+          "contenido": "<p>El mouse y el teclado son tus herramientas principales para comunicarte con la computadora. Mira el video y después practica cada acción.</p><h3>Acciones con el mouse</h3><table><thead><tr><th>Acción</th><th>Cómo se hace</th><th>Para qué sirve</th></tr></thead><tbody><tr><td><strong>Clic</strong></td><td>Presionar y soltar el botón izquierdo una vez</td><td>Seleccionar, presionar botones, abrir enlaces</td></tr><tr><td><strong>Doble clic</strong></td><td>Dos clics rápidos con el botón izquierdo</td><td>Abrir carpetas, archivos y programas del escritorio</td></tr><tr><td><strong>Clic derecho</strong></td><td>Un clic con el botón derecho</td><td>Ver el menú de opciones (copiar, cambiar nombre, eliminar…)</td></tr><tr><td><strong>Arrastrar</strong></td><td>Mantener presionado el botón izquierdo y mover</td><td>Mover archivos o seleccionar texto</td></tr><tr><td><strong>Rueda</strong></td><td>Girar la rueda central</td><td>Subir y bajar en páginas y documentos</td></tr></tbody></table><h3>El touchpad de la laptop</h3><ul><li>Un toque = clic. Dos toques rápidos = doble clic.</li><li>Toque con <strong>dos dedos</strong> = clic derecho.</li><li>Deslizar dos dedos hacia arriba o abajo = desplazarse.</li></ul><h3>Postura correcta</h3><p>Mantén la muñeca recta y apoyada, el mouse cerca del teclado y la pantalla a la altura de los ojos. Así evitas dolores de muñeca y cuello.</p><p class=\"aula-credit\"><small>Video: Marcelo PC (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "El teclado y los atajos que te ahorran tiempo",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<h3>Zonas del teclado</h3><ul><li><strong>Teclas alfanuméricas:</strong> letras, números y signos.</li><li><strong>Teclas de función</strong> (<kbd>F1</kbd> a <kbd>F12</kbd>): acciones especiales; por ejemplo, <kbd>F5</kbd> actualiza una página web.</li><li><strong>Flechas y navegación:</strong> <kbd>Inicio</kbd>, <kbd>Fin</kbd>, <kbd>Re Pág</kbd>, <kbd>Av Pág</kbd>.</li><li><strong>Teclado numérico:</strong> a la derecha, cómodo para escribir cifras (se activa con <kbd>Bloq Num</kbd>).</li></ul><h3>Teclas especiales</h3><ul><li><kbd>Shift</kbd> ⇧: mantenla presionada para escribir una mayúscula o el símbolo de arriba de una tecla.</li><li><kbd>Bloq Mayús</kbd>: activa las mayúsculas de forma fija.</li><li><kbd>Retroceso</kbd> ⌫: borra a la izquierda del cursor. <kbd>Supr</kbd>: borra a la derecha.</li><li><kbd>Enter</kbd>: confirma o crea un nuevo párrafo.</li><li><kbd>Alt Gr</kbd>: escribe el tercer símbolo de una tecla, como la arroba <strong>@</strong> (<kbd>Alt Gr</kbd> + <kbd>Q</kbd> o <kbd>Alt Gr</kbd> + <kbd>2</kbd>, según el teclado).</li></ul><h3>Tildes y la ñ</h3><p>Para escribir <strong>á, é, í, ó, ú</strong>: presiona primero la tecla de la tilde <kbd>´</kbd> y después la vocal. La <strong>ñ</strong> tiene su propia tecla en los teclados en español latinoamericano.</p><h3>Los 10 atajos más útiles</h3><table><thead><tr><th>Atajo</th><th>Qué hace</th></tr></thead><tbody><tr><td><kbd>Ctrl</kbd> + <kbd>C</kbd></td><td>Copiar</td></tr><tr><td><kbd>Ctrl</kbd> + <kbd>V</kbd></td><td>Pegar</td></tr><tr><td><kbd>Ctrl</kbd> + <kbd>X</kbd></td><td>Cortar</td></tr><tr><td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td><td>Deshacer (¡te salva de muchos errores!)</td></tr><tr><td><kbd>Ctrl</kbd> + <kbd>S</kbd></td><td>Guardar</td></tr><tr><td><kbd>Ctrl</kbd> + <kbd>A</kbd></td><td>Seleccionar todo</td></tr><tr><td><kbd>Ctrl</kbd> + <kbd>P</kbd></td><td>Imprimir</td></tr><tr><td><kbd>Alt</kbd> + <kbd>Tab</kbd></td><td>Cambiar entre ventanas abiertas</td></tr><tr><td><kbd>Windows</kbd> + <kbd>D</kbd></td><td>Mostrar el escritorio</td></tr><tr><td><kbd>Windows</kbd> + <kbd>L</kbd></td><td>Bloquear la computadora al levantarte</td></tr></tbody></table>"
+        },
+        {
+          "titulo": "Tarea: práctica de mecanografía",
+          "tipo": "tarea",
+          "duracion": "30 min",
+          "video": "",
+          "contenido": "<p>Escribir rápido y sin mirar el teclado te ahorrará horas de trabajo. En esta práctica vas a medir tu punto de partida.</p><ol><li>Entra a una página gratuita de práctica, por ejemplo <a href=\"https://www.typingclub.com/es-la\" target=\"_blank\" rel=\"noopener\">TypingClub</a> o <a href=\"https://10fastfingers.com/typing-test/spanish\" target=\"_blank\" rel=\"noopener\">10FastFingers (prueba en español)</a>.</li><li>Haz la prueba de 1 minuto <strong>tres veces</strong> y anota tus palabras por minuto (PPM).</li><li>Practica 10 minutos las lecciones de la «fila guía» (A S D F – J K L Ñ).</li><li>Abre el Bloc de notas (Inicio → escribe «Bloc de notas») y escribe un párrafo de 5 líneas sobre ti usando tildes, mayúsculas, la ñ y una arroba (@).</li></ol><p><strong>Entrega:</strong> una captura de pantalla de tu mejor resultado y una foto o captura del párrafo. Para hacer una captura en Windows presiona <kbd>Windows</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        }
+      ]
+    },
+    {
+      "titulo": "Windows y tus archivos",
+      "lecciones": [
+        {
+          "titulo": "El escritorio de Windows",
+          "tipo": "lectura",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>El <strong>escritorio</strong> es la pantalla principal que ves al iniciar sesión. Conocer sus partes te permite moverte con confianza.</p><h3>Partes principales</h3><ul><li><strong>Íconos:</strong> accesos directos a programas, carpetas y archivos (por ejemplo, la Papelera de reciclaje).</li><li><strong>Barra de tareas:</strong> la franja de abajo. Muestra los programas abiertos y los fijados.</li><li><strong>Botón Inicio</strong> (logo de Windows): abre el menú con todos tus programas y el botón de apagado.</li><li><strong>Buscador:</strong> escribe el nombre de un programa o archivo y encuéntralo al instante.</li><li><strong>Área de notificaciones:</strong> a la derecha; muestra la hora, el volumen, el wifi y la batería.</li></ul><h3>Personaliza tu escritorio</h3><ol><li>Clic derecho en un espacio vacío → <strong>Personalizar</strong>.</li><li>En <strong>Fondo</strong> elige una imagen o un color.</li><li>En <strong>Colores</strong> puedes activar el modo oscuro, más cómodo de noche.</li></ol><h3>Fijar programas en la barra de tareas</h3><p>Abre el menú Inicio, busca el programa, haz clic derecho sobre él y elige <strong>Anclar a la barra de tareas</strong>. Así lo abrirás con un solo clic.</p><h3>La Configuración</h3><p>Desde <strong>Inicio → Configuración</strong> (ícono de engrane) o con <kbd>Windows</kbd> + <kbd>I</kbd> puedes cambiar el wifi, el sonido, la pantalla, las cuentas y las actualizaciones.</p>"
+        },
+        {
+          "titulo": "Ventanas y programas: trabaja con varias cosas a la vez",
+          "tipo": "lectura",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Cada programa se abre en una <strong>ventana</strong>. En la esquina superior derecha de toda ventana hay tres botones:</p><ul><li><strong>—  Minimizar:</strong> esconde la ventana en la barra de tareas sin cerrarla.</li><li><strong>□  Maximizar / Restaurar:</strong> la pone en pantalla completa o la regresa a su tamaño.</li><li><strong>✕  Cerrar:</strong> cierra el programa. Si no guardaste, te preguntará.</li></ul><h3>Mover y cambiar el tamaño</h3><p>Arrastra la ventana desde su barra de título (la franja superior) para moverla. Para cambiar su tamaño, coloca el puntero en un borde hasta ver una doble flecha ↔ y arrastra.</p><h3>Dos ventanas lado a lado</h3><p>Muy útil para copiar información de un documento a otro: arrastra una ventana hasta el borde izquierdo de la pantalla y suéltala; Windows te ofrecerá elegir la otra ventana para la mitad derecha. También puedes usar <kbd>Windows</kbd> + <kbd>←</kbd> y <kbd>Windows</kbd> + <kbd>→</kbd>.</p><h3>Cuando un programa no responde</h3><ol><li>Espera unos segundos: a veces solo está ocupado.</li><li>Si sigue trabado, presiona <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Esc</kbd> para abrir el <strong>Administrador de tareas</strong>.</li><li>Selecciona el programa y pulsa <strong>Finalizar tarea</strong>.</li></ol><blockquote>El Administrador de tareas también te muestra qué programa está usando más memoria o procesador: muy útil cuando el equipo está lento.</blockquote>"
+        },
+        {
+          "titulo": "Carpetas y archivos: organiza tu información",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<p>Un <strong>archivo</strong> es cualquier documento, foto, canción o video guardado en la computadora. Una <strong>carpeta</strong> es un contenedor para agrupar archivos (y otras carpetas).</p><h3>El Explorador de archivos</h3><p>Ábrelo con el ícono de la carpeta amarilla en la barra de tareas o con <kbd>Windows</kbd> + <kbd>E</kbd>. A la izquierda verás las ubicaciones principales: <strong>Escritorio, Descargas, Documentos, Imágenes, Música y Videos</strong>.</p><h3>Crear una carpeta</h3><ol><li>Entra a <strong>Documentos</strong>.</li><li>Clic derecho en un espacio vacío → <strong>Nuevo</strong> → <strong>Carpeta</strong>.</li><li>Escribe el nombre y presiona <kbd>Enter</kbd>.</li></ol><h3>Cambiar nombre, mover y eliminar</h3><ul><li><strong>Cambiar nombre:</strong> clic derecho → Cambiar nombre (o tecla <kbd>F2</kbd>).</li><li><strong>Mover:</strong> arrastra el archivo a otra carpeta, o usa Cortar (<kbd>Ctrl</kbd>+<kbd>X</kbd>) y Pegar (<kbd>Ctrl</kbd>+<kbd>V</kbd>).</li><li><strong>Copiar:</strong> <kbd>Ctrl</kbd>+<kbd>C</kbd> y <kbd>Ctrl</kbd>+<kbd>V</kbd>: queda el original y una copia.</li><li><strong>Eliminar:</strong> tecla <kbd>Supr</kbd>. El archivo va a la <strong>Papelera de reciclaje</strong>, de donde puedes restaurarlo.</li></ul><h3>Las extensiones: el «apellido» de los archivos</h3><table><thead><tr><th>Extensión</th><th>Tipo</th></tr></thead><tbody><tr><td>.docx</td><td>Documento de Word</td></tr><tr><td>.xlsx</td><td>Hoja de Excel</td></tr><tr><td>.pdf</td><td>Documento PDF</td></tr><tr><td>.jpg / .png</td><td>Imagen</td></tr><tr><td>.mp3 / .mp4</td><td>Audio / video</td></tr><tr><td>.zip</td><td>Archivo comprimido</td></tr><tr><td>.exe</td><td>Programa (¡cuidado si llega por correo!)</td></tr></tbody></table><h3>Buenas prácticas</h3><ul><li>Usa nombres claros con fecha: <em>Cotizacion-Cliente-2026-10.pdf</em> mejor que <em>documento final final2.pdf</em>.</li><li>No guardes todo en el escritorio: lo vuelve lento y desordenado.</li><li>Revisa y limpia la carpeta <strong>Descargas</strong> cada mes.</li></ul>"
+        },
+        {
+          "titulo": "Memorias USB, la nube y los respaldos",
+          "tipo": "lectura",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Un disco puede fallar, la computadora puede perderse o un virus puede bloquear tus archivos. La única protección real es tener <strong>respaldos</strong> (copias de seguridad).</p><h3>Usar una memoria USB</h3><ol><li>Conéctala a un puerto USB. Aparecerá en el Explorador de archivos, en <strong>Este equipo</strong>.</li><li>Copia los archivos arrastrándolos o con Copiar y Pegar.</li><li>Antes de desconectarla, haz clic en el ícono de USB del área de notificaciones → <strong>Expulsar</strong>. Así evitas que se dañen los archivos.</li></ol><h3>La nube</h3><p>Servicios como <strong>Google Drive</strong> (15 GB gratis con tu cuenta de Gmail) y <strong>OneDrive</strong> (5 GB gratis con cuenta Microsoft) guardan tus archivos en internet. Ventajas: los abres desde cualquier dispositivo y no se pierden si tu computadora falla.</p><h3>La regla 3-2-1</h3><ul><li><strong>3</strong> copias de tus archivos importantes,</li><li>en <strong>2</strong> medios distintos (por ejemplo, la computadora y un disco externo),</li><li>y <strong>1</strong> fuera de casa o en la nube.</li></ul><h3>Cuidado con los virus en USB</h3><p>Las memorias que pasan de computadora en computadora (cafés internet, imprentas) son una vía común de virus. Analízalas con el antivirus antes de abrirlas: clic derecho sobre la unidad → <strong>Examinar con Microsoft Defender</strong>.</p><blockquote>En el taller recibimos muchos discos dañados sin respaldo. Recuperar datos es posible a veces, pero es caro y no siempre se logra. Respaldar es gratis.</blockquote>"
+        },
+        {
+          "titulo": "Tarea: crea tu estructura de carpetas",
+          "tipo": "tarea",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<p>Vas a organizar tu información como lo haría una oficina ordenada.</p><ol><li>En <strong>Documentos</strong> crea una carpeta con tu nombre.</li><li>Dentro de ella crea: <em>Personal</em>, <em>Trabajo</em>, <em>Estudios</em> y <em>Fotos</em>.</li><li>Dentro de <em>Estudios</em> crea la carpeta <em>Curso Computación TechRevive</em>.</li><li>Abre el Bloc de notas, escribe «Mi primer archivo organizado» y guárdalo dentro de esa carpeta con el nombre <em>practica-1</em>.</li><li>Haz una copia del archivo en <em>Personal</em> y cámbiale el nombre a <em>practica-1-copia</em>.</li><li>Elimina la copia y luego restáurala desde la Papelera de reciclaje.</li></ol><p><strong>Entrega:</strong> una captura de pantalla del Explorador de archivos donde se vean tus carpetas.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: Windows y archivos",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Qué combinación de teclas abre el Explorador de archivos?",
+              "opciones": [
+                "Ctrl + E",
+                "Windows + E",
+                "Alt + F4",
+                "Ctrl + P"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Si eliminas un archivo con la tecla Supr, ¿a dónde va?",
+              "opciones": [
+                "Se borra para siempre",
+                "A la Papelera de reciclaje",
+                "A la carpeta Descargas",
+                "A la nube"
+              ],
+              "correcta": 2,
+              "explicacion": "Desde la Papelera puedes restaurarlo mientras no la vacíes."
+            },
+            {
+              "pregunta": "¿Qué botón de la ventana la esconde en la barra de tareas sin cerrarla?",
+              "opciones": [
+                "Cerrar (✕)",
+                "Maximizar (□)",
+                "Minimizar (—)",
+                "Ninguno"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un programa se trabó y no responde. ¿Qué puedes usar?",
+              "opciones": [
+                "El Administrador de tareas (Ctrl + Shift + Esc)",
+                "La Papelera de reciclaje",
+                "El Bloc de notas",
+                "Desconectar el monitor"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué extensión corresponde a un documento PDF?",
+              "opciones": [
+                ".docx",
+                ".pdf",
+                ".jpg",
+                ".exe"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La regla 3-2-1 de respaldos dice que necesitas…",
+              "opciones": [
+                "3 computadoras, 2 monitores y 1 impresora",
+                "3 copias, en 2 medios distintos, 1 fuera de casa o en la nube",
+                "Respaldar cada 3 años",
+                "3 contraseñas distintas"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué debes hacer antes de desconectar una memoria USB?",
+              "opciones": [
+                "Nada",
+                "Apagar la computadora",
+                "Expulsarla desde el ícono de USB",
+                "Formatearla"
+              ],
+              "correcta": 3,
+              "explicacion": "Expulsarla asegura que termine de escribirse toda la información."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Internet, correo y videollamadas",
+      "lecciones": [
+        {
+          "titulo": "Internet y el navegador",
+          "tipo": "lectura",
+          "duracion": "12 min",
+          "video": "",
+          "contenido": "<p><strong>Internet</strong> es una red mundial que conecta millones de computadoras. Para visitar páginas web usamos un <strong>navegador</strong>: Google Chrome, Microsoft Edge o Mozilla Firefox.</p><h3>Partes del navegador</h3><ul><li><strong>Barra de direcciones:</strong> donde escribes la dirección (por ejemplo, <em>www.google.com</em>) o lo que quieres buscar.</li><li><strong>Pestañas:</strong> permiten tener varias páginas abiertas. Nueva pestaña: <kbd>Ctrl</kbd> + <kbd>T</kbd>. Cerrar: <kbd>Ctrl</kbd> + <kbd>W</kbd>.</li><li><strong>Botones Atrás ← y Adelante →</strong>, y <strong>Actualizar</strong> ⟳ (<kbd>F5</kbd>).</li><li><strong>Favoritos ☆:</strong> guarda las páginas que más usas.</li><li><strong>El candado 🔒:</strong> indica una conexión cifrada (https). Es necesario, pero no garantiza por sí solo que la página sea confiable.</li></ul><h3>Buscar información de forma eficiente</h3><ul><li>Escribe <strong>palabras clave</strong>, no frases largas: <em>requisitos pasaporte Guatemala 2026</em>.</li><li>Usa comillas para una frase exacta: <em>\"servicio de reparación de laptops\"</em>.</li><li>Agrega <em>site:</em> para buscar en un sitio: <em>becas site:gob.gt</em>.</li><li>Usa las pestañas <strong>Imágenes</strong>, <strong>Noticias</strong> y <strong>Maps</strong> de Google.</li></ul><h3>¿La información es confiable?</h3><p>Antes de creer o compartir algo, pregúntate: ¿quién lo publica?, ¿es un sitio oficial (<em>.gob.gt</em>, <em>.edu.gt</em>) o un medio reconocido?, ¿tiene fecha reciente?, ¿otros sitios confiables dicen lo mismo?</p><h3>Descargar archivos</h3><p>Lo que descargas se guarda en la carpeta <strong>Descargas</strong>. Puedes verlo con <kbd>Ctrl</kbd> + <kbd>J</kbd> en el navegador.</p>"
+        },
+        {
+          "titulo": "Correo electrónico: crea tu cuenta y envía adjuntos",
+          "tipo": "video",
+          "duracion": "15 min",
+          "video": "https://www.youtube.com/watch?v=Wcuwq_W1jYs",
+          "contenido": "<p>El correo electrónico es indispensable para buscar empleo, hacer trámites y comunicarte de forma profesional. En el video verás cómo crear una cuenta de Gmail y enviar archivos adjuntos.</p><h3>Partes de un correo</h3><ul><li><strong>Para:</strong> la dirección de quien lo recibe (ejemplo: <em>nombre@gmail.com</em>).</li><li><strong>CC:</strong> copia visible para otras personas. <strong>CCO:</strong> copia oculta (útil para enviar a muchos sin mostrar todas las direcciones).</li><li><strong>Asunto:</strong> un título corto y claro.</li><li><strong>Cuerpo:</strong> el mensaje.</li><li><strong>Adjuntos</strong> 📎: archivos que envías con el mensaje (Gmail permite hasta 25 MB; para más, comparte un enlace de Google Drive).</li></ul><h3>Un correo profesional</h3><blockquote><p><strong>Asunto:</strong> Solicitud de empleo – Asistente administrativo – Ana López</p><p>Buenos días, señores de Empresa XYZ:</p><p>Por este medio les envío mi hoja de vida para la plaza de Asistente administrativo publicada en su página. Quedo atenta a cualquier consulta.</p><p>Saludos cordiales,<br/>Ana López<br/>Tel. 5555-5555</p></blockquote><ul><li>Usa una dirección seria: <em>ana.lopez.gt@gmail.com</em>, no <em>princesita2000@…</em></li><li>Revisa la ortografía antes de enviar.</li><li>Nombra bien los adjuntos: <em>CV-Ana-Lopez.pdf</em>.</li></ul><h3>Responder y reenviar</h3><p><strong>Responder</strong> contesta solo a quien te escribió; <strong>Responder a todos</strong> incluye a todos los destinatarios (úsalo con cuidado); <strong>Reenviar</strong> envía el mensaje a otra persona.</p><p class=\"aula-credit\"><small>Video: Paula Quiroga (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Videollamadas y herramientas en línea",
+          "tipo": "lectura",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Hoy muchas clases, entrevistas de trabajo y reuniones son en línea. Estas son las herramientas más usadas:</p><ul><li><strong>Google Meet:</strong> gratis con una cuenta de Gmail; funciona desde el navegador.</li><li><strong>Zoom:</strong> muy usado en cursos y empresas; conviene instalar la aplicación.</li><li><strong>Microsoft Teams:</strong> común en empresas que usan Office 365.</li><li><strong>WhatsApp Web:</strong> usa tu WhatsApp en la computadora entrando a <em>web.whatsapp.com</em> y escaneando el código QR con tu celular.</li></ul><h3>Unirte a una reunión</h3><ol><li>Abre el enlace que te enviaron (por correo o WhatsApp).</li><li>Permite el acceso a la cámara y al micrófono cuando el navegador lo pregunte.</li><li>Escribe tu nombre completo y pulsa <strong>Unirse</strong>.</li></ol><h3>Buenas prácticas en videollamadas</h3><ul><li>Prueba cámara y audio 5 minutos antes.</li><li>Busca un lugar iluminado de frente (no con la ventana detrás).</li><li><strong>Silencia tu micrófono</strong> cuando no hables.</li><li>Usa audífonos para evitar eco.</li><li>En entrevistas de trabajo, vístete como si fuera presencial.</li></ul><h3>Compartir pantalla</h3><p>Todas estas plataformas tienen el botón <strong>Compartir pantalla</strong> para mostrar un documento o presentación. Cierra antes las ventanas privadas.</p>"
+        },
+        {
+          "titulo": "Cuestionario: internet y comunicación",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Qué atajo abre una nueva pestaña en el navegador?",
+              "opciones": [
+                "Ctrl + T",
+                "Ctrl + W",
+                "Ctrl + N",
+                "Alt + Tab"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál búsqueda está mejor escrita?",
+              "opciones": [
+                "¿me podrías decir cuáles son los requisitos del pasaporte por favor?",
+                "requisitos pasaporte Guatemala 2026",
+                "pasaporte",
+                "hola google"
+              ],
+              "correcta": 2,
+              "explicacion": "Las palabras clave dan resultados más precisos."
+            },
+            {
+              "pregunta": "¿Para qué sirve el campo CCO en un correo?",
+              "opciones": [
+                "Para el asunto",
+                "Para enviar copias ocultas",
+                "Para adjuntar archivos",
+                "Para marcar como urgente"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál es una dirección de correo adecuada para buscar empleo?",
+              "opciones": [
+                "elmaskpro99@gmail.com",
+                "ana.lopez.gt@gmail.com",
+                "princesita2000@hotmail.com",
+                "xxx_ana_xxx@gmail.com"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El tamaño máximo de un adjunto en Gmail es de aproximadamente…",
+              "opciones": [
+                "1 MB",
+                "25 MB",
+                "1 GB",
+                "No tiene límite"
+              ],
+              "correcta": 2,
+              "explicacion": "Para archivos más grandes se comparte un enlace de Google Drive."
+            },
+            {
+              "pregunta": "En una videollamada, cuando no estás hablando es recomendable…",
+              "opciones": [
+                "Apagar la computadora",
+                "Silenciar tu micrófono",
+                "Subir el volumen al máximo",
+                "Compartir pantalla"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Seguridad digital y cierre",
+      "lecciones": [
+        {
+          "titulo": "Contraseñas seguras y estafas comunes",
+          "tipo": "lectura",
+          "duracion": "12 min",
+          "video": "",
+          "contenido": "<h3>Contraseñas seguras</h3><ul><li>Usa <strong>frases largas</strong> fáciles de recordar: <em>Mango-Volcan-Lluvia-27</em> es mucho más segura que <em>Ana1990</em>.</li><li>Mínimo 12 caracteres, combinando palabras, números y símbolos.</li><li><strong>Una contraseña distinta</strong> para el correo, el banco y las redes sociales.</li><li>Activa la <strong>verificación en dos pasos</strong>: además de la contraseña, te piden un código que llega a tu celular.</li><li>Nunca compartas tus contraseñas ni códigos, ni siquiera con alguien que dice ser del banco o de soporte técnico.</li></ul><h3>Estafas que circulan en Guatemala</h3><ul><li><strong>Phishing (correos o SMS falsos):</strong> «Su cuenta bancaria será bloqueada, ingrese aquí». Los bancos nunca piden tus claves por mensaje.</li><li><strong>WhatsApp:</strong> «Hola, cambié de número, préstame Q500». Llama a la persona a su número de siempre antes de enviar dinero.</li><li><strong>El código de verificación:</strong> «Te envié un código por error, pásamelo». Con ese código te roban tu cuenta de WhatsApp.</li><li><strong>Premios y ofertas increíbles:</strong> «Ganaste un celular, paga el envío». Si es demasiado bueno para ser verdad, es una estafa.</li><li><strong>Falso soporte técnico:</strong> ventanas que dicen «Su computadora tiene virus, llame a este número». Cierra el navegador; no llames.</li></ul><h3>Señales de alerta</h3><p>Urgencia («¡solo hoy!»), errores de ortografía, enlaces raros (<em>banco-industrial-seguro.xyz</em>) y peticiones de datos personales o dinero.</p><blockquote>Si caíste en una estafa: cambia tus contraseñas de inmediato, llama a tu banco y denuncia en la PNC o en el Ministerio Público.</blockquote>"
+        },
+        {
+          "titulo": "Mantén tu computadora segura y actualizada",
+          "tipo": "lectura",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<h3>1. Actualizaciones de Windows</h3><p>Las actualizaciones corrigen fallas de seguridad. Revisa en <strong>Configuración → Windows Update → Buscar actualizaciones</strong> y reinicia cuando te lo pida. No las pospongas por semanas.</p><h3>2. Antivirus</h3><p>Windows 10 y 11 incluyen <strong>Seguridad de Windows (Microsoft Defender)</strong>, gratuito y suficiente para la mayoría de usuarios. Verifica que esté activo en <strong>Configuración → Privacidad y seguridad → Seguridad de Windows</strong>. No instales dos antivirus a la vez: se estorban y vuelven lento el equipo.</p><h3>3. Descargas con cuidado</h3><ul><li>Descarga programas solo de la Microsoft Store o de páginas oficiales.</li><li>En los sitios de descarga, cuidado con los botones grandes de «Descargar» que en realidad son publicidad.</li><li>Al instalar, lee cada pantalla y <strong>desmarca</strong> programas extra que no pediste (barras de herramientas, «optimizadores»).</li></ul><h3>4. Redes wifi públicas</h3><p>En cafés, centros comerciales o aeropuertos, evita entrar a tu banco o hacer compras. Si es necesario, usa los datos de tu celular.</p><h3>5. Cuentas de usuario</h3><p>Protege tu cuenta de Windows con contraseña o PIN, y bloquea el equipo (<kbd>Windows</kbd> + <kbd>L</kbd>) cuando te levantes. Si varias personas usan la computadora, crea una cuenta para cada una.</p><h3>Señales de que algo anda mal</h3><p>Ventanas de publicidad que aparecen solas, la página de inicio del navegador cambió, programas que no instalaste o lentitud repentina. En esos casos, haz un análisis completo con el antivirus o tráenos el equipo.</p>"
+        },
+        {
+          "titulo": "Proyecto final: tu kit digital",
+          "tipo": "tarea",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<p>Demuestra todo lo que aprendiste preparando tu «kit digital» personal.</p><ol><li>Si no tienes, crea una <strong>cuenta de Gmail</strong> con un nombre profesional.</li><li>Activa la <strong>verificación en dos pasos</strong> en tu cuenta de Google (myaccount.google.com → Seguridad).</li><li>En tu carpeta del curso crea un documento en el Bloc de notas llamado <em>mi-kit-digital</em> que incluya: tu nueva dirección de correo, la versión de Windows de tu computadora (usa <code>winver</code>) y tres atajos de teclado que más usarás.</li><li>Sube ese archivo a <strong>Google Drive</strong>.</li><li>Envíate a ti mismo, y a nosotros, un <strong>correo profesional</strong> con el archivo adjunto y el asunto: <em>Proyecto final – Computación básica – Tu nombre</em>.</li></ol><p><strong>Entrega:</strong> envía por WhatsApp una captura del correo enviado (sin mostrar contraseñas). Después marca esta lección como completada y presenta el examen final.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Examen final: Computación básica",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Este examen evalúa todo el curso. Necesitas la nota mínima para aprobar; puedes repetirlo las veces que necesites. Al aprobarlo podrás solicitar tu <strong>certificado</strong> en la página del curso.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Cuál es la función de la memoria RAM?",
+              "opciones": [
+                "Guardar archivos de forma permanente",
+                "Guardar temporalmente lo que estás usando",
+                "Mostrar la imagen",
+                "Conectarse a internet"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué es el software?",
+              "opciones": [
+                "Las piezas que se pueden tocar",
+                "Los programas que le dicen al hardware qué hacer",
+                "El cable de la corriente",
+                "La pantalla"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué acción del mouse abre el menú de opciones de un archivo?",
+              "opciones": [
+                "Doble clic",
+                "Clic derecho",
+                "Girar la rueda",
+                "Arrastrar"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál es el atajo para DESHACER?",
+              "opciones": [
+                "Ctrl + Z",
+                "Ctrl + Y",
+                "Ctrl + D",
+                "Ctrl + U"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué atajo bloquea la computadora al levantarte?",
+              "opciones": [
+                "Windows + L",
+                "Windows + D",
+                "Alt + F4",
+                "Ctrl + B"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Dónde se guardan por defecto los archivos que descargas de internet?",
+              "opciones": [
+                "En el Escritorio",
+                "En la carpeta Descargas",
+                "En la Papelera",
+                "En la memoria RAM"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál es el mejor nombre para un archivo?",
+              "opciones": [
+                "documento final final2.docx",
+                "Cotizacion-Cliente-2026-10.pdf",
+                "asdf.pdf",
+                "nuevo.docx"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué servicio guarda tus archivos en internet?",
+              "opciones": [
+                "El Bloc de notas",
+                "Google Drive",
+                "El Administrador de tareas",
+                "El BIOS"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué indica el candado 🔒 en la barra de direcciones?",
+              "opciones": [
+                "Que la página es 100 % confiable",
+                "Que la conexión está cifrada (https)",
+                "Que la página es del gobierno",
+                "Que no tiene publicidad"
+              ],
+              "correcta": 2,
+              "explicacion": "Es necesario pero no suficiente: también existen páginas falsas con candado."
+            },
+            {
+              "pregunta": "Recibes un SMS: «Su cuenta será bloqueada, ingrese su usuario y clave aquí». ¿Qué haces?",
+              "opciones": [
+                "Ingreso rápido mis datos",
+                "Lo ignoro y, si tengo dudas, llamo al número oficial del banco",
+                "Lo reenvío a mis contactos",
+                "Respondo con mi clave"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un contacto te pide por WhatsApp el código de 6 dígitos que «te envió por error». ¿Qué haces?",
+              "opciones": [
+                "Se lo envío",
+                "No lo comparto: con ese código pueden robar mi cuenta",
+                "Lo publico en mis estados",
+                "Le envío mi contraseña"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál contraseña es más segura?",
+              "opciones": [
+                "123456",
+                "Ana1990",
+                "Mango-Volcan-Lluvia-27",
+                "contraseña"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Para qué sirve la verificación en dos pasos?",
+              "opciones": [
+                "Para escribir más rápido",
+                "Para pedir un código adicional además de la contraseña",
+                "Para enviar correos a dos personas",
+                "Para tener dos antivirus"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál es el antivirus que ya viene incluido en Windows 10 y 11?",
+              "opciones": [
+                "Microsoft Defender",
+                "Word",
+                "Chrome",
+                "WinRAR"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cómo encuentras la versión exacta de Windows?",
+              "opciones": [
+                "Windows + R y escribir winver",
+                "Abriendo la Papelera",
+                "Ctrl + P",
+                "En el Bloc de notas"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}
