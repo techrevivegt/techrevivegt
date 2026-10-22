@@ -345,6 +345,7 @@
   window.addEventListener("afterprint", function () { document.title = baseTitle; });
   $("#btn-print").addEventListener("click", function () {
     buildPrint();
+    if (window.trEvent) window.trEvent("cotizacion_pdf", field("numero"));
     var go = function () { window.print(); };
     if (qpLogo.complete && qpLogo.naturalWidth) go();
     else if (qpLogo.decode) qpLogo.decode().then(go, go);
@@ -388,6 +389,21 @@
     }
     var url = "https://wa.me/" + to + "?text=" + encodeURIComponent(L.join("\n"));
     window.open(url, "_blank", "noopener");
+    if (window.trEvent) window.trEvent("cotizacion_wa", dest === "cliente" ? "Enviada al cliente" : "Enviada a TechRevive");
+    // Si la persona nos la envía a nosotros, queda guardada en Panel → Solicitudes
+    if (dest !== "cliente" && (field("cliente") || field("telefono"))) {
+      var vid = ""; try { vid = localStorage.getItem("tr-vid") || ""; } catch (e) { /* nada */ }
+      try {
+        fetch("/api/solicitud", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+          tipo: "cotizacion", nombre: field("cliente"), telefono: field("telefono"),
+          servicio: all.length ? all[0].nombre + (all.length > 1 ? " y " + (all.length - 1) + " más" : "") : "Cotización",
+          mensaje: join([sint, field("problema"), field("solicitud")], ". "),
+          datos: { numero: field("numero"), equipo: equipoTxt(), total: c.total, desde: !!c.desde, urgente: !!c.urg,
+            detalle: all.map(function (i) { return i.nombre + (i.cant > 1 ? " ×" + i.cant : "") + " — " + money(i.sub); }) },
+          pagina: location.pathname, vid: vid,
+        }) }).catch(function () {});
+      } catch (e) { /* nada */ }
+    }
   });
 
   /* ---------- Nueva cotización ---------- */

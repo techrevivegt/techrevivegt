@@ -440,3 +440,57 @@ a { color: var(--blue); }
 .map .leaflet-tile-pane { filter: saturate(.5) hue-rotate(-8deg) brightness(1.04); }
 @media (max-width: 700px) { .kpi-band .kpi2:last-child, .kpi-minis .kpi-mini:last-child { grid-column: 1 / -1; } }
 .stat-detail__tools .input { color: #0B1C4A; } .stat-detail__tools .input::placeholder { color: #64748B; }
+
+/* ───────── Solicitudes, reparaciones y conversiones ───────── */
+.badge--info { background: #DBEAFE; color: #1E40AF; }
+.nav__badge { margin-left: auto; min-width: 20px; padding: 1px 7px; border-radius: 999px; background: #F59E0B; color: #1F1300; font-size: .72rem; font-weight: 700; text-align: center; line-height: 18px; }
+.req-list { display: grid; gap: 12px; }
+.req { background: var(--white); border: 1px solid var(--line); border-left: 4px solid var(--line-2); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+.req--nuevo { border-left-color: var(--amber); }
+.req--contactado, .req--cotizado { border-left-color: var(--electric); }
+.req--ganado { border-left-color: var(--green); }
+.req--perdido, .req--archivado { opacity: .82; }
+.req__head { display: flex; align-items: flex-start; gap: 12px; }
+.req__tipo { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: #EEF4FF; font-size: 1.15rem; }
+.req__who { flex: 1; min-width: 0; }
+.req__who strong { display: block; color: var(--navy-900); font-size: 1rem; }
+.req__who small { color: var(--muted); font-size: .8rem; }
+.req__svc, .req__msg { margin: 10px 0 0; font-size: .92rem; }
+.req__msg { white-space: pre-wrap; color: #334155; background: #F8FAFC; border-radius: 10px; padding: 8px 12px; }
+.req__datos { margin: 10px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 16px; font-size: .84rem; }
+.req__datos div { min-width: 0; }
+.req__datos dt { color: var(--muted); font-size: .76rem; }
+.req__datos dd { margin: 0; color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere; }
+.req__contact { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: .88rem; }
+.req__foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.req__state select { min-width: 160px; }
+.req__notebox { display: flex; gap: 8px; align-items: flex-start; margin-top: 10px; }
+.req__nota { flex: 1; min-height: 38px; resize: vertical; font-size: .86rem; }
+.ord-form { margin-bottom: 16px; border: 1px solid #BFDBFE; }
+.ord-form__title { margin: 0 0 12px; font-size: 1.05rem; color: var(--navy-900); }
+.ord-table td { vertical-align: top; }
+.ord-table tr.is-new td { background: #ECFDF5; }
+.ord-prob { max-width: 280px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ord-quick td { background: #F8FAFC; }
+.ord-quick__box { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 4px 0; }
+.ord-hist { margin-top: 6px; font-size: .8rem; }
+.ord-hist summary { cursor: pointer; color: var(--blue); }
+.ord-hist ol { margin: 6px 0 0; padding-left: 18px; color: #475569; display: grid; gap: 4px; }
+.conv-tiles:first-of-type { margin-top: 0; }
+.conv-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin: 12px 0; }
+.conv-tile { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 2px; background: linear-gradient(180deg, #fff, #F8FAFF); }
+.conv-tile__ic { font-size: 1.2rem; }
+.conv-tile strong { font-size: 1.5rem; color: var(--navy-900); line-height: 1.1; }
+.conv-tile span:not(.conv-tile__ic) { font-size: .82rem; color: #334155; font-weight: 600; }
+.conv-tile small { color: var(--muted); font-size: .76rem; }
+.conv-sol { margin: 4px 0 12px; }
+@media (max-width: 640px) {
+  .req__foot { flex-direction: column; align-items: stretch; }
+  .req__state select { width: 100%; }
+  .req__notebox { flex-direction: column; align-items: stretch; }
+  .ord-table thead { display: none; }
+  .ord-table, .ord-table tbody, .ord-table tr, .ord-table td { display: block; width: 100%; }
+  .ord-table tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
+  .ord-table td { border: 0; padding: 4px 12px; }
+  .ord-prob { max-width: none; }
+}

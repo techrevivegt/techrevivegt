@@ -176,12 +176,52 @@ Sin este paso el sitio, el panel y el aula funcionan igual; solo quedan apagadas
 - Elige el periodo: Hoy, 7, 30 o 90 días, o 1 año. **CSV para Excel** descarga todas las visitas (con las secciones vistas) del periodo para abrirlas en Excel.
 - **No contar mis visitas:** márcalo en cada navegador y celular que uses tú o tu equipo, para que sus visitas no inflen los números.
 - Las visitas de robots (Google, buscadores, vistas previas de enlaces) no se cuentan. La ubicación es aproximada (la da la conexión a internet). Se guardan 400 días.
-- **Privacidad:** se guarda la IP completa. Te recomendamos mencionarlo en una página de privacidad o en el pie del sitio.
+- **Privacidad:** se guarda la IP completa. Ya está explicado en el **Aviso de privacidad** (`/privacidad`), enlazado en el pie del sitio.
+
+### Doctor TechRevive · diagnóstico gratuito (`/diagnostico`)
+
+- El cliente elige su equipo y el problema (14 problemas comunes), responde 2 o 3 preguntas y recibe: la **causa más probable**, el **servicio recomendado con el precio de tu tarifario**, qué puede intentar en casa sin riesgo, qué debe evitar y la urgencia.
+- Desde el resultado puede **enviarte el diagnóstico por WhatsApp** o dejar su nombre y teléfono («Que me contacten»). Si la base de datos está conectada (Paso 6), ese contacto queda guardado en **📥 Solicitudes de clientes**.
+- Los precios salen solos de **💲 Tarifario y cotizador**: si cambias un precio allí, el diagnóstico se actualiza en la siguiente publicación.
+- La portada tiene un bloque que lo presenta. Además está en el menú **Servicios → Diagnóstico gratuito** y en el pie de página.
+
+### Asistente con inteligencia artificial (opcional, gratis)
+
+- Agrega al diagnóstico la pestaña **«Descríbelo con tus palabras»**: el cliente escribe lo que le pasa a su equipo y la IA responde con causas, servicios **de tu tarifario**, consejos y preguntas que el técnico le haría.
+- **Para activarla:** Panel → ⚙️ Configuración general → activa **«✨ Asistente con inteligencia artificial»** → Guardar. No necesitas crear nada en Cloudflare: usa **Workers AI**, que viene incluido en tu cuenta gratuita.
+- **Límites para que nunca te cobren:** 6 consultas por hora por persona y 60 al día en total. El plan gratuito de Cloudflare permite 10,000 «neuronas» diarias (unas 80–100 respuestas). Si se llena el cupo del día, el cliente ve un aviso y puede usar el diagnóstico guiado normal.
+- **Si la publicación falla después de activarla**, desactívala y guarda: el sitio vuelve a publicarse como antes.
+
+### 📥 Solicitudes de clientes (requiere el Paso 6)
+
+- Cada persona que deja sus datos queda aquí, **aunque no haya terminado de enviar el WhatsApp**: formularios de contacto e inscripción, cotizaciones que te envían desde el cotizador y diagnósticos del Doctor TechRevive.
+- Verás nombre, teléfono, servicio, mensaje y los detalles (respuestas del diagnóstico, detalle y total de la cotización, curso y modalidad…).
+- **💬 WhatsApp** abre el chat con un saludo listo y marca la solicitud como **Contactada**. Cambia el estado (Nueva → Contactada → Cotizada → Ganada / Perdida / Archivada) y escribe notas internas que solo tú ves.
+- **🛠️ Crear orden** convierte la solicitud en una orden de reparación con los datos ya llenos.
+- El número naranja del menú indica cuántas solicitudes nuevas tienes.
+
+### 🛠️ Reparaciones y seguimiento en línea (requiere el Paso 6)
+
+1. Cuando recibas un equipo: **＋ Nueva orden** → cliente, teléfono, equipo, problema, presupuesto y fecha estimada de entrega (opcionales) → **Crear orden**. Se genera un código, por ejemplo **OT-7K2QD**.
+2. Envíale al cliente el enlace con **💬** (WhatsApp) o **🔗** (copiar). El enlace abre `/seguimiento` con su orden.
+3. El cliente también puede entrar a **Servicios → Seguimiento de reparación** y escribir el código y los **últimos 4 dígitos de su teléfono**, que son su clave.
+4. Para avanzar: **↻ Estado** → elige la etapa (Recibido, En diagnóstico, Esperando aprobación, Esperando repuesto, En reparación, Pruebas, Listo, Entregado, Cancelado) → escribe un mensaje opcional → **Guardar**. Si dejas marcado «Avisar por WhatsApp», se abre el mensaje para el cliente con el enlace.
+5. Las **notas internas** (contraseñas, accesorios recibidos, golpes) nunca las ve el cliente.
+
+### Otras mejoras incluidas
+
+- **Contactos y conversiones** en 📊 Estadísticas: cuántas personas pulsaron WhatsApp, llamar o correo, enviaron un formulario o una cotización, hicieron el diagnóstico o consultaron una orden, y **desde qué página y botón**.
+- **Aviso de privacidad** (`/privacidad`), enlazado en el pie de página. Explica que se guardan las visitas con IP, los formularios y los datos del aula.
+- **Fotos más livianas (WebP):** el sitio carga ~37 % menos de imágenes. Si cambias una foto desde el panel, el sitio usa la nueva automáticamente.
+- **App instalable:** en el celular, el sitio se puede «Agregar a la pantalla de inicio» y, sin internet, muestra una página amable con tu WhatsApp.
+- **Seguridad:** cabeceras de protección en todo el sitio y bloqueo tras 5 contraseñas incorrectas en el panel (15 minutos), 8 en el aula, y límites contra envíos masivos en los formularios.
+- Si dejas vacía la **dirección** en Configuración general, ya no aparece «Tu dirección aquí»: simplemente se oculta.
 
 ### Seguridad
 
 - La contraseña solo está en Cloudflare. Para cambiarla, edita `PANEL_PASSWORD` en **Variables and Secrets**.
 - La sesión dura 12 horas. Usa **Cerrar sesión** en computadoras compartidas.
+- Después de 5 contraseñas incorrectas, el panel se bloquea 15 minutos para esa conexión.
 - El panel no aparece en Google ni en el menú del sitio.
 
 ---
@@ -200,6 +240,8 @@ El panel muestra mensajes claros. Los más comunes:
 | "Tarda más de lo normal" | Revisa **Cloudflare → techrevive → Deployments**. Si hay uno en rojo, abre el registro y envíalo a tu desarrollador. El sitio anterior sigue en línea. |
 | "Falta conectar la base de datos" | Sigue el **Paso 6**. |
 | La publicación falla después de pegar el ID de la base de datos | Borra el ID en Configuración general y guarda. Revisa el permiso **D1 · Edit** del token (Paso 6, punto 3) y vuelve a pegarlo. |
+| La publicación falla después de activar el asistente con IA | Desactívalo en Configuración general y guarda. |
+| «El seguimiento en línea todavía no está activo» | Falta la base de datos: sigue el **Paso 6**. |
 | `/panel` muestra el error 404 | Todavía no se publicó la versión con el panel: sube los archivos (Paso 1) y espera a que el despliegue diga **Success**. |
 
 ---
@@ -227,5 +269,9 @@ Textos fijos de: la página **Redes sociales** (los enlaces sí se editan), el *
   - La interfaz está en `src/js/aula.js` y `src/css/aula.css`.
 - **Base de datos (D1):** `wrangler.jsonc` **no** lleva `d1_databases`. `build.py` (función `configurar_base_datos`) la agrega en Cloudflare (`WORKERS_CI=1`) con el ID de `content/configuracion.json → base_datos` o de la variable `D1_DATABASE_ID`, y valida su formato. Se evita así el aprovisionamiento automático, que necesita permiso D1 en el token de Workers Builds (el token por defecto no lo tiene). El Worker crea las tablas `visitas`, `progreso` y `certificados` con `CREATE TABLE IF NOT EXISTS`. Sin `env.DB`, las rutas devuelven 503 `{sinBase:true}` y el aula usa solo `localStorage`.
 - **Cursos del aula:** `content/aula-cursos/<id>.json` (uno por curso; el panel los lista con `entradas?carpeta=content/aula-cursos`). `content/aula.json` guarda los ajustes y el diseño del certificado. `generador/aula.py` también escribe `_site/certificado.html` (`src/js/certificado.js`, `src/js/qrcode.js`, `src/css/certificado.css`).
-- **Visitas:** `src/js/visitas.js` envía `/api/v` y `/api/v/fin` (sendBeacon). El país, la ciudad, las coordenadas y la IP vienen de `request.cf` y de `CF-Connecting-IP`.
+- **Visitas:** `src/js/visitas.js` envía `/api/v` y `/api/v/fin` (sendBeacon). El país, la ciudad, las coordenadas y la IP vienen de `request.cf` y de `CF-Connecting-IP`. También define `window.trEvent(tipo, etiqueta)` → `/api/v/e` (tabla `eventos`) y registra solo los clics en enlaces `wa.me`, `tel:` y `mailto:` (etiqueta: `data-ev`, «Botón flotante» o el texto del enlace).
+- **Herramientas:** `generador/herramientas.py` genera `diagnostico.html` (síntomas, preguntas y efectos en la lista `SINTOMAS`, precios buscados en el tarifario por palabra clave; si no encuentra uno, avisa en el build), `seguimiento.html`, `privacidad.html`, `offline.html` y `data/servicios-ia.json` (catálogo para la IA). La lógica está en `src/js/diagnostico.js` y `src/js/seguimiento.js`, y los estilos en `src/css/paginas.css`.
+- **API nueva:** `POST /api/solicitud` (mismo origen, honeypot `_gotcha`, 10/h por IP), `GET /api/seguimiento?c=&t=` (30/10 min), `POST /api/diagnostico/ia` (Workers AI `env.AI`, 6/h por IP y 60/día, respuesta en JSON validada contra el catálogo) y, con sesión, `resumen`, `solicitudes` y `reparaciones` (tablas `solicitudes`, `ordenes`, `intentos`, `ia_uso`).
+- **IA:** `build.py` (`configurar_ia`) agrega `"ai": {"binding": "AI"}` a `wrangler.jsonc` solo en Cloudflare y solo si `asistente_ia` está activado.
+- **Rendimiento y seguridad:** `build.py` escribe `_site/_headers` (cabeceras de seguridad, CSP y caché; Cloudflare lo aplica a los archivos estáticos, y el Worker agrega las suyas a `/api` y `/aula`), `manifest.webmanifest` y `sw.js` (red primero, página sin conexión; nunca guarda `/api`, `/panel` ni `/aula`). `optimizar_imagenes()` envuelve las `<img>` en `<picture>` con la versión WebP de `src/img/` solo si su huella coincide con `src/img/webp.json`; con Pillow instalado también genera las que falten.
 - `.pages.yml` sigue presente por compatibilidad con Pages CMS, pero ya no es necesario.

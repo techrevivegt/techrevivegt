@@ -210,6 +210,8 @@ def nav_items():
     serv = [(s["_nombre"], s["_href"], s.get("icono"), s.get("descripcion_menu", "")) for s in SERVICES]
     if TARIFARIO.get("mostrar_en_menu", True) is not False:
         serv += [None, ("Tarifario y cotizador", "cotizador.html", "dollar", "Calcula al instante el costo de tu servicio.")]
+    serv += [("Diagnóstico gratuito", "diagnostico.html", "search", "Descubre qué le pasa a tu equipo en 1 minuto."),
+             ("Seguimiento de reparación", "seguimiento.html", "clipboard", "Consulta en línea cómo va tu equipo.")]
     serv += [None, ("Todos los servicios", "servicios.html", "grid", "Conoce todo lo que podemos hacer por ti.")]
     return [
         ("Inicio", "index.html", None),
@@ -311,7 +313,7 @@ SOCIALS = '''<a href="#" data-social="facebook" aria-label="Facebook"><svg class
 
 C_WA = e(g(CFG, "contacto", "whatsapp_visible") or "+502 0000-0000")
 C_MAIL = e(g(CFG, "contacto", "correo") or "contacto@tudominio.com")
-C_ADDR = e(g(CFG, "contacto", "direccion") or "Tu dirección aquí")
+C_ADDR = e(g(CFG, "contacto", "direccion") or "")
 C_HOURS = e(g(CFG, "contacto", "horario") or "")
 SLOGAN = e(g(CFG, "sitio", "eslogan") or "Tecnología que transforma, soluciones que impulsan.")
 
@@ -319,6 +321,7 @@ SLOGAN = e(g(CFG, "sitio", "eslogan") or "Tecnología que transforma, soluciones
 def footer():
     fl = [(s["_href"], s["_nombre"]) for s in SERVICES]
     fl.insert(min(1, len(fl)), ("capacitacion.html", "Capacitación tecnológica"))
+    fl += [("diagnostico.html", "Diagnóstico gratuito"), ("seguimiento.html", "Seguimiento de reparación")]
     serv_links = "".join(f'\n          <li><a href="{h}">{e(n)}</a></li>' for h, n in fl)
     return f'''  <footer class="footer">
     <div class="container footer__inner">
@@ -355,14 +358,14 @@ def footer():
         <ul class="footer__contact">
           <li><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg><a href="contacto.html" data-wa data-cfg="whatsappDisplay">{C_WA}</a></li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><a href="contacto.html" data-cfg="email" data-cfg-mail>{C_MAIL}</a></li>
-          <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><a href="ubicacion.html" data-cfg="address">{C_ADDR}</a></li>
-          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span data-cfg="hours">{C_HOURS}</span></li>
+          {f'<li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><a href="ubicacion.html" data-cfg="address">{C_ADDR}</a></li>' if C_ADDR else ""}
+          {f'<li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span data-cfg="hours">{C_HOURS}</span></li>' if C_HOURS else ""}
         </ul>
       </div>
     </div>
 
     <div class="container footer__bottom">
-      <p>© {YEAR} TechRevive. Todos los derechos reservados. · <a href="mapa-del-sitio.html">Mapa del sitio</a></p>
+      <p>© {YEAR} TechRevive. Todos los derechos reservados. · <a href="mapa-del-sitio.html">Mapa del sitio</a> · <a href="privacidad.html">Privacidad</a></p>
       <p class="footer__formula">Tecnología + Conocimiento + Soluciones</p>
     </div>
   </footer>
@@ -401,6 +404,7 @@ def head(slug, title, desc, image="img/hero.jpg", jsonld=None, preload=None, noi
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="{e(FAVICON)}" type="image/png" />
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />{pre}
@@ -597,7 +601,7 @@ def field(fid, label, name, kind="text", required=False, placeholder="", error="
         control = f'<textarea id="{fid}" name="{name}" rows="5"{ph}{req}{err}></textarea>'
     elif kind == "tel":
         control = (f'<input id="{fid}" name="{name}" type="tel" autocomplete="tel" inputmode="tel"{ph} '
-                   f'pattern="[0-9+()\\s-]{{8,}}"{req}{err} />')
+                   f'pattern="[0-9+\\(\\)\\s\\-]{{8,}}"{req}{err} />')
     else:
         control = f'<input id="{fid}" name="{name}" type="{kind}"{ac}{ph}{req}{err} />'
     return (f'<div class="field"><label for="{fid}">{label}{star}</label>{control}'
@@ -642,8 +646,8 @@ def contact_list():
     return f'''<ul class="contact__list">
             <li><span class="contact__icon">{icon("whatsapp")}</span><span><small>WhatsApp</small><a href="contacto.html" data-wa data-cfg="whatsappDisplay">{C_WA}</a></span></li>
             <li><span class="contact__icon">{icon("mail")}</span><span><small>Correo electrónico</small><a href="contacto.html" data-cfg="email" data-cfg-mail>{C_MAIL}</a></span></li>
-            <li><span class="contact__icon">{icon("pin")}</span><span><small>Dirección</small><span data-cfg="address">{C_ADDR}</span></span></li>
-            <li><span class="contact__icon">{icon("clock")}</span><span><small>Horario de atención</small><span data-cfg="hours">{C_HOURS}</span></span></li>
+            {f'<li><span class="contact__icon">{icon("pin")}</span><span><small>Dirección</small><span data-cfg="address">{C_ADDR}</span></span></li>' if C_ADDR else ""}
+            {f'<li><span class="contact__icon">{icon("clock")}</span><span><small>Horario de atención</small><span data-cfg="hours">{C_HOURS}</span></span></li>' if C_HOURS else ""}
           </ul>'''
 
 

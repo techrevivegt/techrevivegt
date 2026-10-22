@@ -380,7 +380,8 @@ def build_index(preview_fn):
     cta = cta_block(L.get("titulo"), L.get("texto"),
                     f'<a href="#contacto" class="btn btn--white btn--lg" data-wa>{icon("whatsapp")} {e(L.get("boton_whatsapp") or "Hablar con TechRevive")}</a>\n'
                     f'            <a href="#contacto" class="btn btn--ghost-light btn--lg">{e(L.get("boton_cotizacion") or "Solicitar cotización")}</a>')
-    body = (sec_hero() + sec_values() + sec_services(g(INI, "servicios", default={})) + sec_why(g(INI, "por_que", default={}))
+    import herramientas as ph
+    body = (sec_hero() + sec_values() + sec_services(g(INI, "servicios", default={})) + ph.promo_home() + sec_why(g(INI, "por_que", default={}))
             + sec_training(g(INI, "capacitacion", default={})) + sec_business(g(INI, "negocios", default={}))
             + process_section() + sec_projects(g(INI, "proyectos", default={})) + sec_testimonials(g(INI, "testimonios", default={}))
             + sec_blog(B, preview_fn(n)) + cta + contact_section("contacto"))

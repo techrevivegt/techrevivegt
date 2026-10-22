@@ -177,6 +177,8 @@
     app.replaceChildren(layout);
     buildNav();
     route();
+    refreshBadges();
+    if (!S.badgeTimer) S.badgeTimer = setInterval(() => { if (layout && document.visibilityState === "visible") refreshBadges(); }, 120000);
   }
 
   function buildNav() {
@@ -857,7 +859,7 @@
   }
 
   /* ───────── vistas especiales: estadísticas y certificados ───────── */
-  const VIEWS = { estadisticas: renderStats, certificados: renderCerts };
+  const VIEWS = { estadisticas: renderStats, certificados: renderCerts, solicitudes: renderSolicitudes, reparaciones: renderReparaciones };
   const fmtN = (n) => Number(n || 0).toLocaleString("es-GT");
   function fmtDur(s) {
     s = Math.round(Number(s) || 0);
@@ -899,6 +901,7 @@
     [/^\/contacto/, "✉️", "Contacto"], [/^\/ubicacion/, "📍", "Ubicación"], [/^\/novedades/, "📣", "Novedades"],
     [/^\/galeria/, "🖼️", "Galería"], [/^\/redes-sociales/, "📱", "Redes sociales"], [/^\/mapa-del-sitio/, "🗺️", "Mapa del sitio"],
     [/^\/(reparacion|soporte|desarrollo-web|aplicaciones)/, "🔧", null], [/^\/proceso/, "🔄", "Nuestro proceso"],
+    [/^\/diagnostico/, "🩺", "Doctor TechRevive"], [/^\/seguimiento/, "🔎", "Seguimiento de reparación"], [/^\/privacidad/, "🔒", "Aviso de privacidad"],
   ];
   function pageInfo(ruta, titulo) {
     const r = String(ruta || "/").replace(/\/index\.html$/, "/").replace(/\.html$/, "") || "/";
@@ -1111,7 +1114,7 @@
       rankList("🖥️ Sistema", d.sistemas.map((x) => ({ label: x.k || "Otro", n: x.n })), { kind: "nav" }),
       rankList("🔗 Vino de", d.referentes.map((x) => { const [ic, nm] = refInfo(x.k); return { label: `${ic} ${x.k ? nm : "Directo"}`, n: x.n }; }), { total, kind: "ref" }),
       d.dias > 1 ? hourChart(d.horas) : null);
-    contentEl.replaceChildren(toolbar, band, minis, barsCard(d), grid, mapCard(d.mapa), sectionsCard(d.secciones || []), detailCard(d.detalle, dias));
+    contentEl.replaceChildren(toolbar, band, minis, convCard(d.conversiones, periodName), barsCard(d), grid, mapCard(d.mapa), sectionsCard(d.secciones || []), detailCard(d.detalle, dias));
   }
 
   /* ── Certificados ── */
@@ -1236,6 +1239,282 @@
               }))))))));
       } catch (e) { if (e.message !== "sesión") body.replaceChildren(dbError(e)); }
     }
+  }
+
+  /* ───────── Solicitudes de clientes (formularios, cotizaciones, diagnósticos) ───────── */
+  const SOL_TIPO = { contacto: ["✉️", "Contacto"], inscripcion: ["🎓", "Inscripción"], cotizacion: ["💲", "Cotización"], diagnostico: ["🩺", "Diagnóstico"], otro: ["📌", "Otro"] };
+  const SOL_EST = { nuevo: ["🆕 Nueva", "badge--warn"], contactado: ["📞 Contactada", "badge--info"], cotizado: ["💬 Cotizada", "badge--info"], ganado: ["✅ Ganada", "badge--ok"], perdido: ["✕ Perdida", "badge--off"], archivado: ["🗄 Archivada", "badge--off"] };
+  const waNum = (tel) => { let n = String(tel || "").replace(/\D/g, ""); if (n.length === 8) n = "502" + n; return n.length >= 10 ? n : ""; };
+  const waLink = (tel, msg) => { const n = waNum(tel); return n ? `https://wa.me/${n}?text=${encodeURIComponent(msg)}` : ""; };
+  const firstName = (n) => String(n || "").trim().split(/\s+/)[0] || "";
+
+  function solDatos(x) {
+    const d = x.datos || {};
+    const rows = [];
+    const add = (k, v) => { if (v !== undefined && v !== null && v !== "" && !(Array.isArray(v) && !v.length)) rows.push([k, v]); };
+    if (x.tipo === "diagnostico") {
+      add("Equipo", d.equipo); add("Problema", d.sintoma); add("Con IA", d.ia ? "Sí" : "");
+      add("Urgencia", { alta: "🔴 Alta", media: "🟠 Media", baja: "🟢 Baja" }[d.urgencia] || d.urgencia);
+      add("Causas probables", (d.causas || []).map((c) => `${c.t} (${c.nivel})`).join(" · "));
+      add("Servicios sugeridos", (d.servicios || []).join(" · "));
+      (d.respuestas || []).forEach((r) => add(r.q, r.a));
+    } else if (x.tipo === "cotizacion") {
+      add("No. de cotización", d.numero); add("Equipo", d.equipo);
+      add("Total estimado", d.total != null ? `Q${Number(d.total).toLocaleString("es-GT", { minimumFractionDigits: 2 })}${d.desde ? " (incluye precios «desde»)" : ""}` : "");
+      add("Urgente", d.urgente ? "Sí" : "");
+      add("Detalle", (d.detalle || []).join("\n"));
+    } else {
+      Object.entries(d).forEach(([k, v]) => add(k.charAt(0).toUpperCase() + k.slice(1), Array.isArray(v) ? v.join(", ") : typeof v === "object" ? JSON.stringify(v) : v));
+    }
+    if (!rows.length) return null;
+    return h("dl", { class: "req__datos" }, ...rows.map(([k, v]) => h("div", {}, h("dt", {}, k), h("dd", {}, String(v)))));
+  }
+
+  async function renderSolicitudes(sec) {
+    const filtro = sessionStorage.getItem("tr-sol-f") || "abiertas";
+    contentEl.replaceChildren(loading("Cargando solicitudes…"));
+    let d;
+    try { d = await api("GET", "solicitudes"); } catch (e) { if (e.message !== "sesión") contentEl.replaceChildren(dbError(e)); return; }
+    const items = d.items || [];
+    const cnt = (f) => items.filter(f).length;
+    const abiertas = (x) => ["nuevo", "contactado", "cotizado"].includes(x.estado);
+    const filtros = [["abiertas", `Abiertas (${cnt(abiertas)})`, abiertas], ["nuevo", `Nuevas (${cnt((x) => x.estado === "nuevo")})`, (x) => x.estado === "nuevo"],
+      ["ganado", "Ganadas", (x) => x.estado === "ganado"], ["cerradas", "Perdidas / archivadas", (x) => ["perdido", "archivado"].includes(x.estado)], ["todas", `Todas (${items.length})`, () => true]];
+    const fx = (filtros.find((f) => f[0] === filtro) || filtros[0])[2];
+    let tipo = "", q = "";
+    const list = h("div", { class: "req-list" });
+    const paint = () => {
+      const qq = q.toLowerCase();
+      const rows = items.filter(fx).filter((x) => !tipo || x.tipo === tipo)
+        .filter((x) => !qq || [x.nombre, x.telefono, x.correo, x.servicio, x.mensaje].join(" ").toLowerCase().includes(qq));
+      if (!rows.length) {
+        list.replaceChildren(h("div", { class: "alert alert--info" }, items.length ? "No hay solicitudes con este filtro." :
+          "Todavía no hay solicitudes. Aquí aparecerá cada formulario de contacto o inscripción, cada cotización enviada a tu WhatsApp y cada diagnóstico del Doctor TechRevive donde la persona dejó sus datos."));
+        return;
+      }
+      list.replaceChildren(...rows.map(solCard));
+    };
+    const solCard = (x) => {
+      const [ic, tl] = SOL_TIPO[x.tipo] || SOL_TIPO.otro;
+      const [el, ec] = SOL_EST[x.estado] || [x.estado, "badge--off"];
+      const msg = `Hola ${firstName(x.nombre)}, te saluda TechRevive. Recibimos tu solicitud${x.servicio ? ` sobre «${x.servicio}»` : ""} y con gusto te ayudamos.`;
+      const wa = waLink(x.telefono, msg);
+      const estado = h("select", { class: "input input--sm", "aria-label": "Estado", onchange: () => upd({ estado: estado.value }) },
+        ...Object.entries(SOL_EST).map(([k, [l]]) => h("option", { value: k, selected: k === x.estado }, l)));
+      const nota = h("textarea", { class: "input input--sm req__nota", rows: "2", maxlength: "1000", placeholder: "Nota interna (solo tú la ves)…" }, x.nota || "");
+      const notaBtn = h("button", { class: "btn btn--ghost btn--sm", type: "button", hidden: true, onclick: () => upd({ nota: nota.value }, "Nota guardada.") }, "💾 Guardar nota");
+      nota.addEventListener("input", () => { notaBtn.hidden = nota.value === (x.nota || ""); });
+      const upd = async (patch, okMsg) => {
+        const body = { id: x.id, estado: x.estado, nota: x.nota || "", ...patch };
+        try { await api("PUT", "solicitudes", body); Object.assign(x, patch); toast(okMsg || "Estado actualizado.", "ok"); notaBtn.hidden = true; refreshBadges(); paint(); }
+        catch (e) { if (e.message !== "sesión") toast(e.message, "error"); }
+      };
+      const toOrder = h("button", { class: "btn btn--ghost btn--sm", type: "button", onclick: () => {
+        sessionStorage.setItem("tr-orden-pre", JSON.stringify({ cliente: x.nombre, telefono: x.telefono, equipo: (x.datos && x.datos.equipo) || "", problema: [x.datos && x.datos.sintoma, x.servicio, x.mensaje].filter(Boolean).join(" · ").slice(0, 900) }));
+        location.hash = "#/reparaciones";
+      } }, "🛠️ Crear orden");
+      return h("article", { class: `req req--${x.estado}` },
+        h("header", { class: "req__head" },
+          h("span", { class: "req__tipo", title: tl }, ic),
+          h("div", { class: "req__who" }, h("strong", {}, x.nombre || "(sin nombre)"),
+            h("small", {}, [tl, fmtDT(x.ts), [x.ciudad, x.pais].filter(Boolean).join(", "), x.pagina ? pageInfo(x.pagina).name : ""].filter(Boolean).join(" · "))),
+          h("span", { class: `badge ${ec}` }, el)),
+        x.servicio ? h("p", { class: "req__svc" }, h("b", {}, "Servicio: "), x.servicio) : null,
+        x.mensaje ? h("p", { class: "req__msg" }, x.mensaje) : null,
+        solDatos(x),
+        h("div", { class: "req__contact" },
+          x.telefono ? h("span", {}, "📱 ", h("a", { href: `tel:${x.telefono.replace(/[^\d+]/g, "")}` }, x.telefono)) : null,
+          x.correo ? h("span", {}, "✉️ ", h("a", { href: `mailto:${x.correo}` }, x.correo)) : null),
+        h("footer", { class: "req__foot" },
+          h("div", { class: "row-actions" },
+            wa ? h("a", { class: "btn btn--primary btn--sm", href: wa, target: "_blank", rel: "noopener", onclick: () => { if (x.estado === "nuevo") upd({ estado: "contactado" }, "Marcada como contactada."); } }, "💬 WhatsApp") : null,
+            ["diagnostico", "contacto", "cotizacion"].includes(x.tipo) ? toOrder : null,
+            h("button", { class: "btn btn--danger btn--sm", type: "button", title: "Eliminar", onclick: async () => {
+              if (!confirm(`¿Eliminar la solicitud de ${x.nombre || "este cliente"}?`)) return;
+              try { await api("DELETE", `solicitudes?id=${x.id}`); items.splice(items.indexOf(x), 1); toast("Eliminada.", "ok"); refreshBadges(); paint(); } catch (e) { if (e.message !== "sesión") toast(e.message, "error"); }
+            } }, "🗑")),
+          h("div", { class: "req__state" }, estado)),
+        h("div", { class: "req__notebox" }, nota, notaBtn));
+    };
+    const bar = h("div", { class: "seg seg--tabs", role: "tablist" }, ...filtros.map(([k, l]) => h("button", { type: "button", role: "tab", "aria-selected": k === filtro ? "true" : "false", class: k === filtro ? "is-on" : "", onclick: () => { sessionStorage.setItem("tr-sol-f", k); renderSolicitudes(sec); } }, l)));
+    const tools = h("div", { class: "toolbar" },
+      h("div", { class: "toolbar__left" },
+        h("select", { class: "input input--sm", "aria-label": "Tipo", onchange: (e) => { tipo = e.target.value; paint(); } }, h("option", { value: "" }, "Todos los tipos"), ...Object.entries(SOL_TIPO).map(([k, [i, l]]) => h("option", { value: k }, `${i} ${l}`))),
+        h("input", { type: "search", class: "input input--sm", placeholder: "Buscar nombre, teléfono, servicio…", oninput: (e) => { q = e.target.value; paint(); } })),
+      h("button", { class: "btn btn--ghost btn--sm", type: "button", onclick: () => renderSolicitudes(sec) }, "↻ Actualizar"));
+    contentEl.replaceChildren(h("p", { class: "intro" }, "Cada persona que deja sus datos en el sitio queda aquí, aunque no haya terminado de enviar el WhatsApp. Escríbele, cambia el estado y lleva el control de quién se convirtió en cliente."), bar, tools, list);
+    paint();
+  }
+
+  /* ───────── Reparaciones con seguimiento en línea ───────── */
+  const ORD_CLS = { recibido: "badge--info", diagnostico: "badge--info", aprobacion: "badge--warn", repuesto: "badge--warn", reparacion: "badge--info", pruebas: "badge--info", listo: "badge--ok", entregado: "badge--off", cancelado: "badge--bad" };
+  const trackLink = (o) => `${location.origin}/seguimiento.html?c=${o.codigo}${o.clave ? `&t=${o.clave}` : ""}`;
+
+  async function renderReparaciones(sec) {
+    const filtro = sessionStorage.getItem("tr-ord-f") || "activas";
+    contentEl.replaceChildren(loading("Cargando reparaciones…"));
+    let d;
+    try { d = await api("GET", "reparaciones"); } catch (e) { if (e.message !== "sesión") contentEl.replaceChildren(dbError(e)); return; }
+    const items = d.items || [], EST = d.estados || [];
+    const estT = (id) => (EST.find((x) => x.id === id) || { t: id }).t;
+    const activas = (o) => !["entregado", "cancelado"].includes(o.estado);
+    const filtros = [["activas", `En taller (${items.filter(activas).length})`, activas], ["listo", `Listas para entregar (${items.filter((o) => o.estado === "listo").length})`, (o) => o.estado === "listo"],
+      ["cerradas", "Entregadas / canceladas", (o) => !activas(o)], ["todas", `Todas (${items.length})`, () => true]];
+    const fx = (filtros.find((f) => f[0] === filtro) || filtros[0])[2];
+    const formBox = h("div", {});
+    const list = h("div", { class: "table-wrap" });
+    let q = "";
+    const waMsg = (o, nota) => [`Hola ${firstName(o.cliente)}, te saluda TechRevive.`, `Tu orden *${o.codigo}*${o.equipo ? ` (${o.equipo})` : ""} está: *${estT(o.estado)}*.`,
+      nota || o.nota_publica || "", `Puedes ver el avance cuando quieras aquí: ${trackLink(o)}`].filter(Boolean).join("\n");
+
+    const openForm = (o) => {
+      const isNew = !o;
+      const pre = isNew ? JSON.parse(sessionStorage.getItem("tr-orden-pre") || "null") || {} : o;
+      sessionStorage.removeItem("tr-orden-pre");
+      const inp = (k, attrs = {}) => h("input", { class: "input", value: pre[k] || "", ...attrs });
+      const f = { cliente: inp("cliente", { maxlength: "90", required: true }), telefono: inp("telefono", { type: "tel", maxlength: "20", placeholder: "Ej. 5555 5555" }),
+        equipo: inp("equipo", { maxlength: "160", placeholder: "Ej. Laptop HP 15, gris, con cargador" }), presupuesto: inp("presupuesto", { maxlength: "60", placeholder: "Ej. Q350 (aprobado)" }),
+        entrega: inp("entrega", { type: "date" }), problema: h("textarea", { class: "input", rows: "2", maxlength: "1000" }, pre.problema || ""),
+        estado: h("select", { class: "input" }, ...EST.map((x) => h("option", { value: x.id, selected: x.id === (pre.estado || "recibido") }, x.t))),
+        nota: h("textarea", { class: "input", rows: "2", maxlength: "500", placeholder: isNew ? "Ej. Recibimos tu equipo con cargador. Te avisamos al tener el diagnóstico." : "Ej. Ya llegó el repuesto, hoy lo instalamos." }),
+        internas: h("textarea", { class: "input", rows: "2", maxlength: "2000", placeholder: "Contraseña de Windows, accesorios recibidos, golpes visibles…" }, pre.notas_internas || "") };
+      const btn = h("button", { class: "btn btn--primary", type: "submit" }, isNew ? "＋ Crear orden" : "💾 Guardar cambios");
+      const fld = (label, el, help) => h("div", { class: "field" }, h("label", {}, label), el, help ? h("small", { class: "muted-sm" }, help) : null);
+      const form = h("form", { class: "card is-open ord-form", onsubmit: async (e) => {
+        e.preventDefault();
+        if (!f.cliente.value.trim()) { toast("Escribe el nombre del cliente.", "error"); f.cliente.focus(); return; }
+        const body = { cliente: f.cliente.value, telefono: f.telefono.value, equipo: f.equipo.value, problema: f.problema.value, presupuesto: f.presupuesto.value, entrega: f.entrega.value, estado: f.estado.value, notas_internas: f.internas.value };
+        if (isNew) body.nota_publica = f.nota.value; else { body.codigo = o.codigo; body.nota = f.nota.value; }
+        btn.disabled = true;
+        try {
+          const r = await api(isNew ? "POST" : "PUT", "reparaciones", body);
+          toast(isNew ? `✅ Orden ${r.codigo} creada. Envíale el enlace de seguimiento al cliente.` : "✅ Orden actualizada.", "ok", 7000);
+          if (isNew) sessionStorage.setItem("tr-ord-nueva", r.codigo);
+          refreshBadges(); renderReparaciones(sec);
+        } catch (err) { if (err.message !== "sesión") toast(err.message, "error"); btn.disabled = false; }
+      } }, h("div", { class: "card__body", style: "display:block;padding-top:18px" },
+        h("h3", { class: "ord-form__title" }, isNew ? "Nueva orden de reparación" : `Editar orden ${o.codigo}`),
+        h("div", { class: "grid-2" }, fld("Cliente *", f.cliente), fld("Teléfono / WhatsApp", f.telefono, "Sus últimos 4 dígitos son la clave para consultar en línea.")),
+        h("div", { class: "grid-2" }, fld("Equipo", f.equipo), fld("Estado", f.estado)),
+        fld("Problema reportado", f.problema),
+        h("div", { class: "grid-2" }, fld("Presupuesto (opcional)", f.presupuesto), fld("Entrega estimada (opcional)", f.entrega)),
+        fld(isNew ? "Mensaje para el cliente (lo verá en el seguimiento)" : "Nuevo mensaje para el cliente (se agrega al historial)", f.nota),
+        fld("Notas internas (el cliente NO las ve)", f.internas),
+        h("div", { class: "row-actions" }, btn, h("button", { class: "btn btn--ghost", type: "button", onclick: () => formBox.replaceChildren() }, "Cancelar"))));
+      formBox.replaceChildren(form);
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+      f.cliente.focus({ preventScroll: true });
+    };
+
+    const quick = (o, row) => {
+      const next = row.nextElementSibling;
+      if (next && next.classList.contains("ord-quick")) { next.remove(); return; }
+      const est = h("select", { class: "input input--sm" }, ...EST.map((x) => h("option", { value: x.id, selected: x.id === o.estado }, x.t)));
+      const nota = h("input", { class: "input input--sm", maxlength: "500", placeholder: "Mensaje para el cliente (opcional)", style: "flex:1;min-width:200px" });
+      const avisar = h("input", { type: "checkbox", checked: true });
+      const go = h("button", { class: "btn btn--primary btn--sm", type: "button", onclick: async () => {
+        go.disabled = true;
+        try {
+          await api("PUT", "reparaciones", { codigo: o.codigo, estado: est.value, nota: nota.value });
+          const upd = { ...o, estado: est.value, nota_publica: nota.value || o.nota_publica };
+          toast("✅ Estado actualizado.", "ok");
+          if (avisar.checked) { const l = waLink(o.telefono, waMsg(upd, nota.value)); if (l) window.open(l, "_blank", "noopener"); }
+          refreshBadges(); renderReparaciones(sec);
+        } catch (e) { if (e.message !== "sesión") toast(e.message, "error"); go.disabled = false; }
+      } }, "Guardar");
+      row.after(h("tr", { class: "ord-quick" }, h("td", { colspan: "6" }, h("div", { class: "ord-quick__box" }, est, nota,
+        o.telefono ? h("label", { class: "check-inline" }, avisar, " Avisar por WhatsApp") : null, go))));
+      nota.focus();
+    };
+
+    const paint = () => {
+      const qq = q.toLowerCase();
+      const rows = items.filter(fx).filter((o) => !qq || [o.codigo, o.cliente, o.telefono, o.equipo, o.problema].join(" ").toLowerCase().includes(qq));
+      if (!rows.length) {
+        list.replaceChildren(h("div", { class: "alert alert--info" }, items.length ? "No hay órdenes con este filtro." :
+          "Aún no hay órdenes. Cuando recibas un equipo, crea su orden con «＋ Nueva orden»: se genera un código (ej. OT-7K2QD) y un enlace para que el cliente vea el avance desde su celular sin tener que llamarte."));
+        return;
+      }
+      const nueva = sessionStorage.getItem("tr-ord-nueva");
+      sessionStorage.removeItem("tr-ord-nueva");
+      const tbody = h("tbody", {});
+      rows.forEach((o) => {
+        const wa = waLink(o.telefono, waMsg(o));
+        const tr = h("tr", { class: o.codigo === nueva ? "is-new" : "" },
+          h("td", { class: "mono nowrap" }, h("strong", {}, o.codigo), h("small", { class: "muted-sm block" }, `desde ${fmtD(o.creado)}`)),
+          h("td", {}, h("strong", {}, o.cliente), o.telefono ? h("small", { class: "muted-sm block" }, o.telefono) : null),
+          h("td", {}, o.equipo || "—", o.problema ? h("small", { class: "muted-sm block ord-prob" }, o.problema) : null),
+          h("td", {}, h("span", { class: `badge ${ORD_CLS[o.estado] || "badge--off"}` }, estT(o.estado)), o.entrega && activas(o) ? h("small", { class: "muted-sm block" }, `entrega ${o.entrega}`) : null),
+          h("td", { class: "nowrap" }, fmtDT(o.actualizado)),
+          h("td", {}, h("div", { class: "row-actions" },
+            h("button", { class: "btn btn--primary btn--sm", type: "button", onclick: (e) => quick(o, e.target.closest("tr")) }, "↻ Estado"),
+            wa ? h("a", { class: "btn btn--ghost btn--sm", href: wa, target: "_blank", rel: "noopener", title: "Enviar enlace de seguimiento" }, "💬") : null,
+            h("button", { class: "btn btn--ghost btn--sm", type: "button", title: "Copiar enlace de seguimiento", onclick: () => navigator.clipboard.writeText(trackLink(o)).then(() => toast("Enlace de seguimiento copiado.", "ok")) }, "🔗"),
+            h("button", { class: "btn btn--ghost btn--sm", type: "button", title: "Editar", onclick: () => openForm(o) }, "✎"),
+            h("button", { class: "btn btn--danger btn--sm", type: "button", title: "Eliminar", onclick: async () => {
+              if (!confirm(`¿Eliminar la orden ${o.codigo}? El cliente ya no podrá consultarla.`)) return;
+              try { await api("DELETE", `reparaciones?codigo=${encodeURIComponent(o.codigo)}`); toast("Orden eliminada.", "ok"); refreshBadges(); renderReparaciones(sec); } catch (e) { if (e.message !== "sesión") toast(e.message, "error"); }
+            } }, "🗑"))));
+        tbody.append(tr);
+        if ((o.historial || []).length > 1) {
+          tr.children[3].append(h("details", { class: "ord-hist" }, h("summary", {}, `Historial (${o.historial.length})`),
+            h("ol", {}, ...o.historial.slice().reverse().map((x) => h("li", {}, h("b", {}, estT(x.estado)), ` · ${fmtDT(x.ts)}`, x.nota ? h("span", { class: "block" }, x.nota) : null)))));
+        }
+      });
+      list.replaceChildren(h("table", { class: "table table--compact table--static ord-table" },
+        h("thead", {}, h("tr", {}, ...["Orden", "Cliente", "Equipo", "Estado", "Actualizado", ""].map((t) => h("th", {}, t)))), tbody));
+    };
+
+    const bar = h("div", { class: "seg seg--tabs", role: "tablist" }, ...filtros.map(([k, l]) => h("button", { type: "button", role: "tab", "aria-selected": k === filtro ? "true" : "false", class: k === filtro ? "is-on" : "", onclick: () => { sessionStorage.setItem("tr-ord-f", k); renderReparaciones(sec); } }, l)));
+    const tools = h("div", { class: "toolbar" },
+      h("div", { class: "toolbar__left" },
+        h("button", { class: "btn btn--primary btn--sm", type: "button", onclick: () => openForm(null) }, "＋ Nueva orden"),
+        h("input", { type: "search", class: "input input--sm", placeholder: "Buscar código, cliente, equipo…", oninput: (e) => { q = e.target.value; paint(); } })),
+      h("a", { class: "btn btn--ghost btn--sm", href: "/seguimiento.html", target: "_blank", rel: "noopener" }, "↗ Ver página de seguimiento"));
+    contentEl.replaceChildren(h("p", { class: "intro" }, "Registra cada equipo que recibes. El cliente consulta el avance en tu sitio con su código y los últimos 4 dígitos de su teléfono; tú solo cambias el estado y, si quieres, le avisas por WhatsApp con un clic."), tools, formBox, bar, list);
+    paint();
+    if (sessionStorage.getItem("tr-orden-pre")) openForm(null);
+  }
+
+  /* ───────── Contadores en el menú ───────── */
+  async function refreshBadges() {
+    if (!navEl) return;
+    let r;
+    try { r = await api("GET", "resumen"); } catch { return; }
+    const set = (id, n, title) => {
+      const a = navEl.querySelector(`a[data-href="#/${id}"]`);
+      if (!a) return;
+      let b = a.querySelector(".nav__badge");
+      if (!n) { if (b) b.remove(); return; }
+      if (!b) { b = h("span", { class: "nav__badge" }); a.append(b); }
+      b.textContent = n > 99 ? "99+" : String(n);
+      b.title = title;
+    };
+    set("solicitudes", r.solicitudesNuevas, "Solicitudes nuevas");
+    set("reparaciones", r.reparacionesActivas, "Equipos en taller");
+  }
+
+  /* ───────── Estadísticas: tarjeta de conversiones ───────── */
+  const CONV = { whatsapp: ["💬", "Clics en WhatsApp"], llamada: ["📞", "Clics en llamar"], correo: ["✉️", "Clics en correo"], formulario: ["📝", "Formularios enviados"],
+    cotizacion_wa: ["💲", "Cotizaciones por WhatsApp"], cotizacion_pdf: ["🖨️", "Cotizaciones impresas"], diagnostico: ["🩺", "Diagnósticos completados"], diagnostico_ia: ["✨", "Diagnósticos con IA"], seguimiento: ["🔎", "Consultas de seguimiento"] };
+  function convCard(c, periodName) {
+    if (!c || !(c.porTipo || []).length) {
+      return h("section", { class: "stat-card stat-card--wide conv-card" },
+        h("h3", {}, "🎯 Contactos y conversiones"),
+        h("p", { class: "muted-sm", style: "margin:0" }, `Sin contactos registrados en ${periodName}. Aquí verás cuántas personas pulsaron WhatsApp, llamaron, enviaron un formulario, una cotización o hicieron el diagnóstico, y desde qué página.`));
+    }
+    const tiles = h("div", { class: "conv-tiles" }, ...c.porTipo.map((x) => {
+      const [ic, l] = CONV[x.k] || ["•", x.k];
+      return h("div", { class: "conv-tile" }, h("span", { class: "conv-tile__ic" }, ic), h("strong", {}, fmtN(x.n)), h("span", {}, l), h("small", {}, `${fmtN(x.p)} persona${x.p === 1 ? "" : "s"}`));
+    }));
+    const tabla = (c.donde || []).length ? h("div", { class: "table-wrap" }, h("table", { class: "table table--compact table--static" },
+      h("thead", {}, h("tr", {}, h("th", {}, "Acción"), h("th", {}, "Página"), h("th", {}, "Sección / botón"), h("th", { class: "num" }, "Veces"))),
+      h("tbody", {}, ...c.donde.map((x) => { const p = pageInfo(x.ruta); const [ic, l] = CONV[x.tipo] || ["•", x.tipo];
+        return h("tr", {}, h("td", { class: "nowrap" }, `${ic} ${l}`), h("td", {}, `${p.icon} ${p.name}`), h("td", {}, [x.etiqueta, x.seccion && x.seccion !== x.etiqueta ? `en «${x.seccion}»` : ""].filter(Boolean).join(" ") || "—"), h("td", { class: "num" }, fmtN(x.n))); })))) : null;
+    const sol = (c.solicitudes || []).length ? h("p", { class: "muted-sm conv-sol" }, "Datos de contacto guardados: ",
+      ...c.solicitudes.map((x, i) => h("span", {}, i ? " · " : "", `${(SOL_TIPO[x.tipo] || SOL_TIPO.otro)[0]} ${(SOL_TIPO[x.tipo] || SOL_TIPO.otro)[1]}: `, h("b", {}, fmtN(x.n)))), " — ", h("a", { href: "#/solicitudes" }, "ver solicitudes →")) : null;
+    return h("section", { class: "stat-card stat-card--wide conv-card" },
+      h("h3", {}, `🎯 Contactos y conversiones (${periodName})`), tiles, sol, tabla);
   }
 
   /* ───────── guardar ───────── */

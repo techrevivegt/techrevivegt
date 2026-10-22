@@ -236,6 +236,26 @@
     input.removeAttribute("aria-invalid");
   }
 
+  /* Guarda una copia de la solicitud en el panel (Panel → Solicitudes). Si la base de datos
+     no está activa, simplemente no se guarda y el formulario sigue funcionando igual. */
+  function saveRequest(form, data) {
+    var esCurso = /inscrip/i.test(form.getAttribute("data-form-name") || "");
+    var extra = {};
+    ["curso", "modalidad", "horario", "nivel"].forEach(function (k) { if (data[k]) extra[k] = data[k]; });
+    var vid = ""; try { vid = localStorage.getItem("tr-vid") || ""; } catch (err) { /* nada */ }
+    var payload = {
+      tipo: esCurso ? "inscripcion" : "contacto",
+      nombre: data.nombre || "", telefono: data.telefono || "", correo: data.email || data.correo || "",
+      servicio: data.servicio || data.curso || "", mensaje: data.mensaje || "",
+      datos: extra, pagina: location.pathname, vid: vid,
+      _gotcha: form.elements._gotcha ? form.elements._gotcha.value : "",
+    };
+    try {
+      fetch("/api/solicitud", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).catch(function () {});
+    } catch (err) { /* nada */ }
+    if (window.trEvent) window.trEvent("formulario", form.getAttribute("data-form-name") || "Contacto");
+  }
+
   $$("form.js-form").forEach(function (form) {
     var statusEl = $(".form__status", form);
     var submitBtn = $(".form__submit", form);
@@ -283,6 +303,7 @@
       });
       data._formulario = form.getAttribute("data-form-name") || "Contacto";
       var nombre = (data.nombre || "").split(" ")[0];
+      saveRequest(form, data);
 
       if (cfg.formEndpoint) {
         submitBtn.disabled = true; submitText.textContent = "Enviando…";
@@ -310,4 +331,9 @@
       }
     });
   });
+
+  /* App instalable y página sin conexión */
+  if ("serviceWorker" in navigator && location.protocol === "https:" && location.pathname.indexOf("/panel") !== 0) {
+    window.addEventListener("load", function () { navigator.serviceWorker.register("/sw.js").catch(function () {}); });
+  }
 })();

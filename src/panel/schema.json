@@ -142,6 +142,12 @@
           "description": "Activa las estadísticas de visitas, los certificados y el progreso del aula guardado en la cuenta del alumno. En Cloudflare: Storage & databases → D1 → Create database → nombre techrevive-datos → copia el «Database ID» (ej. 1a2b3c4d-…) y pégalo aquí. Déjalo vacío si aún no la creas: el sitio funciona igual."
         },
         {
+          "name": "asistente_ia",
+          "label": "✨ Asistente con inteligencia artificial (Doctor TechRevive)",
+          "type": "boolean",
+          "description": "Agrega al diagnóstico gratuito la pestaña «Descríbelo con tus palabras», que responde con IA de Cloudflare (Workers AI, plan gratuito: unas 60 consultas al día). Funciona mejor con la base de datos conectada (lleva el control del cupo diario). Si se llena el cupo del día, el diagnóstico guiado sigue funcionando."
+        },
+        {
           "name": "formulario",
           "label": "📨 Formularios",
           "type": "object",
@@ -191,6 +197,18 @@
           ]
         }
       ]
+    },
+    {
+      "id": "solicitudes",
+      "label": "📥 Solicitudes de clientes",
+      "type": "custom",
+      "view": "solicitudes"
+    },
+    {
+      "id": "reparaciones",
+      "label": "🛠️ Reparaciones (seguimiento)",
+      "type": "custom",
+      "view": "reparaciones"
     },
     {
       "id": "estadisticas",

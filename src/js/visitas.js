@@ -8,6 +8,7 @@
    ========================================================================== */
 (function () {
   "use strict";
+  window.trEvent = window.trEvent || function () {};   // si no se registra (panel, «no contar»), no hace nada
   try {
     if (location.pathname.indexOf("/panel") === 0) return;
     if (localStorage.getItem("tr-noseguir") === "1") return;
@@ -98,6 +99,29 @@
     }
     return location.pathname.indexOf("/aula/") === 0 && location.pathname.split("/").length > 3 ? "Clase" : "Contenido";
   }
+
+  /* ---------- Eventos: WhatsApp, llamadas, correo, formularios, cotizaciones ---------- */
+  // Otros scripts pueden llamar window.trEvent("diagnostico", "Pantalla azul").
+  var lastEv = {};
+  window.trEvent = function (tipo, etiqueta) {
+    try {
+      var k = clean(etiqueta).slice(0, 80), key = tipo + "|" + k, now = Date.now();
+      if (lastEv[key] && now - lastEv[key] < 3000) return;   // evita dobles clics
+      lastEv[key] = now;
+      send("/api/v/e", { pid: pid, vid: keep(localStorage, "tr-vid"), e: tipo, k: k, r: location.pathname, s: current() });
+    } catch (e) { /* nada */ }
+  };
+  document.addEventListener("click", function (ev) {
+    var a = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "", tipo = "";
+    if (/^https?:\/\/(wa\.me|api\.whatsapp\.com|web\.whatsapp\.com|chat\.whatsapp\.com|(www\.)?whatsapp\.com)\b/i.test(href)) tipo = "whatsapp";
+    else if (/^tel:/i.test(href)) tipo = "llamada";
+    else if (/^mailto:/i.test(href)) tipo = "correo";
+    if (!tipo) return;
+    var label = a.getAttribute("data-ev") || (a.classList.contains("wa-float") ? "Botón flotante" : "") || a.getAttribute("aria-label") || a.textContent;
+    window.trEvent(tipo, label);
+  }, true);
 
   /* ---------- Tiempo ---------- */
   var total = 0, secs = {}, nSecs = 0, lastSent = -1, lastAct = Date.now(), IDLE = 5 * 60 * 1000;

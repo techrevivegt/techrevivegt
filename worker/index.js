@@ -48,13 +48,13 @@ export default {
     const url = new URL(request.url);
     if (url.pathname.startsWith("/api/")) {
       try {
-        return await handleApi(request, env, url);
+        return withSec(await handleApi(request, env, url));
       } catch (err) {
-        return json({ error: err.userMessage || "Error inesperado en el servidor del panel.", detail: String(err && err.message || err) }, err.status || 500);
+        return withSec(json({ error: err.userMessage || "Error inesperado en el servidor del panel.", detail: String(err && err.message || err) }, err.status || 500));
       }
     }
     if (url.pathname === "/aula" || url.pathname.startsWith("/aula/")) {
-      return handleAulaPage(request, env, url);
+      return withSec(await handleAulaPage(request, env, url), true);
     }
     if (url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/admin.html") {
       return Response.redirect(new URL("/panel/", url).toString(), 302);
@@ -70,7 +70,10 @@ async function handleApi(request, env, url) {
   const route = url.pathname.replace(/^\/api\//, "").replace(/\/$/, "");
   const method = request.method.toUpperCase();
 
-  if (route === "v" || route === "v/fin") return handleBeacon(request, env, url, route, method);
+  if (route === "v" || route === "v/fin" || route === "v/e") return handleBeacon(request, env, url, route, method);
+  if (route === "solicitud" && method === "POST") return publicSolicitud(request, env, url);
+  if (route === "seguimiento" && method === "GET") return publicSeguimiento(request, env, url);
+  if (route === "diagnostico/ia" && method === "POST") return diagnosticoIA(request, env, url);
   if (route === "certificado" && method === "GET") return publicCertificate(env, url);
   if (route.startsWith("aula/")) return handleAulaApi(request, env, url, route, method);
 
@@ -95,12 +98,18 @@ async function handleApi(request, env, url) {
 
   if (route === "login" && method === "POST") {
     if (!env.PANEL_PASSWORD) return json({ error: "Falta configurar la contraseña del panel (PANEL_PASSWORD) en Cloudflare." }, 500);
+    const lkey = `panel:${clientIp(request)}`;
+    if (await rlCount(env, lkey, 15 * 60) >= 5) {
+      return json({ error: "Demasiados intentos fallidos. Por seguridad, espera 15 minutos antes de volver a intentar." }, 429);
+    }
     const body = await readJson(request);
     const ok = await safeEqual(String(body.password || ""), String(env.PANEL_PASSWORD));
     if (!ok) {
+      await rlHit(env, lkey);
       await sleep(700);
       return json({ error: "Contraseña incorrecta." }, 401);
     }
+    await rlClear(env, lkey);
     const cookie = await makeSession(env, url);
     return json({ ok: true }, 200, { "Set-Cookie": cookie });
   }
@@ -114,7 +123,7 @@ async function handleApi(request, env, url) {
   if (!session) return json({ error: "Tu sesión terminó. Vuelve a entrar con tu contraseña.", login: true }, 401);
 
   // Estadísticas, certificados y progreso de alumnos (base de datos, no necesitan GitHub).
-  if (route === "estadisticas" || route === "estadisticas/csv" || route === "certificados" || route === "alumnos/progreso") {
+  if (route === "estadisticas" || route === "estadisticas/csv" || route === "certificados" || route === "alumnos/progreso" || route === "solicitudes" || route === "reparaciones" || route === "resumen") {
     return handlePanelDb(request, env, url, route, method);
   }
   if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) {
@@ -286,9 +295,14 @@ async function handleAulaApi(request, env, url, route, method) {
     const body = await readJson(request);
     const usuario = String(body.usuario || "").trim().toLowerCase();
     const password = String(body.password || "");
+    const akey = `aula:${clientIp(request)}`;
+    if (await rlCount(env, akey, 15 * 60) >= 8) {
+      return json({ error: "Demasiados intentos fallidos. Espera 15 minutos y vuelve a intentar, o pide ayuda por WhatsApp." }, 429);
+    }
     const user = usuario && Object.prototype.hasOwnProperty.call(AULA_USERS, usuario) ? AULA_USERS[usuario] : null;
     const ok = user ? await safeEqual(await sha256Hex(`${user.s}:${password}`), user.h) : false;
     if (!ok) {
+      await rlHit(env, akey);
       await sleep(800);
       return json({ error: "Usuario o contraseña incorrectos." }, 401);
     }
@@ -415,6 +429,14 @@ function ensureSchema(env) {
       env.DB.prepare("CREATE TABLE IF NOT EXISTS progreso (usuario TEXT NOT NULL, leccion TEXT NOT NULL, ts INTEGER NOT NULL, nota INTEGER, PRIMARY KEY (usuario, leccion))"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS certificados (id TEXT PRIMARY KEY, usuario TEXT, nombre TEXT NOT NULL, curso TEXT, curso_titulo TEXT NOT NULL, horas TEXT, nota INTEGER, estado TEXT NOT NULL, origen TEXT, motivo TEXT, solicitado INTEGER, emitido INTEGER, fecha TEXT)"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS cert_usuario ON certificados(usuario, curso)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS eventos (id INTEGER PRIMARY KEY AUTOINCREMENT, ts INTEGER NOT NULL, pid TEXT, vid TEXT, tipo TEXT NOT NULL, etiqueta TEXT, ruta TEXT, seccion TEXT)"),
+      env.DB.prepare("CREATE INDEX IF NOT EXISTS eventos_ts ON eventos(ts)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS solicitudes (id INTEGER PRIMARY KEY AUTOINCREMENT, ts INTEGER NOT NULL, tipo TEXT, nombre TEXT, telefono TEXT, correo TEXT, servicio TEXT, mensaje TEXT, datos TEXT, pagina TEXT, ip TEXT, pais TEXT, ciudad TEXT, vid TEXT, estado TEXT NOT NULL DEFAULT 'nuevo', nota TEXT, actualizado INTEGER)"),
+      env.DB.prepare("CREATE INDEX IF NOT EXISTS solicitudes_ts ON solicitudes(ts)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS ordenes (codigo TEXT PRIMARY KEY, clave TEXT, cliente TEXT, telefono TEXT, equipo TEXT, problema TEXT, estado TEXT NOT NULL, nota_publica TEXT, notas_internas TEXT, presupuesto TEXT, entrega TEXT, historial TEXT, creado INTEGER, actualizado INTEGER)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS intentos (clave TEXT NOT NULL, ts INTEGER NOT NULL)"),
+      env.DB.prepare("CREATE INDEX IF NOT EXISTS intentos_clave ON intentos(clave, ts)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS ia_uso (dia TEXT PRIMARY KEY, n INTEGER NOT NULL DEFAULT 0)"),
     ]).catch((e) => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -502,6 +524,14 @@ async function handleBeacon(request, env, url, route, method) {
   if (!d || !/^[a-z0-9-]{8,40}$/i.test(String(d.pid || ""))) return ok();
   try {
     await ensureSchema(env);
+    if (route === "v/e") {
+      const tipo = String(d.e || "");
+      if (!EVENT_TYPES.has(tipo)) return ok();
+      const ruta = clip(d.r, 300).replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+      await env.DB.prepare("INSERT INTO eventos (ts, pid, vid, tipo, etiqueta, ruta, seccion) VALUES (?, ?, ?, ?, ?, ?, ?)")
+        .bind(Date.now(), clip(d.pid, 40), clip(d.vid, 40), tipo, clip(cleanName(d.k), 80), ruta, clip(cleanName(d.s), 60)).run();
+      return ok();
+    }
     if (route === "v/fin") {
       const dur = Math.max(0, Math.min(4 * 3600, Math.round(Number(d.d) || 0)));
       const visit = await env.DB.prepare("SELECT ts FROM visitas WHERE pid = ? AND ts > ?").bind(d.pid, Date.now() - 6 * 3600 * 1000).first();
@@ -583,6 +613,9 @@ async function handlePanelDb(request, env, url, route, method) {
       q(`SELECT SUM(CASE WHEN ts >= ? THEN 1 ELSE 0 END) AS hoy, SUM(CASE WHEN ts >= ? THEN 1 ELSE 0 END) AS semana, COUNT(*) AS total, COUNT(DISTINCT vid) AS visitantes, MIN(ts) AS primera FROM visitas`, hoy0, hoy0 - 6 * 86400000),
       q(`SELECT v.ruta AS ruta, MAX(v.titulo) AS titulo, s.seccion AS seccion, SUM(s.segundos) AS tiempo, COUNT(*) AS veces FROM secciones s JOIN visitas v ON v.pid = s.pid WHERE v.ts >= ? GROUP BY v.ruta, s.seccion ORDER BY tiempo DESC LIMIT 40`, desde),
       q(`SELECT pid, seccion, segundos FROM secciones WHERE pid IN (SELECT pid FROM visitas WHERE ts >= ? ORDER BY ts DESC LIMIT 300) ORDER BY segundos DESC`, desde),
+      q(`SELECT tipo AS k, COUNT(*) AS n, COUNT(DISTINCT vid) AS p FROM eventos WHERE ts >= ? GROUP BY tipo ORDER BY n DESC`, desde),
+      q(`SELECT tipo, ruta, seccion, etiqueta, COUNT(*) AS n FROM eventos WHERE ts >= ? GROUP BY tipo, ruta, seccion, etiqueta ORDER BY n DESC LIMIT 30`, desde),
+      q(`SELECT tipo, COUNT(*) AS n FROM solicitudes WHERE ts >= ? GROUP BY tipo`, desde),
     ]);
     const r = (i) => res[i].results || [];
     const tot = r(0)[0] || {};
@@ -597,7 +630,78 @@ async function handlePanelDb(request, env, url, route, method) {
       secciones: r(13),
       porDia: r(1).map((x) => ({ fecha: new Date(x.d * 86400000).toISOString().slice(0, 10), visitas: x.visitas, visitantes: x.visitantes })),
       paginas: r(2), paises: r(3), ciudades: r(4), dispositivos: r(5), navegadores: r(6), sistemas: r(7), referentes: r(8), mapa: r(9), horas: r(10), detalle,
+      conversiones: { porTipo: r(15), donde: r(16), solicitudes: r(17) },
     });
+  }
+
+  if (route === "resumen" && method === "GET") {
+    const [a, b] = await DB.batch([
+      DB.prepare("SELECT COUNT(*) AS n FROM solicitudes WHERE estado = 'nuevo'"),
+      DB.prepare("SELECT COUNT(*) AS n FROM ordenes WHERE estado NOT IN ('entregado', 'cancelado')"),
+    ]);
+    return json({ solicitudesNuevas: (a.results[0] || {}).n || 0, reparacionesActivas: (b.results[0] || {}).n || 0 });
+  }
+
+  if (route === "solicitudes") {
+    if (method === "GET") {
+      const rows = (await DB.prepare("SELECT id, ts, tipo, nombre, telefono, correo, servicio, mensaje, datos, pagina, pais, ciudad, estado, nota, actualizado FROM solicitudes ORDER BY ts DESC LIMIT 500").all()).results || [];
+      return json({ items: rows.map((x) => ({ ...x, datos: safeParse(x.datos) })) });
+    }
+    if (method === "PUT") {
+      const b = await readJson(request);
+      const estado = String(b.estado || "");
+      if (!SOL_ESTADOS.includes(estado)) return json({ error: "Estado no válido." }, 400);
+      await DB.prepare("UPDATE solicitudes SET estado = ?, nota = ?, actualizado = ? WHERE id = ?").bind(estado, clip(b.nota, 1000), Date.now(), Number(b.id) || 0).run();
+      return json({ ok: true });
+    }
+    if (method === "DELETE") {
+      await DB.prepare("DELETE FROM solicitudes WHERE id = ?").bind(Number(url.searchParams.get("id")) || 0).run();
+      return json({ ok: true });
+    }
+  }
+
+  if (route === "reparaciones") {
+    if (method === "GET") {
+      const rows = (await DB.prepare("SELECT * FROM ordenes ORDER BY actualizado DESC LIMIT 500").all()).results || [];
+      return json({ items: rows.map((x) => ({ ...x, historial: safeParse(x.historial) || [] })), estados: ORDEN_ESTADOS });
+    }
+    if (method === "POST") {
+      const b = await readJson(request);
+      const cliente = cleanName(b.cliente);
+      if (!cliente) return json({ error: "Escribe el nombre del cliente." }, 400);
+      const estado = ORDEN_ESTADOS.some((x) => x.id === b.estado) ? b.estado : "recibido";
+      const tel = String(b.telefono || "").replace(/\D/g, "").slice(0, 15);
+      let codigo = "";
+      for (let i = 0; i < 6 && !codigo; i++) {
+        const c = ordenCodigo();
+        const ex = await DB.prepare("SELECT codigo FROM ordenes WHERE codigo = ?").bind(c).first();
+        if (!ex) codigo = c;
+      }
+      const now = Date.now();
+      const hist = [{ estado, nota: clip(b.nota_publica, 500), ts: now }];
+      await DB.prepare("INSERT INTO ordenes (codigo, clave, cliente, telefono, equipo, problema, estado, nota_publica, notas_internas, presupuesto, entrega, historial, creado, actualizado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        .bind(codigo, tel.slice(-4), cliente, tel, clip(b.equipo, 160), clip(b.problema, 1000), estado, clip(b.nota_publica, 500), clip(b.notas_internas, 2000), clip(b.presupuesto, 60), clip(b.entrega, 10), JSON.stringify(hist), now, now).run();
+      return json({ ok: true, codigo });
+    }
+    if (method === "PUT") {
+      const b = await readJson(request);
+      const o = await DB.prepare("SELECT * FROM ordenes WHERE codigo = ?").bind(String(b.codigo || "")).first();
+      if (!o) return json({ error: "No se encontró la orden." }, 404);
+      const hist = safeParse(o.historial) || [];
+      const estado = ORDEN_ESTADOS.some((x) => x.id === b.estado) ? b.estado : o.estado;
+      const nota = clip(b.nota, 500);
+      const now = Date.now();
+      if (estado !== o.estado || nota) hist.push({ estado, nota, ts: now });
+      const tel = b.telefono != null ? String(b.telefono).replace(/\D/g, "").slice(0, 15) : o.telefono;
+      const pick = (k, n) => (b[k] != null ? clip(b[k], n) : o[k]);
+      await DB.prepare("UPDATE ordenes SET clave = ?, cliente = ?, telefono = ?, equipo = ?, problema = ?, estado = ?, nota_publica = ?, notas_internas = ?, presupuesto = ?, entrega = ?, historial = ?, actualizado = ? WHERE codigo = ?")
+        .bind((tel || "").slice(-4), b.cliente != null ? (cleanName(b.cliente) || o.cliente) : o.cliente, tel, pick("equipo", 160), pick("problema", 1000), estado, nota || o.nota_publica, pick("notas_internas", 2000), pick("presupuesto", 60), pick("entrega", 10), JSON.stringify(hist.slice(-60)), now, o.codigo).run();
+      return json({ ok: true });
+    }
+    if (method === "DELETE") {
+      await DB.prepare("DELETE FROM ordenes WHERE codigo = ?").bind(String(url.searchParams.get("codigo") || "")).run();
+      return json({ ok: true });
+    }
   }
 
   if (route === "alumnos/progreso" && method === "GET") {
@@ -823,6 +927,210 @@ function bytesToB64url(bytes) {
 
 async function readJson(request) {
   try { return await request.json(); } catch { return {}; }
+}
+
+
+/* ───────────── Seguridad, solicitudes, seguimiento y Doctor TechRevive ───────────── */
+
+const SEC_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Frame-Options": "SAMEORIGIN",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+};
+const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' https:; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self' https:; frame-ancestors 'self'; upgrade-insecure-requests";
+
+function withSec(resp, html = false) {
+  if (!resp || resp.status === 101) return resp;
+  const r = new Response(resp.body, resp);
+  for (const [k, v] of Object.entries(SEC_HEADERS)) if (!r.headers.has(k)) r.headers.set(k, v);
+  if (html && (r.headers.get("content-type") || "").includes("text/html") && !r.headers.has("Content-Security-Policy")) r.headers.set("Content-Security-Policy", CSP);
+  return r;
+}
+
+function clientIp(request) {
+  return (request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for") || "0").split(",")[0].trim().slice(0, 64);
+}
+
+function safeParse(t) { try { return t ? JSON.parse(t) : null; } catch { return null; } }
+
+// Límite de intentos (contraseñas, formularios, IA). Usa la base de datos si existe;
+// si no, una memoria temporal (menos estricta, pero mejor que nada).
+const MEM_HITS = new Map();
+async function rlCount(env, key, windowSec) {
+  const since = Date.now() - windowSec * 1000;
+  if (env.DB) {
+    try {
+      await ensureSchema(env);
+      const r = await env.DB.prepare("SELECT COUNT(*) AS n FROM intentos WHERE clave = ? AND ts > ?").bind(key, since).first();
+      return (r && r.n) || 0;
+    } catch { /* memoria */ }
+  }
+  return (MEM_HITS.get(key) || []).filter((t) => t > since).length;
+}
+async function rlHit(env, key) {
+  const now = Date.now();
+  if (env.DB) {
+    try {
+      await ensureSchema(env);
+      await env.DB.prepare("INSERT INTO intentos (clave, ts) VALUES (?, ?)").bind(key, now).run();
+      if (Math.random() < 0.05) await env.DB.prepare("DELETE FROM intentos WHERE ts < ?").bind(now - 2 * 86400000).run();
+      return;
+    } catch { /* memoria */ }
+  }
+  const arr = (MEM_HITS.get(key) || []).filter((t) => t > now - 86400000);
+  arr.push(now); MEM_HITS.set(key, arr);
+  if (MEM_HITS.size > 5000) MEM_HITS.clear();
+}
+async function rlClear(env, key) {
+  MEM_HITS.delete(key);
+  if (env.DB) { try { await env.DB.prepare("DELETE FROM intentos WHERE clave = ?").bind(key).run(); } catch { /* nada */ } }
+}
+async function rlTake(env, key, max, windowSec) {
+  if (await rlCount(env, key, windowSec) >= max) return false;
+  await rlHit(env, key);
+  return true;
+}
+
+const EVENT_TYPES = new Set(["whatsapp", "llamada", "correo", "formulario", "cotizacion_wa", "cotizacion_pdf", "diagnostico", "diagnostico_ia", "seguimiento"]);
+const SOL_ESTADOS = ["nuevo", "contactado", "cotizado", "ganado", "perdido", "archivado"];
+const SOL_TIPOS = ["contacto", "inscripcion", "cotizacion", "diagnostico", "otro"];
+const ORDEN_ESTADOS = [
+  { id: "recibido", t: "Equipo recibido" },
+  { id: "diagnostico", t: "En diagnóstico" },
+  { id: "aprobacion", t: "Esperando tu aprobación" },
+  { id: "repuesto", t: "Esperando repuesto" },
+  { id: "reparacion", t: "En reparación" },
+  { id: "pruebas", t: "Pruebas de calidad" },
+  { id: "listo", t: "Listo para entregar" },
+  { id: "entregado", t: "Entregado" },
+  { id: "cancelado", t: "Cancelado" },
+];
+
+function ordenCodigo() {
+  const abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const b = crypto.getRandomValues(new Uint8Array(5));
+  return "OT-" + [...b].map((x) => abc[x % abc.length]).join("");
+}
+
+function sameOrigin(request, url) {
+  const o = request.headers.get("origin");
+  return !o || o === url.origin;
+}
+
+async function publicSolicitud(request, env, url) {
+  if (!sameOrigin(request, url)) return json({ error: "Solicitud no permitida." }, 403);
+  if (!env.DB) return json({ ok: false, sinBase: true });
+  const b = await readJson(request);
+  if (b._gotcha) return json({ ok: true });
+  const ua = request.headers.get("user-agent") || "";
+  if (BOT_RE.test(ua)) return json({ ok: true });
+  if (!await rlTake(env, `sol:${clientIp(request)}`, 10, 3600)) return json({ error: "Recibimos varias solicitudes seguidas. Escríbenos por WhatsApp, por favor." }, 429);
+  const nombre = cleanName(b.nombre);
+  const telefono = clip(String(b.telefono || "").replace(/[^\d+ -]/g, ""), 30);
+  const correo = clip(String(b.correo || "").trim(), 120);
+  if (!nombre && !telefono && !correo) return json({ error: "Faltan tus datos de contacto." }, 400);
+  const tipo = SOL_TIPOS.includes(b.tipo) ? b.tipo : "otro";
+  let datos = b.datos && typeof b.datos === "object" ? JSON.stringify(b.datos) : "";
+  if (datos.length > 6000) datos = datos.slice(0, 6000);
+  const cf = request.cf || {};
+  await ensureSchema(env);
+  const r = await env.DB.prepare("INSERT INTO solicitudes (ts, tipo, nombre, telefono, correo, servicio, mensaje, datos, pagina, ip, pais, ciudad, vid, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'nuevo')")
+    .bind(Date.now(), tipo, nombre, telefono, correo, clip(cleanName(b.servicio), 120), clip(String(b.mensaje || "").replace(/[<>]/g, ""), 3000), datos, clip(b.pagina, 200), clientIp(request), clip(cf.country, 2), clip(cf.city, 80), clip(b.vid, 40)).run();
+  return json({ ok: true, id: r.meta && r.meta.last_row_id });
+}
+
+async function publicSeguimiento(request, env, url) {
+  if (!env.DB) return json({ error: "El seguimiento en línea todavía no está activo. Escríbenos por WhatsApp con tu número de orden." }, 503);
+  if (!await rlTake(env, `seg:${clientIp(request)}`, 30, 600)) return json({ error: "Demasiadas consultas seguidas. Espera unos minutos." }, 429);
+  const codigo = String(url.searchParams.get("c") || "").toUpperCase().replace(/\s+/g, "").replace(/^OT(?!-)/, "OT-");
+  const clave = String(url.searchParams.get("t") || "").replace(/\D/g, "");
+  await ensureSchema(env);
+  const o = /^OT-[A-Z0-9]{5}$/.test(codigo) ? await env.DB.prepare("SELECT * FROM ordenes WHERE codigo = ?").bind(codigo).first() : null;
+  if (!o || (o.clave && o.clave !== clave)) {
+    await sleep(400);
+    return json({ error: "No encontramos esa orden. Revisa el código (ej. OT-7K2QD) y los últimos 4 dígitos del teléfono que dejaste al entregar tu equipo." }, 404);
+  }
+  const est = (id) => (ORDEN_ESTADOS.find((x) => x.id === id) || { t: id }).t;
+  const hist = (safeParse(o.historial) || []).map((h) => ({ estado: h.estado, titulo: est(h.estado), nota: h.nota || "", ts: h.ts }));
+  return json({
+    codigo: o.codigo, nombre: String(o.cliente || "").split(" ")[0], equipo: o.equipo, estado: o.estado, titulo: est(o.estado),
+    nota: o.nota_publica || "", presupuesto: o.presupuesto || "", entrega: o.entrega || "", creado: o.creado, actualizado: o.actualizado,
+    historial: hist, estados: ORDEN_ESTADOS,
+  });
+}
+
+const IA_MODELOS = ["@cf/meta/llama-3.1-8b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/google/gemma-4-26b-a4b-it", "@cf/meta/llama-3.1-8b-instruct"];
+const IA_DIARIO = 60;
+
+async function diagnosticoIA(request, env, url) {
+  if (!sameOrigin(request, url)) return json({ error: "Solicitud no permitida." }, 403);
+  if (!env.AI) return json({ error: "El asistente con inteligencia artificial no está activado. Usa el diagnóstico guiado.", sinIA: true }, 503);
+  const b = await readJson(request);
+  const texto = String(b.texto || "").replace(/\s+/g, " ").trim().slice(0, 700);
+  if (texto.length < 12) return json({ error: "Cuéntanos un poco más: qué equipo es y qué le pasa." }, 400);
+  if (!await rlTake(env, `ia:${clientIp(request)}`, 6, 3600)) return json({ error: "Ya hiciste varias consultas. Usa el diagnóstico guiado o escríbenos por WhatsApp.", limite: true }, 429);
+  const dia = new Date().toISOString().slice(0, 10);
+  if (env.DB) {
+    try {
+      await ensureSchema(env);
+      const u = await env.DB.prepare("SELECT n FROM ia_uso WHERE dia = ?").bind(dia).first();
+      if (u && u.n >= IA_DIARIO) return json({ error: "El asistente alcanzó su límite de hoy. Usa el diagnóstico guiado: es igual de útil.", limite: true }, 429);
+      await env.DB.prepare("INSERT INTO ia_uso (dia, n) VALUES (?, 1) ON CONFLICT(dia) DO UPDATE SET n = n + 1").bind(dia).run();
+    } catch { /* sigue */ }
+  }
+  let catalogo = [];
+  try {
+    const r = await env.ASSETS.fetch(new Request(new URL("/data/servicios-ia.json", url).toString()));
+    if (r.ok) catalogo = (await r.json()).servicios || [];
+  } catch { /* sin catálogo */ }
+  const lista = catalogo.map((c) => `- ${c.n}`).join("\n");
+  const system = [
+    "Eres «Doctor TechRevive», asistente de diagnóstico de una empresa de reparación de computadoras en Guatemala.",
+    "Responde SIEMPRE en español neutro, claro y amable, para personas sin conocimientos técnicos.",
+    "Analiza el problema descrito y responde SOLO con un objeto JSON válido, sin texto adicional, con esta forma exacta:",
+    '{"resumen":"1-2 frases","causas":[{"causa":"texto corto","probabilidad":"alta|media|baja","explicacion":"1 frase"}],"servicios":["nombre EXACTO copiado del catálogo"],"urgencia":"baja|media|alta","consejos":["acción segura que la persona puede intentar"],"evitar":["lo que NO debe hacer"],"preguntas":["pregunta que el técnico haría"]}',
+    "Máximo 3 causas, 3 servicios, 3 consejos, 2 cosas a evitar y 2 preguntas.",
+    "Nunca sugieras abrir la fuente de poder, manipular baterías hinchadas ni nada peligroso. Si hay líquido, humo, olor a quemado o batería hinchada, la urgencia es alta y el primer consejo es desconectar el equipo.",
+    "No inventes precios ni servicios fuera del catálogo. Si el problema no es de computadoras, dilo en el resumen y deja causas vacías.",
+    "Catálogo de servicios:\n" + lista,
+  ].join("\n");
+  let raw = null, modelo = "";
+  for (const m of IA_MODELOS) {
+    try {
+      const out = await env.AI.run(m, { messages: [{ role: "system", content: system }, { role: "user", content: `Equipo: ${clip(b.equipo, 40) || "no indicado"}. Problema: ${texto}` }], max_tokens: 700, temperature: 0.2 });
+      raw = out && (out.response ?? (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content));
+      if (raw) { modelo = m; break; }
+    } catch { /* siguiente modelo */ }
+  }
+  let data = raw && typeof raw === "object" ? raw : null;
+  if (!data && typeof raw === "string") {
+    const i = raw.indexOf("{"), j = raw.lastIndexOf("}");
+    if (i >= 0 && j > i) data = safeParse(raw.slice(i, j + 1));
+  }
+  if (!data || typeof data !== "object") return json({ error: "El asistente no pudo responder ahora. Usa el diagnóstico guiado o escríbenos por WhatsApp." }, 502);
+  const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+  const findSvc = (name) => {
+    const n = norm(name);
+    if (!n) return null;
+    return catalogo.find((c) => norm(c.n) === n) || catalogo.find((c) => norm(c.n).includes(n) || n.includes(norm(c.n))) || null;
+  };
+  const arrS = (v, k, max) => (Array.isArray(v) ? v : []).slice(0, max).map((x) => clip(typeof x === "string" ? x : (x && x[k]) || "", 220)).filter(Boolean);
+  const causas = (Array.isArray(data.causas) ? data.causas : []).slice(0, 3).map((c) => ({
+    t: clip(typeof c === "string" ? c : c.causa, 120), p: ["alta", "media", "baja"].includes(c && c.probabilidad) ? c.probabilidad : "media", d: clip(c && c.explicacion, 220),
+  })).filter((c) => c.t);
+  const servicios = [];
+  for (const s of (Array.isArray(data.servicios) ? data.servicios : []).slice(0, 4)) {
+    const f = findSvc(s);
+    if (f && !servicios.some((x) => x.n === f.n)) servicios.push(f);
+  }
+  return json({
+    ia: true, modelo,
+    resumen: clip(data.resumen, 400), causas, servicios,
+    urgencia: ["baja", "media", "alta"].includes(data.urgencia) ? data.urgencia : "media",
+    consejos: arrS(data.consejos, "t", 3), evitar: arrS(data.evitar, "t", 2), preguntas: arrS(data.preguntas, "t", 2),
+  });
 }
 
 function json(data, status = 200, headers = {}) {

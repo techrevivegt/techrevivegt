@@ -93,7 +93,7 @@ def escribir_config():
         "whatsappDisplay": c.get("whatsapp_visible") or "+502 0000-0000",
         "whatsappMessage": c.get("mensaje_whatsapp") or "Hola TechRevive, me gustaría recibir información sobre sus servicios.",
         "email": c.get("correo") or "contacto@tudominio.com",
-        "address": c.get("direccion") or "Tu dirección aquí, Guatemala",
+        "address": c.get("direccion") or "",
         "mapQuery": c.get("busqueda_mapa") or c.get("direccion") or "Ciudad de Guatemala, Guatemala",
         "hours": c.get("horario") or "",
         "aulaVirtualUrl": g(CFG, "aula_virtual") or (aula_propia() and "/aula/ingresar") or "",
@@ -120,6 +120,202 @@ def escribir_extras():
                 '<a href="/panel/">Ir al panel de administración</a>\n')
 
 
+# ------------------------------------------------------------------ Rendimiento y seguridad
+CSP = ("default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; "
+       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; "
+       "font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' https:; "
+       "frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; "
+       "connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self' https:; "
+       "frame-ancestors 'self'; upgrade-insecure-requests")
+
+
+def escribir_cabeceras():
+    """_headers: Cloudflare lo aplica a los archivos del sitio (no se publica como archivo)."""
+    reglas = [
+        ("/*", ["X-Content-Type-Options: nosniff", "Referrer-Policy: strict-origin-when-cross-origin",
+                "X-Frame-Options: SAMEORIGIN", "Strict-Transport-Security: max-age=31536000; includeSubDomains",
+                "Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+                "Content-Security-Policy: " + CSP]),
+        ("/img/*", ["Cache-Control: public, max-age=86400, stale-while-revalidate=604800"]),
+        ("/css/*", ["Cache-Control: public, max-age=3600, stale-while-revalidate=86400"]),
+        ("/js/*", ["Cache-Control: public, max-age=3600, stale-while-revalidate=86400"]),
+        ("/js/config.js", ["Cache-Control: no-cache"]),
+        ("/sw.js", ["Cache-Control: no-cache"]),
+        ("/version.json", ["Cache-Control: no-store"]),
+    ]
+    with open(os.path.join(OUT, "_headers"), "w", encoding="utf-8") as f:
+        for ruta, hs in reglas:
+            f.write(ruta + "\n" + "".join("  " + h + "\n" for h in hs) + "\n")
+
+
+def optimizar_imagenes():
+    """Usa versiones WebP (más livianas) de las fotos cuando existen y corresponden a la imagen actual.
+
+    src/img/webp.json guarda la huella de cada foto original: si reemplazas una foto desde el
+    panel con el mismo nombre, la WebP vieja se ignora (o se regenera si Pillow está instalado).
+    """
+    import hashlib, re
+    img_dir = os.path.join(OUT, "img")
+    try:
+        with open(os.path.join(img_dir, "webp.json"), encoding="utf-8") as f:
+            huellas = json.load(f)
+    except (OSError, ValueError):
+        huellas = {}
+    try:
+        from PIL import Image  # opcional: en Cloudflare normalmente no está y no pasa nada
+    except Exception:
+        Image = None
+    validas = set()
+    for nombre in os.listdir(img_dir):
+        base_, ext = os.path.splitext(nombre)
+        if ext.lower() not in (".jpg", ".jpeg", ".png") or base_ in ("favicon", "apple-touch-icon"):
+            continue
+        ruta = os.path.join(img_dir, nombre)
+        webp = os.path.join(img_dir, base_ + ".webp")
+        with open(ruta, "rb") as f:
+            huella = hashlib.sha1(f.read()).hexdigest()[:16]
+        if os.path.exists(webp) and huellas.get(nombre) == huella:
+            validas.add(nombre)
+            continue
+        if Image is not None:
+            try:
+                im = Image.open(ruta)
+                if im.mode in ("P", "LA"):
+                    im = im.convert("RGBA")
+                im.save(webp, "WEBP", quality=80 if ext.lower() != ".png" else 90, method=4)
+                if os.path.getsize(webp) < os.path.getsize(ruta) * 0.95:
+                    validas.add(nombre)
+                    continue
+            except Exception:
+                pass
+        if os.path.exists(webp) and nombre not in validas:
+            os.remove(webp)
+    if os.path.exists(os.path.join(img_dir, "webp.json")):
+        os.remove(os.path.join(img_dir, "webp.json"))
+    if not validas:
+        return 0
+    patron = re.compile(r'<img\b([^>]*?)\bsrc="((?:/)?img/([^"/]+)\.(?:jpe?g|png))"([^>]*)>', re.I)
+    total = 0
+    for carpeta, _, archivos in os.walk(OUT):
+        if os.sep + "panel" in carpeta:
+            continue
+        for a in archivos:
+            if not a.endswith(".html"):
+                continue
+            ruta = os.path.join(carpeta, a)
+            with open(ruta, encoding="utf-8") as f:
+                html = f.read()
+
+            def cambiar(m):
+                nonlocal total
+                archivo = os.path.basename(m.group(2))
+                if archivo not in validas or "data-nowebp" in m.group(0):
+                    return m.group(0)
+                total += 1
+                return (f'<picture><source type="image/webp" srcset="{m.group(2).rsplit(".", 1)[0]}.webp" />'
+                        f'{m.group(0)}</picture>')
+            nuevo = re.sub(r"<picture>.*?</picture>", lambda m: m.group(0).replace("<img", "<img data-nowebp"), html, flags=re.S)
+            nuevo = patron.sub(cambiar, nuevo).replace(" data-nowebp", "")
+            nuevo = re.sub(r'<link rel="preload" as="image" href="((?:/)?img/([^"/]+)\.(?:jpe?g|png))" />',
+                           lambda m: (f'<link rel="preload" as="image" type="image/webp" href="{m.group(1).rsplit(".", 1)[0]}.webp" />'
+                                      if os.path.basename(m.group(1)) in validas else m.group(0)), nuevo)
+            if nuevo != html:
+                with open(ruta, "w", encoding="utf-8") as f:
+                    f.write(nuevo)
+    return total
+
+
+def escribir_app():
+    """manifest.webmanifest + sw.js: el sitio se puede «instalar» en el celular y muestra
+    una página amable cuando no hay internet. Nunca guarda el panel, el aula ni la API."""
+    manifest = {
+        "name": "TechRevive", "short_name": "TechRevive", "lang": "es",
+        "description": "Reparación de computadoras, soporte técnico, capacitación y desarrollo web.",
+        "start_url": "/", "scope": "/", "display": "standalone",
+        "theme_color": "#071233", "background_color": "#040A1C",
+        "icons": [{"src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+                  {"src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}],
+        "shortcuts": [{"name": "Diagnóstico gratuito", "url": "/diagnostico.html"},
+                      {"name": "Seguimiento de reparación", "url": "/seguimiento.html"},
+                      {"name": "Cotizador", "url": "/cotizador.html"}],
+    }
+    with open(os.path.join(OUT, "manifest.webmanifest"), "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=1)
+    version = (os.environ.get("WORKERS_CI_COMMIT_SHA") or "")[:8] or str(int(__import__("time").time()))
+    sw = """/* TechRevive · service worker (generado por build.py) */
+var V = "tr-%s", OFFLINE = "/offline.html";
+var PRE = [OFFLINE, "/css/styles.css", "/img/logo-icono.png"];
+self.addEventListener("install", function (e) {
+  e.waitUntil(caches.open(V).then(function (c) { return c.addAll(PRE); }).then(function () { return self.skipWaiting(); }));
+});
+self.addEventListener("activate", function (e) {
+  e.waitUntil(caches.keys().then(function (ks) {
+    return Promise.all(ks.filter(function (k) { return k !== V; }).map(function (k) { return caches.delete(k); }));
+  }).then(function () { return self.clients.claim(); }));
+});
+self.addEventListener("fetch", function (e) {
+  var r = e.request, u = new URL(r.url);
+  if (r.method !== "GET" || u.origin !== location.origin) return;
+  if (/^\\/(api|panel|aula|admin)(\\/|$)/.test(u.pathname) || u.pathname === "/version.json" || u.pathname === "/js/config.js") return;
+  if (r.mode === "navigate") {
+    e.respondWith(fetch(r).catch(function () {
+      return caches.match(r).then(function (m) { return m || caches.match(OFFLINE); });
+    }));
+    return;
+  }
+  if (/\\.(css|js|png|jpe?g|webp|svg|woff2?)$/.test(u.pathname)) {
+    e.respondWith(caches.open(V).then(function (c) {
+      return c.match(r).then(function (hit) {
+        var net = fetch(r).then(function (res) { if (res.ok) c.put(r, res.clone()); return res; }).catch(function () { return hit; });
+        return hit || net;
+      });
+    }));
+  }
+});
+""" % version
+    with open(os.path.join(OUT, "sw.js"), "w", encoding="utf-8") as f:
+        f.write(sw)
+    # Íconos de la app a partir del logo (si Pillow está disponible; si no, se usan los ya generados)
+    for n in (192, 512):
+        destino = os.path.join(OUT, "img", f"icon-{n}.png")
+        if os.path.exists(destino):
+            continue
+        try:
+            from PIL import Image
+            logo = Image.open(os.path.join(OUT, "img", "logo-icono.png")).convert("RGBA")
+            lienzo = Image.new("RGBA", (n, n), (4, 10, 28, 255))
+            lado = int(n * 0.66)
+            logo.thumbnail((lado, lado))
+            lienzo.paste(logo, ((n - logo.width) // 2, (n - logo.height) // 2), logo)
+            lienzo.convert("RGB").save(destino, optimize=True)
+        except Exception:
+            shutil.copy(os.path.join(OUT, "img", "logo-icono.png"), destino)
+
+
+def configurar_ia():
+    """Asistente con IA del Doctor TechRevive (Workers AI, plan gratuito de Cloudflare).
+
+    Se activa en Panel → Configuración general → «Asistente con inteligencia artificial».
+    Solo en Cloudflare (WORKERS_CI=1) se agrega la conexión "ai" a wrangler.jsonc.
+    """
+    activo = g(CFG, "asistente_ia") is True or str(g(CFG, "asistente_ia")).lower() in ("true", "1", "si", "sí")
+    if not activo:
+        return
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wrangler.jsonc")
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    if '"ai"' in text:
+        return
+    if os.environ.get("WORKERS_CI") != "1":
+        print("ℹ Asistente con IA: activado. Se conectará al publicar en Cloudflare.")
+        return
+    fin = text.rstrip().rfind("}")
+    text = text[:fin] + '  ,"ai": { "binding": "AI" }\n' + text[fin:]
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+    print("✔ Asistente con IA conectado (Workers AI).")
+
+
 def main():
     preparar_salida()
     escribir_config()
@@ -140,8 +336,13 @@ def main():
     pk.build_novedades(); pk.build_galeria(); pk.build_redes()
     pq.build_cotizador()
     n_alumnos = pa.build_aula_virtual()
+    import herramientas as ph
+    ph.build_all()
     pk.build_contacto(); pk.build_ubicacion(); pk.build_mapa(pr.POSTS); pk.build_404()
     escribir_extras()
+    escribir_cabeceras()
+    escribir_app()
+    n_webp = optimizar_imagenes()
 
     # sitemap.xml y robots.txt
     urls = "".join(
@@ -153,9 +354,10 @@ def main():
         f.write(f"User-agent: *\nAllow: /\nDisallow: /panel/\nDisallow: /api/\nDisallow: /aula/\n\nSitemap: {SITE_URL}/sitemap.xml\n")
 
     configurar_base_datos()
+    configurar_ia()
     for w in dict.fromkeys(WARNINGS):
         print("⚠ Aviso:", w)
-    print(f"✔ {len(PAGES) + 1} páginas generadas en _site/")
+    print(f"✔ {len(PAGES) + 1} páginas generadas en _site/" + (f" · {n_webp} imágenes en WebP" if n_webp else ""))
     if pa.habilitada():
         n_lec = sum(len(c["_lessons"]) for c in pa.cursos())
         print(f"✔ Aula virtual: {len(pa.cursos())} cursos, {n_lec} lecciones, {n_alumnos} alumnos con acceso")
