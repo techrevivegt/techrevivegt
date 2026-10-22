@@ -316,6 +316,28 @@ def configurar_ia():
     print("✔ Asistente con IA conectado (Workers AI).")
 
 
+def versionar_recursos():
+    """Agrega ?v=<versión> a los CSS/JS propios de cada página. Así, al publicar un cambio,
+    el navegador (y el service worker) descargan los archivos nuevos en lugar de usar los guardados."""
+    import re
+    version = (os.environ.get("WORKERS_CI_COMMIT_SHA") or "")[:8] or str(int(__import__("time").time()))
+    patron = re.compile(r'((?:href|src)=")((?:/?(?:css|js)/)?[\w./-]+\.(?:css|js))(")')
+    n = 0
+    for raiz, _, archivos in os.walk(OUT):
+        for nombre in archivos:
+            if not nombre.endswith(".html"):
+                continue
+            ruta = os.path.join(raiz, nombre)
+            with open(ruta, encoding="utf-8") as f:
+                html = f.read()
+            nuevo = patron.sub(lambda m: m.group(0) if m.group(2).startswith(("http", "//")) else f"{m.group(1)}{m.group(2)}?v={version}{m.group(3)}", html)
+            if nuevo != html:
+                with open(ruta, "w", encoding="utf-8") as f:
+                    f.write(nuevo)
+                n += 1
+    return n
+
+
 def main():
     preparar_salida()
     escribir_config()
@@ -343,6 +365,7 @@ def main():
     escribir_cabeceras()
     escribir_app()
     n_webp = optimizar_imagenes()
+    versionar_recursos()
 
     # sitemap.xml y robots.txt
     urls = "".join(
