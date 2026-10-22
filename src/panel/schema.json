@@ -2410,6 +2410,19 @@
                   "description": "Se recomienda el logo horizontal sobre fondo blanco."
                 },
                 {
+                  "name": "mostrar_sello",
+                  "label": "Mostrar el sello",
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Pone el sello azul de TechRevive junto a las firmas."
+                },
+                {
+                  "name": "sello",
+                  "label": "Imagen del sello (opcional)",
+                  "type": "image",
+                  "description": "Déjalo vacío para usar el sello de TechRevive incluido. Si subes otro, que sea PNG con fondo transparente."
+                },
+                {
                   "name": "firmas",
                   "label": "Firmas (máximo 3)",
                   "type": "object",

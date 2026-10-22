@@ -158,10 +158,11 @@ Sin este paso el sitio, el panel y el aula funcionan igual; solo quedan apagadas
 
 1. El alumno termina **todas** las lecciones y aprueba el examen final. En la página del curso aparece **Solicitar certificado**: escribe su nombre completo, lo confirma y envía.
 2. En el panel, **🏅 Certificados → Solicitudes** aparece con su avance y su nota. **Corrige el nombre si hace falta** (tildes, apellidos) y las horas → **✓ Aprobar** (o **✕ Rechazar** con un motivo; el alumno lo ve y puede volver a pedirlo).
-3. Al aprobarlo, el alumno lo ve en **Mis certificados** del aula y puede **imprimirlo o guardarlo en PDF** (hoja horizontal), copiar el enlace o compartirlo por WhatsApp.
+3. Al aprobarlo, el alumno lo ve en **Mis certificados** del aula y puede **imprimirlo o guardarlo en PDF** (hoja **tamaño carta horizontal**; en el diálogo de impresión deja márgenes en «Ninguno» y activa «Gráficos de fondo» si tu navegador lo pide), copiar el enlace o compartirlo por WhatsApp.
 - Cada certificado tiene un **código** (ej. `TR-AB12-CD34`) y un **código QR**. Cualquiera puede verificarlo en `/certificado?c=CÓDIGO`. Si lo **anulas**, la verificación dirá que fue revocado (puedes restaurarlo).
 - **Emitir manualmente:** para cursos presenciales o talleres que no están en el aula: nombre, curso, horas y fecha.
 - **Progreso de alumnos:** cuántas lecciones lleva cada alumno en cada curso y su última actividad.
+- **Aspecto:** franja azul marino con circuitos, sello TechRevive, código QR de verificación y el nombre del alumno en grande (si el nombre o el curso son muy largos, la letra se ajusta sola o pasa a dos líneas).
 - **Diseño:** **⚙️ Ajustes del aula y certificado → Certificado**. Cambia los textos, el lugar, el logo y las **firmas**: nombre, cargo y, si quieres, la imagen de la firma escaneada (PNG con fondo transparente). Las firmas incluidas son de ejemplo: **cámbialas por las reales**.
 - Al imprimir, desactiva **Encabezados y pies de página** en *Más opciones* y activa **Gráficos de fondo** para que salgan los colores.
 

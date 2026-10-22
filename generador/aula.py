@@ -581,9 +581,10 @@ CERT_DEF = {
     "texto_curso": "por haber completado satisfactoriamente el curso",
     "lugar": "Guatemala",
     "logo": "/img/logo-techrevive.png",
+    "sello": "/img/sello-techrevive.png",
     "firmas": [
         {"nombre": "Nombre del director(a)", "cargo": "Dirección general · TechRevive", "imagen": ""},
-        {"nombre": "Nombre del instructor(a)", "cargo": "Coordinación de capacitación", "imagen": ""},
+        {"nombre": "Elías Cruz", "cargo": "Instructor · TechRevive", "imagen": ""},
     ],
 }
 
@@ -593,10 +594,51 @@ def cert_config():
     cfg = cfg if isinstance(cfg, dict) else {}
     out = {k: (cfg.get(k) if str(cfg.get(k) or "").strip() else v) for k, v in CERT_DEF.items() if k != "firmas"}
     out["logo"] = img_abs(out["logo"], "/img/logo-techrevive.png")
+    out["sello"] = img_abs(out["sello"], "/img/sello-techrevive.png")
+    out["mostrar_sello"] = cfg.get("mostrar_sello") is not False
     firmas = [f for f in arr(cfg.get("firmas")) if isinstance(f, dict) and (f.get("nombre") or f.get("cargo"))]
+    # Si en el panel aún está el texto de ejemplo del instructor, se usa el instructor real
+    for f in firmas:
+        if (f.get("nombre") or "").strip() == "Nombre del instructor(a)":
+            f["nombre"], f["cargo"] = "Elías Cruz", "Instructor · TechRevive"
     out["firmas"] = [{"nombre": f.get("nombre") or "", "cargo": f.get("cargo") or "",
                       "imagen": img_abs(f.get("imagen"), "") if f.get("imagen") else ""} for f in (firmas or CERT_DEF["firmas"])][:3]
     return out
+
+
+def cert_band():
+    """Franja lateral del certificado: circuitos (como los del logo), sello y código QR."""
+    trazos = [
+        "M8 0 V38 L22 52 V92", "M18 0 V24 L34 40 H52", "M66 0 V30 L52 44 V70", "M0 118 H14 L26 130 V170",
+        "M74 104 H58 L46 116 V150 L58 162 V216", "M10 216 V186 L24 172 H40", "M36 216 V196 L50 182",
+        "M0 70 H6 L16 80 V100",
+    ]
+    nodos = [(22, 92), (52, 40), (52, 70), (26, 170), (40, 172), (50, 182), (16, 100), (8, 38), (46, 150)]
+    svg_tr = "".join(f'<path d="{d}"/>' for d in trazos)
+    svg_no = "".join(f'<circle cx="{x}" cy="{y}" r="1.6"/>' for x, y in nodos)
+    return f'''<aside class="cert__band" aria-hidden="false">
+          <svg class="cert__circuit" viewBox="0 0 74 216" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke-width=".55" stroke-linecap="round" stroke-linejoin="round">{svg_tr}</g><g>{svg_no}</g></svg>
+          <div class="cert__seal" aria-hidden="true">
+            <svg viewBox="0 0 200 230">
+              <defs>
+                <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset=".55" stop-color="#2563EB"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient>
+                <path id="sp" d="M100 100 m-71 0 a71 71 0 1 1 142 0 a71 71 0 1 1 -142 0"/>
+              </defs>
+              <path d="M62 160 L48 226 L72 212 L86 230 L96 170 Z" fill="#1D4ED8"/><path d="M138 160 L152 226 L128 212 L114 230 L104 170 Z" fill="#2563EB"/>
+              <circle cx="100" cy="100" r="96" fill="url(#sg)"/>
+              <circle cx="100" cy="100" r="86" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4" stroke-dasharray="2 4"/>
+              <text font-family="Manrope, Inter, sans-serif" font-weight="800" font-size="13.2" letter-spacing="2.3" fill="#fff"><textPath href="#sp" startOffset="0">CAPACITACIÓN TECNOLÓGICA • TECHREVIVE •</textPath></text>
+              <circle cx="100" cy="100" r="54" fill="#071233"/>
+              <circle cx="100" cy="100" r="54" fill="none" stroke="#38BDF8" stroke-width="2"/>
+              <image href="/img/cert-icono.png" x="64" y="60" width="72" height="54" preserveAspectRatio="xMidYMid meet"/>
+              <text x="100" y="129" text-anchor="middle" font-family="Manrope, Inter, sans-serif" font-weight="800" font-size="8.6" letter-spacing="1.6" fill="#93C5FD">CERTIFICADO</text>
+            </svg>
+          </div>
+          <div class="cert__verify">
+            <div class="cert__qr" data-qr></div>
+            <p><strong data-f="id"></strong><span>Verifica su autenticidad en</span><span data-f="url"></span></p>
+          </div>
+        </aside>'''
 
 
 def build_certificado():
@@ -638,21 +680,26 @@ def build_certificado():
     <div class="certp__verified" data-verified hidden>✓ Certificado auténtico emitido por TechRevive · Código <strong data-code></strong></div>
     <div class="certp__stage" data-stage hidden>
       <article class="cert" data-cert aria-label="Certificado">
-        <div class="cert__frame">
-          <div class="cert__corner cert__corner--tl"></div><div class="cert__corner cert__corner--br"></div>
-          <img class="cert__logo" src="{e(cfg["logo"])}" alt="TechRevive" />
+        {cert_band()}
+        <div class="cert__body">
+          <img class="cert__mark" src="/img/cert-icono.png" alt="" aria-hidden="true" />
+          <header class="cert__top">
+            <img class="cert__logo" src="{e(cfg["logo"])}" alt="TechRevive" />
+            <span class="cert__tag">Capacitación tecnológica</span>
+          </header>
           <p class="cert__title">{e(cfg["titulo"])}</p>
           <p class="cert__subtitle">{e(cfg["subtitulo"])}</p>
           <p class="cert__lead">{e(cfg["texto_otorga"])}</p>
           <p class="cert__name" data-f="nombre"></p>
           <p class="cert__lead">{e(cfg["texto_curso"])}</p>
           <p class="cert__course" data-f="curso"></p>
-          <p class="cert__detail" data-f="detalle"></p>
+          <dl class="cert__facts">
+            <div data-fact="horas"><dt>Duración</dt><dd data-f="horas"></dd></div>
+            <div><dt>Fecha de emisión</dt><dd data-f="fecha"></dd></div>
+            <div><dt>Lugar</dt><dd>{e(cfg["lugar"])}</dd></div>
+          </dl>
+          {('<img class="cert__stamp" src="' + e(cfg["sello"]) + '" alt="Sello de TechRevive" />') if cfg["mostrar_sello"] else ""}
           <div class="cert__signs">{"".join(f'<div class="cert__sign">{(chr(60) + "img src=" + chr(34) + e(f["imagen"]) + chr(34) + " alt=" + chr(34) + chr(34) + " />") if f["imagen"] else ""}<span class="cert__line"></span><strong>{e(f["nombre"])}</strong><small>{e(f["cargo"])}</small></div>' for f in cfg["firmas"])}</div>
-          <footer class="cert__foot">
-            <div class="cert__qr" data-qr></div>
-            <div><strong>Código: <span data-f="id"></span></strong><span>Verifica su autenticidad en <span data-f="url"></span></span></div>
-          </footer>
         </div>
       </article>
     </div>

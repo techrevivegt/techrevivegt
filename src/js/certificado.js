@@ -14,11 +14,30 @@
   }
   function set(name, val) { var el = document.querySelector('[data-f="' + name + '"]'); if (el) el.textContent = val; }
 
-  function fitName() {
-    var el = document.querySelector('[data-f="nombre"]');
+  // Ajusta el tamaño del nombre y del curso para que siempre quepan en el certificado
+  function fit(sel, max, min, lines) {
+    var el = document.querySelector(sel);
     if (!el) return;
-    var len = el.textContent.length;
-    el.style.fontSize = len > 42 ? "30pt" : len > 32 ? "36pt" : "";
+    var size = max;
+    el.style.fontSize = size + "pt";
+    var tooBig = function () {
+      if (lines === 1) return el.scrollWidth > el.clientWidth + 1;
+      var cs = getComputedStyle(el);
+      var lh = parseFloat(cs.lineHeight) || size * 1.6;
+      var alto = el.scrollHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0);
+      return el.scrollWidth > el.clientWidth + 1 || alto > lh * lines + 2;
+    };
+    while (tooBig() && size > min) { size -= 1; el.style.fontSize = size + "pt"; }
+  }
+  function fitAll() {
+    var n = document.querySelector('[data-f="nombre"]');
+    if (n) {
+      n.style.whiteSpace = "";
+      fit('[data-f="nombre"]', 44, 30, 1);
+      // Nombres muy largos: se permiten dos líneas en lugar de achicar demasiado la letra
+      if (n.scrollWidth > n.clientWidth + 1) { n.style.whiteSpace = "normal"; fit('[data-f="nombre"]', 34, 18, 2); }
+    }
+    fit('[data-f="curso"]', 24, 13, 2);
   }
 
   function scale() {
@@ -34,14 +53,18 @@
     var url = location.origin + "/certificado?c=" + d.id;
     set("nombre", d.nombre);
     set("curso", d.curso);
-    var det = [];
-    if (d.horas) det.push("Con una duración de " + (/[a-z]/i.test(d.horas) ? d.horas : d.horas + " horas"));
-    det.push((cfg.lugar ? cfg.lugar + ", " : "") + fechaLarga(d.fecha, d.emitido));
-    set("detalle", det.join(" · "));
+    var horas = d.horas ? (/[a-z]/i.test(d.horas) ? d.horas : d.horas + " horas") : "";
+    set("horas", horas);
+    var fh = document.querySelector('[data-fact="horas"]'); if (fh) fh.hidden = !horas;
+    set("fecha", fechaLarga(d.fecha, d.emitido));
     set("id", d.id);
     set("url", location.host + "/certificado");
     $("[data-code]").textContent = d.id;
-    fitName();
+    fitAll();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fitAll(); scale(); });
+    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", function () { fitAll(); });
+    window.addEventListener("load", function () { fitAll(); });
+    window.addEventListener("beforeprint", function () { fitAll(); });
     var qrBox = $("[data-qr]");
     if (window.qrcode) {
       var qr = qrcode(0, "M"); qr.addData(url); qr.make();

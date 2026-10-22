@@ -1,4 +1,4 @@
-/* TECHREVIVE · Certificado (pantalla + impresión A4 horizontal) */
+/* TECHREVIVE · Certificado (pantalla + impresión carta horizontal) */
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0}
 body.certp{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#0B1C4A;background:radial-gradient(1200px 600px at 80% -10%,#12307a 0,#071233 55%,#040A1C 100%);color:#e6ecff;min-height:100vh}
@@ -24,42 +24,53 @@ body.certp{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-seri
 .certp__verified[hidden],.certp__stage[hidden],.certp__state[hidden]{display:none}
 .certp__stage{position:relative;width:100%;overflow:hidden}
 
-/* ---------- El certificado (tamaño real A4 horizontal) ---------- */
-.cert{width:297mm;height:210mm;background:#fff;color:#0B1C4A;transform-origin:top left;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;overflow:hidden}
-.cert::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(circle at 100% 0,rgba(56,189,248,.10) 0,transparent 38%),
-  radial-gradient(circle at 0 100%,rgba(37,99,235,.10) 0,transparent 40%),
-  repeating-linear-gradient(135deg,rgba(11,28,74,.025) 0 2px,transparent 2px 14px)}
-.cert__frame{position:absolute;inset:9mm;border:1.6mm solid #0B1C4A;display:flex;flex-direction:column;align-items:center;text-align:center;padding:11mm 20mm 8mm}
-.cert__frame::after{content:"";position:absolute;inset:2.2mm;border:.35mm solid #38BDF8;pointer-events:none}
-.cert__corner{position:absolute;width:34mm;height:34mm;pointer-events:none}
-.cert__corner--tl{top:-1.6mm;left:-1.6mm;background:linear-gradient(135deg,#2563EB 0 50%,transparent 50%)}
-.cert__corner--br{bottom:-1.6mm;right:-1.6mm;background:linear-gradient(315deg,#0B1C4A 0 50%,transparent 50%)}
-.cert__corner--tl::after,.cert__corner--br::after{content:"";position:absolute;width:20mm;height:20mm}
-.cert__corner--tl::after{top:0;left:0;background:linear-gradient(135deg,#38BDF8 0 50%,transparent 50%)}
-.cert__corner--br::after{bottom:0;right:0;background:linear-gradient(315deg,#2563EB 0 50%,transparent 50%)}
-.cert__logo{height:19mm;width:auto;max-width:90mm;object-fit:contain;position:relative}
-.cert__title{font-family:Manrope,Inter,sans-serif;font-weight:800;font-size:38pt;letter-spacing:.24em;margin:5mm 0 0;padding-left:.24em;color:#0B1C4A;line-height:1}
-.cert__subtitle{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:17pt;color:#2563EB;margin:1.5mm 0 0}
-.cert__lead{font-size:12.5pt;color:#3a4a72;margin:6mm 0 0}
-.cert__name{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:42pt;line-height:1.1;margin:3mm 0 0;padding:0 8mm 2.5mm;color:#071233;border-bottom:.5mm solid transparent;border-image:linear-gradient(90deg,transparent,#2563EB 20%,#38BDF8 80%,transparent) 1;min-width:150mm}
-.cert__course{font-family:Manrope,Inter,sans-serif;font-weight:800;font-size:22pt;color:#2563EB;margin:3mm 0 0;line-height:1.15;max-width:230mm}
-.cert__detail{font-size:11.5pt;color:#3a4a72;margin:3mm 0 0}
-.cert__signs{display:flex;justify-content:center;gap:24mm;margin-top:auto;padding-bottom:17mm;width:100%}
-.cert__sign{display:flex;flex-direction:column;align-items:center;width:68mm;position:relative}
-.cert__sign img{height:16mm;width:auto;max-width:60mm;object-fit:contain;margin-bottom:-3mm}
-.cert__line{display:block;width:100%;height:.35mm;background:#0B1C4A;margin:12mm 0 2mm}
-.cert__sign img+.cert__line{margin-top:1mm}
-.cert__sign strong{font-size:11pt;color:#0B1C4A}
-.cert__sign small{font-size:9pt;color:#5a6890;margin-top:.6mm}
-.cert__foot{position:absolute;left:50%;transform:translateX(-50%);bottom:4.5mm;white-space:nowrap;display:flex;align-items:center;gap:3.5mm;text-align:left;font-size:8pt;color:#5a6890}
-.cert__foot strong{display:block;color:#0B1C4A;font-size:8.5pt;letter-spacing:.04em}
-.cert__qr{width:14mm;height:14mm}
+/* ---------- El certificado (tamaño real: carta horizontal, 279.4 × 215.9 mm) ---------- */
+.cert{width:279.4mm;height:215.9mm;background:#fff;color:#0B1C4A;transform-origin:top left;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;overflow:hidden;display:flex}
+.cert__band{position:relative;flex:0 0 72mm;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:16mm 8mm 11mm;color:#E6ECFF;
+  background:radial-gradient(120% 60% at 0 0,rgba(56,189,248,.20),transparent 60%),radial-gradient(90% 50% at 100% 100%,rgba(37,99,235,.35),transparent 70%),linear-gradient(180deg,#071233 0%,#0B1C4A 55%,#040A1C 100%);overflow:hidden}
+.cert__band::after{content:"";position:absolute;top:0;right:0;width:1.6mm;height:100%;background:linear-gradient(180deg,#38BDF8,#2563EB 50%,#1D4ED8)}
+.cert__circuit{position:absolute;inset:0;width:100%;height:100%}
+.cert__circuit g:first-child{stroke:#38BDF8;stroke-opacity:.28}
+.cert__circuit g:last-child{fill:#38BDF8;fill-opacity:.55}
+.cert__seal{position:relative;width:50mm;margin-top:18mm}
+.cert__seal svg{display:block;width:100%;height:auto;filter:drop-shadow(0 2mm 4mm rgba(0,0,0,.35))}
+.cert__verify{position:relative;display:flex;flex-direction:column;align-items:center;gap:2.6mm;text-align:center}
+.cert__qr{width:24mm;height:24mm;padding:2mm;background:#fff;border-radius:2.4mm}
 .cert__qr svg{width:100%;height:100%;display:block}
+.cert__verify p{margin:0;display:flex;flex-direction:column;gap:.6mm;font-size:7.6pt;line-height:1.35;color:#A8B5D1}
+.cert__verify strong{font-family:Manrope,Inter,sans-serif;font-size:10.5pt;letter-spacing:.08em;color:#fff}
+.cert__body{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:13mm 17mm 11mm 18mm;
+  background:radial-gradient(70% 55% at 100% 0,rgba(56,189,248,.09),transparent 70%),radial-gradient(60% 50% at 100% 100%,rgba(37,99,235,.07),transparent 70%),#fff}
+.cert__body::before{content:"";position:absolute;inset:7mm 7mm 7mm 7mm;border:.35mm solid #DCE6F7;border-radius:3mm;pointer-events:none}
+.cert__mark{position:absolute;right:10mm;top:52mm;width:80mm;opacity:.04;pointer-events:none}
+.cert__top{position:relative;width:100%;display:flex;align-items:center;justify-content:space-between;gap:6mm}
+.cert__logo{height:17mm;width:auto;max-width:82mm;object-fit:contain}
+.cert__tag{font-family:Manrope,Inter,sans-serif;font-weight:700;font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:#1D4ED8;border:.35mm solid #BFD3F7;border-radius:999px;padding:1.6mm 3.6mm;white-space:nowrap}
+.cert__title{position:relative;font-family:Manrope,Inter,sans-serif;font-weight:800;font-size:44pt;letter-spacing:.16em;text-transform:uppercase;margin:12mm 0 0;line-height:1;color:#071233}
+.cert__subtitle{position:relative;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:18pt;color:#2563EB;margin:2.4mm 0 0;display:flex;align-items:center;gap:4mm}
+.cert__subtitle::after{content:"";width:34mm;height:.7mm;border-radius:1mm;background:linear-gradient(90deg,#2563EB,#38BDF8)}
+.cert__lead{position:relative;font-size:12pt;color:#46557d;margin:10mm 0 0}
+.cert__name{position:relative;font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:44pt;line-height:1.12;margin:2.4mm 0 0;padding-bottom:2.6mm;color:#071233;white-space:nowrap;width:100%;overflow:hidden;
+  border-bottom:.5mm solid transparent;border-image:linear-gradient(90deg,#2563EB,#38BDF8 60%,rgba(56,189,248,0)) 1}
+.cert__name + .cert__lead{margin-top:7mm}
+.cert__course{position:relative;font-family:Manrope,Inter,sans-serif;font-weight:800;font-size:24pt;color:#1D4ED8;margin:2mm 0 0;line-height:1.18;max-width:100%}
+.cert__facts{position:relative;display:flex;gap:5mm;margin:10mm 0 0;padding:0}
+.cert__facts div{border-left:.8mm solid #38BDF8;padding:.4mm 0 .4mm 3mm}
+.cert__facts div[hidden]{display:none}
+.cert__facts dt{font-family:Manrope,Inter,sans-serif;font-weight:700;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#6b7aa3}
+.cert__facts dd{margin:.6mm 0 0;font-size:11pt;font-weight:600;color:#0B1C4A}
+.cert__stamp{position:absolute;right:19mm;bottom:10mm;width:42mm;height:42mm;transform:rotate(-12deg);opacity:.88;mix-blend-mode:multiply;pointer-events:none;z-index:2}
+.cert__signs{position:relative;display:flex;gap:14mm;margin-top:auto;width:100%}
+.cert__sign{display:flex;flex-direction:column;align-items:flex-start;width:62mm}
+.cert__sign img{height:15mm;width:auto;max-width:58mm;object-fit:contain;margin-bottom:-2mm}
+.cert__line{display:block;width:100%;height:.35mm;background:#0B1C4A;margin:16mm 0 2mm}
+.cert__sign img+.cert__line{margin-top:1mm}
+.cert__sign strong{font-size:10.5pt;color:#0B1C4A}
+.cert__sign small{font-size:8.5pt;color:#5a6890;margin-top:.5mm}
 
 @media (max-width:640px){.certp__tools{width:100%}.certp__btn{flex:1;justify-content:center;font-size:13px;padding:10px}}
 
-@page{size:A4 landscape;margin:0}
+@page{size:letter landscape;margin:0}
 @media print{
   body.certp{background:#fff}
   .certp__bar,.certp__verified,.certp__state{display:none!important}
