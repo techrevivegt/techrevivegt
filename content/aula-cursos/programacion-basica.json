@@ -1,0 +1,479 @@
+{
+  "titulo": "Programación básica desde cero",
+  "publicado": true,
+  "orden": 8,
+  "descripcion": "Aprende a programar desde cero sin instalar nada: primero la lógica y el pseudocódigo, luego HTML y CSS para crear páginas, Python para tus primeros programas reales (con cálculos en quetzales), JavaScript para páginas que responden y C++ para entender la potencia de bajo nivel, con un mapa de caminos para seguir creciendo.",
+  "imagen": "/img/p-web.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "8 semanas",
+  "horas": "24",
+  "nivel": "Principiante",
+  "certificado": true,
+  "requisitos": "Saber usar el navegador y el bloc de notas. Todas las prácticas se hacen con herramientas gratuitas en línea o que ya trae Windows.",
+  "objetivos": [
+    "Pensar en algoritmos y pseudocódigo",
+    "Crear y publicar una página con HTML y CSS",
+    "Escribir programas útiles en Python",
+    "Agregar interactividad con JavaScript",
+    "Entender cómo funciona C++ y elegir tu camino"
+  ],
+  "modulos": [
+    {
+      "titulo": "Pensar como programador",
+      "lecciones": [
+        {
+          "titulo": "¿Qué es programar? (y para qué te sirve a vos)",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es un programa y para qué sirve</li><li>Ver ejemplos de la vida real en Guatemala</li><li>Perder el miedo: programar es escribir instrucciones claras</li></ul></aside><p>Un <strong>programa</strong> es una lista de instrucciones exactas que la computadora sigue al pie de la letra. Programar es escribir esas instrucciones en un idioma que la computadora entienda (un <strong>lenguaje de programación</strong>).</p><ul><li>Los cajeros automáticos del Banco Industrial, la app que pide tu pedido de comida, el semáforo de la plaza: todo son programas escritos por personas.</li><li><strong>No sirve solo para trabajar de programador:</strong> un emprendedor que programa puede hacerse su propia calculadora de precios, su inventario o automatizar tareas repetitivas.</li><li>Hay muchos lenguajes (Python, JavaScript, C++…) como hay muchos idiomas humanos: suenan distinto, pero las ideas base son las mismas. Aprendé uno bien y los demás se aprenden rápido.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Programar es 20 % escribir código y 80 % pensar con claridad qué querés que pase. Si sabés dar instrucciones precisas, ya tenés lo más difícil.</p></aside>"
+        },
+        {
+          "titulo": "Algoritmos y pseudocódigo: planear antes de programar",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es un algoritmo</li><li>Escribir pasos en pseudocódigo antes del código real</li><li>Traducir una tarea cotidiana en instrucciones ordenadas</li></ul></aside><p>Un <strong>algoritmo</strong> es la secuencia de pasos para resolver algo: la receta del atol de elote es un algoritmo (ingredientes → pasos → resultado). Antes de escribir código, los profesionales planean en <strong>pseudocódigo</strong>: los pasos escritos en español normal, sin complicarse con la sintaxis.</p><p>Ejemplo — algoritmo para cobrar en tu tienda:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>1. Recibir el precio del producto2. Recibir cuántas unidades lleva el cliente3. Multiplicar precio × unidades4. Si el total es mayor a Q100, aplicar 10 % de descuento5. Mostrar el total y cobrar</code></pre><p>Si sabés escribir estos pasos en papel, el código después es solo traducirlos: mismo orden, mismas preguntas («si… entonces…»).</p><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Elegí una tarea cotidiana (preparar café, sacar dinero del cajero, lavar ropa)</li><li>Escribí los pasos en orden, numerados, sin saltarte ninguno</li><li>Buscá un paso donde haya una decisión («si el agua está caliente…») y agregalo como «si… entonces…»</li></ol></aside>"
+        },
+        {
+          "titulo": "Variables y tipos de datos: las cajas donde guardas la información",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es una variable</li><li>Distinguir texto, números y verdadero/falso</li><li>Nombrar variables con sentido</li></ul></aside><p>Una <strong>variable</strong> es una cajita con nombre donde guardás un dato. En casi todos los lenguajes hay 3 tipos básicos:</p><ul><li><strong>Texto (string):</strong> nombres, direcciones. Va entre comillas: <code>\"María López\"</code></li><li><strong>Números:</strong> edades, precios, cantidades: <code>25</code>, <code>14.50</code></li><li><strong>Verdadero/falso (booleano):</strong> <code>true</code> o <code>false</code> — «¿pagó el cliente?», «¿hay stock?»</li></ul><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>nombre   = \"María López\"     # textoedad     = 25                # número enteroprecio   = 14.50             # número con decimalesactivo   = true              # verdadero/falso</code></pre><p>Regla de oro: nombres claros (<code>precioDelAlmuerzo</code> se entiende solo; <code>x7</code> no). Dentro de 3 meses tu «yo del futuro» te lo va a agradecer.</p>"
+        },
+        {
+          "titulo": "Cuestionario: pensar como programador",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Un programa es…",
+              "opciones": [
+                "Un aparato electrónico",
+                "Una lista de instrucciones exactas que la computadora ejecuta",
+                "Un sistema operativo"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El pseudocódigo sirve para…",
+              "opciones": [
+                "Escribir código real de inmediato",
+                "Planear los pasos en tu idioma antes de programar",
+                "Diseñar interfaces"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué tipo de dato es \"zona 7\"?",
+              "opciones": [
+                "Número",
+                "Texto",
+                "Verdadero/falso"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un buen nombre de variable es…",
+              "opciones": [
+                "x9",
+                "totalDeLaVenta",
+                "aa"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "HTML y CSS: la web por dentro",
+      "lecciones": [
+        {
+          "titulo": "HTML: el esqueleto de todas las páginas",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es HTML y cómo funciona una etiqueta</li><li>Conocer las etiquetas más usadas</li><li>Leer el código de cualquier página</li></ul></aside><p>Toda página web tiene por dentro <strong>HTML</strong>: etiquetas entre <code>&lt; &gt;</code> que le dicen al navegador qué es cada cosa. Casi todas se abren y se cierran: <code>&lt;h1&gt;Título&lt;/h1&gt;</code>.</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>&lt;h1&gt;Título grande&lt;/h1&gt;&lt;p&gt;Un párrafo de texto.&lt;/p&gt;&lt;a href=\"https://youtube.com\"&gt;Un enlace&lt;/a&gt;&lt;img src=\"foto.jpg\"&gt;   (imagen)&lt;ul&gt;&lt;li&gt;Ítem de lista&lt;/li&gt;&lt;/ul&gt;</code></pre><p>¿Sabías? En cualquier página hacés clic derecho → <strong>«Ver código fuente»</strong> y podés ver el HTML real con el que está hecha. Hacelo en tu sitio favorito: todo lo «mágico» es solo texto bien ordenado.</p>"
+        },
+        {
+          "titulo": "CSS: la ropa de tu página",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es CSS</li><li>Cambiar colores, tamaños y fondos</li><li>Vincular estilos al HTML</li></ul></aside><p>Si el HTML es el esqueleto, el <strong>CSS</strong> es la ropa: colores, tipos de letra, tamaños y márgenes. Cada regla dice «a tal cosa, ponle tales estilos»:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>h1 {color: #1e3a8a;        /* texto azul oscuro */font-size: 32px;       /* tamaño de letra */}body {background: #f1f5f9;   /* fondo gris clarito */}</code></pre><p>Los colores usan códigos hexadecimales (<code>#1e3a8a</code>): los mismos que vas a ver en Canva y en todo el mundo del diseño.</p><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Con solo 4 o 5 propiedades (color, background, font-size, margin, padding) ya podés dejar una página sencilla con muy buena pinta.</p></aside>"
+        },
+        {
+          "titulo": "Tu primera página web en 15 minutos",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Crear un archivo .html desde cero</li><li>Abrirlo en el navegador sin internet ni servidores</li><li>Publicarlo gratis más adelante</li></ul></aside><p>No necesitás instalar nada: el <strong>Bloc de notas</strong> de Windows alcanza.</p><ol><li>Abrí el Bloc de notas.</li><li>Escribí lo siguiente (copiando con cuidado):</li></ol><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;Mi negocio&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Tortillería Doña Juanita&lt;/h1&gt;&lt;p&gt;Tortillas frescas todos los días. Pedidos al 5555-5555.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><ol start=\"3\"><li>Guardalo como <code>mi-negocio.html</code> (en «Tipo» elegí <em>Todos los archivos</em>).</li><li>Hacé doble clic: se abre en tu navegador. ¡Es tu primera página web!</li></ol><aside class=\"nota alerta\"><h4>⚠️</h4><p>El error más común: el archivo se guarda como mi-negocio.html.txt por culpa de las extensiones ocultas. Si se abre como texto en vez de página, activá «Ver → Extensiones de nombre de archivo» en el Explorador y corregí.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: tu página de presentación",
+          "tipo": "tarea",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<p>Creá en el Bloc de notas una página <code>mi-negocio.html</code> con: el nombre de tu negocio o proyecto (h1), un párrafo describiendo qué ofrecés, una lista con 3 productos o servicios y tu número de contacto. Cuando la abras en el navegador mandale captura a tu instructor por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: HTML y CSS",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Las etiquetas HTML generalmente…",
+              "opciones": [
+                "Se abren y se cierran",
+                "Solo se abren",
+                "Van en mayúsculas"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué etiqueta sirve para un párrafo de texto?",
+              "opciones": [
+                "&lt;párrafo&gt;",
+                "&lt;p&gt;",
+                "&lt;par&gt;"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "CSS sirve para…",
+              "opciones": [
+                "Guardar bases de datos",
+                "Dar estilos: colores, tamaños, márgenes",
+                "Conectarse a internet"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para ver el HTML de cualquier página…",
+              "opciones": [
+                "Clic derecho → Ver código fuente",
+                "Escribir al administrador",
+                "Es imposible"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Python: tu primer lenguaje real",
+      "lecciones": [
+        {
+          "titulo": "Python sin instalar nada: tu primer programa",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Escribir tu primer programa en Python</li><li>Usar un intérprete en línea gratis</li><li>Entender los errores como pistas, no como fracasos</li></ul></aside><p><strong>Python</strong> es hoy el lenguaje más recomendado para aprender: se lee casi como inglés y se usa en inteligencia artificial, datos y automatización. Para practicar sin instalar nada buscá en Google <em>«Python online compiler»</em> (replit.com o programiz.com funcionan bien) y escribí:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>print(\"¡Hola Guatemala!\")print(\"Quetzal\" + \"tenango\")</code></pre><p>Apretá <strong>Run</strong> y verás las dos líneas en pantalla. Si te equivocás (olvidar comillas, por ejemplo) el programa te muestra un <strong>error</strong>: léelo completo; casi siempre dice en qué línea está el problema. Los errores no son fracasos: son el GPS del programador.</p><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Escribí vos mismo el código, no copies y pegues: con los dedos se aprende mejor que con los ojos.</p></aside>"
+        },
+        {
+          "titulo": "Variables y matemática con quetzales",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Guardar datos en variables</li><li>Hacer operaciones matemáticas</li><li>Calcular el IVA de Guatemala con código</li></ul></aside><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>nombre  = \"Tortilla de maíz blanco\"precio  = 2unidades = 15subtotal = precio * unidadesiva      = subtotal * 0.12total    = subtotal + ivaprint(\"Cliente compró\", unidades, \"unidades de\", nombre)print(\"Subtotal: Q\", subtotal)print(\"IVA (12%): Q\", iva)print(\"TOTAL: Q\", total)</code></pre><p>Las operaciones usan <code>+</code> <code>-</code> <code>*</code> (multiplicar) <code>/</code> (dividir). Podés cambiar los valores y ver cómo el total se recalcula solo: eso es exactamente lo que hace un punto de venta de supermercado, con más frases bonitas.</p>"
+        },
+        {
+          "titulo": "Tomar decisiones y repetir: if, else y ciclos",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Usar if/else para que el programa decida</li><li>Repetir acciones con for y while</li><li>Cuidar la sangría en Python</li></ul></aside><p><strong>Decidí</strong>: «si el total supera Q100, aplicá el descuento»:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>total = 120if total > 100:descuento = total * 0.10print(\"Descuento: Q\", descuento)else:print(\"Descuento no aplica\")</code></pre><p><strong>Repetí</strong>: mostrar los precios de la lista uno por uno:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>precios = [10, 25, 5, 30]for precio in precios:print(\"Precio con IVA: Q\", precio * 1.12)</code></pre><p>En Python la <strong>sangría</strong> (los espacios al inicio) le dice al programa qué va dentro del if y del for: no es decoración, es obligatoria.</p><aside class=\"nota alerta\"><h4>⚠️</h4><p>Si Python te dice «IndentationError», olvidaste la sangría o mezclaste espacios con tabulaciones. Volvé a poner 4 espacios por nivel.</p></aside>"
+        },
+        {
+          "titulo": "Listas y funciones: organizar y reutilizar",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Guardar muchos datos en listas</li><li>Crear funciones reutilizables</li><li>Combinar todo en un mini-programa</li></ul></aside><p>Las <strong>listas</strong> guardan muchos valores, y las <strong>funciones</strong> son bloques de código con nombre que podés ejecutar las veces que quieras:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>def calcular_total(precio, unidades):subtotal = precio * unidadesreturn subtotal * 1.12       # total con IVA del 12%# Carrito de comprasproductos = [\"Queso fresco\", \"Pan dulce\", \"Café molido\"]precios   = [35, 4, 60]for producto, precio in zip(productos, precios):total = calcular_total(precio, 2)print(producto, \"→ Q\", total)</code></pre><p>Con esto ya podés escribir programas útiles: calculadoras de precios, conversores de moneda (Q a USD), promedios de notas… todo es combinar estos mismos bloques.</p>"
+        },
+        {
+          "titulo": "Tarea: calculadora de ventas",
+          "tipo": "tarea",
+          "duracion": "45 min",
+          "video": "",
+          "contenido": "<p>En un intérprete de Python en línea, escribí un programa que: pregunte el nombre del cliente (con input), tenga una lista de 3 productos con precios, calcule el total con IVA del 12 % y muestre un «ticket» bonito al final. Mandá una captura del programa corriendo a tu instructor.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: Python",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Para mostrar texto en pantalla en Python usás…",
+              "opciones": [
+                "mostrar()",
+                "print(\"hola\")",
+                "echo hola"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué hace el símbolo * en Python?",
+              "opciones": [
+                "Multiplica",
+                "Pausa",
+                "Borra"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La palabra clave para «si esto, entonces eso» es…",
+              "opciones": [
+                "cuando",
+                "if",
+                "check"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Para qué sirve una función (def)?",
+              "opciones": [
+                "Solo para ordenar",
+                "Agrupar código reutilizable con nombre",
+                "Para errores"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "JavaScript: la web que responde",
+      "lecciones": [
+        {
+          "titulo": "JavaScript: la web que responde",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué hace JavaScript dentro de una página</li><li>Usar la consola del navegador (F12)</li><li>Escribir tu primer script</li></ul></aside><p>HTML da la estructura, CSS da la pinta y <strong>JavaScript</strong> da el comportamiento: menús que se despliegan, formularios que avisan al llenarse mal, carritos que suman solos. Corre dentro del navegador, sin instalar nada.</p><p>Abrí cualquier página, pulsá <strong>F12</strong> → pestaña <strong>Consola</strong> y escribí:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>alert(\"¡Hola desde JavaScript!\")2 + 2\"Quetzaltenango\".length</code></pre><p>Verás la alerta, el resultado de la suma y cuántas letras tiene la palabra. La consola es el cuaderno de borrador del programador web: podés probar ahí todo lo que quieras, sin miedo.</p>"
+        },
+        {
+          "titulo": "Cambiar la página con un clic: el DOM",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es el DOM</li><li>Cambiar el texto de una página con JavaScript</li><li>Crear un botón que cuente clics</li></ul></aside><p>El navegador convierte tu HTML en una estructura viva llamada <strong>DOM</strong>, y JavaScript puede buscar elementos y cambiarlos en caliente:</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>&lt;p id=\"saludo\"&gt;Hola&lt;/p&gt;&lt;button onclick=\"cambiar()\"&gt;Cambiar texto&lt;/button&gt;&lt;script&gt;function cambiar() {document.getElementById(\"saludo\").innerText =\"¡JavaScript en acción!\";}&lt;/script&gt;</code></pre><p>Guardalo como <code>prueba.html</code> junto con lo que aprendiste en el módulo de HTML: al hacer clic en el botón, el párrafo cambia sin recargar nada. Así funcionan, en miniatura, casi todos los sitios modernos.</p><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Partiendo del ejemplo, agregá un segundo botón</li><li>Que cambie el color del párrafo (elemento.style.color = \"red\")</li><li>Probalo, rompelo y arreglalo: así se aprende</li></ol></aside>"
+        },
+        {
+          "titulo": "Cuestionario: JavaScript",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "JavaScript se ejecuta principalmente…",
+              "opciones": [
+                "En el navegador del visitante",
+                "Solo en servidores",
+                "En el Windows del dueño del sitio"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué se abre con F12 en el navegador?",
+              "opciones": [
+                "La impresora",
+                "Las herramientas de desarrollador y la consola",
+                "El historial"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para cambiar el texto de &lt;p id=\"h\"&gt; usás…",
+              "opciones": [
+                "document.getElementById(\"h\").innerText",
+                "cambiarTexto(\"h\")",
+                "edit.p.h"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "C++ y tu mapa de caminos",
+      "lecciones": [
+        {
+          "titulo": "C++: potencia bajo el capó",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Saber para qué se usa C++ hoy</li><li>Ver la estructura de un programa en C++</li><li>Diferenciar compilar de interpretar</li></ul></aside><p><strong>C++</strong> está detrás de videojuegos, motores gráficos, sistemas operativos y Arduino: el lenguaje elegido cuando la <strong>velocidad</strong> importa. A diferencia de Python, el código no se ejecuta linea por linea: primero se <strong>compila</strong> (se traduce completo a un archivo .exe) y después se corre.</p><pre style=\"background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:14px;line-height:1.5\"><code>#include &lt;iostream&gt;using namespace std;int main() {float precio = 25.50;float total = precio * 1.12;   // IVA 12 %cout &lt;&lt; \"Total: Q\" &lt;&lt; total &lt;&lt; endl;return 0;}</code></pre><p></p><ul><li>Stará en <code>main()</code>: todo programa C++ empieza ahí.</li><li>En C++ declarás el <strong>tipo</strong> de cada variable (<code>float</code> para decimales, <code>int</code> para enteros) a diferencia de Python, que lo adivina.</li><li>Para practicarlo sin instalar nada: buscá <em>«C++ online compiler»</em> (onlinegdb o programiz).</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>No te asustes con la sintaxis de C++: date cuenta de que las ideas son idénticas a las de Python (variables, if, ciclos, funciones), solo que más exigente con el orden.</p></aside>"
+        },
+        {
+          "titulo": "Tu mapa de caminos: qué aprender después",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Elegir tu siguiente paso según tu meta</li><li>Usar recursos gratuitos en español</li><li>Formar el hábito: proyectos pequeños y constantes</li></ul></aside><p>Ya conocés los 4 caminos. ¿Cuál seguir?</p><ul><li><strong>Webs y tiendas:</strong> profundizá en HTML, CSS y luego JavaScript (y frameworks después).</li><li><strong>Datos, automatización e IA:</strong> seguí con Python.</li><li><strong>Videojuegos, Arduino y sistemas:</strong> C++ es tu camino (exige más, pero paga bien).</li></ul><p>Recursos gratuitos: <strong>freeCodeCamp</strong> (español), <strong>Curso em Vídeo</strong> en YouTube (Português con subtítulos), Cisco Networking Academy (cursos con certificado gratis) y la documentación oficial de cada lenguaje. El secreto no es el curso: es <strong>hacer proyectos pequeños cada semana</strong> y terminarlos.</p>"
+        },
+        {
+          "titulo": "Examen final de Programación básica",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los cinco módulos: lógica, HTML, CSS, Python, JavaScript y C++. Al aprobarlo podrás solicitar tu certificado.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Un programa es…",
+              "opciones": [
+                "Una lista de instrucciones exactas",
+                "Una carpeta de archivos",
+                "Un teclado"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El pseudocódigo se escribe…",
+              "opciones": [
+                "Con sintaxis perfecta",
+                "En tu idioma, antes del código real",
+                "Solo en inglés"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué etiqueta HTML crea un enlace?",
+              "opciones": [
+                "&lt;link&gt;",
+                "&lt;a&gt;",
+                "&lt;href&gt;"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "CSS se encarga de…",
+              "opciones": [
+                "La lógica",
+                "Los estilos visuales",
+                "La base de datos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En Python, print(\"2\" + \"3\") muestra…",
+              "opciones": [
+                "5",
+                "23",
+                "Un error"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La sangría en Python…",
+              "opciones": [
+                "Es decorativa",
+                "Es obligatoria: define qué va dentro de if y for",
+                "Solo molesta"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Las funciones en Python se crean con…",
+              "opciones": [
+                "función",
+                "def",
+                "create"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "JavaScript agrega a una página…",
+              "opciones": [
+                "Interactividad",
+                "Solo las imágenes",
+                "El hosting"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La consola del navegador se abre con…",
+              "opciones": [
+                "F1",
+                "F5",
+                "F12"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En C++ todo programa empieza en…",
+              "opciones": [
+                "start()",
+                "main()",
+                "run()"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "«Compilar» significa…",
+              "opciones": [
+                "Traducir todo el código de una vez a un ejecutable",
+                "Ejecutar línea por línea",
+                "Subirlo a internet"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para vender webs y tiendas, el camino siguiente es…",
+              "opciones": [
+                "Solo C++",
+                "HTML, CSS y JavaScript en profundidad",
+                "Dejar de programar"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}

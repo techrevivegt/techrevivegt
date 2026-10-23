@@ -1,0 +1,359 @@
+{
+  "titulo": "Diseño gráfico básico",
+  "publicado": true,
+  "orden": 9,
+  "descripcion": "Aprende diseño gráfico desde cero con herramientas 100 % gratuitas: composición, jerarquía, color y tipografías; Canva como profesional; Photopea y GIMP para editar imágenes y quitar fondos; y al final diseña tu propio logo y kit de marca completo para tu negocio o emprendimiento.",
+  "imagen": "/img/p-app.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "5 semanas",
+  "horas": "16",
+  "nivel": "Principiante",
+  "certificado": true,
+  "requisitos": "Ninguno. Todas las herramientas son gratuitas y funcionan en el navegador o en tu computadora.",
+  "objetivos": [
+    "Aplicar los principios del diseño en cualquier publicación",
+    "Crear publicaciones profesionales en Canva con tu propia marca",
+    "Editar imágenes en Photopea y GIMP",
+    "Diseñar tu logo y kit de marca completo"
+  ],
+  "modulos": [
+    {
+      "titulo": "Fundamentos visuales",
+      "lecciones": [
+        {
+          "titulo": "Composición y jerarquía: ordenar antes de decorar",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Dirigir la mirada con el tamaño y el contraste</li><li>Alineas los elementos en cuadrículas</li><li>Amar el espacio en blanco</li></ul></aside><p>Diseñar no es poner emojis y brillos: es <strong>ordenar información</strong> para que la persona entienda en un segundo qué importa más.</p><ul><li><strong>Jerarquía:</strong> el elemento principal (el precio, el título, la foto) debe ser el más grande y claro. Si todo grita, nada se escucha.</li><li><strong>Alineación:</strong> los textos y fotos comparten bordes imaginarios (una cuadrícula). Nada «flotando» sin tocar nada.</li><li><strong>Espacio en blanco:</strong> el aire alrededor de los elementos no está vacío: es lo que hace que respiren y se lean. Diseño lleno de todo = diseño amateur.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Ejercicio rápido: abrí el catálogo de una marca seria en Instagram y contá cuántos elementos hay por publicación. Casi siempre son 3 o 4, bien alineados.</p></aside>"
+        },
+        {
+          "titulo": "El color: rueda, combinaciones y significado",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Combinar colores con la rueda cromática</li><li>Elegir paletas de 2-3 colores, no arcoíris</li><li>Usar el contraste para legibilidad</li></ul></aside><ul><li><strong>Rueda cromática:</strong> colores opuestos (complementarios: azul/naranja, rojo/verde) contrastan y llaman la atención; colores vecinos (análogos: verde/vegetal/amarillo) armonizan.</li><li><strong>Significados:</strong> el rojo invita a comer (pienso en advertisimentos de pollo y comida rápida), el azul transmite confianza (bancos y salud), el verde, naturaleza y plata. Elegí según el mensaje, no tu favorito personal.</li><li><strong>Regla del 60-30-10:</strong> 60 % color base (fondo), 30 % color secundario, 10 % color de acento (el botón o el precio).</li><li><strong>Herramienta gratis:</strong> coolors.co genera paletas perfectas en un clic, y te da los códigos hexadecimales (los mismos que aprendiste en «Programación básica»).</li></ul><aside class=\"nota alerta\"><h4>⚠️</h4><p>Máximo 2 o 3 colores por diseño. Si tu publicación parece una caja de crayones, sobran: quitá hasta que quede solo el mensaje.</p></aside>"
+        },
+        {
+          "titulo": "Tipografías: la voz de tu diseño",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Distinguir letra con remates (Serif) y limpia (Sans Serif)</li><li>Combinar máximo 2 fuentes</li><li>Evitar los errores que gritan «amateur»</li></ul></aside><ul><li><strong>Serif</strong> (con remates, como Times): formal, elegante, confiable. Funciona en textos largos impresos.</li><li><strong>Sans Serif</strong> (sin remates, como Arial o Montserrat): moderna, clara, perfecta para pantallas y precios.</li><li><strong>Máximo dos fuentes por diseño:</strong> una para títulos y otra para texto. Más fuentes = caos.</li><li><strong>Legibilidad ante todo:</strong> evitá mayúsculas sostenidas en párrafos, letras «manuscritas» en textos largos, y contraste bajito (gris claro sobre blanco).</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Si dudás, usá Montserrat para los títulos y Open Sans para el texto: combinación gratis, profesional y disponible en Canva.</p></aside>"
+        },
+        {
+          "titulo": "Cuestionario: fundamentos visuales",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "La jerarquía visual significa…",
+              "opciones": [
+                "Todo igual de grande",
+                "Organizar por importancia usando tamaño y contraste",
+                "Poner un solo color"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La regla 60-30-10 aplica para…",
+              "opciones": [
+                "Fotos",
+                "Colores en el diseño",
+                "Tipografías"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuántas fuentes se recomiendan como máximo por diseño?",
+              "opciones": [
+                "1",
+                "6",
+                "2"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un par de colores complementarios es…",
+              "opciones": [
+                "Gris y blanco",
+                "Azul y naranja",
+                "Rojo y rosa"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Canva como profesional",
+      "lecciones": [
+        {
+          "titulo": "Canva como profesional: más allá de las plantillas",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Adaptar plantillas sin que se vea «genérico»</li><li>Usar capas, transparencias y elementos</li><li>Crear tu kit de marca gratis</li></ul></aside><p>Ya conocés Canva del módulo de emprendimiento; ahora subamos de nivel:</p><ul><li><strong>Las plantillas son punto de partida:</strong> cambialas de color, fuente y foto para que no se vean «idénticas a las de la competencia». Con tu paleta y tus tipografías = tu marca.</li><li><strong>Capas y transparencia:</strong> un bloque semitransparente de color detrás del texto lo hace legible sobre cualquier foto.</li><li><strong>Kit de marca:</strong> en Canva podés guardar tu logo, paleta y fuentes (incluso en el plan gratis) y aplicarlas a todo con un clic.</li><li><strong>Diseño desde cero:</strong> abrí un lienzo en blanco y aplica lo aprendido: jerarquía, alineación, 60-30-10, 2 fuentes.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Elegí una plantilla de «publicación de Instagram»</li><li>Cambiale colores y fuentes por los de tu marca (o tu negocio imaginario)</li><li>Aplicá la regla del 60-30-10 y descargala como PNG</li></ol></aside>"
+        },
+        {
+          "titulo": "Tamaños y formatos correctos para cada red",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Usar el tamaño exacto de cada plataforma</li><li>Elegir entre JPG, PNG y PDF</li><li>Exportar con calidad gratis</li></ul></aside><ul><li><strong>Post de Instagram/Facebook:</strong> 1080 × 1080 px</li><li><strong>Historias y Reels:</strong> 1080 × 1920 px (dejá libre arriba y abajo, donde van los botones de la app)</li><li><strong>Portada de Facebook:</strong> 851 × 315 px</li><li><strong>Formatos:</strong> JPG para fotos, PNG si hay texto o letrero (mantiene los bordes nítidos) y con fondo transparente para logos; PDF para imprimir.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>No subas al grupo de compras de Facebook un volante que se vea pixelado: un PNG de 1080 px se ve profesional y vale lo mismo de tiempo.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: publicación completa para tu marca",
+          "tipo": "tarea",
+          "duracion": "45 min",
+          "video": "",
+          "contenido": "<p>Diseñá en Canva una publicación real (1080×1080) para tu negocio o proyecto: usa tu paleta, máximo 2 fuentes, jerarquía clara y un llamado a la acción («Escribinos», «Hoy 2×1»). Exportala en PNG y mandásela a tu instructor por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: Canva y formatos",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "El tamaño correcto para una historia de Instagram es…",
+              "opciones": [
+                "1080 × 1080",
+                "1920 × 1080",
+                "1080 × 1920"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuándo conviene usar PNG en vez de JPG?",
+              "opciones": [
+                "Para fotos de paisajes",
+                "Para texto, logos y transparencias nítidos",
+                "Siempre es igual"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para que un texto se lea sobre una fotografía…",
+              "opciones": [
+                "Se agranda a lo loco",
+                "Se pone un bloque semitransparente detrás",
+                "Se cambia de foto"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Editar imágenes gratis",
+      "lecciones": [
+        {
+          "titulo": "Photopea: Photoshop gratis en tu navegador",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Abrir y editar imágenes en Photopea sin instalar nada</li><li>Quitar el fondo de una foto de producto</li><li>Usar capas y textos</li></ul></aside><p>Photopea (photopea.com) es un editor de nivel profesional, gratuito, que corre en el navegador y se ve casi idéntico a Photoshop:</p><ul><li><strong>Quitar el fondo:</strong> para fotos de producto, usá la herramienta de selección rápida (o «Eliminar fondo» automático) y después Archivo → Exportar como PNG transparente.</li><li><strong>Capas:</strong> cada elemento (foto, texto, forma) va en su propia capa: podés mover y editar una sin dañar las demás.</li><li><strong>Texto sobre imagen:</strong> agregá el texto, sombra suave y listo (menos es más: una frase, no un párrafo).</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Photopea abre también archivos PSD (de Photoshop): si algún día te envían uno, ya podés editarlo sin pagar licencias.</p></aside>"
+        },
+        {
+          "titulo": "GIMP: el editor instalado, gratis para siempre",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Instalar GIMP en tu computadora</li><li>Retocar, recortar y exportar imágenes</li><li>Decidir cuándo usar Photopea y cuándo GIMP</li></ul></aside><ul><li><strong>GIMP</strong> es el editor de escritorio gratuito (gimp.org): se instala en Windows y funciona sin internet, ideal para fotos grandes o muchos archivos.</li><li>Básico de cada día: recortar (herramienta de recorte), corregir brillo y contraste (Colores → Brillo y contraste), redimensionar (Imagen → Escalar) y exportar como JPG/PNG (Archivo → Exportar como).</li><li><strong>Regla de dedo:</strong> ¿trabajo rápido o en otra computadora? → Photopea. ¿Trabajo pesado, muchos archivos, siempre en mi PC? → GIMP.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Instalá GIMP o abrí Photopea</li><li>Quitale el fondo a la foto de un producto tuyo</li><li>Exportala como PNG con fondo transparente y probándola sobre un fondo de color en Canva</li></ol></aside>"
+        },
+        {
+          "titulo": "Cuestionario: edición de imágenes",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Photopea corre…",
+              "opciones": [
+                "Solo de pago",
+                "Gratis en el navegador, sin instalar",
+                "Solo en celular"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué son las capas en un editor?",
+              "opciones": [
+                "Fotos duplicadas",
+                "Elementos separados que se editan sin dañarse entre sí",
+                "Filtros de colores"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Si querés el editor instalado y sin depender de internet…",
+              "opciones": [
+                "Canva",
+                "GIMP",
+                "Paint básico"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Tu identidad de marca",
+      "lecciones": [
+        {
+          "titulo": "Qué hace a un buen logo (y qué lo mata)",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Diseñar logos simples y memorables</li><li>Asegurarte de que funcione chiquito y en blanco y negro</li><li>Evitar los 3 errores fatales</li></ul></aside><p>Un buen logo es <strong>simple</strong> (se puede dibujar de memoria), <strong>memorable</strong> y <strong>funciona en cualquier situación</strong>: en tu factura en blanco y negro, en un sello de 2 cm y en una valla enorme.</p><ul><li>Errores fatales: usar imágenes de bancos de dibujitos (se ve genérico y puede dar problemas legales), 5 colores, degradados horribles, y tipografías manuscritas ilegibles.</li><li>Elegí +1 símbolo o las iniciales de tu marca + 1-2 colores de tu paleta + tu tipografía de títulos: punto.</li><li>Antes de decidir, improváselo a alguien y pedile que lo describa desde la memoria: si lo recuerda bien, vas bien.</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>La tortillería de la esquina pasó de un logo con 6 colores y 3 gallos (dibujado en Word) a un sello redondo con «TDJ» en Montserrat, dorado sobre azul marino. En WhatsApp queda nítido, en la factura también, y la gente los reconoce en las entregas.</p></aside>"
+        },
+        {
+          "titulo": "Tu kit mínimo de marca (guardalo para siempre)",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Exportar tu logo en los formatos correctos</li><li>Guardar tu paleta y fuentes en un documento</li><li>Crear tu primera plantilla reutilizable</li></ul></aside><p>Tu «kit de marca» cabe en una carpeta de Google Drive y te ahorra horas cada semana:</p><ol><li><strong>Logo en 3 archivos:</strong> PNG con fondo transparente (para poner sobre fotos), JPG normal (para facturas/documentos) y SVG si lo tenés (para imprimir grande sin que se pixelice).</li><li><strong>Paleta con códigos hexadecimales:</strong> anota los 3 códigos (ej: <code>#1e3a8a</code>) en un texto llamado «mi-marca.txt» en el Drive.</li><li><strong>2 fuentes elegidas:</strong> la de títulos y la de texto (descargalas).</li><li><strong>Una plantilla reutilizable:</strong> en Canva duplicá tu mejor publicación, cambiá solo la foto y el texto, y tenés tus próximos 10 posts hechos en minutos.</li></ol>"
+        },
+        {
+          "titulo": "Tarea final: tu identidad completa",
+          "tipo": "tarea",
+          "duracion": "60 min",
+          "video": "",
+          "contenido": "<p>1) Diseñá un logo simple (½ hora, en Canva o Photopea) para tu negocio o proyecto. 2) Exportá tu kit: PNG transparente + JPG + archivo con tus 3 hexadecimales y tus 2 fuentes. 3) Diseñá un post usando todo el kit. Mandale todo a tu instructor.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Examen final de Diseño gráfico básico",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los cuatro módulos del curso. Al aprobarlo podrás solicitar tu certificado.</p>",
+          "preguntas": [
+            {
+              "pregunta": "El diseño gráfico es…",
+              "opciones": [
+                "Poner muchos colores",
+                "Organizar información visual para comunicar mejor",
+                "Usar Photoshop de pago"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La regla 60-30-10 aplica a…",
+              "opciones": [
+                "Tipografías",
+                "Colores en el diseño",
+                "Tamaños de fotos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuántas fuentes máximo en un diseño profesional?",
+              "opciones": [
+                "5",
+                "2",
+                "Siempre 1"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La tipografía Sans Serif (como Montserrat) transmite…",
+              "opciones": [
+                "Tradición, elegancia formal",
+                "Modernidad y claridad para pantalla",
+                "Romance"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El tamaño de una publicación de Instagram es…",
+              "opciones": [
+                "1080 × 1920",
+                "1080 × 1080",
+                "851 × 315"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "PNG transparente es ideal para…",
+              "opciones": [
+                "Fotos de paisajes",
+                "Logos y textos sobre fotos",
+                "Impresión grande"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Photopea es…",
+              "opciones": [
+                "Un editor pago",
+                "Un editor gratis en el navegador que acepta PSD",
+                "Una red social"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "GIMP se instala en la computadora y sirve para…",
+              "opciones": [
+                "Jugar",
+                "Editar imágenes sin internet",
+                "Ver videos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un buen logo debe funcionar…",
+              "opciones": [
+                "Solo en colores brillantes",
+                "En blanco y negro y en tamaño pequeño",
+                "Solo en pantalla"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Tu kit de marca mínimo incluye…",
+              "opciones": [
+                "El logo en PNG transparente, la paleta hex, las 2 fuentes y una plantilla",
+                "Solo el logo",
+                "Nada, se improvisa"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}

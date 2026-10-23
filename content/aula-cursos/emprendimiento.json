@@ -2,11 +2,11 @@
   "titulo": "Emprendimiento: de la idea a tu negocio",
   "publicado": true,
   "orden": 5,
-  "descripcion": "Convierte tu idea en un negocio que deje plata: identifica un problema real de clientes guatemaltecos, valida antes de invertir, ponle precio con números, formaliza cuando toca ante la SAT y promociónate gratis con WhatsApp Business, Canva y estados.",
+  "descripcion": "Emprende desde cero: mentalidad sin mitos, tipos de negocio y tus habilidades que ya valen plata. Luego tendrás que validar la idea con clientes reales, ponerle precio con números, formalizar ante la SAT cuando toque y promocionarte gratis con WhatsApp Business, Canva y estados.",
   "imagen": "/img/emprendedor.jpg",
   "docente": "Instructores de TechRevive",
-  "duracion": "5 semanas",
-  "horas": "15",
+  "duracion": "6 semanas",
+  "horas": "20",
   "nivel": "Todos los niveles",
   "certificado": true,
   "requisitos": "Ninguno. Tener una idea en mente ayuda, pero no es obligatorio.",
@@ -17,6 +17,90 @@
     "Promocionar gratis con WhatsApp Business y redes sociales"
   ],
   "modulos": [
+    {
+      "titulo": "Desde cero: mentalidad y primeros pasos",
+      "lecciones": [
+        {
+          "titulo": "Mentalidad emprendedora (y los mitos que la frenan)",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Desmontar los 3 mitos que frenan a los guatemaltecos</li><li>Entender cómo piensa alguien que emprende</li><li>Empezar pequeño, pero empezar</li></ul></aside><p>Antes de hablar de precios o de marketing hay que ganar la batalla interna. Estos son los mitos que más frenan en Guatemala:</p><ul><li><strong>«Necesito mucho dinero para empezar»:</strong> falso. La mayoría de negocios exitosos empezaron así de chicos (venta por WhatsApp, servicios por encargo). Empezá con lo mínimo que te sirva para poner a prueba la idea.</li><li><strong>«Necesito un título»:</strong> falso. Lo que vende es el resultado para el cliente, no tu diploma.</li><li><strong>«Esperaré el momento perfecto»:</strong> falso. El momento perfecto es cuando ya validaste con 10 personas reales, no cuando las estrellas se alinean.</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Doña Marta empezó su venta de empanadas con Q80 de ingredientes, mandando audios a su grupo de WhatsApp de la iglesia. En dos meses ya tenía clientes fijos y ahorró para el primer mes de alquiler de un local pequeño. No esperó tener todo: empezó con lo que tenía.</p></aside><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Un emprendedor no es el que tiene la idea más original: es el que prueba, ajusta y vuelve a probar sin rendirse a la primera.</p></aside>"
+        },
+        {
+          "titulo": "Tipos de negocio y cuál va con vos",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Distinguir producto, servicio, digital y mixto</li><li>Ver ventajas y desventajas reales en el contexto chapín</li><li>Elegir el tipo que encaje con tu vida</li></ul></aside><p>No todos los negocios piden lo mismo. Conocé las opciones antes de decidir:</p><ul><li><strong>Producto físico:</strong> comida, ropa, repuestos. Necesita inventario y espacio, pero es fácil de entender («comprás en X, vendés en Y»).</li><li><strong>Servicio:</strong> técnico de computadoras a domicilio, limpieza, reparto. Poco inventario: tu capital principal son tus habilidades y tu tiempo.</li><li><strong>Digital:</strong> cursos, diseños, administrar redes de otros. Casi cero inversión inicial, pero necesita más disciplina y presencia en línea.</li><li><strong>Mixto:</strong> la tienda que también reparte a domicilio por WhatsApp.</li></ul><aside class=\"nota clave\"><h4>📌 Puntos clave para recordar</h4><ul><li>El servicio necesita menos dinero para arrancar.</li><li>El producto escala más fácil una vez validado.</li><li>El digital depende 100 % de que domines las herramientas de los otros cursos de esta aula.</li></ul></aside>"
+        },
+        {
+          "titulo": "Tus habilidades ya valen dinero",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Hacer tu inventario de habilidades ocultas</li><li>Detectar oportunidades en tu colonia o municipio</li><li>Convertir lo que hacés gratis en un servicio</li></ul></aside><p>No empezás de cero: empezás desde lo que ya sabés hacer. Escribí todo lo que la gente te pide hacer (aunque sea «de favor»):</p><ul><li>¿Te piden arreglar el celular, la laptop, la impresora? → servicio técnico.</li><li>¿Hacés el mejor atol o la mejor salsa de la colonia? → negocio de comida.</li><li>¿Explicás la tarea a los delegados del cole y lo entienden mejor que cuando los profes la explican? → tutorías.</li><li>¿Llevas tus cuentas ordenadas en una hoja? → contabilidad informal para otros pequeños negocios (con los límites legales que promocionaremos luego).</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Escribí 5 habilidades que ya tenés</li><li>Escribí 3 «dolores» que ves todos los días en tu colonia</li><li>Cruzá la lista: ¿alguna habilidad tuya resuelve alguno de esos dolores?</li></ol></aside>"
+        },
+        {
+          "titulo": "Tarea: tu inventario de emprendedor",
+          "tipo": "tarea",
+          "duracion": "30 min",
+          "video": "",
+          "contenido": "<p>Completá en un documento o audio: 1) Mis 5 habilidades. 2) Los 3 dolores que veo a mi alrededor. 3) La posible combinación (cómo mi habilidad X resuelve el dolor Y). 4) ¿Qué tipo de negocio sería (producto, servicio, digital o mixto)? Enviáselo a tu instructor por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: desde cero",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "El mito más común que frena a los que quieren emprender es…",
+              "opciones": [
+                "El dinero inicial",
+                "Que creen necesitar mucho dinero o el «momento perfecto»",
+                "La falta de clientes"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un negocio de servicio (como técnico a domicilio) se caracteriza por…",
+              "opciones": [
+                "Mucho inventario",
+                "Poco inventario: vendés tu habilidad y tiempo",
+                "No necesitar habilidades"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para encontrar tu idea emprendedora conviene empezar por…",
+              "opciones": [
+                "Copiar al más rico",
+                "Tu propio inventario de habilidades y los dolores de tu comunidad",
+                "Esperar a ganar la lotería"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "«Empezar pequeño» significa…",
+              "opciones": [
+                "Nunca crecer",
+                "Validar la idea con lo mínimo antes de endeudarse",
+                "No registrarse jamás"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
     {
       "titulo": "Idea y números básicos",
       "lecciones": [
