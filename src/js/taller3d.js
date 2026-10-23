@@ -19,21 +19,21 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 /* ───────────── índice de piezas ───────────── */
 const BY = {};
-const KINDS = { cases: "case", boards: "board", cpus: "cpu", coolers: "cooler", rams: "ram", gpus: "gpu", drives: "drive", psus: "psu", laptops: "laptop" };
+const KINDS = { cases: "case", boards: "board", cpus: "cpu", coolers: "cooler", rams: "ram", gpus: "gpu", drives: "drive", psus: "psu", laptops: "laptop", lwifi: "lwifi", chargers: "charger", bats: "batt", lfans: "lfan", screens: "screen" };
 if (CAT) Object.keys(KINDS).forEach((k) => (CAT[k] || []).forEach((p) => { p.kind = KINDS[k]; BY[p.id] = p; }));
 const P = (id) => (id ? BY[id] || null : null);
 const GEN = (CAT && CAT.GEN) || {};
 const genName = (g) => (GEN[g] ? GEN[g][0] : g);
 
-const KIND_LABEL = { case: "Gabinete", board: "Placa madre", cpu: "Procesador", cooler: "Disipador", ram: "Memoria RAM", gpu: "Tarjeta de video", drive: "Almacenamiento", psu: "Fuente de poder", laptop: "Laptop" };
+const KIND_LABEL = { case: "Gabinete", board: "Placa madre", cpu: "Procesador", cooler: "Disipador", ram: "Memoria RAM", gpu: "Tarjeta de video", drive: "Almacenamiento", psu: "Fuente de poder", laptop: "Laptop", lwifi: "Tarjeta WiFi", charger: "Cargador", batt: "Batería", lfan: "Ventilador", screen: "Pantalla" };
 const TABS = {
   pc: [["case", "Gabinetes"], ["board", "Placas madre"], ["cpu", "Procesadores"], ["cooler", "Disipadores"], ["ram", "Memoria RAM"], ["gpu", "Tarjetas de video"], ["drive", "Almacenamiento"], ["psu", "Fuentes"]],
-  lap: [["laptop", "Laptops"], ["ram", "Memoria RAM"], ["drive", "Almacenamiento"]],
+  lap: [["laptop", "Laptops"], ["ram", "Memoria RAM"], ["drive", "Almacenamiento"], ["lwifi", "WiFi"], ["batt", "Baterías"], ["lfan", "Ventiladores"], ["screen", "Pantallas"], ["charger", "Cargadores"]],
 };
 
 /* ───────────── estado ───────────── */
 function emptyPC() { return { case: null, board: null, cpu: null, cooler: null, gpu: null, psu: null, ram: [], m2: [], bay: [], steps: {} }; }
-function emptyLap() { return { laptop: null, ram: [], m2: [], b25: [], cover: true, batt: true }; }
+function emptyLap() { return { laptop: null, ram: [], m2: [], b25: [], wifi: null, bat: null, fan: [], screen: null, charger: null, cover: true, batt: true, edp: true, clean: false }; }
 const S = { mode: "pc", pc: emptyPC(), lap: emptyLap(), compat: true };
 const UI = { tab: "case", armed: null, sel: null, powered: false, done: false, lastPost: null };
 
@@ -59,7 +59,11 @@ function load() {
       S.lap.ram = (d.lap.ram || []).map((id) => okId(id, "ram"));
       S.lap.m2 = (d.lap.m2 || []).map((id) => okId(id, "drive"));
       S.lap.b25 = (d.lap.b25 || []).map((id) => okId(id, "drive"));
+      S.lap.fan = (d.lap.fan || []).map((id) => okId(id, "lfan"));
+      S.lap.wifi = okId(d.lap.wifi, "lwifi"); S.lap.bat = okId(d.lap.bat, "batt");
+      S.lap.screen = okId(d.lap.screen, "screen"); S.lap.charger = okId(d.lap.charger, "charger");
       S.lap.cover = d.lap.cover !== false; S.lap.batt = d.lap.batt !== false;
+      S.lap.edp = d.lap.edp !== false; S.lap.clean = !!d.lap.clean;
     }
     UI.done = localStorage.getItem("tr-t3d:done:" + LESSON) === "1";
   } catch (e) { /* estado dañado: se empieza de cero */ }
@@ -89,6 +93,11 @@ function slotsFor(p) {
     case "laptop": return ["laptop"];
     case "ram": return L ? range(L.ram).map((i) => "ram:" + i) : [];
     case "drive": return L ? (p.size === "m2" ? L.m2.map((_, i) => "m2:" + i) : range(L.b25).map((i) => "b25:" + i)) : [];
+    case "lwifi": return ["wifi"];
+    case "batt": return ["bat"];
+    case "lfan": return L ? range(L.fans).map((i) => "fan:" + i) : [];
+    case "screen": return ["screen"];
+    case "charger": return ["charger"];
     default: return [];
   }
 }
@@ -225,6 +234,35 @@ function check(p, key) {
         } else if (!L.b25) bad("Esta laptop no tiene bahía de 2.5\": solo M.2.");
         break;
       }
+      case "lwifi":
+        if (!L) return pre("Primero elige una laptop.");
+        if (p.key !== L.wifi) { bad("Esta laptop usa ranura " + (L.wifi === "mpcie" ? "mini PCIe" : "M.2 2230 A/E-key") + " para el WiFi y esa tarjeta es " + (p.key === "mpcie" ? "mini PCIe" : "M.2 2230") + ". No encaja."); break; }
+        good("Conduce las dos antenas (MAIN y AUX) y conéctalas a las pestañas correspondientes.");
+        break;
+      case "batt":
+        if (!L) return pre("Primero elige una laptop.");
+        if (p.fit.indexOf(S.lap.laptop) < 0) { bad("Las baterías de laptop no son universales: esta es para " + p.fit.map((x) => P(x).name.split(" (")[0]).join(", ") + ". El chasis y el conector no coinciden."); break; }
+        break;
+      case "lfan":
+        if (!L) return pre("Primero elige una laptop.");
+        if (!S.lap.cover === false) {}
+        if (p.mm !== L.fanSize) { bad("No desciende el aire: el ventilador original es de " + L.fanSize + " mm y este de " + p.mm + " mm; los tornillos y el ducto no calzan."); break; }
+        break;
+      case "screen":
+        if (!L) return pre("Primero elige una laptop.");
+        if (p.size !== L.scr.size) { bad("El marco es para " + L.scr.size + ": una pantalla de " + p.size + " no calza físicamente."); break; }
+        if (p.conn !== L.scr.conn) { bad("El cable plano de video de esta laptop es " + L.scr.conn + " y esta pantalla requiere " + p.conn + ". No es intercambiable."); break; }
+        if (L.stock.screen && P(L.stock.screen[0]).id !== p.id) good("Mejora válida: " + p.acabo + " en lugar de " + P(L.stock.screen[0]).acabo + ", mismo conector y tamaño.");
+        break;
+      case "charger":
+        if (!L) return pre("Primero elige una laptop.");
+        if (L.ac.t === "usbc" || p.t === L.ac.t) {
+          if (p.W < L.ac.min) warn("Entrega " + p.W + " W y la laptop pide " + L.ac.min + " W: cargará lento y bajo carga pesada la batería se descargará aunque esté enchufada. La fuente se sobrecalienta.");
+          if (L.ac.t === "barrel" && p.t === "usbc") { /* no pasa */ }
+        } else { bad("Esta laptop carga por conector de punta (" + L.ac.min + " W): el USB-C de otro equipo no le sirve; su puerto USB-C no acepta carga."); break; }
+        if (p.t === "barrel" && L.ac.t === "barrel" && p.W < L.ac.min && !warn) {}
+        if (p.t === "barrel" && L.id === "lap-gamer" && p.W < 180) warn("Una laptop gamer sin sus " + L.ac.min + " W limita el procesador y la tarjeta (modo «batería» aunque esté enchufada).");
+        break;
       default: return { lvl: 2, msgs: [[2, "Es una pieza de PC de escritorio."]] };
     }
   }
@@ -311,8 +349,10 @@ function install(id, key) {
   if (!p) return false;
   if (S.mode === "lap" && p.kind !== "laptop") {
     if (!S.lap.laptop) { say("Primero elige una laptop.", "warn"); return false; }
-    if (S.lap.cover) { say("Primero quita los tornillos y la tapa inferior.", "warn"); return false; }
-    if (S.lap.batt) { say("¡Alto! Desconecta la batería antes de tocar la placa. Así evitas cortocircuitos.", "bad"); return false; }
+    if (["screen", "charger"].indexOf(p.kind) < 0) {
+      if (S.lap.cover) { say("Primero quita los tornillos y la tapa inferior.", "warn"); return false; }
+      if (S.lap.batt) { say("¡Alto! Desconecta la batería antes de tocar la placa. Así evitas cortocircuitos.", "bad"); return false; }
+    }
   }
   key = key || bestSlot(p);
   if (!key) {
@@ -320,16 +360,32 @@ function install(id, key) {
     say((r.msgs.find((m) => m[0] === 2 || m[0] < 0) || r.msgs[0] || [0, "No hay una ranura disponible."])[1], r.lvl === 2 ? "bad" : "warn");
     return false;
   }
-  if (getAt(key)) { say("Esa ranura ya está ocupada.", "warn"); return false; }
+  if (getAt(key)) {
+    if (p.kind === "laptop" && getAt(key) !== p.id) {
+      if (!window.confirm("¿Cambiar la laptop? Se perderá todo lo instalado en «" + P(getAt(key)).name + "».")) return false;
+    } else {
+      const r0 = check(p, key); // si la pieza ni siquiera cabe aquí, explicarlo aunque esté ocupada
+      if (r0.lvl === 2) { say("No se podría cambiar tampoco: " + r0.msgs.filter((m) => m[0] === 2).map((m) => m[1]).join(" "), "bad"); return false; }
+      say("Esa ranura ya está ocupada. Primero retira " + P(getAt(key)).name + " (tócalo en el 3D o en la ficha).", "warn"); return false;
+    }
+  }
   const r = check(p, key);
   if (r.lvl < 0) { say(r.msgs[0][1], "warn"); return false; }
   if (r.lvl === 2) { say("No se puede: " + r.msgs.filter((m) => m[0] === 2).map((m) => m[1]).join(" "), "bad"); return false; }
   setAt(key, id);
+  if (p.kind === "screen") S.lap.edp = false; // se reemplazó: falta conectar el cable eDP
+  if (p.kind === "batt") S.lap.batt = false; // batería nueva: hay que conectarla
+  if (p.kind === "lfan") S.lap.clean = false;
   if (p.kind === "laptop") {
     S.lap.ram = range(p.ram).map((i) => (p.stock.ram || [])[i] || null);
     S.lap.m2 = p.m2.map((_, i) => (p.stock.m2 || [])[i] || null);
     S.lap.b25 = range(p.b25).map((i) => (p.stock.b25 || [])[i] || null);
-    S.lap.cover = true; S.lap.batt = true;
+    S.lap.fan = range(p.fans).map((i) => (p.stock.fan || [])[i] || null);
+    S.lap.wifi = p.stock.wifi || null;
+    S.lap.bat = p.stock.batt ? (Array.isArray(p.stock.batt) ? p.stock.batt[0] : p.stock.batt) : null;
+    S.lap.screen = p.stock.screen ? p.stock.screen[0] : null;
+    S.lap.charger = null;
+    S.lap.cover = true; S.lap.batt = true; S.lap.edp = true; S.lap.clean = false;
   }
   if (p.kind === "case") { S.pc.bay = []; }
   if (p.kind === "board") { S.pc.ram = []; S.pc.m2 = []; S.pc.steps.bios = false; }
@@ -347,7 +403,7 @@ function remove(key) {
   const id = getAt(key), p = P(id);
   if (!p) return;
   const st = ST(), extra = [];
-  if (S.mode === "lap" && p.kind !== "laptop") {
+  if (S.mode === "lap" && p.kind !== "laptop" && ["screen", "charger"].indexOf(p.kind) < 0) {
     if (S.lap.cover) { say("Primero quita la tapa inferior.", "warn"); return; }
     if (S.lap.batt) { say("¡Alto! Desconecta la batería antes de retirar piezas.", "bad"); return; }
   }
@@ -476,16 +532,33 @@ function postLap() {
   const R = { ok: false, sympt: [], hints: [], warns: [], spin: false };
   const fail = (sym, hint) => { R.sympt.push(sym); if (hint) R.hints.push(hint); return R; };
   if (!L) return fail("No hay laptop en la mesa.", "Elige una laptop en el catálogo.");
-  if (!S.lap.batt) return fail("Presionas el botón y no enciende ni una luz.", "La batería está desconectada. Vuelve a conectarla (paso «Conectar batería») antes de probar.");
+  const scr = P(S.lap.screen), chg = P(S.lap.charger), bat = P(S.lap.bat), wf = P(S.lap.wifi);
+  const fans = S.lap.fan.map(P);
+  const plugged = !!chg;
+  if (!S.lap.batt && !plugged) return fail("Presionas el botón y no enciende ni una luz, ni con el cargador: ¡no hay cargador conectado!", "Conecta el cargador o vuelve a conectar la batería (paso «Conectar batería»).");
+  if (!S.lap.batt && plugged && chg.W < L.ac.min) { R.spin = true; return fail("La luz naranja parpadea. Al intentar encender se apaga de inmediato.", "El cargador no da los watts que necesita (" + chg.W + " W de " + L.ac.min + " W) y la batería está desconectada: usa su cargador original o reconecta la batería."); }
+  if (!bat && !plugged) return fail("No responde al botón: no tiene batería y no está enchufada.", "Instala una batería o conecta el cargador.");
   R.spin = true;
   const mods = S.lap.ram.map(P).filter(Boolean);
   const gb = (L.solder || 0) + mods.reduce((a, r) => a + r.gb, 0);
-  if (!gb) return fail("Enciende, el ventilador gira, pero la pantalla queda negra y la luz de Bloq Mayús parpadea.", "Falta la memoria RAM.");
+  if (!gb) return fail("Enciende, pero la pantalla queda negra y la luz de Bloq Mayús parpadea 3 veces.", "Falta la memoria RAM (o la que pusiste no va bien asentada).");
+  if (fans.some((f) => !f)) return fail("Arranca unos segundos, el procesador sube a 95 °C y la laptop se apaga sola con un pitido largo.", "Falta un ventilador: sin él el procesador se quema. Instálalo en el slot marcado.");
+  if (!scr) return fail("Enciende el teclado y suenan los ventiladores, pero la pantalla está totalmente negra, ni retroiluminada.", "No hay pantalla instalada: la retiraste del chasis.");
+  if (!S.lap.edp) return fail("Todo enciende, pero la pantalla está negra. Con una linterna apenas se ve el fondo (¡sí da video!).", "El cable eDP que va de la placa a la pantalla quedó suelto o mal asentado. Conéctalo con el paso «Conectar el cable eDP».");
   R.ok = true;
-  if (!S.lap.cover) R.warns.push(["media", "Encendiste sin la tapa inferior: ciérrala y atorníllala antes de entregar (el flujo de aire del ventilador depende de ella)."]);
-  if (mods.length === 1 && L.ram === 2) R.warns.push(["baja", "Un solo módulo: canal sencillo. Con dos iguales rinde más, sobre todo el video integrado."]);
+  // temperatura y desempeño
+  let temp = 40;
+  if (!S.lap.clean) { temp = 62; R.warns.push(["media", "Temperatura en reposo " + temp + " °C y ventiladores ruidosos: están llenos de polvo. Haz la limpieza (paso «Limpiar ventilador y rejillas»)."]); }
+  if (mods.length === 1 && L.ram === 2) R.warns.push(["baja", "Un solo módulo: canal sencillo. Con dos iguales (dual channel) el video integrado rinde mucho más."]);
   if (gb > L.maxRam) R.warns.push(["baja", "Solo se reconocen " + L.maxRam + " GB."]);
-  if (gb < 8) R.warns.push(["baja", "Solo " + gb + " GB de RAM: Windows irá lento."]);
+  if (gb < 8) R.warns.push(["baja", "Solo " + gb + " GB de RAM: Windows irá muy lento."]);
+  if (!wf) R.warns.push(["media", "Windows no muestra redes WiFi: la laptop quedó sin tarjeta inalámbrica (sí funcionaría por cable de red o un adaptador USB)."]);
+  if (wf && wf.key !== L.wifi) R.warns.push(["baja", "Ninguna antena conectada: revisa los cables MAIN/AUX en la tarjeta WiFi."]);
+  if (plugged && chg.W < L.ac.min) R.warns.push([L.ac.min >= 180 ? "alta" : "media", "Cargador insuficiente (" + chg.W + " W en lugar de " + L.ac.min + " W): " + (L.ac.min >= 180 ? "limitará severamente el rendimiento y la fuente se sobrecalienta." : "cargará lento y bajo carga pesada se descargará incluso enchufada.")]);
+  if (!plugged && bat) R.warns.push(["baja", "Estás usando solo batería: " + bat.wh + " Wh dan unas " + Math.round(bat.wh / 12) + " h de uso liviano. Recuerda conectar el cargador cuando puedas."]);
+  if (bat && bat.fit.indexOf(S.lap.laptop) < 0) {} // no debería pasar
+  if (scr && L.stock.screen && P(L.stock.screen[0]).id !== scr.id) R.warns.push(["baja", "Pantalla mejorada a " + scr.acabo + " · " + scr.hz + " Hz. Buena reparación."]);
+  if (scr && scr.hz === 144 && !(L.gpu && L.gpu.g >= 60)) R.warns.push(["baja", "Pantalla de 144 Hz: para aprovecharla el juego debe superar los 60 FPS (esta GPU rinde más humilde). Igual mejora la suavidad del escritorio."]);
   const drives = S.lap.m2.map(P).filter(Boolean).concat(S.lap.b25.map(P).filter(Boolean)).sort((a, z) => z.speed - a.speed);
   if (!drives.length) R.noBoot = true;
   const ram = { gb, dual: L.solder ? true : mods.length >= 2, list: mods };
@@ -496,17 +569,22 @@ function postLap() {
     title: "TechRevive UEFI BIOS · " + L.name,
     rows: [
       ["Procesador", cpu.name],
+      ["Temperatura CPU", temp + " °C" + (temp > 55 ? " ⚠ (polvo)" : "")],
       ["Memoria", gb + " GB " + L.mem + (L.solder ? " (soldada)" : " · " + (ram.dual ? "Dual channel" : "Canal sencillo"))],
-      ["Video", gpuName],
+      ["Video", gpuName + " · pantalla " + (scr ? scr.size + " " + scr.hz + " Hz" : "—")],
       ["Almacenamiento", drives.length ? drives.map((d) => d.name).join(" · ") : "Ninguno detectado"],
-      ["Batería", "Conectada · 87 % · cargando"],
+      ["WiFi", wf ? wf.name + " (" + wf.std + ")" : "Ninguna instalada"],
+      ["Batería", bat ? bat.wh + " Wh · al " + (S.lap.batt ? "90 %" : "desconectada ⚠") : "Sin batería"],
+      ["Cargador", chg ? chg.name + (chg.W < L.ac.min ? " ⚠" : "") : "No conectado"],
     ],
   };
   R.est = drives.length ? estimates(cpu, gScore, ram, drives, gpuName) : null;
   const w11 = GEN[cpu.gen] && GEN[cpu.gen][1];
   R.win11 = w11 && gb >= 4 && drives.length ? [true, "Compatible con Windows 11."] : [false, !w11 ? genName(cpu.gen) + " no es compatible con Windows 11: usa Windows 10 o Linux." : gb < 4 ? "Windows 11 pide al menos 4 GB de RAM." : "Falta un disco para instalar Windows."];
   R.price = totalPrice();
-  R.complete = !!drives.length && !R.warns.some((x) => x[0] === "alta");
+  R.complete = !!drives.length && !R.warns.some((x) => x[0] === "alta") && S.lap.cover;
+  if (!S.lap.cover && R.complete === false) {}
+  if (!S.lap.cover) R.complete = false;
   return R;
 }
 
@@ -517,8 +595,8 @@ function totalPrice() {
   }
   const L = P(S.lap.laptop);
   if (!L) return 0;
-  const stock = [].concat(L.stock.ram || [], L.stock.m2 || [], L.stock.b25 || []).filter(Boolean);
-  const now = [].concat(S.lap.ram, S.lap.m2, S.lap.b25).filter(Boolean);
+  const stock = [].concat(L.stock.ram || [], L.stock.m2 || [], L.stock.b25 || [], L.stock.fan || [], L.stock.screen || [], L.stock.batt ? [Array.isArray(L.stock.batt) ? L.stock.batt[0] : L.stock.batt] : [], L.stock.wifi ? [L.stock.wifi] : []).filter(Boolean);
+  const now = [].concat(S.lap.ram, S.lap.m2, S.lap.b25, S.lap.fan, [S.lap.wifi, S.lap.bat, S.lap.screen, S.lap.charger]).filter(Boolean);
   const extra = now.slice();
   stock.forEach((id) => { const i = extra.indexOf(id); if (i >= 0) extra.splice(i, 1); });
   return L.price + extra.reduce((a, id) => a + (P(id).price || 0), 0);
@@ -994,6 +1072,7 @@ function lapLayout(L) {
     gpu: L.gpu ? { x: -4, z: -d / 2 + 6.5 } : null,
     ram: range(L.ram).map((i) => ({ x: -1.5, z: -d / 2 + 10.5 + i * 3.6 })),
     m2: L.m2.map((s, i) => ({ x: w / 2 - 6.5, z: -d / 2 + 11.5 + i * 3.2 })),
+    wifi: { x: -w / 2 + 4.4, z: -d / 2 + 4.4 },
     b25: range(L.b25).map(() => ({ x: -w / 2 + 7, z: -d / 2 + 12.5 })),
     batt: { x: 0, z: d / 2 - 4, w: w - 10, d: 6 },
   };
@@ -1022,6 +1101,40 @@ function buildSODIMM(r, s, parent, key) {
   parent.add(g);
   return g;
 }
+function screenTex(scr, L) {
+  return ctex("scr" + (scr ? scr.id : "none"), 420, 260, (x, w, h) => {
+    x.fillStyle = L.color; x.fillRect(0, 0, w, h);
+    if (!scr) { label(x, "SIN PANTALLA", w / 2, h / 2, 28, "#fca5a5", 800, "center"); label(x, "falta el panel de " + L.scr.size, w / 2, h / 2 + 36, 16, "#94a3b8", 700, "center"); return; }
+    const marco = 26;
+    x.fillStyle = "#000"; x.fillRect(marco, marco, w - marco * 2, h - marco * 2 - 8);
+    const g = x.createLinearGradient(marco, marco, w - marco, h - marco);
+    const ips = scr.id.indexOf("ips") >= 0;
+    g.addColorStop(0, ips ? "#182c5e" : "#1b2440"); g.addColorStop(0.55, ips ? "#27439b" : "#2b3a6e"); g.addColorStop(1, ips ? "#38bdf8" : "#5b6ba0");
+    x.fillStyle = g; x.fillRect(marco + 10, marco + 10, w - marco * 2 - 20, h - marco * 2 - 28);
+    x.fillStyle = ips ? "#e2e8f0" : "#c8d2ea"; x.fillRect(marco + 10, h - marco - 26, w - marco * 2 - 20, 8);
+    x.fillStyle = "#0b1220"; x.beginPath(); x.arc(w / 2, 12, 4, 0, 7); x.fill();
+    label(x, (scr.hz >= 144 ? "144Hz " : "") + scr.name.split(" (")[0], w / 2, h - 10, 13, "rgba(255,255,255,.5)", 700, "center");
+  });
+}
+function buildScreenAssembly(L, parent) {
+  const scr = P(S.lap.screen), w = L.w;
+  const sh = w * 0.56;
+  const g = new THREE.Group();
+  const m = tmat(screenTex(scr, L), scr ? 0.5 : 0.9);
+  const panel = box(w - 0.4, 0.22, sh, mat(L.color, 0.5, 0.4), 0, 0, 0, g);
+  panel.userData.slot = "screen";
+  const face = new THREE.Mesh(new THREE.PlaneGeometry(w - 0.4, sh), m);
+  face.rotation.x = -Math.PI / 2; face.position.set(0, 0.12, 0); face.userData.slot = "screen"; g.add(face);
+  box(2.6, 0.5, 0.9, mat("#1a1d24", 0.5, 0.4), -w / 2 + 3, 0, sh / 2 + 0.4, g);
+  box(2.6, 0.5, 0.9, mat("#1a1d24", 0.5, 0.4), w / 2 - 3, 0, sh / 2 + 0.4, g);
+  if (scr && S.lap.edp) {
+    const pts = [new THREE.Vector3(-2, 0.1, sh / 2 - 0.5), new THREE.Vector3(-2, 0.05, sh / 2 + 1.6), new THREE.Vector3(-2, -0.15, sh / 2 + 2.4)];
+    const curve = new THREE.CatmullRomCurve3(pts);
+    const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 12, 0.12, 6, false), mat("#f59e0b", 0.7));
+    g.add(tube);
+  }
+  return g;
+}
 function buildLaptop(L, parent) {
   const g = new THREE.Group(), lay2 = lapLayout(L), w = L.w, d = L.d;
   g.userData.lay = lay2;
@@ -1044,14 +1157,37 @@ function buildLaptop(L, parent) {
   box(2.4, 0.3, 1.8, mat("#0b0c0f", 0.4), lay2.cpu.x, 0.55, lay2.cpu.z, g);
   box(3.2, 0.2, 3, copper, lay2.cpu.x, 0.8, lay2.cpu.z, g);
   if (lay2.gpu) { box(2.6, 0.3, 2.2, mat("#0b0c0f", 0.4), lay2.gpu.x, 0.55, lay2.gpu.z, g); box(3.4, 0.2, 3.2, copper, lay2.gpu.x, 0.8, lay2.gpu.z, g); }
-  lay2.fans.forEach((f) => {
-    cyl(3.6, 1.2, mat("#111318", 0.6), f.x, 0.9, f.z, g, 36);
-    const fd = fanDisc(3.2, "#2c3340", g); fd.rotation.x = -Math.PI / 2; fd.position.set(f.x, 1.52, f.z);
+  // WiFi: ranura + tarjeta + antenas
+  cyl(0.25, 0.4, mat("#9aa3ad", 0.3, 0.8), lay2.wifi.x - 1.7, 0.6, lay2.wifi.z, g);
+  box(0.6, 0.45, 2.2, mat("#0b0c0f", 0.6), lay2.wifi.x + 1.7, 0.6, lay2.wifi.z, g);
+  if (S.lap.wifi) {
+    const wf = new THREE.Group();
+    const wcard = boxT(3.0, 0.18, L.wifi === "mpcie" ? 2.6 : 2.2, mat("#0b5b32", 0.55), [2], [tmat(ctex("wifi" + S.lap.wifi, 200, 140, (x, W, H) => { x.fillStyle = "#0b5b32"; x.fillRect(0, 0, W, H); x.fillStyle = "#d4af37"; x.fillRect(0, 0, 14, H); label(x, "WiFi", 40, 30, 22, "#fff", 800); label(x, P(S.lap.wifi).std.split(" ·")[0], 40, 64, 16, "#bbf7d0", 700); x.fillStyle = "#0b0c0f"; x.fillRect(40, 84, 44, 40); }))], 0, 0, 0, wf);
+    box(0.4, 0.3, 0.4, mat("#d4af37", 0.35, 0.9), 0.9, 0.15, 1.2, wf); box(0.4, 0.3, 0.4, mat("#d4af37", 0.35, 0.9), -0.9, 0.15, 1.2, wf);
+    cable([new THREE.Vector3(0.9, 0.3, 1.3), new THREE.Vector3(1.6, 0.5, 2.2), new THREE.Vector3(2.6, 0.4, 3.2)], 0.06, "#111318", wf);
+    cable([new THREE.Vector3(-0.9, 0.3, 1.3), new THREE.Vector3(-1.6, 0.5, 2.2), new THREE.Vector3(-2.6, 0.4, 3.2)], 0.06, "#94a3b8", wf);
+    wf.position.set(lay2.wifi.x, 0.75, lay2.wifi.z); wf.traverse((o) => { if (o.isMesh) o.userData.slot = "wifi"; });
+    g.add(wf);
+  }
+  // ventiladores removibles (con polvo o limpios)
+  lay2.fans.forEach((f, fi) => {
+    cyl(3.6, 0.2, mat("#111318", 0.6), f.x, 0.35, f.z, g, 36);
+    const fanP = P(S.lap.fan[fi]);
+    if (fanP) {
+      const dirty2 = !S.lap.clean;
+      const fd = fanDisc(3.1, dirty2 ? "#5b4636" : "#2c3340", g); fd.rotation.x = -Math.PI / 2; fd.position.set(f.x, 0.5, f.z);
+      fd.userData.slot = "fan:" + fi;
+      if (dirty2) { const dust = cyl(2.9, 0.22, mat("#5b4636", 0.95), f.x, 0.55, f.z, g, 20); dust.userData.slot = "fan:" + fi; dust.userData.pick = "clean"; }
+    }
     const from = lay2.gpu && f.x < 0 ? lay2.gpu : lay2.cpu, len = Math.hypot(f.x - from.x, f.z - from.z);
     const hp = box(len, 0.25, 0.8, copper, (f.x + from.x) / 2, 1.0, (f.z + from.z) / 2, g);
     hp.rotation.y = -Math.atan2(f.z - from.z, f.x - from.x);
   });
   if (L.solder) range(4).forEach((i) => box(1.3, 0.2, 1.5, mat("#0b0c0f", 0.4), lay2.cpu.x - 4.2 + (i % 2) * 8.4, 0.5, lay2.cpu.z - 0.9 + Math.floor(i / 2) * 2.4, g));
+  // ensamble de pantalla abierto sobre el banco
+  const scrG = buildScreenAssembly(L, g);
+  scrG.position.set(0, 0.1, -d / 2 - w * 0.3 - 1.5);
+  g.add(scrG);
   // ranuras
   lay2.ram.forEach((r) => box(7, 0.6, 0.7, mat("#0b0c0f", 0.6), r.x, 0.7, r.z - 1.6, g));
   lay2.m2.forEach((m) => { box(0.6, 0.45, 2.2, mat("#0b0c0f", 0.6), m.x - 4.3, 0.6, m.z, g); cyl(0.25, 0.4, mat("#9aa3ad", 0.3, 0.8), m.x + 4.0, 0.6, m.z, g); });
@@ -1156,6 +1292,11 @@ function markerSpec(k, p) {
     if (kk === "ram" && l2.ram[i]) return { parent: R.lg, pos: V(l2.ram[i].x, 1.1, l2.ram[i].z), size: V(7.2, 0.8, 3.4) };
     if (kk === "m2" && l2.m2[i]) return { parent: R.lg, pos: V(l2.m2[i].x, 1.0, l2.m2[i].z), size: V(8.6, 0.7, 2.6) };
     if (kk === "b25" && l2.b25[i]) return { parent: R.lg, pos: V(l2.b25[i].x, 1.0, l2.b25[i].z), size: V(10.4, 1.1, 7.4) };
+    if (kk === "wifi") return { parent: R.lg, pos: V(l2.wifi.x, 1.1, l2.wifi.z), size: V(3.4, 1.0, 3.0) };
+    if (kk === "bat") { const b2 = l2.batt; return { parent: R.lg, pos: V(b2.x, 1.0, b2.z), size: V(b2.w, 1.4, b2.d) }; }
+    if (kk === "fan" && l2.fans[i]) return { parent: R.lg, pos: V(l2.fans[i].x, 1.0, l2.fans[i].z), size: V(7.4, 1.4, 7.4) };
+    if (kk === "screen") { const w2 = P(S.lap.laptop).w; return { parent: R.lg, pos: V(0, 0.5, -P(S.lap.laptop).d / 2 - w2 * 0.3 - 1.5), size: V(w2, 0.8, w2 * 0.56) }; }
+    if (kk === "charger") { const L3 = P(S.lap.laptop); return { parent: R.lg, pos: V(L3.w / 2 + 0.6, 1.0, L3.d / 2 - 4), size: V(2.0, 2.0, 2.0) }; }
     return null;
   }
   const c = P(S.pc.case);
@@ -1181,7 +1322,7 @@ const LVL_COLOR = { 0: "#22c55e", 1: "#f59e0b", 2: "#ef4444" };
 function addMarkers() {
   if (!UI.armed) return;
   const p = P(UI.armed);
-  if (S.mode === "lap" && p.kind !== "laptop" && (S.lap.cover || S.lap.batt)) return;
+  if (S.mode === "lap" && ["laptop", "screen", "charger"].indexOf(p.kind) < 0 && (S.lap.cover || S.lap.batt)) return;
   slotsFor(p).filter((k) => !getAt(k)).forEach((k) => {
     const r = check(p, k);
     if (r.lvl < 0) return;
@@ -1314,6 +1455,7 @@ function pick(x, y) {
     if (!o || o === world) continue;
     if (o.userData.pick === "cover") { toggleLap("cover"); return; }
     if (o.userData.pick === "batt") { toggleLap("batt"); return; }
+    if (o.userData.pick === "clean") { toggleLap("clean"); return; }
     if (UI.armed) { say("Haz clic en una zona verde (o usa el botón «Instalar»).", "info"); return; }
     UI.sel = o.userData.slot; UI.armed = null;
     rebuild3D(); renderUI();
@@ -1332,6 +1474,11 @@ function say(t, type) {
 
 function short(p) {
   switch (p.kind) {
+    case "lwifi": return p.std + " · " + (p.key === "mpcie" ? "mini PCIe" : "M.2 2230");
+    case "charger": return p.W + " W · " + (p.t === "usbc" ? "USB-C PD" : "punta redonda");
+    case "batt": return p.wh + " Wh";
+    case "lfan": return p.mm + " mm";
+    case "screen": return p.size + " · " + p.acabo + " · " + p.hz + " Hz";
     case "case": return "Placas " + p.boards.join("/") + " · GPU ≤ " + p.gpu + " cm · disipador ≤ " + p.cooler + " cm";
     case "board": return p.socket + " · " + p.mem + " · " + p.ff + " · " + p.year;
     case "cpu": return p.socket + " · " + genName(p.gen) + (p.ig ? "" : " · sin video");
@@ -1355,7 +1502,12 @@ function specs(p) {
     case "gpu": return [["Largo", p.L + " cm"], ["Grosor", p.sl + " ranuras"], ["Consumo", p.w + " W"], ["Energía", p.p16 ? "1× 16 pines (12V-2x6)" : p.p8 ? p.p8 + "× 8 pines PCIe" : "Solo de la ranura"], ["Año", p.year]];
     case "drive": return [["Tipo", p.speed < 200 ? "Disco duro mecánico (HDD)" : "Unidad de estado sólido (SSD)"], ["Formato", p.size === "m2" ? "M.2 2280" : p.size + "\""], ["Interfaz", p.bus === "nvme" ? "NVMe PCIe " + p.gen + ".0" : "SATA"], ["Capacidad", p.tb >= 1 ? p.tb + " TB" : Math.round(p.tb * 1000) + " GB"], ["Velocidad", "hasta " + p.speed.toLocaleString("es-GT") + " MB/s"]];
     case "psu": return [["Potencia real", p.w + " W" + (p.generic ? " (la etiqueta dice " + p.label + " W)" : "")], ["Formato", p.ff], ["PCIe 8 pines", p.p8], ["16 pines nativo", yes(p.p16)], ["Conectores SATA", p.sata]];
-    case "laptop": return [["Procesador", p.cpu.name], ["Memoria", p.ram ? p.ram + " ranuras SODIMM " + p.mem + " · máx " + p.maxRam + " GB" : "Soldada: " + p.solder + " GB " + p.mem], ["M.2", p.m2.length ? p.m2.map((s) => "PCIe " + s[1] + ".0" + (s[2] ? " (acepta SATA)" : "")).join(", ") : "No tiene"], ["Bahía 2.5\"", p.b25 ? "Sí" : "No"], ["Video", p.gpu ? p.gpu.name : "Integrado"]];
+    case "laptop": return [["Procesador", p.cpu.name], ["Memoria", p.ram ? p.ram + " ranuras SODIMM " + p.mem + " · máx " + p.maxRam + " GB" : "Soldada: " + p.solder + " GB " + p.mem], ["M.2", p.m2.length ? p.m2.map((s) => "PCIe " + s[1] + ".0" + (s[2] ? " (acepta SATA)" : "")).join(", ") : "No tiene"], ["Bahía 2.5\"", p.b25 ? "Sí" : "No"], ["WiFi", p.wifi === "mpcie" ? "Ranura mini PCIe" : "Ranura M.2 2230 A/E-key"], ["Pantalla", p.scr.size + " · conector " + p.scr.conn], ["Batería", "Intercambiable por dentro"], ["Ventilador", p.fans + "× " + p.fanSize + " mm"], ["Cargador", p.ac.t === "usbc" ? "USB-C PD · " + p.ac.min + " W mínimo" : "Punta redonda · " + p.ac.min + " W"], ["Video", p.gpu ? p.gpu.name : "Integrado"]];
+    case "lwifi": return [["Ranura", p.key === "mpcie" ? "M.2 2230 A/E-key" : "mini PCIe (laptops viejas)"], ["Estándar", p.std], ["Año", p.year], ["Nota", "Se conectan 2 cables de antena (MAIN negro y AUX gris)."]];
+    case "charger": return [["Potencia", p.W + " W"], ["Conector", p.t === "usbc" ? "USB-C Power Delivery" : "Punta redonda (barrel)"], ["Regla", "Usa siempre al menos los watts que pide el fabricante de la laptop."]];
+    case "batt": return [["Capacidad", p.wh + " Wh"], ["Calza en", p.fit.map((x) => P(x).name.split(" (")[0]).join(" · ")], ["Regla", "Las baterías NO son universales: chasis y conector deben coincidir."]];
+    case "lfan": return [["Tamaño", p.mm + " mm"], ["Nota", "El tamaño debe coincidir exactamente con el slot; además va tapado con un braquette que no cambies."]];
+    case "screen": return [["Tamaño", p.size], ["Panel", p.acabo], ["Refresco", p.hz + " Hz"], ["Conector", p.conn], ["Regla", "Conector y tamaño deben coincidir; sí puedes mejorar TN→IPS."]];
   }
   return [];
 }
@@ -1403,8 +1555,14 @@ function renderSteps() {
   const el = $(".t3d__steps");
   if (S.mode === "lap") {
     const L = P(S.lap.laptop);
-    el.innerHTML = '<h4>Pasos</h4>' + (L ? '<ul class="t3d__chk">' +
-      chk("cover", "Tapa inferior retirada", !S.lap.cover, true) + chk("batt", "Batería desconectada", !S.lap.batt, !S.lap.cover, S.lap.cover ? "Primero quita la tapa." : "") + "</ul>" : '<p class="t3d__mini">Elige una laptop del catálogo.</p>');
+    if (!L) { el.innerHTML = '<h4>Pasos</h4><p class="t3d__mini">Elige una laptop del catálogo.</p>'; return; }
+    const open2 = !S.lap.cover, safe = open2 && !S.lap.batt;
+    let html = chk("cover", "Tapa inferior retirada", !S.lap.cover, true) +
+      chk("batt", "Batería desconectada", !S.lap.batt, open2 || !S.lap.batt, open2 ? "" : "Primero quita la tapa.");
+    if (!S.lap.edp) html += chk("edp", "Conectar el cable eDP a la pantalla", false, safe, safe ? "" : "Abre la laptop y desconecta la batería primero.", "El cable plano que lleva el video: sin él, la pantalla queda negra.");
+    if (S.lap.edp && S.lap.screen) html += chk("edp", "Cable eDP de la pantalla conectado", true, true);
+    html += chk("clean", "Limpiar ventilador y rejillas (aire comprimido)", S.lap.clean, open2, open2 ? "" : "Primero quita la tapa.", "Sostén las aspas para que no giren mientras soplas.");
+    el.innerHTML = "<h4>Pasos</h4>" + '<ul class="t3d__chk">' + html + "</ul>";
     return;
   }
   const list = stepsPC();
@@ -1416,7 +1574,20 @@ function chk(id, label2, done, en, need, tip, auto) {
 
 function liveWarns() {
   const out = [];
-  if (S.mode === "lap") return out;
+  if (S.mode === "lap") {
+    const L = P(S.lap.laptop);
+    if (!L) return out;
+    if (!S.lap.cover) {
+      if (S.lap.fan.some((f) => !f)) out.push("Falta un ventilador: se apagará por sobrecalentamiento.");
+      if (!S.lap.clean) out.push("Ventiladores con polvo: harán ruido y calentarán el equipo.");
+      if (S.lap.ram.some((id, i) => !id && L.ram > 0)) {}
+      if (!S.lap.wifi && L.wifi) out.push("Sin tarjeta WiFi instalada.");
+      if (S.lap.bat && !S.lap.batt) out.push("Batería desconectada: solo funcionaría enchufada.");
+      if (!S.lap.edp && S.lap.screen) out.push("Pantalla sin cable eDP: no dará video.");
+    }
+    if (S.lap.charger && P(S.lap.charger).W < L.ac.min) out.push("Cargador insuficiente (" + P(S.lap.charger).W + " W < " + L.ac.min + " W).");
+    return out;
+  }
   const st = S.pc, b = P(st.board), cpu = P(st.cpu), cl = P(st.cooler), g = P(st.gpu), ps = P(st.psu);
   if (b && cpu && b.bios.indexOf(cpu.gen) >= 0 && !st.steps.bios) out.push("Falta actualizar el BIOS para este procesador.");
   if (cpu && b && !cpu.ig && !b.igpu && !g) out.push("El procesador no tiene video integrado: falta tarjeta de video.");
@@ -1448,7 +1619,13 @@ function renderSum() {
     if (L) {
       const gb = (L.solder || 0) + S.lap.ram.map(P).filter(Boolean).reduce((a, r) => a + r.gb, 0);
       const drives = S.lap.m2.map(P).concat(S.lap.b25.map(P)).filter(Boolean);
-      rows = "<tr><th>Laptop</th><td>" + esc(L.name) + "</td></tr><tr><th>Procesador</th><td>" + esc(L.cpu.name) + "</td></tr><tr><th>Memoria RAM</th><td>" + gb + " GB " + L.mem + "</td></tr><tr><th>Almacenamiento</th><td>" + (drives.length ? drives.map((d) => esc(d.name)).join("<br>") : "—") + "</td></tr>";
+      const link2 = (k) => { const v = S.lap[k]; return v ? '<button type="button" class="t3d__link" data-selkey="' + k + '">' + esc(P(v).name) + "</button>" : "—"; };
+      rows = "<tr><th>Laptop</th><td>" + esc(L.name) + "</td></tr><tr><th>Procesador</th><td>" + esc(L.cpu.name) + "</td></tr><tr><th>Memoria RAM</th><td>" + gb + " GB " + L.mem + "</td></tr><tr><th>Almacenamiento</th><td>" + (drives.length ? drives.map((d) => esc(d.name)).join("<br>") : "—") + "</td></tr>" +
+        "<tr><th>WiFi</th><td>" + link2("wifi") + "</td></tr>" +
+        "<tr><th>Batería</th><td>" + (S.lap.bat ? '<button type="button" class="t3d__link" data-selkey="bat">' + esc(P(S.lap.bat).wh + " Wh") + "</button>" + (S.lap.batt ? " · conectada" : " · <b>desconectada</b>") : "Sin batería") + "</td></tr>" +
+        "<tr><th>Ventilador</th><td>" + S.lap.fan.map((id, i) => id ? '<button type="button" class="t3d__link" data-selkey="fan:' + i + '">' + (S.lap.clean ? "✓ " : "✗ ") + "Vent. " + (i + 1) + (S.lap.clean ? " limpio" : " (con polvo)") + "</button>" : "⚠ Vent. " + (i + 1) + " falta").join(" · ") + "</td></tr>" +
+        "<tr><th>Pantalla</th><td>" + (S.lap.screen ? '<button type="button" class="t3d__link" data-selkey="screen">' + esc(P(S.lap.screen).name) + "</button>" + (S.lap.edp ? "" : " · <b>sin cable eDP</b>") : "—") + "</td></tr>" +
+        "<tr><th>Cargador</th><td>" + (S.lap.charger ? esc(P(S.lap.charger).name) : "No conectado") + "</td></tr>";
     }
   }
   rows += '<tr class="t3d__tot"><th>Precio de referencia</th><td><b>' + q(totalPrice()) + "</b></td></tr>";
@@ -1487,6 +1664,15 @@ function toggleLap(what) {
     if (!S.lap.cover && !S.lap.batt) say("Tapa colocada. ⚠ Recuerda: la batería quedó desconectada; conéctala antes de cerrar si vas a encender.", "warn");
     else say(S.lap.cover ? "Quitaste los tornillos y la tapa inferior. Usa una púa plástica para no rayar los broches." : "Tapa colocada y atornillada ✔", "ok");
     S.lap.cover = !S.lap.cover;
+  } else if (what === "edp") {
+    if (S.lap.batt) { say("¡Alto! Desconecta la batería antes de tocar la placa o el cable de video.", "bad"); return; }
+    if (S.lap.edp) { say("El cable eDP ya está conectado.", "info"); return; }
+    S.lap.edp = true; say("Cable eDP conectado y asegurado con su traba ✔", "ok");
+  } else if (what === "clean") {
+    if (S.lap.cover) { say("Primero quita la tapa inferior.", "warn"); return; }
+    if (S.lap.clean) { say("Ya limpiaste el ventilador.", "info"); return; }
+    if (!S.lap.fan.some(Boolean)) { say("No hay ventilador instalado que limpiar.", "warn"); return; }
+    S.lap.clean = true; say("Limpieza hecha: aspas sujetadas mientras soplabas, rejillas despejadas ✔", "ok");
   } else {
     if (S.lap.cover) { say("Primero quita la tapa inferior.", "warn"); return; }
     S.lap.batt = !S.lap.batt;

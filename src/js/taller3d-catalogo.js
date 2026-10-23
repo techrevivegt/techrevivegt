@@ -144,11 +144,50 @@ window.TALLER3D_CATALOGO = (function () {
 
   // ── Laptops (vienen con su configuración de fábrica) · ram = ranuras SODIMM (0 = soldada) · m2 = ranuras · b25 = bahía 2.5"
   var laptops = [
-    { id: "lap-2012", name: "Laptop de oficina 2012 (15.6\")", sub: "Core i5-3210M · DDR3L · disco duro", cpu: { name: "Intel Core i5-3210M", gen: "ivb", st: 30, mt: 16, ig: 3, socket: "rPGA988B (removible)" }, ram: 2, mem: "DDR3L", maxRam: 16, solder: 0, m2: [], b25: 1, stock: { ram: ["so-ddr3l-4", null], b25: ["hdd25-1"] }, w: 37, d: 25, color: "#374151", fans: 1, odd: true, price: 900 },
-    { id: "lap-2019", name: "Laptop de oficina 2019 (15.6\")", sub: "Core i5-8265U · DDR4 · M.2 + bahía 2.5\"", cpu: { name: "Intel Core i5-8265U (soldado)", gen: "i8", st: 50, mt: 30, ig: 7 }, ram: 2, mem: "DDR4", maxRam: 32, solder: 0, m2: [["nvme", 3, true]], b25: 1, stock: { ram: ["so-ddr4-8", null], b25: ["hdd25-1"], m2: [null] }, w: 36, d: 24, color: "#1f2937", fans: 1, price: 2500 },
-    { id: "lap-ultra", name: "Ultrabook 14\" 2024", sub: "Core Ultra 7 155H · RAM soldada · 1 M.2", cpu: { name: "Intel Core Ultra 7 155H (soldado)", gen: "mtl", st: 88, mt: 95, ig: 26 }, ram: 0, mem: "LPDDR5X", maxRam: 16, solder: 16, m2: [["nvme", 4]], b25: 0, stock: { m2: ["nvme4-1"] }, w: 31, d: 22, color: "#94a3b8", fans: 1, price: 8000 },
-    { id: "lap-gamer", name: "Laptop gamer 15.6\" 2023", sub: "Ryzen 7 7735HS + RTX 4060 · DDR5 · 2 M.2", cpu: { name: "AMD Ryzen 7 7735HS (soldado)", gen: "zen3", st: 80, mt: 85, ig: 12 }, gpu: { name: "RTX 4060 Laptop (soldada)", g: 62 }, ram: 2, mem: "DDR5", maxRam: 64, solder: 0, m2: [["nvme", 4], ["nvme", 4]], b25: 0, stock: { ram: ["so-ddr5-16", null], m2: ["nvme4-1", null] }, w: 36, d: 26, color: "#0f172a", fans: 2, price: 9500 },
+    { id: "lap-2012", name: "Laptop de oficina 2012 (15.6\")", sub: "Core i5-3210M · DDR3L · disco duro", cpu: { name: "Intel Core i5-3210M", gen: "ivb", st: 30, mt: 16, ig: 3 }, ram: 2, mem: "DDR3L", maxRam: 16, solder: 0, m2: [], b25: 1, stock: { ram: ["so-ddr3l-4", null], b25: ["hdd25-1"], batt: "bat-48", fan: ["fan-60"], screen: ["scr-tn-e30"], wifi: "wifi-7260" }, w: 37, d: 25, color: "#374151", fans: 1, odd: true, price: 900, wifi: "mpcie", fanSize: 60, ac: { t: "barrel", min: 45 }, scr: { size: "15.6\"", conn: "eDP 30 pines" } },
+    { id: "lap-2016", name: "Laptop básica 2016 (14\")", sub: "Celeron N3060 · 2 GB · muy básica", cpu: { name: "Intel Celeron N3060 (soldado)", gen: "i6", st: 14, mt: 6, ig: 2 }, ram: 1, mem: "DDR3L", maxRam: 8, solder: 0, m2: [], b25: 1, stock: { ram: ["so-ddr3l-4"], b25: ["hdd25-1"], batt: "bat-32", fan: ["fan-50"], screen: ["scr-tn14"], wifi: "wifi-3168" }, w: 33, d: 23, color: "#0e7490", fans: 1, price: 700, wifi: "a2230", fanSize: 50, ac: { t: "barrel", min: 45 }, scr: { size: "14\"", conn: "eDP 30 pines" } },
+    { id: "lap-2019", name: "Laptop de oficina 2019 (15.6\")", sub: "Core i5-8265U · DDR4 · M.2 + bahía 2.5\"", cpu: { name: "Intel Core i5-8265U (soldado)", gen: "i8", st: 50, mt: 30, ig: 7 }, ram: 2, mem: "DDR4", maxRam: 32, solder: 0, m2: [["nvme", 3, true]], b25: 1, stock: { ram: ["so-ddr4-8", null], b25: ["hdd25-1"], m2: [null], wifi: "wifi-3168", batt: "bat-48", fan: ["fan-60"], screen: ["scr-tn-e40"] }, w: 36, d: 24, color: "#1f2937", fans: 1, price: 2500, wifi: "a2230", fanSize: 60, ac: { t: "barrel", min: 65 }, scr: { size: "15.6\"", conn: "eDP 40 pines" } },
+    { id: "lap-ultra", name: "Ultrabook 14\" 2024", sub: "Core Ultra 7 155H · RAM soldada · 1 M.2", cpu: { name: "Intel Core Ultra 7 155H (soldado)", gen: "mtl", st: 88, mt: 95, ig: 26 }, ram: 0, mem: "LPDDR5X", maxRam: 16, solder: 16, m2: [["nvme", 4]], b25: 0, stock: { m2: ["nvme4-1"], wifi: "wifi-ax210", batt: "bat-56", fan: ["fan-50"], screen: ["scr-ips14"] }, w: 31, d: 22, color: "#94a3b8", fans: 1, price: 8000, wifi: "a2230", fanSize: 50, ac: { t: "usbc", min: 65 }, scr: { size: "14\"", conn: "eDP 40 pines" } },
+    { id: "lap-gamer", name: "Laptop gamer 15.6\" 2023", sub: "Ryzen 7 7735HS + RTX 4060 · DDR5 · 2 M.2", cpu: { name: "AMD Ryzen 7 7735HS (soldado)", gen: "zen3", st: 80, mt: 85, ig: 12 }, gpu: { name: "RTX 4060 Laptop (soldada)", g: 62 }, ram: 2, mem: "DDR5", maxRam: 64, solder: 0, m2: [["nvme", 4], ["nvme", 4]], b25: 0, stock: { ram: ["so-ddr5-16", null], m2: ["nvme4-1", null], wifi: "wifi-ax200", batt: "bat-90", fan: ["fan-75", "fan-75"], screen: ["scr-ips144"] }, w: 36, d: 26, color: "#0f172a", fans: 2, price: 9500, wifi: "a2230", fanSize: 75, ac: { t: "barrel", min: 180 }, scr: { size: "15.6\"", conn: "eDP 40 pines" } },
   ];
 
-  return { GEN: GEN, cases: cases, boards: boards, cpus: cpus, coolers: coolers, rams: rams, gpus: gpus, drives: drives, psus: psus, laptops: laptops };
+  // ── Tarjetas WiFi para laptop · key: "mpcie" (mini PCIe) o "a2230" (M.2 2230 A/E-key)
+  var lwifi = [
+    { id: "wifi-3168", name: "Tarjeta WiFi 802.11n/AC 1x1", key: "a2230", std: "WiFi 4/5 · 433 Mbps", price: 120, year: 2016 },
+    { id: "wifi-7260", name: "Tarjeta WiFi Intel 7260HMW (mini PCIe)", key: "mpcie", std: "WiFi 5 · 867 Mbps", price: 130, year: 2014 },
+    { id: "wifi-ax200", name: "Tarjeta WiFi Intel AX200", key: "a2230", std: "WiFi 6 · 2.4 Gbps", price: 280, year: 2019 },
+    { id: "wifi-ax210", name: "Tarjeta WiFi Intel AX210", key: "a2230", std: "WiFi 6E · 3.0 Gbps", price: 350, year: 2021 },
+  ];
+  // ── Cargadores de laptop · t: "barrel" (punta redonda) o "usbc" (USB-C Power Delivery) · W = potencia
+  var chargers = [
+    { id: "ch-45", name: "Cargador 45 W (punta 4.5 mm)", t: "barrel", W: 45, price: 250 },
+    { id: "ch-65", name: "Cargador 65 W (punta universal)", t: "barrel", W: 65, price: 300 },
+    { id: "ch-65c", name: "Cargador 65 W USB-C PD", t: "usbc", W: 65, price: 380 },
+    { id: "ch-100c", name: "Cargador 100 W USB-C PD", t: "usbc", W: 100, price: 550 },
+    { id: "ch-180", name: "Cargador 180 W (gamer)", t: "barrel", W: 180, price: 700 },
+    { id: "ch-240", name: "Cargador 240 W (gamer)", t: "barrel", W: 240, price: 900 },
+  ];
+  // ── Baterías de laptop · fit = laptops donde calzan físicamente
+  var bats = [
+    { id: "bat-32", name: "Batería de laptop 32 Wh", wh: 32, fit: ["lap-2016"], price: 450 },
+    { id: "bat-48", name: "Batería de laptop 48 Wh", wh: 48, fit: ["lap-2012", "lap-2019"], price: 600 },
+    { id: "bat-56", name: "Batería ultrabook 56 Wh", wh: 56, fit: ["lap-ultra"], price: 800 },
+    { id: "bat-90", name: "Batería gamer 90 Wh", wh: 90, fit: ["lap-gamer"], price: 1100 },
+  ];
+  // ── Ventiladores de laptop · mm = tamaño
+  var lfans = [
+    { id: "fan-50", name: "Ventilador de laptop 50 mm", mm: 50, price: 200 },
+    { id: "fan-60", name: "Ventilador de laptop 60 mm", mm: 60, price: 220 },
+    { id: "fan-75", name: "Ventilador de laptop 75 mm (gamer)", mm: 75, price: 320 },
+  ];
+  // ── Pantallas de laptop · conn = conector eDP
+  var screens = [
+    { id: "scr-tn-e30", name: "Pantalla 15.6\" TN 60 Hz (eDP 30 pines)", size: "15.6\"", conn: "eDP 30 pines", acabo: "TN: colores lavados", hz: 60, price: 350 },
+    { id: "scr-tn-e40", name: "Pantalla 15.6\" TN 60 Hz (eDP 40 pines)", size: "15.6\"", conn: "eDP 40 pines", acabo: "TN: colores lavados", hz: 60, price: 400 },
+    { id: "scr-tn14", name: "Pantalla 14\" TN 60 Hz (eDP 30 pines)", size: "14\"", conn: "eDP 30 pines", acabo: "TN", hz: 60, price: 300 },
+    { id: "scr-ips14", name: "Pantalla 14\" IPS FHD (eDP 40 pines)", size: "14\"", conn: "eDP 40 pines", acabo: "IPS: buenos ángulos", hz: 60, price: 650 },
+    { id: "scr-ips60", name: "Pantalla 15.6\" IPS FHD 60 Hz (eDP 40 pines)", size: "15.6\"", conn: "eDP 40 pines", acabo: "IPS", hz: 60, price: 700 },
+    { id: "scr-ips144", name: "Pantalla 15.6\" IPS FHD 144 Hz (eDP 40 pines)", size: "15.6\"", conn: "eDP 40 pines", acabo: "IPS · gamer", hz: 144, price: 1100 },
+  ];
+  return { GEN: GEN, cases: cases, boards: boards, cpus: cpus, coolers: coolers, rams: rams, gpus: gpus, drives: drives, psus: psus, laptops: laptops, lwifi: lwifi, chargers: chargers, bats: bats, lfans: lfans, screens: screens };
 })();
