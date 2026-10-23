@@ -2,40 +2,42 @@
   "titulo": "Reparación y mantenimiento de computadoras",
   "publicado": true,
   "orden": 2,
-  "descripcion": "Aprende a diagnosticar, limpiar, mejorar y reparar computadoras de escritorio y laptops como un técnico: componentes, mantenimiento preventivo, fallas comunes, instalación de Windows, respaldo de datos y atención al cliente.",
+  "descripcion": "Aprende a diagnosticar, limpiar, mejorar y reparar computadoras de escritorio y laptops como un técnico: electricidad y multímetro, fuente de poder, componentes, armado de PC y BIOS/UEFI, mantenimiento preventivo, diagnóstico con método y software, laptops, instalación de Windows y drivers, redes, respaldo de datos y atención al cliente. Con casos reales, prácticas guiadas y un proyecto final.",
   "imagen": "/img/tecnico.jpg",
   "docente": "Técnicos de TechRevive",
-  "duracion": "6 semanas",
-  "horas": "30",
+  "duracion": "10 semanas",
+  "horas": "60",
   "nivel": "Intermedio",
   "certificado": true,
   "requisitos": "Haber completado Computación básica o saber usar Windows con soltura.",
   "objetivos": [
     "Trabajar de forma segura con herramientas y protección antiestática",
-    "Identificar cada componente interno y su compatibilidad",
+    "Usar el multímetro y probar fuentes de poder con seguridad",
+    "Identificar cada componente interno, verificar su compatibilidad y armar una PC",
+    "Configurar el BIOS/UEFI e interpretar pitidos y luces de diagnóstico",
     "Realizar mantenimiento preventivo completo, incluida la pasta térmica",
     "Diagnosticar con método: no enciende, no da imagen, lentitud, pantallas azules y virus",
     "Mejorar equipos con SSD y memoria RAM",
-    "Instalar Windows desde USB y respaldar o recuperar información",
+    "Instalar Windows y drivers desde USB, resolver fallas de red y respaldar o recuperar información",
     "Atender clientes, documentar el servicio y elaborar presupuestos"
   ],
   "modulos": [
     {
-      "titulo": "Fundamentos, herramientas y seguridad",
+      "titulo": "Fundamentos, electricidad y seguridad",
       "lecciones": [
         {
           "titulo": "¿Por qué fallan las computadoras?",
           "tipo": "lectura",
           "duracion": "10 min",
           "video": "",
-          "contenido": "<p>Antes de tomar un destornillador, un buen técnico entiende <strong>por qué</strong> fallan los equipos. Casi todas las fallas que llegan a un taller tienen una de estas causas:</p><ul><li><strong>Calor:</strong> el polvo tapa ventiladores y disipadores; la pasta térmica se seca. El equipo se pone lento, se apaga solo o se daña el procesador o la tarjeta de video.</li><li><strong>Energía eléctrica:</strong> picos, apagones y variaciones de voltaje dañan fuentes de poder, placas y discos. Muy común en Guatemala, sobre todo en temporada de lluvia.</li><li><strong>Desgaste:</strong> discos duros mecánicos, baterías de laptop, bisagras y ventiladores tienen vida útil limitada.</li><li><strong>Golpes y líquidos:</strong> caídas de laptops, café o agua sobre el teclado.</li><li><strong>Software:</strong> virus, programas pirata, actualizaciones interrumpidas, sistema saturado de programas de inicio.</li><li><strong>Mal uso:</strong> laptops sobre la cama, apagar desconectando el cable, forzar conectores.</li></ul><h3>Mantenimiento preventivo vs. correctivo</h3><table><thead><tr><th></th><th>Preventivo</th><th>Correctivo</th></tr></thead><tbody><tr><td><strong>Cuándo</strong></td><td>Antes de que falle (cada 6 a 12 meses)</td><td>Cuando ya falló</td></tr><tr><td><strong>Qué incluye</strong></td><td>Limpieza, pasta térmica, revisión de discos, actualizaciones</td><td>Diagnóstico, cambio de piezas, reinstalación</td></tr><tr><td><strong>Costo</strong></td><td>Bajo</td><td>Alto, y puede haber pérdida de datos</td></tr></tbody></table><blockquote>Un mantenimiento preventivo cuesta una fracción de lo que cuesta cambiar una placa madre. Explicárselo así al cliente es parte del trabajo del técnico.</blockquote>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Identificar las causas más frecuentes de falla en el taller</li><li>Diferenciar mantenimiento preventivo, correctivo y mejoras</li><li>Explicar al cliente por qué conviene prevenir</li></ul></aside><p>Antes de tomar un destornillador, un buen técnico entiende <strong>por qué</strong> fallan los equipos. Casi todas las fallas que llegan a un taller tienen una de estas causas:</p><ul><li><strong>Calor:</strong> el polvo tapa ventiladores y disipadores; la pasta térmica se seca. El equipo se pone lento, se apaga solo o se daña el procesador o la tarjeta de video.</li><li><strong>Energía eléctrica:</strong> picos, apagones y variaciones de voltaje dañan fuentes de poder, placas y discos. Muy común en Guatemala, sobre todo en temporada de lluvia.</li><li><strong>Desgaste:</strong> discos duros mecánicos, baterías de laptop, bisagras y ventiladores tienen vida útil limitada.</li><li><strong>Golpes y líquidos:</strong> caídas de laptops, café o agua sobre el teclado.</li><li><strong>Software:</strong> virus, programas pirata, actualizaciones interrumpidas, sistema saturado de programas de inicio.</li><li><strong>Mal uso:</strong> laptops sobre la cama, apagar desconectando el cable, forzar conectores.</li></ul><h3>Mantenimiento preventivo vs. correctivo</h3><table><thead><tr><th></th><th>Preventivo</th><th>Correctivo</th></tr></thead><tbody><tr><td><strong>Cuándo</strong></td><td>Antes de que falle (cada 6 a 12 meses)</td><td>Cuando ya falló</td></tr><tr><td><strong>Qué incluye</strong></td><td>Limpieza, pasta térmica, revisión de discos, actualizaciones</td><td>Diagnóstico, cambio de piezas, reinstalación</td></tr><tr><td><strong>Costo</strong></td><td>Bajo</td><td>Alto, y puede haber pérdida de datos</td></tr></tbody></table><blockquote>Un mantenimiento preventivo cuesta una fracción de lo que cuesta cambiar una placa madre. Explicárselo así al cliente es parte del trabajo del técnico.</blockquote><h3>Las causas que más vemos en Guatemala</h3><table><thead><tr><th>Causa</th><th>Qué provoca</th><th>Cómo se previene</th></tr></thead><tbody><tr><td>Variaciones de voltaje y cortes de luz</td><td>Fuentes quemadas, discos dañados, Windows corrupto</td><td>Regulador o UPS; apagar el equipo en tormentas</td></tr><tr><td>Polvo y calor</td><td>Sobrecalentamiento, apagados, ventiladores ruidosos</td><td>Limpieza cada 6–12 meses, pasta térmica</td></tr><tr><td>Golpes y líquidos</td><td>Pantallas rotas, bisagras, placas con corrosión</td><td>Fundas, no comer sobre el equipo</td></tr><tr><td>Software pirata y descargas dudosas</td><td>Virus, robo de datos, lentitud</td><td>Programas originales o gratuitos legales</td></tr><tr><td>Desgaste natural</td><td>Discos con sectores dañados, baterías hinchadas</td><td>Revisar la salud del disco y la batería</td></tr></tbody></table><h3>Ponte a prueba</h3><details class=\"check\"><summary>Cambiar un disco HDD por un SSD, ¿es preventivo, correctivo o mejora?</summary><p>Es una <strong>mejora</strong> (actualización). Si el disco ya estaba fallando, además es correctivo.</p></details><aside class=\"nota clave\"><h4>📌 Puntos clave para recordar</h4><ul><li>La mayoría de fallas se previenen: energía estable, limpieza y software legal.</li><li>El técnico profesional también educa al cliente para que la falla no se repita.</li></ul></aside>"
         },
         {
           "titulo": "Herramientas y seguridad en el taller",
           "tipo": "lectura",
           "duracion": "12 min",
           "video": "",
-          "contenido": "<h3>Herramientas básicas</h3><ul><li><strong>Juego de destornilladores de precisión</strong> (Phillips #0, #1, #2 y Torx T5–T10 para laptops).</li><li><strong>Pulsera antiestática</strong> y, de preferencia, un tapete antiestático.</li><li><strong>Aire comprimido</strong> (lata o sopladora eléctrica) y <strong>brochas</strong> de cerdas suaves (antiestáticas).</li><li><strong>Alcohol isopropílico</strong> al 90 % o más, hisopos y paños de microfibra.</li><li><strong>Pasta térmica</strong> de buena calidad.</li><li><strong>Púas y espátulas plásticas</strong> para abrir carcasas sin rayarlas.</li><li><strong>Multímetro</strong> para medir voltajes y continuidad.</li><li><strong>Memoria USB booteable</strong> con instalador de Windows y herramientas de diagnóstico.</li><li>Recipientes o <strong>tapete magnético</strong> para ordenar tornillos.</li></ul><h3>Reglas de seguridad</h3><ol><li><strong>Apaga y desconecta</strong> el equipo de la corriente. En laptops, desconecta también la batería interna antes de tocar la placa.</li><li>Después de desconectar, mantén presionado el botón de encendido 10 segundos para descargar la energía residual.</li><li><strong>Descarga la electricidad estática</strong> de tu cuerpo: usa la pulsera o toca una parte metálica sin pintura del gabinete.</li><li>Sujeta las tarjetas por los bordes; nunca toques los contactos dorados ni los chips.</li><li><strong>Nunca abras la fuente de poder</strong>: sus capacitores guardan carga peligrosa aun desconectada.</li><li>Trabaja en una mesa limpia, bien iluminada, sin alfombra y lejos de bebidas.</li><li>Toma fotos antes de desconectar cables: te ahorran dolores de cabeza al armar.</li></ol><blockquote>Descarga la bitácora de mantenimiento: la usarás en la tarea del módulo 3 y te servirá con tus clientes.</blockquote>",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Armar un kit de herramientas básico</li><li>Trabajar sin descargas electrostáticas (ESD)</li><li>Reconocer los riesgos eléctricos y de baterías</li></ul></aside><h3>Herramientas básicas</h3><ul><li><strong>Juego de destornilladores de precisión</strong> (Phillips #0, #1, #2 y Torx T5–T10 para laptops).</li><li><strong>Pulsera antiestática</strong> y, de preferencia, un tapete antiestático.</li><li><strong>Aire comprimido</strong> (lata o sopladora eléctrica) y <strong>brochas</strong> de cerdas suaves (antiestáticas).</li><li><strong>Alcohol isopropílico</strong> al 90 % o más, hisopos y paños de microfibra.</li><li><strong>Pasta térmica</strong> de buena calidad.</li><li><strong>Púas y espátulas plásticas</strong> para abrir carcasas sin rayarlas.</li><li><strong>Multímetro</strong> para medir voltajes y continuidad.</li><li><strong>Memoria USB booteable</strong> con instalador de Windows y herramientas de diagnóstico.</li><li>Recipientes o <strong>tapete magnético</strong> para ordenar tornillos.</li></ul><h3>Reglas de seguridad</h3><ol><li><strong>Apaga y desconecta</strong> el equipo de la corriente. En laptops, desconecta también la batería interna antes de tocar la placa.</li><li>Después de desconectar, mantén presionado el botón de encendido 10 segundos para descargar la energía residual.</li><li><strong>Descarga la electricidad estática</strong> de tu cuerpo: usa la pulsera o toca una parte metálica sin pintura del gabinete.</li><li>Sujeta las tarjetas por los bordes; nunca toques los contactos dorados ni los chips.</li><li><strong>Nunca abras la fuente de poder</strong>: sus capacitores guardan carga peligrosa aun desconectada.</li><li>Trabaja en una mesa limpia, bien iluminada, sin alfombra y lejos de bebidas.</li><li>Toma fotos antes de desconectar cables: te ahorran dolores de cabeza al armar.</li></ol><blockquote>Descarga la bitácora de mantenimiento: la usarás en la tarea del módulo 3 y te servirá con tus clientes.</blockquote><h3>Kit básico del técnico</h3><ul class=\"checklist\"><li>Destornilladores Phillips PH0, PH1 y PH2 (y Torx T5–T8 para laptops)</li><li>Púas y tarjetas plásticas para abrir carcasas</li><li>Pulsera antiestática o tapete ESD</li><li>Aire comprimido o sopladora con control de velocidad</li><li>Brochas antiestáticas y alcohol isopropílico al 99 %</li><li>Pasta térmica de calidad</li><li>Multímetro digital</li><li>Caja organizadora o tapete magnético para tornillos</li><li>Memoria USB de 16 GB con Windows y herramientas</li></ul><aside class=\"nota alerta\"><h4>⚠️ Riesgos que no se negocian</h4><ul><li><strong>Nunca abras una fuente de poder:</strong> sus capacitores guardan carga peligrosa aunque esté desconectada.</li><li>Una <strong>batería hinchada</strong> puede incendiarse: no la perfores ni la presiones; retírala con cuidado y llévala a un punto de reciclaje.</li><li>Desconecta la corriente y, en laptops, la batería interna antes de tocar la placa.</li></ul></aside><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Organiza los tornillos en el orden en que los quitas, sobre una hoja donde dibujas la tapa. En laptops hay tornillos de distinta longitud: uno largo en el lugar equivocado puede perforar la placa.</p></aside>",
           "materiales": [
             {
               "titulo": "Bitácora de mantenimiento (PDF)",
@@ -45,18 +47,25 @@
           ]
         },
         {
+          "titulo": "Electricidad básica y uso del multímetro",
+          "tipo": "video",
+          "duracion": "25 min",
+          "video": "https://www.youtube.com/watch?v=Z1pxudDk-BM",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender voltaje, corriente, resistencia y continuidad</li><li>Configurar el multímetro para cada medición sin dañarlo</li><li>Medir de forma segura tomacorrientes, fuentes, cables y la pila CMOS</li></ul></aside><p>El multímetro es el «estetoscopio» del técnico: te dice con números lo que antes solo suponías. Mira el video y luego practica cada medición de la tabla.</p><table><thead><tr><th>Magnitud</th><th>Unidad</th><th>Analogía con el agua</th><th>Ejemplo en una PC</th></tr></thead><tbody><tr><td>Voltaje</td><td>Voltios (V)</td><td>Presión del agua</td><td>La fuente entrega 12 V, 5 V y 3.3 V</td></tr><tr><td>Corriente</td><td>Amperios (A)</td><td>Cantidad de agua que pasa</td><td>Un cargador de laptop entrega 3.42 A</td></tr><tr><td>Resistencia</td><td>Ohmios (Ω)</td><td>Lo estrecho del tubo</td><td>Un fusible bueno tiene casi 0 Ω</td></tr><tr><td>Continuidad</td><td>Pitido</td><td>¿El tubo está entero?</td><td>¿Un cable está roto por dentro?</td></tr></tbody></table><h3>Cómo medir</h3><ul><li><strong>Voltaje continuo (DC, V⎓):</strong> para fuentes, cargadores y la pila CMOS. Punta negra en COM y roja en VΩ, rango 20 V.</li><li><strong>Voltaje alterno (AC, V~):</strong> para el tomacorriente (rango 200 V o 750 V). En Guatemala debe marcar alrededor de 120 V.</li><li><strong>Continuidad (símbolo de sonido):</strong> siempre con el equipo <em>desconectado</em>. Si pita, hay conexión.</li><li><strong>Resistencia (Ω):</strong> nunca en un circuito energizado.</li></ul><table><thead><tr><th>Medición</th><th>Valor correcto</th><th>Si está fuera</th></tr></thead><tbody><tr><td>Tomacorriente</td><td>110–127 V AC</td><td>Problema eléctrico del lugar: recomienda UPS o electricista</td></tr><tr><td>Pila CMOS CR2032</td><td>3.0 V (cambiar si baja de 2.8 V)</td><td>Se pierde la fecha y la configuración del BIOS</td></tr><tr><td>Cargador de laptop 19.5 V</td><td>19–20.5 V DC sin carga</td><td>Cargador dañado</td></tr></tbody></table><aside class=\"nota alerta\"><h4>⚠️ Seguridad eléctrica</h4><ul><li>Nunca midas corriente (A) en un tomacorriente: es un cortocircuito directo y puede explotar el multímetro.</li><li>Sujeta las puntas por la zona aislada y mide AC con una sola mano.</li><li>Cambia el selector solo con las puntas retiradas del circuito.</li></ul></aside><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Mide la pila CMOS de una placa (rango 20 V DC).</li><li>Mide el voltaje de un cargador de laptop en su punta (centro positivo, exterior negativo).</li><li>Prueba la continuidad de un cable USB o de red de punta a punta.</li><li>Anota los valores y concluye si cada elemento está bien.</li></ol></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>La pila CMOS marca 2.4 V y el equipo pierde la hora. ¿Qué haces?</summary><p>Cambiar la pila CR2032 y volver a configurar fecha, hora y opciones del BIOS.</p></details><details class=\"check\"><summary>¿Por qué la continuidad se mide con el equipo desconectado?</summary><p>Porque el multímetro inyecta su propia corriente; con energía externa la lectura es falsa y puedes dañar el instrumento.</p></details><aside class=\"nota clave\"><h4>📌 Puntos clave para recordar</h4><ul><li>DC para fuentes y cargadores; AC para la pared; continuidad y resistencia siempre sin energía.</li><li>Pila CMOS sana: ~3 V.</li><li>Nunca midas amperios en un tomacorriente.</li></ul></aside><p class=\"aula-credit\"><small>Video: Hetzu Academy (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
           "titulo": "El método de diagnóstico en 6 pasos",
           "tipo": "lectura",
           "duracion": "12 min",
           "video": "",
-          "contenido": "<p>Un buen técnico no cambia piezas «a ver si se compone». Sigue un método. Este es el que usamos en TechRevive:</p><ol><li><strong>Escuchar al cliente:</strong> ¿qué hace exactamente el equipo?, ¿desde cuándo?, ¿pasó algo antes (caída, apagón, actualización, líquido)?, ¿tiene información importante sin respaldo?</li><li><strong>Reproducir la falla:</strong> compruébala tú mismo. Si no la ves, no la puedes confirmar.</li><li><strong>Revisar lo simple primero:</strong> cables, tomacorriente, cargador, botón de encendido, monitor encendido y en la entrada correcta.</li><li><strong>Formular hipótesis:</strong> de la más probable y barata de probar a la menos probable.</li><li><strong>Probar, una cosa a la vez:</strong> cambia o prueba un componente y vuelve a verificar. Si cambias tres cosas a la vez, no sabrás cuál era la falla.</li><li><strong>Documentar y verificar:</strong> anota el diagnóstico, la solución y prueba el equipo completo antes de entregarlo.</li></ol><h3>Preguntas clave al recibir un equipo</h3><ul><li>¿Enciende? ¿Hay luces, ventiladores o pitidos?</li><li>¿Da imagen? ¿Llega a Windows?</li><li>¿La falla es constante o aparece a ratos (por ejemplo, después de 20 minutos de uso)?</li><li>¿Cuál es la contraseña de Windows? (la necesitarás para probar; anótala en la orden de servicio)</li></ul><h3>La orden de servicio</h3><p>Siempre registra: datos del cliente, marca, modelo y número de serie, accesorios recibidos (cargador, maletín), estado físico (golpes, rayones, teclas faltantes), la falla reportada y la autorización del cliente para el diagnóstico.</p><blockquote>Registrar el estado físico al recibir te protege: evita reclamos por golpes que el equipo ya tenía.</blockquote>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Aplicar un método ordenado en lugar de cambiar piezas al azar</li><li>Documentar cada paso en una orden de servicio</li><li>Aislar la causa probando una variable a la vez</li></ul></aside><p>Un buen técnico no cambia piezas «a ver si se compone». Sigue un método. Este es el que usamos en TechRevive:</p><ol><li><strong>Escuchar al cliente:</strong> ¿qué hace exactamente el equipo?, ¿desde cuándo?, ¿pasó algo antes (caída, apagón, actualización, líquido)?, ¿tiene información importante sin respaldo?</li><li><strong>Reproducir la falla:</strong> compruébala tú mismo. Si no la ves, no la puedes confirmar.</li><li><strong>Revisar lo simple primero:</strong> cables, tomacorriente, cargador, botón de encendido, monitor encendido y en la entrada correcta.</li><li><strong>Formular hipótesis:</strong> de la más probable y barata de probar a la menos probable.</li><li><strong>Probar, una cosa a la vez:</strong> cambia o prueba un componente y vuelve a verificar. Si cambias tres cosas a la vez, no sabrás cuál era la falla.</li><li><strong>Documentar y verificar:</strong> anota el diagnóstico, la solución y prueba el equipo completo antes de entregarlo.</li></ol><h3>Preguntas clave al recibir un equipo</h3><ul><li>¿Enciende? ¿Hay luces, ventiladores o pitidos?</li><li>¿Da imagen? ¿Llega a Windows?</li><li>¿La falla es constante o aparece a ratos (por ejemplo, después de 20 minutos de uso)?</li><li>¿Cuál es la contraseña de Windows? (la necesitarás para probar; anótala en la orden de servicio)</li></ul><h3>La orden de servicio</h3><p>Siempre registra: datos del cliente, marca, modelo y número de serie, accesorios recibidos (cargador, maletín), estado físico (golpes, rayones, teclas faltantes), la falla reportada y la autorización del cliente para el diagnóstico.</p><blockquote>Registrar el estado físico al recibir te protege: evita reclamos por golpes que el equipo ya tenía.</blockquote><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Una laptop llega «sin imagen». El técnico apurado pide una pantalla nueva (Q650). El técnico con método primero conecta un monitor externo: tampoco hay imagen. Luego quita y limpia la RAM: arranca. Costo real: 15 minutos y una limpieza. El método ahorró dinero al cliente y reputación al taller.</p></aside><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Regla de oro: <strong>de lo simple a lo complejo y de lo barato a lo caro</strong>. Cables y conexiones antes que piezas; software antes que hardware cuando el equipo arranca.</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>¿Por qué solo se cambia una cosa a la vez al diagnosticar?</summary><p>Porque si cambias varias a la vez no sabrás cuál era la causa real ni podrás justificar el cobro.</p></details>"
         },
         {
           "titulo": "Cuestionario: fundamentos y seguridad",
           "tipo": "cuestionario",
           "duracion": "10 min",
           "video": "",
-          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Las revisa el servidor: verás tu nota, cuáles acertaste y la explicación de cada una. Las preguntas y las opciones cambian de orden en cada intento, así que no memorices posiciones: entiende el porqué. Necesitas la nota mínima para que la lección quede completada.</p>",
           "preguntas": [
             {
               "pregunta": "¿Cuál es una de las causas más comunes de fallas por calor?",
@@ -134,6 +143,39 @@
               ],
               "correcta": 2,
               "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué haces con una batería de laptop hinchada?",
+              "opciones": [
+                "La presiono para que vuelva a su forma",
+                "La retiro con cuidado, sin perforarla, y la llevo a reciclaje",
+                "La sigo usando con cuidado",
+                "La caliento para desinflarla"
+              ],
+              "correcta": 2,
+              "explicacion": "Una batería de litio hinchada puede incendiarse; se maneja con cuidado y se recicla."
+            },
+            {
+              "pregunta": "¿Cuál es la regla de oro del diagnóstico?",
+              "opciones": [
+                "Cambiar primero la pieza más cara",
+                "De lo simple a lo complejo y de lo barato a lo caro",
+                "Reinstalar Windows siempre",
+                "Cambiar varias piezas a la vez para ahorrar tiempo"
+              ],
+              "correcta": 2,
+              "explicacion": "Así se encuentra la causa con el menor costo y riesgo."
+            },
+            {
+              "pregunta": "¿Qué medida de voltaje tiene un tomacorriente doméstico en Guatemala?",
+              "opciones": [
+                "12 V",
+                "120 V a 60 Hz",
+                "220 V a 50 Hz",
+                "5 V"
+              ],
+              "correcta": 2,
+              "explicacion": "Guatemala usa 120 V y 60 Hz en tomacorrientes domésticos."
             }
           ]
         }
@@ -147,14 +189,21 @@
           "tipo": "video",
           "duracion": "15 min",
           "video": "https://www.youtube.com/watch?v=fcrLFdn-oWE",
-          "contenido": "<p>Mira el video para tener una visión general y luego repasa los puntos clave de cada componente.</p><h3>Placa madre (motherboard)</h3><p>Es la tarjeta principal que conecta todo. Tiene el <strong>socket</strong> del procesador, las ranuras de <strong>RAM</strong>, ranuras <strong>PCIe</strong> (tarjeta de video, red), conectores <strong>SATA</strong> y <strong>M.2</strong> para discos, el chip del <strong>BIOS/UEFI</strong> y la <strong>pila CR2032</strong> que conserva la hora y la configuración.</p><h3>Procesador (CPU)</h3><p>Ejecuta las instrucciones. Se identifica por marca, gama y generación: un <em>Intel Core i5-12400</em> es un i5 de 12.ª generación; un <em>AMD Ryzen 5 5600G</em> es un Ryzen 5 de la serie 5000. Siempre lleva un <strong>disipador</strong> con <strong>pasta térmica</strong>.</p><h3>Memoria RAM</h3><p>Memoria temporal de trabajo. Tipos: <strong>DDR3</strong>, <strong>DDR4</strong> y <strong>DDR5</strong> (no son intercambiables: cada placa acepta uno). Formatos: <strong>DIMM</strong> (escritorio) y <strong>SO-DIMM</strong> (laptop, más corta).</p><h3>Tarjeta de video (GPU)</h3><p>Genera la imagen. Puede ser <strong>integrada</strong> en el procesador o <strong>dedicada</strong> (NVIDIA, AMD) para diseño, video y juegos.</p><h3>Fuente de poder (PSU)</h3><p>Convierte la corriente de la pared (120 V AC) en los voltajes que usa la computadora (12 V, 5 V y 3.3 V DC). Conectores principales: <strong>ATX 24 pines</strong> (placa), <strong>EPS 4+4 pines</strong> (procesador), <strong>PCIe 6+2</strong> (tarjeta de video) y <strong>SATA</strong> (discos).</p><p class=\"aula-credit\"><small>Video: TICnoticos (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Ubicar cada componente dentro del gabinete</li><li>Explicar la función de cada uno al cliente con palabras sencillas</li><li>Reconocer los conectores principales</li></ul></aside><p>Mira el video para tener una visión general y luego repasa los puntos clave de cada componente.</p><h3>Placa madre (motherboard)</h3><p>Es la tarjeta principal que conecta todo. Tiene el <strong>socket</strong> del procesador, las ranuras de <strong>RAM</strong>, ranuras <strong>PCIe</strong> (tarjeta de video, red), conectores <strong>SATA</strong> y <strong>M.2</strong> para discos, el chip del <strong>BIOS/UEFI</strong> y la <strong>pila CR2032</strong> que conserva la hora y la configuración.</p><h3>Procesador (CPU)</h3><p>Ejecuta las instrucciones. Se identifica por marca, gama y generación: un <em>Intel Core i5-12400</em> es un i5 de 12.ª generación; un <em>AMD Ryzen 5 5600G</em> es un Ryzen 5 de la serie 5000. Siempre lleva un <strong>disipador</strong> con <strong>pasta térmica</strong>.</p><h3>Memoria RAM</h3><p>Memoria temporal de trabajo. Tipos: <strong>DDR3</strong>, <strong>DDR4</strong> y <strong>DDR5</strong> (no son intercambiables: cada placa acepta uno). Formatos: <strong>DIMM</strong> (escritorio) y <strong>SO-DIMM</strong> (laptop, más corta).</p><h3>Tarjeta de video (GPU)</h3><p>Genera la imagen. Puede ser <strong>integrada</strong> en el procesador o <strong>dedicada</strong> (NVIDIA, AMD) para diseño, video y juegos.</p><h3>Fuente de poder (PSU)</h3><p>Convierte la corriente de la pared (120 V AC) en los voltajes que usa la computadora (12 V, 5 V y 3.3 V DC). Conectores principales: <strong>ATX 24 pines</strong> (placa), <strong>EPS 4+4 pines</strong> (procesador), <strong>PCIe 6+2</strong> (tarjeta de video) y <strong>SATA</strong> (discos).</p><table><thead><tr><th>Conector</th><th>Dónde va</th><th>Dato clave</th></tr></thead><tbody><tr><td>ATX 24 pines</td><td>Fuente → placa madre</td><td>Alimenta toda la placa</td></tr><tr><td>EPS 4+4 pines (CPU)</td><td>Fuente → esquina superior de la placa</td><td>Sin él la PC no arranca o no da imagen</td></tr><tr><td>PCIe 6+2 pines</td><td>Fuente → tarjeta de video</td><td>No confundir con el EPS: no son intercambiables</td></tr><tr><td>SATA (datos y energía)</td><td>Discos y SSD de 2.5″</td><td>Datos a la placa, energía a la fuente</td></tr><tr><td>M.2</td><td>Ranura en la placa</td><td>SSD NVMe o SATA, sin cables</td></tr><tr><td>Panel frontal</td><td>Pines de la placa (F_PANEL)</td><td>PWR SW, RESET, HDD LED, POWER LED</td></tr></tbody></table><h3>Ponte a prueba</h3><details class=\"check\"><summary>La PC enciende ventiladores pero no da imagen y alguien olvidó un cable. ¿Cuál es el sospechoso típico?</summary><p>El conector EPS de 4+4 pines del procesador.</p></details><p class=\"aula-credit\"><small>Video: TICnoticos (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "La fuente de poder ATX: voltajes y pruebas",
+          "tipo": "video",
+          "duracion": "20 min",
+          "video": "https://www.youtube.com/watch?v=4aati9EtbjA",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Identificar los voltajes por color de cable</li><li>Probar una fuente con la prueba del clip y el multímetro</li><li>Elegir la potencia y calidad correctas para un equipo</li></ul></aside><table><thead><tr><th>Color</th><th>Voltaje</th><th>Tolerancia (±5 %)</th></tr></thead><tbody><tr><td>Amarillo</td><td>+12 V</td><td>11.40 – 12.60 V</td></tr><tr><td>Rojo</td><td>+5 V</td><td>4.75 – 5.25 V</td></tr><tr><td>Naranja</td><td>+3.3 V</td><td>3.14 – 3.47 V</td></tr><tr><td>Morado</td><td>+5 V standby (siempre activo)</td><td>4.75 – 5.25 V</td></tr><tr><td>Verde</td><td>PS_ON (encendido)</td><td>Se une a tierra para arrancar</td></tr><tr><td>Negro</td><td>Tierra (GND)</td><td>Referencia de 0 V</td></tr><tr><td>Gris</td><td>Power Good</td><td>~5 V cuando la fuente está estable</td></tr></tbody></table><h3>Prueba del clip, paso a paso</h3><ol><li>Desconecta la fuente de la pared y de <strong>todos</strong> los componentes (o deja un disco viejo como carga).</li><li>En el conector de 24 pines, une con un clip en forma de U el cable <strong>verde</strong> con cualquier <strong>negro</strong>.</li><li>Conecta la fuente y enciende el interruptor trasero: el ventilador debe girar.</li><li>Mide con el multímetro (20 V DC): punta negra en un pin negro, roja en amarillo, rojo y naranja. Compara con la tabla.</li></ol><h3>¿Qué fuente recomendar?</h3><ul><li>Suma el consumo aproximado (procesador + tarjeta de video + 50–100 W del resto) y deja un <strong>30 % de margen</strong>.</li><li>Prefiere certificación <strong>80 PLUS</strong> (Bronze o superior) de marcas reconocidas. Una fuente genérica de «750 W» puede entregar mucho menos y quemar componentes al fallar.</li></ul><aside class=\"nota alerta\"><h4>⚠️ Cuidado</h4><p>Jamás abras la fuente para repararla en el taller básico: sus capacitores guardan carga peligrosa. Una fuente dañada se reemplaza.</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>El cable amarillo marca 11.1 V. ¿La fuente está bien?</summary><p>No: está por debajo de la tolerancia (11.40 V). Puede causar reinicios o apagados bajo carga; recomienda cambiarla.</p></details><aside class=\"nota clave\"><h4>📌 Puntos clave para recordar</h4><ul><li>Amarillo 12 V, rojo 5 V, naranja 3.3 V; verde + negro = arranque.</li><li>Tolerancia ±5 %.</li><li>Potencia con 30 % de margen y certificación 80 PLUS.</li></ul></aside><p class=\"aula-credit\"><small>Video: EDWINEDUCA (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
         },
         {
           "titulo": "Almacenamiento: HDD, SSD SATA y NVMe",
           "tipo": "lectura",
           "duracion": "12 min",
           "video": "",
-          "contenido": "<h3>Tipos de unidades</h3><table><thead><tr><th>Tipo</th><th>Cómo funciona</th><th>Velocidad aprox.</th><th>Uso recomendado</th></tr></thead><tbody><tr><td><strong>HDD</strong> (disco duro)</td><td>Platos magnéticos que giran (5400/7200 rpm)</td><td>80–160 MB/s</td><td>Respaldos y almacenamiento barato</td></tr><tr><td><strong>SSD SATA 2.5\"</strong></td><td>Memoria flash, sin partes móviles</td><td>~500 MB/s</td><td>La mejor mejora para equipos antiguos</td></tr><tr><td><strong>SSD M.2 NVMe</strong></td><td>Memoria flash conectada por PCIe</td><td>2,000–7,000 MB/s</td><td>Equipos modernos</td></tr></tbody></table><p>Ojo: hay unidades <strong>M.2 SATA</strong> y <strong>M.2 NVMe</strong> con el mismo tamaño. Revisa qué acepta la placa (manual o ficha técnica del fabricante) antes de comprar.</p><h3>Señales de que un disco está fallando</h3><ul><li>Ruidos de clic o rasguños (en HDD).</li><li>Lentitud extrema, archivos que no abren o desaparecen.</li><li>Mensajes de error al arrancar, pantallas azules frecuentes.</li></ul><h3>Cómo revisar la salud del disco</h3><ol><li>Descarga <strong>CrystalDiskInfo</strong> (gratuito) desde su página oficial.</li><li>Ábrelo: muestra el estado <strong>Bueno</strong>, <strong>Precaución</strong> o <strong>Malo</strong>, la temperatura y las horas de uso.</li><li>Si dice <em>Precaución</em> o <em>Malo</em>: <strong>respalda de inmediato</strong> y recomienda el cambio.</li></ol><h3>Migrar a un SSD</h3><p>Puedes <strong>clonar</strong> el disco viejo al SSD (con herramientas como Macrium Reflect o la del fabricante del SSD) para conservar todo, o hacer una <strong>instalación limpia</strong> de Windows y copiar los archivos. La instalación limpia suele dar mejor resultado en equipos llenos de programas.</p>",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Elegir la unidad correcta según la placa y el presupuesto</li><li>Leer el estado SMART de un disco</li><li>Planear una migración a SSD sin perder datos</li></ul></aside><h3>Tipos de unidades</h3><table><thead><tr><th>Tipo</th><th>Cómo funciona</th><th>Velocidad aprox.</th><th>Uso recomendado</th></tr></thead><tbody><tr><td><strong>HDD</strong> (disco duro)</td><td>Platos magnéticos que giran (5400/7200 rpm)</td><td>80–160 MB/s</td><td>Respaldos y almacenamiento barato</td></tr><tr><td><strong>SSD SATA 2.5\"</strong></td><td>Memoria flash, sin partes móviles</td><td>~500 MB/s</td><td>La mejor mejora para equipos antiguos</td></tr><tr><td><strong>SSD M.2 NVMe</strong></td><td>Memoria flash conectada por PCIe</td><td>2,000–7,000 MB/s</td><td>Equipos modernos</td></tr></tbody></table><p>Ojo: hay unidades <strong>M.2 SATA</strong> y <strong>M.2 NVMe</strong> con el mismo tamaño. Revisa qué acepta la placa (manual o ficha técnica del fabricante) antes de comprar.</p><h3>Señales de que un disco está fallando</h3><ul><li>Ruidos de clic o rasguños (en HDD).</li><li>Lentitud extrema, archivos que no abren o desaparecen.</li><li>Mensajes de error al arrancar, pantallas azules frecuentes.</li></ul><h3>Cómo revisar la salud del disco</h3><ol><li>Descarga <strong>CrystalDiskInfo</strong> (gratuito) desde su página oficial.</li><li>Ábrelo: muestra el estado <strong>Bueno</strong>, <strong>Precaución</strong> o <strong>Malo</strong>, la temperatura y las horas de uso.</li><li>Si dice <em>Precaución</em> o <em>Malo</em>: <strong>respalda de inmediato</strong> y recomienda el cambio.</li></ol><h3>Migrar a un SSD</h3><p>Puedes <strong>clonar</strong> el disco viejo al SSD (con herramientas como Macrium Reflect o la del fabricante del SSD) para conservar todo, o hacer una <strong>instalación limpia</strong> de Windows y copiar los archivos. La instalación limpia suele dar mejor resultado en equipos llenos de programas.</p><table><thead><tr><th>Tipo</th><th>Velocidad típica de lectura</th><th>Uso recomendado</th></tr></thead><tbody><tr><td>HDD 7200 rpm</td><td>100–200 MB/s</td><td>Respaldos y almacenamiento masivo barato</td></tr><tr><td>SSD SATA 2.5″</td><td>~550 MB/s</td><td>Mejora universal para equipos antiguos</td></tr><tr><td>SSD NVMe PCIe 3.0</td><td>~3,500 MB/s</td><td>Equipos con ranura M.2 NVMe</td></tr><tr><td>SSD NVMe PCIe 4.0</td><td>~7,000 MB/s</td><td>Equipos modernos, edición y juegos</td></tr></tbody></table><aside class=\"nota alerta\"><h4>⚠️ Antes de comprar un M.2</h4><p>Una ranura M.2 no siempre acepta NVMe: algunas solo aceptan M.2 SATA (llave B+M). Revisa el manual de la placa o de la laptop antes de vender la pieza al cliente.</p></aside>",
           "materiales": [
             {
               "titulo": "CrystalDiskInfo (página oficial)",
@@ -168,7 +217,7 @@
           "tipo": "video",
           "duracion": "15 min",
           "video": "https://www.youtube.com/watch?v=5EzS6eVGVGY",
-          "contenido": "<h3>Instalar o cambiar memoria RAM</h3><ol><li>Identifica el tipo que acepta el equipo (DDR4 o DDR5, DIMM o SO-DIMM) con <strong>CPU-Z</strong> (pestaña <em>Memory</em> y <em>SPD</em>) o con el manual.</li><li>Apaga, desconecta y descarga la estática.</li><li>Abre las pestañas laterales de la ranura.</li><li>Alinea la <strong>muesca</strong> del módulo con la de la ranura (solo entra en una posición).</li><li>Presiona firme y parejo hasta que las pestañas cierren solas con un «clic». En laptop: inserta en ángulo de 30° y baja hasta que trabe.</li></ol><h3>Doble canal (dual channel)</h3><p>Dos módulos iguales (por ejemplo, 2 × 8 GB) rinden más que uno solo de 16 GB, porque trabajan en paralelo. En placas de 4 ranuras, se usan normalmente la 2 y la 4 (revisa el manual).</p><h3>¿Cuánta RAM recomendar?</h3><ul><li><strong>8 GB:</strong> mínimo para Windows 11 y uso de oficina.</li><li><strong>16 GB:</strong> recomendado para multitarea, diseño básico y estudiantes.</li><li><strong>32 GB o más:</strong> edición de video, diseño 3D, programación pesada.</li></ul><h3>El BIOS / UEFI</h3><p>Es el programa de la placa que arranca antes que Windows. Se entra presionando <kbd>Supr</kbd>, <kbd>F2</kbd>, <kbd>F10</kbd> o <kbd>Esc</kbd> al encender (depende de la marca). Ahí se ve la RAM y los discos detectados, se cambia el orden de arranque y se activan opciones como TPM 2.0 y Secure Boot (necesarias para Windows 11).</p><p class=\"aula-credit\"><small>Video: Tecnowl (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Instalar memoria RAM en las ranuras correctas</li><li>Verificar compatibilidad DDR3/DDR4/DDR5 y SODIMM/DIMM</li><li>Explicar el beneficio del doble canal</li></ul></aside><h3>Instalar o cambiar memoria RAM</h3><ol><li>Identifica el tipo que acepta el equipo (DDR4 o DDR5, DIMM o SO-DIMM) con <strong>CPU-Z</strong> (pestaña <em>Memory</em> y <em>SPD</em>) o con el manual.</li><li>Apaga, desconecta y descarga la estática.</li><li>Abre las pestañas laterales de la ranura.</li><li>Alinea la <strong>muesca</strong> del módulo con la de la ranura (solo entra en una posición).</li><li>Presiona firme y parejo hasta que las pestañas cierren solas con un «clic». En laptop: inserta en ángulo de 30° y baja hasta que trabe.</li></ol><h3>Doble canal (dual channel)</h3><p>Dos módulos iguales (por ejemplo, 2 × 8 GB) rinden más que uno solo de 16 GB, porque trabajan en paralelo. En placas de 4 ranuras, se usan normalmente la 2 y la 4 (revisa el manual).</p><h3>¿Cuánta RAM recomendar?</h3><ul><li><strong>8 GB:</strong> mínimo para Windows 11 y uso de oficina.</li><li><strong>16 GB:</strong> recomendado para multitarea, diseño básico y estudiantes.</li><li><strong>32 GB o más:</strong> edición de video, diseño 3D, programación pesada.</li></ul><h3>El BIOS / UEFI</h3><p>Es el programa de la placa que arranca antes que Windows. Se entra presionando <kbd>Supr</kbd>, <kbd>F2</kbd>, <kbd>F10</kbd> o <kbd>Esc</kbd> al encender (depende de la marca). Ahí se ve la RAM y los discos detectados, se cambia el orden de arranque y se activan opciones como TPM 2.0 y Secure Boot (necesarias para Windows 11).</p><table><thead><tr><th>Tipo</th><th>Equipos</th><th>Detalle</th></tr></thead><tbody><tr><td>DIMM</td><td>Escritorio</td><td>Módulo largo</td></tr><tr><td>SODIMM</td><td>Laptops y mini PC</td><td>Módulo corto</td></tr><tr><td>DDR3 / DDR4 / DDR5</td><td>Generaciones</td><td>La muesca está en distinto lugar: no son intercambiables</td></tr></tbody></table><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Para saber qué RAM lleva un equipo sin abrirlo, usa <strong>CPU-Z</strong> (pestañas Memory y SPD) o mira el Administrador de tareas → Rendimiento → Memoria (velocidad, ranuras usadas y formato).</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>Un cliente tiene un solo módulo de 8 GB. ¿Qué le recomiendas para mejorar el rendimiento gráfico integrado?</summary><p>Agregar otro módulo igual de 8 GB para trabajar en doble canal (16 GB en total).</p></details><p class=\"aula-credit\"><small>Video: Tecnowl (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>",
           "materiales": [
             {
               "titulo": "CPU-Z (página oficial)",
@@ -182,14 +231,14 @@
           "tipo": "lectura",
           "duracion": "12 min",
           "video": "",
-          "contenido": "<p>Reparar laptops exige más paciencia que una computadora de escritorio: todo está más integrado y los tornillos y conectores son diminutos.</p><h3>Lo que cambia en una laptop</h3><ul><li>Muchos modelos tienen la <strong>RAM soldada</strong> (no se puede ampliar) o solo una ranura libre.</li><li>El procesador va <strong>soldado</strong> a la placa.</li><li>El disco suele ser <strong>M.2</strong> o SATA de 2.5\". La ampliación de RAM y el cambio a SSD siguen siendo las mejoras más rentables.</li><li>Las piezas (pantalla, teclado, bisagras, batería, ventilador) son <strong>específicas de cada modelo</strong>: busca el repuesto con el número de parte exacto.</li></ul><h3>Antes de abrir</h3><ol><li>Busca el <strong>manual de servicio</strong> o una guía del modelo exacto (por ejemplo, en iFixit o en el sitio del fabricante).</li><li>Apaga por completo (no suspender), desconecta el cargador y, al abrir, <strong>desconecta la batería</strong> interna primero.</li><li>Ordena los tornillos según su posición: suelen tener largos distintos. Un tornillo largo en el lugar equivocado puede perforar la placa.</li><li>Usa púas plásticas para liberar los clips de la tapa; nunca destornilladores metálicos como palanca.</li></ol><h3>Fallas típicas de laptops</h3><ul><li><strong>Bisagras flojas o rotas:</strong> si no se atienden, terminan dañando la pantalla y el cable flex.</li><li><strong>Batería inflada:</strong> la carcasa se levanta o el touchpad se abomba. Es peligroso: cámbiala de inmediato y no la perfores.</li><li><strong>Teclas que no responden:</strong> suciedad o líquido; a veces se cambia el teclado completo.</li><li><strong>Puerto de carga flojo:</strong> el cargador «hace falso contacto».</li><li><strong>Sobrecalentamiento:</strong> ventilador tapado de polvo y pasta seca.</li></ul><h3>Si se derrama un líquido</h3><p>Apaga de inmediato manteniendo el botón, desconecta el cargador, voltea la laptop en forma de «V» invertida y llévala al taller. <strong>No la enciendas</strong> para «ver si funciona», ni la metas en arroz: el líquido corroe la placa y se debe limpiar por dentro con alcohol isopropílico.</p>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Abrir una laptop sin romper broches ni cables flex</li><li>Identificar qué se puede mejorar en cada modelo</li><li>Actuar correctamente ante derrames de líquido</li></ul></aside><p>Reparar laptops exige más paciencia que una computadora de escritorio: todo está más integrado y los tornillos y conectores son diminutos.</p><h3>Lo que cambia en una laptop</h3><ul><li>Muchos modelos tienen la <strong>RAM soldada</strong> (no se puede ampliar) o solo una ranura libre.</li><li>El procesador va <strong>soldado</strong> a la placa.</li><li>El disco suele ser <strong>M.2</strong> o SATA de 2.5\". La ampliación de RAM y el cambio a SSD siguen siendo las mejoras más rentables.</li><li>Las piezas (pantalla, teclado, bisagras, batería, ventilador) son <strong>específicas de cada modelo</strong>: busca el repuesto con el número de parte exacto.</li></ul><h3>Antes de abrir</h3><ol><li>Busca el <strong>manual de servicio</strong> o una guía del modelo exacto (por ejemplo, en iFixit o en el sitio del fabricante).</li><li>Apaga por completo (no suspender), desconecta el cargador y, al abrir, <strong>desconecta la batería</strong> interna primero.</li><li>Ordena los tornillos según su posición: suelen tener largos distintos. Un tornillo largo en el lugar equivocado puede perforar la placa.</li><li>Usa púas plásticas para liberar los clips de la tapa; nunca destornilladores metálicos como palanca.</li></ol><h3>Fallas típicas de laptops</h3><ul><li><strong>Bisagras flojas o rotas:</strong> si no se atienden, terminan dañando la pantalla y el cable flex.</li><li><strong>Batería inflada:</strong> la carcasa se levanta o el touchpad se abomba. Es peligroso: cámbiala de inmediato y no la perfores.</li><li><strong>Teclas que no responden:</strong> suciedad o líquido; a veces se cambia el teclado completo.</li><li><strong>Puerto de carga flojo:</strong> el cargador «hace falso contacto».</li><li><strong>Sobrecalentamiento:</strong> ventilador tapado de polvo y pasta seca.</li></ul><h3>Si se derrama un líquido</h3><p>Apaga de inmediato manteniendo el botón, desconecta el cargador, voltea la laptop en forma de «V» invertida y llévala al taller. <strong>No la enciendas</strong> para «ver si funciona», ni la metas en arroz: el líquido corroe la placa y se debe limpiar por dentro con alcohol isopropílico.</p><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Antes de abrir cualquier laptop, busca su <strong>manual de servicio</strong> (en inglés «service manual» o «hardware maintenance manual») con el modelo exacto de la etiqueta inferior. Los fabricantes como Dell, HP y Lenovo los publican gratis y muestran cada tornillo.</p></aside><aside class=\"nota alerta\"><h4>⚠️ Cuidado</h4><p>Los conectores flex (cintas planas) tienen una traba que se levanta antes de jalar la cinta. Si la jalas directo, rompes el conector y la reparación se vuelve una microsoldadura.</p></aside>"
         },
         {
           "titulo": "Cuestionario: componentes",
           "tipo": "cuestionario",
           "duracion": "10 min",
           "video": "",
-          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Las revisa el servidor: verás tu nota, cuáles acertaste y la explicación de cada una. Las preguntas y las opciones cambian de orden en cada intento, así que no memorices posiciones: entiende el porqué. Necesitas la nota mínima para que la lección quede completada.</p>",
           "preguntas": [
             {
               "pregunta": "¿Qué conserva la hora y la configuración del BIOS cuando el equipo está desconectado?",
@@ -278,6 +327,182 @@
               ],
               "correcta": 3,
               "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué conector alimenta específicamente al procesador?",
+              "opciones": [
+                "SATA",
+                "EPS 4+4 pines",
+                "PCIe 6+2",
+                "Molex"
+              ],
+              "correcta": 2,
+              "explicacion": "El EPS va en la esquina superior de la placa, cerca del procesador."
+            },
+            {
+              "pregunta": "¿Qué tipo de módulo de RAM usan las laptops?",
+              "opciones": [
+                "DIMM",
+                "SODIMM",
+                "SIMM",
+                "M.2"
+              ],
+              "correcta": 2,
+              "explicacion": "SODIMM es el formato corto para portátiles."
+            },
+            {
+              "pregunta": "Una ranura M.2, ¿acepta siempre SSD NVMe?",
+              "opciones": [
+                "Sí, siempre",
+                "No: algunas solo aceptan M.2 SATA; hay que revisar el manual",
+                "Solo en laptops",
+                "Solo si el SSD es de 1 TB"
+              ],
+              "correcta": 2,
+              "explicacion": "La compatibilidad depende de la placa; revisa la llave y el manual."
+            },
+            {
+              "pregunta": "¿Qué programa muestra el tipo y la velocidad de RAM sin abrir el equipo?",
+              "opciones": [
+                "CPU-Z",
+                "Paint",
+                "WinRAR",
+                "Bloc de notas"
+              ],
+              "correcta": 1,
+              "explicacion": "CPU-Z (y el Administrador de tareas) muestran los datos de la memoria."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Armado de PC, BIOS/UEFI y arranque",
+      "lecciones": [
+        {
+          "titulo": "Armado de una PC paso a paso",
+          "tipo": "video",
+          "duracion": "35 min",
+          "video": "https://www.youtube.com/watch?v=jDgFbYoTtr4",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Verificar la compatibilidad de las piezas antes de comprar</li><li>Armar una PC en el orden correcto y sin dañar componentes</li><li>Hacer la primera prueba de encendido y gestionar cables</li></ul></aside><h3>Compatibilidad: la lista que evita devoluciones</h3><table><thead><tr><th>Revisa</th><th>Debe coincidir con</th><th>Ejemplo</th></tr></thead><tbody><tr><td>Socket del procesador</td><td>Socket de la placa madre</td><td>Ryzen 5 7600 → AM5; Core i5-14400 → LGA1700</td></tr><tr><td>Tipo de RAM</td><td>La placa (DDR4 o DDR5)</td><td>Placas AM5 solo aceptan DDR5</td></tr><tr><td>Tamaño de la placa</td><td>Gabinete (ATX, Micro-ATX, Mini-ITX)</td><td>Una ATX no cabe en un gabinete Mini-ITX</td></tr><tr><td>Potencia de la fuente</td><td>Consumo total + 30 %</td><td>GPU de 200 W + CPU de 65 W → fuente de 550–650 W</td></tr><tr><td>Altura del disipador / largo de la GPU</td><td>Medidas del gabinete</td><td>Revisa la ficha del gabinete</td></tr></tbody></table><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Antes de comprar, arma la lista en <strong>pcpartpicker.com</strong>: revisa automáticamente la compatibilidad y estima el consumo.</p></aside><h3>Orden de armado recomendado</h3><h3>Sigue y marca cada paso</h3><ul class=\"checklist\"><li>Procesador en la placa (fuera del gabinete), alineando el triángulo dorado</li><li>Disipador con pasta térmica (si no la trae aplicada)</li><li>Memoria RAM en las ranuras recomendadas (normalmente A2 y B2)</li><li>SSD M.2 con su tornillo o traba</li><li>Separadores (standoffs) solo donde la placa tiene agujeros</li><li>Placa dentro del gabinete con su placa trasera de puertos (I/O shield)</li><li>Fuente de poder con el ventilador hacia la rejilla</li><li>Cables: 24 pines, EPS del CPU, SATA y PCIe</li><li>Panel frontal: PWR SW, RESET, LEDs, USB y audio</li><li>Tarjeta de video (si lleva) asegurada con tornillo</li><li>Prueba de encendido ANTES de ordenar cables y cerrar</li></ul><aside class=\"nota alerta\"><h4>⚠️ Cuidado</h4><p>Un separador metálico en un lugar sin agujero de la placa provoca un cortocircuito. Y el procesador nunca se fuerza: si no entra solo, la orientación está mal.</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>¿Qué conector olvidan muchos principiantes y causa que no haya imagen?</summary><p>El EPS de 4+4 pines del procesador.</p></details><p class=\"aula-credit\"><small>Video: YANPOL (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "BIOS/UEFI: configuración esencial",
+          "tipo": "video",
+          "duracion": "20 min",
+          "video": "https://www.youtube.com/watch?v=P56lWEma6UA",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entrar al BIOS/UEFI y al menú de arranque de cualquier marca</li><li>Configurar orden de arranque, XMP/EXPO, Secure Boot y TPM</li><li>Restablecer el BIOS cuando algo sale mal</li></ul></aside><table><thead><tr><th>Marca</th><th>Entrar al BIOS</th><th>Menú de arranque</th></tr></thead><tbody><tr><td>Placas genéricas (ASUS, MSI, Gigabyte, ASRock)</td><td><kbd>Supr</kbd> o <kbd>F2</kbd></td><td><kbd>F8</kbd>, <kbd>F11</kbd> o <kbd>F12</kbd></td></tr><tr><td>Dell</td><td><kbd>F2</kbd></td><td><kbd>F12</kbd></td></tr><tr><td>HP</td><td><kbd>Esc</kbd> y luego <kbd>F10</kbd></td><td><kbd>Esc</kbd> y luego <kbd>F9</kbd></td></tr><tr><td>Lenovo</td><td><kbd>F1</kbd> o <kbd>F2</kbd> (o botón Novo)</td><td><kbd>F12</kbd></td></tr><tr><td>Acer</td><td><kbd>F2</kbd></td><td><kbd>F12</kbd></td></tr></tbody></table><h3>Opciones que todo técnico debe conocer</h3><ul><li><strong>Boot order / Boot priority:</strong> orden de arranque (USB, SSD…).</li><li><strong>UEFI vs. Legacy/CSM:</strong> Windows 11 requiere UEFI con disco en GPT. Legacy usa MBR.</li><li><strong>Secure Boot</strong> y <strong>TPM 2.0</strong> (fTPM en AMD, PTT en Intel): requisitos de Windows 11.</li><li><strong>XMP / EXPO:</strong> hace que la RAM funcione a su velocidad anunciada (por defecto suele ir más lenta).</li><li><strong>SATA mode (AHCI / RAID):</strong> cambiarlo con Windows instalado puede causar pantalla azul INACCESSIBLE_BOOT_DEVICE.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Si el equipo no arranca después de cambiar algo en el BIOS, carga los valores por defecto (<strong>Load Optimized Defaults</strong>, normalmente <kbd>F9</kbd>) o borra la CMOS: retira la pila 5 minutos o une los pines <strong>CLR_CMOS</strong> con el equipo desconectado.</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>La RAM es DDR4-3200 pero Windows dice 2133 MHz. ¿Qué activas?</summary><p>El perfil <strong>XMP</strong> (o DOCP/EXPO en AMD) en el BIOS.</p></details><details class=\"check\"><summary>¿Qué necesita Windows 11 en el BIOS?</summary><p>Modo UEFI, Secure Boot y TPM 2.0 activos.</p></details><p class=\"aula-credit\"><small>Video: LVLTECH (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Códigos de pitidos y la prueba POST",
+          "tipo": "video",
+          "duracion": "15 min",
+          "video": "https://www.youtube.com/watch?v=1G1P4PK48gQ",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Explicar qué es la prueba POST</li><li>Interpretar los pitidos y luces más comunes</li><li>Usar el manual de la placa para confirmar el código</li></ul></aside><p>Al encender, la placa ejecuta el <strong>POST</strong> (Power-On Self-Test): revisa CPU, RAM y video antes de arrancar. Si algo falla, lo avisa con pitidos (si tiene bocina o «speaker»), con luces DEBUG o con un código en pantalla.</p><table><thead><tr><th>Señal (referencia general)</th><th>Significado probable</th></tr></thead><tbody><tr><td>1 pitido corto</td><td>POST correcto (AMI y muchas placas)</td></tr><tr><td>Pitidos largos repetidos</td><td>Problema de memoria RAM</td></tr><tr><td>1 largo y 2 o 3 cortos</td><td>Problema de video</td></tr><tr><td>Pitidos continuos rápidos</td><td>Sobrecalentamiento o problema de energía</td></tr><tr><td>LED DRAM encendido fijo</td><td>La placa se detuvo en la memoria</td></tr><tr><td>LED VGA encendido fijo</td><td>Problema de video o del cable de monitor</td></tr></tbody></table><aside class=\"nota alerta\"><h4>⚠️ No memorices: verifica</h4><p>Los códigos cambian según el fabricante del BIOS (AMI, Award/Phoenix) y la marca del equipo (Dell, HP y Lenovo usan combinaciones de luces del botón o del cargador). Confírmalos siempre en el manual del modelo.</p></aside><p class=\"aula-credit\"><small>Video: Miguel_PC_Gonzalez (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Tarea: cotiza y planifica un armado",
+          "tipo": "tarea",
+          "duracion": "1 hora",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Elegir piezas compatibles para un presupuesto real</li><li>Justificar cada elección ante un cliente</li></ul></aside><p>Un cliente necesita una PC para oficina y diseño ligero con un presupuesto de <strong>Q6,500</strong>. Entrega:</p><ol><li>Lista de piezas (procesador, placa, RAM, SSD, fuente, gabinete y, si cabe, tarjeta de video) con precio de una tienda guatemalteca y enlace.</li><li>Captura de pcpartpicker.com sin advertencias de compatibilidad.</li><li>Cálculo de la potencia de la fuente con el 30 % de margen.</li><li>Un párrafo para el cliente explicando por qué esa configuración es la mejor para su uso.</li></ol><ul class=\"checklist\"><li>Socket CPU = socket placa</li><li>Tipo de RAM compatible con la placa</li><li>Formato de placa compatible con el gabinete</li><li>Fuente con margen y certificación 80 PLUS</li><li>Total dentro del presupuesto</li></ul>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: armado y BIOS",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Qué debe coincidir entre el procesador y la placa madre?",
+              "opciones": [
+                "El color",
+                "El socket",
+                "La marca del gabinete",
+                "El tamaño del disco"
+              ],
+              "correcta": 2,
+              "explicacion": "El socket determina qué procesadores acepta la placa."
+            },
+            {
+              "pregunta": "¿Qué opción del BIOS hace que la RAM trabaje a su velocidad anunciada?",
+              "opciones": [
+                "Secure Boot",
+                "XMP / EXPO",
+                "CSM",
+                "Fast Boot"
+              ],
+              "correcta": 2,
+              "explicacion": "XMP (Intel) o EXPO/DOCP (AMD) aplican el perfil de velocidad del módulo."
+            },
+            {
+              "pregunta": "¿Qué necesita Windows 11 en el firmware?",
+              "opciones": [
+                "Legacy y MBR",
+                "UEFI, Secure Boot y TPM 2.0",
+                "Solo 4 GB de RAM",
+                "Un disco HDD"
+              ],
+              "correcta": 2,
+              "explicacion": "Son requisitos oficiales de Windows 11."
+            },
+            {
+              "pregunta": "¿Cuándo se ordenan los cables y se cierra el gabinete?",
+              "opciones": [
+                "Antes de probar",
+                "Después de una prueba de encendido exitosa",
+                "Nunca",
+                "Antes de instalar la RAM"
+              ],
+              "correcta": 2,
+              "explicacion": "Así evitas desarmar todo si algo no funciona."
+            },
+            {
+              "pregunta": "Pitidos largos repetidos al encender suelen indicar…",
+              "opciones": [
+                "Problema de memoria RAM",
+                "Que todo está bien",
+                "Falta de internet",
+                "Teclado desconectado"
+              ],
+              "correcta": 1,
+              "explicacion": "Es el aviso más común de RAM defectuosa o mal colocada (confírmalo en el manual)."
+            },
+            {
+              "pregunta": "¿Cómo restableces un BIOS que dejó de arrancar tras un cambio?",
+              "opciones": [
+                "Reinstalando Windows",
+                "Cargando valores por defecto o borrando la CMOS (pila o jumper CLR_CMOS)",
+                "Cambiando el monitor",
+                "Formateando el disco"
+              ],
+              "correcta": 2,
+              "explicacion": "Volver a los valores por defecto deshace la configuración problemática."
+            },
+            {
+              "pregunta": "Un cable amarillo de la fuente mide 11.2 V. ¿Qué concluyes?",
+              "opciones": [
+                "Está perfecto",
+                "Está fuera de tolerancia (mín. 11.40 V): la fuente debe reemplazarse",
+                "Es normal en fuentes nuevas",
+                "Hay que subir el voltaje en el BIOS"
+              ],
+              "correcta": 2,
+              "explicacion": "La tolerancia ATX es ±5 %."
+            },
+            {
+              "pregunta": "Para hacer la prueba del clip se une el cable verde con…",
+              "opciones": [
+                "El amarillo",
+                "Cualquier negro",
+                "El rojo",
+                "El naranja"
+              ],
+              "correcta": 2,
+              "explicacion": "Verde (PS_ON) a tierra (negro) indica a la fuente que encienda."
             }
           ]
         }
@@ -291,14 +516,14 @@
           "tipo": "video",
           "duracion": "15 min",
           "video": "https://www.youtube.com/watch?v=hDwTd17d0Dc",
-          "contenido": "<h3>Paso a paso</h3><ol><li>Apaga, desconecta todos los cables y lleva el equipo a un área ventilada (de preferencia al aire libre: sale mucho polvo).</li><li>Retira la tapa lateral y toma una foto del interior.</li><li><strong>Ventiladores:</strong> sujeta las aspas con un dedo o un palillo mientras soplas. Si giran libres con el aire comprimido pueden dañarse o generar corriente.</li><li>Sopla en ráfagas cortas (1 a 2 segundos), con la lata en posición vertical para que no salga líquido congelante.</li><li><strong>Disipador del procesador:</strong> suele ser lo más sucio. Sopla entre las aletas desde varios ángulos.</li><li><strong>Fuente de poder:</strong> sopla por las rejillas desde fuera, sin abrirla.</li><li><strong>Placa y ranuras:</strong> brocha suave y aire. Puedes retirar la RAM y limpiar sus contactos con un paño seco o con alcohol isopropílico.</li><li><strong>Filtros de polvo</strong> del gabinete: retíralos y lávalos con agua si son de malla; sécalos por completo.</li><li>Limpia el exterior, el teclado y el mouse con un paño humedecido en alcohol isopropílico.</li><li>Revisa que todos los cables estén bien conectados, cierra y prueba.</li></ol><h3>Errores que dañan equipos</h3><ul><li>Usar <strong>aspiradora</strong> dentro del gabinete (genera estática).</li><li>Soplar con la boca (humedad y saliva).</li><li>Usar un compresor de taller sin filtro de humedad ni regulador de presión.</li><li>Limpiar con el equipo conectado.</li></ul><p class=\"aula-credit\"><small>Video: Computer Hoy (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Limpiar sin dañar ventiladores ni componentes</li><li>Ordenar el cableado para mejorar el flujo de aire</li><li>Documentar el estado antes y después</li></ul></aside><h3>Paso a paso</h3><ol><li>Apaga, desconecta todos los cables y lleva el equipo a un área ventilada (de preferencia al aire libre: sale mucho polvo).</li><li>Retira la tapa lateral y toma una foto del interior.</li><li><strong>Ventiladores:</strong> sujeta las aspas con un dedo o un palillo mientras soplas. Si giran libres con el aire comprimido pueden dañarse o generar corriente.</li><li>Sopla en ráfagas cortas (1 a 2 segundos), con la lata en posición vertical para que no salga líquido congelante.</li><li><strong>Disipador del procesador:</strong> suele ser lo más sucio. Sopla entre las aletas desde varios ángulos.</li><li><strong>Fuente de poder:</strong> sopla por las rejillas desde fuera, sin abrirla.</li><li><strong>Placa y ranuras:</strong> brocha suave y aire. Puedes retirar la RAM y limpiar sus contactos con un paño seco o con alcohol isopropílico.</li><li><strong>Filtros de polvo</strong> del gabinete: retíralos y lávalos con agua si son de malla; sécalos por completo.</li><li>Limpia el exterior, el teclado y el mouse con un paño humedecido en alcohol isopropílico.</li><li>Revisa que todos los cables estén bien conectados, cierra y prueba.</li></ol><h3>Errores que dañan equipos</h3><ul><li>Usar <strong>aspiradora</strong> dentro del gabinete (genera estática).</li><li>Soplar con la boca (humedad y saliva).</li><li>Usar un compresor de taller sin filtro de humedad ni regulador de presión.</li><li>Limpiar con el equipo conectado.</li></ul><h3>Lista de verificación de la limpieza</h3><ul class=\"checklist\"><li>Fotos del equipo antes de abrir</li><li>Equipo desconectado y botón de encendido presionado 5 s para descargar</li><li>Ventiladores trabados con el dedo al soplar (que no giren libres)</li><li>Filtros de polvo lavados y secos</li><li>Cables ordenados con cinchos</li><li>Prueba de encendido y temperaturas tras cerrar</li><li>Fotos del después para el cliente</li></ul><p class=\"aula-credit\"><small>Video: Computer Hoy (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
         },
         {
           "titulo": "Pasta térmica y control de temperatura",
           "tipo": "video",
           "duracion": "15 min",
           "video": "https://www.youtube.com/watch?v=-eGyaxAWQH0",
-          "contenido": "<p>La <strong>pasta térmica</strong> rellena las imperfecciones microscópicas entre el procesador y el disipador para que el calor pase bien. Con el tiempo (2 a 4 años) se seca y la temperatura sube.</p><h3>Cómo cambiarla</h3><ol><li>Retira el disipador aflojando sus tornillos en forma de <strong>cruz</strong> (en diagonal), poco a poco.</li><li>Si está muy pegado, gíralo suavemente un poco a cada lado; no lo jales de golpe (en AMD antiguos puedes arrancar el procesador del socket).</li><li>Limpia la pasta vieja del procesador y del disipador con alcohol isopropílico y un paño sin pelusa.</li><li>Aplica una gota del tamaño de un <strong>grano de arroz o guisante</strong> en el centro del procesador (en procesadores grandes, una línea o una «X»).</li><li>Coloca el disipador recto y aprieta los tornillos en cruz, de forma pareja.</li></ol><h3>Temperaturas de referencia</h3><table><thead><tr><th>Estado</th><th>Temperatura del CPU</th></tr></thead><tbody><tr><td>En reposo</td><td>30–50 °C</td></tr><tr><td>Uso normal / carga</td><td>60–80 °C</td></tr><tr><td>Preocupante</td><td>Más de 90 °C de forma sostenida</td></tr></tbody></table><p>Para medirlas usa <strong>HWMonitor</strong> o <strong>Core Temp</strong> (gratuitos). Mide antes y después del mantenimiento: es una excelente forma de mostrarle al cliente el resultado de tu trabajo.</p><h3>Laptops</h3><p>En laptops el disipador cubre procesador y a veces la tarjeta de video. Cambiar la pasta y limpiar el ventilador suele bajar de 10 a 25 °C en equipos con años sin mantenimiento.</p><p class=\"aula-credit\"><small>Video: Digitalife (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Cambiar la pasta térmica con la cantidad correcta</li><li>Medir temperaturas en reposo y bajo carga</li><li>Detectar ventiladores o disipadores defectuosos</li></ul></aside><p>La <strong>pasta térmica</strong> rellena las imperfecciones microscópicas entre el procesador y el disipador para que el calor pase bien. Con el tiempo (2 a 4 años) se seca y la temperatura sube.</p><h3>Cómo cambiarla</h3><ol><li>Retira el disipador aflojando sus tornillos en forma de <strong>cruz</strong> (en diagonal), poco a poco.</li><li>Si está muy pegado, gíralo suavemente un poco a cada lado; no lo jales de golpe (en AMD antiguos puedes arrancar el procesador del socket).</li><li>Limpia la pasta vieja del procesador y del disipador con alcohol isopropílico y un paño sin pelusa.</li><li>Aplica una gota del tamaño de un <strong>grano de arroz o guisante</strong> en el centro del procesador (en procesadores grandes, una línea o una «X»).</li><li>Coloca el disipador recto y aprieta los tornillos en cruz, de forma pareja.</li></ol><h3>Temperaturas de referencia</h3><table><thead><tr><th>Estado</th><th>Temperatura del CPU</th></tr></thead><tbody><tr><td>En reposo</td><td>30–50 °C</td></tr><tr><td>Uso normal / carga</td><td>60–80 °C</td></tr><tr><td>Preocupante</td><td>Más de 90 °C de forma sostenida</td></tr></tbody></table><p>Para medirlas usa <strong>HWMonitor</strong> o <strong>Core Temp</strong> (gratuitos). Mide antes y después del mantenimiento: es una excelente forma de mostrarle al cliente el resultado de tu trabajo.</p><h3>Laptops</h3><p>En laptops el disipador cubre procesador y a veces la tarjeta de video. Cambiar la pasta y limpiar el ventilador suele bajar de 10 a 25 °C en equipos con años sin mantenimiento.</p><aside class=\"nota practica\"><h4>🧪 Práctica: mide antes y después</h4><ol><li>Instala <strong>HWiNFO</strong> (versión portable desde su sitio oficial) y abre solo <strong>Sensors</strong>.</li><li>Anota la temperatura del CPU en reposo después de 5 minutos.</li><li>Abre varios videos o una prueba de estrés durante 10 minutos y anota la temperatura máxima.</li><li>Compara con la tabla de referencia de la lección y anota la conclusión en tu bitácora.</li></ol></aside><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Un equipo que baja más de 15 °C bajo carga después del mantenimiento es una gran evidencia para mostrar al cliente: incluye esas cifras en el informe.</p></aside><p class=\"aula-credit\"><small>Video: Digitalife (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>",
           "materiales": [
             {
               "titulo": "HWMonitor (página oficial)",
@@ -312,21 +537,21 @@
           "tipo": "video",
           "duracion": "15 min",
           "video": "https://www.youtube.com/watch?v=z31L2Rv1ZnU",
-          "contenido": "<p>El video muestra una limpieza casera completa. Ten en cuenta estas precauciones adicionales:</p><ul><li>Apágala por completo (no suspender) y desconecta la batería interna antes de limpiar.</li><li>Usa púas plásticas para abrir; muchos modelos tienen tornillos escondidos bajo las gomas o etiquetas.</li><li>Fija el ventilador mientras soplas y limpia las aletas del disipador, donde se forma una «alfombra» de polvo.</li><li>Si vas a cambiar la pasta, ten cuidado con las <strong>almohadillas térmicas</strong> (thermal pads) de los chips de memoria y alimentación: no las pierdas ni las cambies por pasta.</li><li>Limpia el teclado con aire comprimido inclinado a 75° y un paño con alcohol isopropílico.</li></ul><h3>Si no quieres abrirla</h3><p>Una limpieza externa ayuda: sopla aire comprimido por las rejillas (con la laptop apagada) y recomienda una base con ventilador. Pero la limpieza interna es la que realmente resuelve el sobrecalentamiento.</p><p class=\"aula-credit\"><small>Video: SupraPixel (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Limpiar el ventilador y el disipador de una laptop</li><li>Reemplazar pasta térmica en laptops con cuidado</li><li>Saber cuándo NO conviene abrir</li></ul></aside><p>El video muestra una limpieza casera completa. Ten en cuenta estas precauciones adicionales:</p><ul><li>Apágala por completo (no suspender) y desconecta la batería interna antes de limpiar.</li><li>Usa púas plásticas para abrir; muchos modelos tienen tornillos escondidos bajo las gomas o etiquetas.</li><li>Fija el ventilador mientras soplas y limpia las aletas del disipador, donde se forma una «alfombra» de polvo.</li><li>Si vas a cambiar la pasta, ten cuidado con las <strong>almohadillas térmicas</strong> (thermal pads) de los chips de memoria y alimentación: no las pierdas ni las cambies por pasta.</li><li>Limpia el teclado con aire comprimido inclinado a 75° y un paño con alcohol isopropílico.</li></ul><h3>Si no quieres abrirla</h3><p>Una limpieza externa ayuda: sopla aire comprimido por las rejillas (con la laptop apagada) y recomienda una base con ventilador. Pero la limpieza interna es la que realmente resuelve el sobrecalentamiento.</p><p>Material complementario: el video «Cómo limpiar una laptop por dentro» de Mazthertutoriales muestra el proceso completo con otro modelo: <a href=\"https://www.youtube.com/watch?v=kWFDhPqy39w\">verlo en YouTube</a>.</p><aside class=\"nota alerta\"><h4>⚠️ Cuidado</h4><p>Al soplar, sujeta las aspas del ventilador: si giran a alta velocidad generan corriente que puede dañar la placa y desgastan el eje.</p></aside><p class=\"aula-credit\"><small>Video: SupraPixel (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
         },
         {
           "titulo": "Mantenimiento de software",
           "tipo": "lectura",
           "duracion": "15 min",
           "video": "",
-          "contenido": "<p>Un equipo limpio por dentro, pero lleno de programas basura, sigue estando lento. El mantenimiento de software incluye:</p><h3>1. Actualizaciones</h3><p><strong>Windows Update</strong> completo y controladores (drivers) desde la página del fabricante del equipo (Dell, HP, Lenovo, Asus…) o con sus herramientas oficiales.</p><h3>2. Programas de inicio</h3><p>Abre el <strong>Administrador de tareas</strong> (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Esc</kbd>) → pestaña <strong>Aplicaciones de arranque</strong> y deshabilita lo que no sea necesario al encender (actualizadores, Spotify, Teams si no se usa…). Nunca deshabilites el antivirus ni los controladores de audio y touchpad.</p><h3>3. Desinstalar lo que sobra</h3><p><strong>Configuración → Aplicaciones → Aplicaciones instaladas</strong>. Quita programas que el cliente no usa, barras de herramientas, «optimizadores» y antivirus duplicados.</p><h3>4. Liberar espacio</h3><ul><li>Usa <strong>Liberador de espacio en disco</strong> (busca «Liberar espacio») o <strong>Configuración → Sistema → Almacenamiento → Archivos temporales</strong>.</li><li>Mantén al menos un 15 % del disco libre.</li><li>No uses programas «limpiadores de registro»: no mejoran el rendimiento y pueden dañar Windows.</li></ul><h3>5. Análisis de seguridad</h3><p>Ejecuta un <strong>análisis completo</strong> con Microsoft Defender y, si hay sospechas, uno adicional con <strong>Malwarebytes</strong> (versión gratuita).</p><h3>6. Revisar el disco y el sistema</h3><p>Abre <strong>Terminal (Administrador)</strong> y ejecuta <code>sfc /scannow</code> para reparar archivos de Windows dañados. Revisa también la salud del disco con CrystalDiskInfo.</p><blockquote>Antes de cualquier cambio importante, crea un <strong>punto de restauración</strong> (busca «Crear un punto de restauración»). Si algo sale mal, puedes volver atrás.</blockquote>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Ejecutar las herramientas de reparación de Windows</li><li>Optimizar el arranque sin programas «milagrosos»</li><li>Dejar el equipo actualizado y protegido</li></ul></aside><p>Un equipo limpio por dentro, pero lleno de programas basura, sigue estando lento. El mantenimiento de software incluye:</p><h3>1. Actualizaciones</h3><p><strong>Windows Update</strong> completo y controladores (drivers) desde la página del fabricante del equipo (Dell, HP, Lenovo, Asus…) o con sus herramientas oficiales.</p><h3>2. Programas de inicio</h3><p>Abre el <strong>Administrador de tareas</strong> (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Esc</kbd>) → pestaña <strong>Aplicaciones de arranque</strong> y deshabilita lo que no sea necesario al encender (actualizadores, Spotify, Teams si no se usa…). Nunca deshabilites el antivirus ni los controladores de audio y touchpad.</p><h3>3. Desinstalar lo que sobra</h3><p><strong>Configuración → Aplicaciones → Aplicaciones instaladas</strong>. Quita programas que el cliente no usa, barras de herramientas, «optimizadores» y antivirus duplicados.</p><h3>4. Liberar espacio</h3><ul><li>Usa <strong>Liberador de espacio en disco</strong> (busca «Liberar espacio») o <strong>Configuración → Sistema → Almacenamiento → Archivos temporales</strong>.</li><li>Mantén al menos un 15 % del disco libre.</li><li>No uses programas «limpiadores de registro»: no mejoran el rendimiento y pueden dañar Windows.</li></ul><h3>5. Análisis de seguridad</h3><p>Ejecuta un <strong>análisis completo</strong> con Microsoft Defender y, si hay sospechas, uno adicional con <strong>Malwarebytes</strong> (versión gratuita).</p><h3>6. Revisar el disco y el sistema</h3><p>Abre <strong>Terminal (Administrador)</strong> y ejecuta <code>sfc /scannow</code> para reparar archivos de Windows dañados. Revisa también la salud del disco con CrystalDiskInfo.</p><blockquote>Antes de cualquier cambio importante, crea un <strong>punto de restauración</strong> (busca «Crear un punto de restauración»). Si algo sale mal, puedes volver atrás.</blockquote><table><thead><tr><th>Comando (en Terminal como administrador)</th><th>Para qué sirve</th></tr></thead><tbody><tr><td><code>sfc /scannow</code></td><td>Revisa y repara archivos del sistema</td></tr><tr><td><code>DISM /Online /Cleanup-Image /RestoreHealth</code></td><td>Repara la imagen de Windows (úsalo si sfc no pudo reparar)</td></tr><tr><td><code>chkdsk C: /scan</code></td><td>Revisa el sistema de archivos del disco</td></tr><tr><td><code>powercfg /batteryreport</code></td><td>Crea un informe del desgaste de la batería (laptops)</td></tr><tr><td><code>cleanmgr</code></td><td>Liberador de espacio, incluye archivos de actualizaciones antiguas</td></tr></tbody></table><aside class=\"nota alerta\"><h4>⚠️ Cuidado</h4><p>Evita los «optimizadores» y «limpiadores de registro»: no aceleran el equipo de forma real y muchos traen publicidad o rompen Windows. Las herramientas integradas son suficientes.</p></aside>"
         },
         {
           "titulo": "Tarea: mantenimiento completo con bitácora",
           "tipo": "tarea",
           "duracion": "2 horas",
           "video": "",
-          "contenido": "<p>Realiza un mantenimiento preventivo completo a una computadora (tuya, de tu familia o de un conocido, con su permiso) y documéntalo como lo harías con un cliente.</p><ol><li>Llena la parte de <strong>recepción</strong> de la bitácora: equipo, estado físico, falla reportada.</li><li>Mide la temperatura del procesador en reposo y con carga (por ejemplo, con un video en YouTube) usando HWMonitor. Anótala.</li><li>Revisa la salud del disco con CrystalDiskInfo y toma captura.</li><li>Haz la limpieza física (fotos <strong>antes</strong> y <strong>después</strong>).</li><li>Haz el mantenimiento de software: actualizaciones, programas de inicio, espacio y análisis antivirus.</li><li>Vuelve a medir la temperatura y anota la diferencia.</li><li>Escribe tus <strong>recomendaciones</strong> al cliente (por ejemplo: «se recomienda cambiar a SSD», «ampliar a 16 GB de RAM», «usar regulador de voltaje»).</li></ol><p><strong>Entrega:</strong> foto de la bitácora llena y las fotos de antes y después.</p>",
+          "contenido": "<p>Realiza un mantenimiento preventivo completo a una computadora (tuya, de tu familia o de un conocido, con su permiso) y documéntalo como lo harías con un cliente.</p><ol><li>Llena la parte de <strong>recepción</strong> de la bitácora: equipo, estado físico, falla reportada.</li><li>Mide la temperatura del procesador en reposo y con carga (por ejemplo, con un video en YouTube) usando HWMonitor. Anótala.</li><li>Revisa la salud del disco con CrystalDiskInfo y toma captura.</li><li>Haz la limpieza física (fotos <strong>antes</strong> y <strong>después</strong>).</li><li>Haz el mantenimiento de software: actualizaciones, programas de inicio, espacio y análisis antivirus.</li><li>Vuelve a medir la temperatura y anota la diferencia.</li><li>Escribe tus <strong>recomendaciones</strong> al cliente (por ejemplo: «se recomienda cambiar a SSD», «ampliar a 16 GB de RAM», «usar regulador de voltaje»).</li></ol><p><strong>Entrega:</strong> foto de la bitácora llena y las fotos de antes y después.</p><table><thead><tr><th>Dato de la bitácora</th><th>Antes</th><th>Después</th></tr></thead><tbody><tr><td>Temperatura CPU en reposo</td><td></td><td></td></tr><tr><td>Temperatura CPU bajo carga</td><td></td><td></td></tr><tr><td>Tiempo de arranque hasta el escritorio</td><td></td><td></td></tr><tr><td>Espacio libre en disco</td><td></td><td></td></tr><tr><td>Estado SMART del disco</td><td></td><td></td></tr><tr><td>Programas de inicio activos</td><td></td><td></td></tr></tbody></table><p>Copia esta tabla en tu informe y llénala con tus mediciones reales.</p>",
           "fecha_limite": "",
           "enlace_entrega": ""
         },
@@ -335,7 +560,7 @@
           "tipo": "cuestionario",
           "duracion": "10 min",
           "video": "",
-          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Las revisa el servidor: verás tu nota, cuáles acertaste y la explicación de cada una. Las preguntas y las opciones cambian de orden en cada intento, así que no memorices posiciones: entiende el porqué. Necesitas la nota mínima para que la lección quede completada.</p>",
           "preguntas": [
             {
               "pregunta": "¿Por qué se sujetan las aspas del ventilador al soplar con aire comprimido?",
@@ -413,6 +638,39 @@
               ],
               "correcta": 1,
               "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué comando repara archivos del sistema de Windows?",
+              "opciones": [
+                "sfc /scannow",
+                "ipconfig",
+                "winver",
+                "ping"
+              ],
+              "correcta": 1,
+              "explicacion": "sfc revisa y repara archivos del sistema; si no puede, se usa DISM."
+            },
+            {
+              "pregunta": "¿Qué se recomienda sobre los «limpiadores de registro»?",
+              "opciones": [
+                "Usarlos cada semana",
+                "Evitarlos: no aceleran de forma real y pueden dañar Windows",
+                "Instalar varios a la vez",
+                "Son obligatorios en Windows 11"
+              ],
+              "correcta": 2,
+              "explicacion": "Las herramientas integradas de Windows son suficientes."
+            },
+            {
+              "pregunta": "¿Qué comando genera un informe del desgaste de la batería?",
+              "opciones": [
+                "powercfg /batteryreport",
+                "chkdsk",
+                "sfc /scannow",
+                "msconfig"
+              ],
+              "correcta": 1,
+              "explicacion": "Genera un HTML con la capacidad de diseño vs. la capacidad actual."
             }
           ]
         }
@@ -426,35 +684,56 @@
           "tipo": "lectura",
           "duracion": "15 min",
           "video": "",
-          "contenido": "<p>«No enciende» puede significar cosas distintas. Primero precisa: ¿no hay <em>ninguna</em> señal (luces, ventiladores) o enciende pero no da imagen? Esta lección trata el primer caso.</p><h3>Escritorio: revisión en orden</h3><ol><li><strong>Energía externa:</strong> prueba el tomacorriente con otro aparato; revisa el regulador o UPS; cambia el cable de poder.</li><li><strong>Interruptor de la fuente</strong> (atrás) en posición «I» y, en fuentes antiguas, el selector de voltaje en <strong>115 V</strong>.</li><li><strong>Botón de encendido:</strong> puentea con cuidado los pines <em>PWR_SW</em> del panel frontal de la placa con un destornillador. Si enciende, el botón del gabinete está dañado.</li><li><strong>Fuente de poder:</strong> haz la prueba del clip (puentear el cable verde con un negro del conector de 24 pines, <em>con la fuente desconectada de la placa</em>) para ver si el ventilador gira; mejor aún, usa un probador de fuentes o mide con el multímetro (+12 V, +5 V, +3.3 V). Si hay olor a quemado, cámbiala.</li><li><strong>Cortocircuitos:</strong> desconecta todo lo no esencial (discos, USB, tarjeta de video dedicada). Si así enciende, ve conectando uno por uno.</li><li><strong>Placa madre:</strong> busca capacitores inflados o con fugas, y quemaduras. Prueba quitando la pila CR2032 por 5 minutos (reinicio del BIOS).</li></ol><h3>Laptop</h3><ol><li>Revisa la luz del cargador y mide su voltaje con el multímetro (debe coincidir con la etiqueta, por ejemplo 19.5 V).</li><li>Prueba con otro cargador compatible.</li><li>Haz un <strong>reinicio de energía</strong>: desconecta cargador y batería, mantén presionado el botón 30 segundos, conecta solo el cargador e intenta encender.</li><li>Revisa el puerto de carga (flojo o quemado).</li><li>Si nada funciona, la falla suele estar en la placa (circuito de carga o de encendido): requiere reparación electrónica especializada.</li></ol><blockquote>Seguridad: las pruebas de la fuente de poder se hacen sin tocar partes metálicas internas y siempre con la fuente cerrada. Si no te sientes seguro, usa un probador de fuentes.</blockquote>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Diagnosticar en orden: energía, fuente, placa</li><li>Usar la prueba del clip y el multímetro en la fuente</li><li>Diferenciar «no enciende» de «enciende sin imagen»</li></ul></aside><p>«No enciende» puede significar cosas distintas. Primero precisa: ¿no hay <em>ninguna</em> señal (luces, ventiladores) o enciende pero no da imagen? Esta lección trata el primer caso.</p><h3>Escritorio: revisión en orden</h3><ol><li><strong>Energía externa:</strong> prueba el tomacorriente con otro aparato; revisa el regulador o UPS; cambia el cable de poder.</li><li><strong>Interruptor de la fuente</strong> (atrás) en posición «I» y, en fuentes antiguas, el selector de voltaje en <strong>115 V</strong>.</li><li><strong>Botón de encendido:</strong> puentea con cuidado los pines <em>PWR_SW</em> del panel frontal de la placa con un destornillador. Si enciende, el botón del gabinete está dañado.</li><li><strong>Fuente de poder:</strong> haz la prueba del clip (puentear el cable verde con un negro del conector de 24 pines, <em>con la fuente desconectada de la placa</em>) para ver si el ventilador gira; mejor aún, usa un probador de fuentes o mide con el multímetro (+12 V, +5 V, +3.3 V). Si hay olor a quemado, cámbiala.</li><li><strong>Cortocircuitos:</strong> desconecta todo lo no esencial (discos, USB, tarjeta de video dedicada). Si así enciende, ve conectando uno por uno.</li><li><strong>Placa madre:</strong> busca capacitores inflados o con fugas, y quemaduras. Prueba quitando la pila CR2032 por 5 minutos (reinicio del BIOS).</li></ol><h3>Laptop</h3><ol><li>Revisa la luz del cargador y mide su voltaje con el multímetro (debe coincidir con la etiqueta, por ejemplo 19.5 V).</li><li>Prueba con otro cargador compatible.</li><li>Haz un <strong>reinicio de energía</strong>: desconecta cargador y batería, mantén presionado el botón 30 segundos, conecta solo el cargador e intenta encender.</li><li>Revisa el puerto de carga (flojo o quemado).</li><li>Si nada funciona, la falla suele estar en la placa (circuito de carga o de encendido): requiere reparación electrónica especializada.</li></ol><blockquote>Seguridad: las pruebas de la fuente de poder se hacen sin tocar partes metálicas internas y siempre con la fuente cerrada. Si no te sientes seguro, usa un probador de fuentes.</blockquote><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Una PC de oficina no encendía. El cable y el regulador funcionaban. Con la prueba del clip la fuente arrancó, y con el multímetro midió 12.1 V, 5.0 V y 3.3 V: la fuente estaba bien. Al revisar el panel frontal, el botón de encendido estaba roto. Se encendió puenteando los pines PWR SW con un destornillador y se cambió el botón por Q35.</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>¿Qué indica que el ventilador de la fuente gire con la prueba del clip?</summary><p>Que la fuente arranca; aun así debes medir los voltajes con el multímetro porque puede encender con voltajes fuera de rango.</p></details>"
         },
         {
           "titulo": "Falla: enciende pero no da imagen",
           "tipo": "lectura",
           "duracion": "15 min",
           "video": "",
-          "contenido": "<p>Los ventiladores giran y las luces prenden, pero la pantalla queda negra. Es una de las fallas más frecuentes del taller.</p><h3>Revisión rápida</h3><ol><li>¿El monitor está encendido y en la <strong>entrada correcta</strong> (HDMI, DisplayPort, VGA)?</li><li>Si hay tarjeta de video dedicada, el cable debe ir en <strong>ella</strong>, no en la salida de la placa.</li><li>Prueba otro cable y otro monitor (o un televisor por HDMI).</li></ol><h3>Memoria RAM: la causa número uno</h3><p>Contactos sucios u oxidados en la RAM causan pantalla negra con frecuencia.</p><ol><li>Retira los módulos, limpia los contactos con un paño seco o con alcohol isopropílico (o una goma de borrar blanca, con cuidado de retirar los residuos).</li><li>Prueba con un solo módulo, en una ranura a la vez.</li><li>Si un módulo hace que no arranque y el otro no, encontraste el dañado.</li></ol><h3>Los pitidos (códigos beep) y las luces de diagnóstico</h3><p>Muchas placas emiten pitidos o encienden luces <em>CPU / DRAM / VGA / BOOT</em> para indicar dónde está el problema. El significado depende del fabricante del BIOS; búscalo en el manual de la placa. Ejemplos comunes:</p><table><thead><tr><th>Señal</th><th>Suele indicar</th></tr></thead><tbody><tr><td>1 pitido corto</td><td>Todo bien (arranque normal)</td></tr><tr><td>Pitidos largos repetidos</td><td>Problema de memoria RAM</td></tr><tr><td>1 largo + 2 o 3 cortos</td><td>Problema de video</td></tr><tr><td>Luz DRAM encendida</td><td>RAM no detectada o mal colocada</td></tr><tr><td>Luz VGA encendida</td><td>Tarjeta de video o cable</td></tr></tbody></table><h3>Otras causas</h3><ul><li>Reinicio del BIOS (quitar la pila 5 minutos) después de un cambio de configuración.</li><li>Tarjeta de video dañada: prueba con la salida de video integrada (si el procesador la tiene).</li><li>En laptops: prueba con un monitor externo. Si allí sí hay imagen, la falla está en la pantalla, el cable flex o la retroiluminación (prueba con una linterna sobre la pantalla: si se ve la imagen tenue, falla la retroiluminación).</li></ul>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Aislar si la falla es de pantalla, video, RAM o placa</li><li>Interpretar pitidos y luces de diagnóstico</li><li>Usar el mínimo de componentes para arrancar</li></ul></aside><p>Los ventiladores giran y las luces prenden, pero la pantalla queda negra. Es una de las fallas más frecuentes del taller.</p><h3>Revisión rápida</h3><ol><li>¿El monitor está encendido y en la <strong>entrada correcta</strong> (HDMI, DisplayPort, VGA)?</li><li>Si hay tarjeta de video dedicada, el cable debe ir en <strong>ella</strong>, no en la salida de la placa.</li><li>Prueba otro cable y otro monitor (o un televisor por HDMI).</li></ol><h3>Memoria RAM: la causa número uno</h3><p>Contactos sucios u oxidados en la RAM causan pantalla negra con frecuencia.</p><ol><li>Retira los módulos, limpia los contactos con un paño seco o con alcohol isopropílico (o una goma de borrar blanca, con cuidado de retirar los residuos).</li><li>Prueba con un solo módulo, en una ranura a la vez.</li><li>Si un módulo hace que no arranque y el otro no, encontraste el dañado.</li></ol><h3>Los pitidos (códigos beep) y las luces de diagnóstico</h3><p>Muchas placas emiten pitidos o encienden luces <em>CPU / DRAM / VGA / BOOT</em> para indicar dónde está el problema. El significado depende del fabricante del BIOS; búscalo en el manual de la placa. Ejemplos comunes:</p><table><thead><tr><th>Señal</th><th>Suele indicar</th></tr></thead><tbody><tr><td>1 pitido corto</td><td>Todo bien (arranque normal)</td></tr><tr><td>Pitidos largos repetidos</td><td>Problema de memoria RAM</td></tr><tr><td>1 largo + 2 o 3 cortos</td><td>Problema de video</td></tr><tr><td>Luz DRAM encendida</td><td>RAM no detectada o mal colocada</td></tr><tr><td>Luz VGA encendida</td><td>Tarjeta de video o cable</td></tr></tbody></table><h3>Otras causas</h3><ul><li>Reinicio del BIOS (quitar la pila 5 minutos) después de un cambio de configuración.</li><li>Tarjeta de video dañada: prueba con la salida de video integrada (si el procesador la tiene).</li><li>En laptops: prueba con un monitor externo. Si allí sí hay imagen, la falla está en la pantalla, el cable flex o la retroiluminación (prueba con una linterna sobre la pantalla: si se ve la imagen tenue, falla la retroiluminación).</li></ul><aside class=\"nota practica\"><h4>🧪 Prueba de configuración mínima</h4><ol><li>Deja solo lo mínimo: placa, CPU con disipador, <strong>un</strong> módulo de RAM y fuente (sin discos ni tarjetas extra).</li><li>Conecta el monitor al video integrado (si el procesador lo tiene) o a la tarjeta de video.</li><li>Si no hay imagen, prueba el módulo de RAM en otra ranura y luego otro módulo.</li><li>Observa las luces <strong>DEBUG LED</strong> (CPU, DRAM, VGA, BOOT) de la placa si las tiene: indican dónde se detuvo.</li></ol></aside>"
+        },
+        {
+          "titulo": "Falla de memoria RAM y doble canal en la práctica",
+          "tipo": "video",
+          "duracion": "15 min",
+          "video": "https://www.youtube.com/watch?v=gsuEzVO3qNs",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Reconocer los síntomas de una RAM defectuosa</li><li>Aislar el módulo dañado probando uno por uno</li><li>Configurar el doble canal correctamente</li></ul></aside><h3>Síntomas típicos</h3><ul><li>Enciende sin imagen y con pitidos largos.</li><li>Pantallas azules aleatorias (MEMORY_MANAGEMENT, PAGE_FAULT_IN_NONPAGED_AREA).</li><li>Programas que se cierran solos o archivos que se corrompen al copiarlos.</li></ul><aside class=\"nota practica\"><h4>🧪 Aislar el módulo dañado</h4><ol><li>Limpia los contactos dorados con alcohol isopropílico o una goma blanca (sin tocar los contactos con los dedos).</li><li>Prueba con un solo módulo en la ranura recomendada.</li><li>Si arranca, prueba el otro módulo solo; si uno falla siempre, ese es el defectuoso.</li><li>Confirma con MemTest86 antes de vender un módulo nuevo.</li></ol></aside><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Para doble canal usa módulos <strong>iguales</strong> (capacidad, velocidad y, si es posible, marca) en las ranuras del mismo color o en A2 y B2 según el manual. Mezclar módulos puede funcionar, pero a la velocidad del más lento.</p></aside><p class=\"aula-credit\"><small>Video: CuriosoFrank (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Diagnóstico con software: SMART, sensores y memoria",
+          "tipo": "video",
+          "duracion": "30 min",
+          "video": "https://www.youtube.com/watch?v=rYs2_LfuoEI",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Evaluar la salud de un disco con CrystalDiskInfo</li><li>Leer temperaturas y voltajes con HWiNFO</li><li>Probar la memoria RAM con herramientas gratuitas</li></ul></aside><h3>CrystalDiskInfo: la salud del disco</h3><table><thead><tr><th>Atributo SMART</th><th>Qué significa</th><th>Alarma</th></tr></thead><tbody><tr><td>05 Sectores reasignados</td><td>Zonas dañadas que el disco reemplazó</td><td>Cualquier número que crezca</td></tr><tr><td>C5 Sectores pendientes</td><td>Zonas dudosas por revisar</td><td>Mayor que 0</td></tr><tr><td>C6 Sectores incorregibles</td><td>Datos que no se pudieron leer</td><td>Mayor que 0</td></tr><tr><td>Vida útil restante (SSD)</td><td>Porcentaje de desgaste</td><td>Menos de 10 %</td></tr><tr><td>Temperatura</td><td>Calor del disco</td><td>Más de 55 °C en HDD o 70 °C en SSD</td></tr></tbody></table><p>Estado <strong>Bueno</strong>: sigue. <strong>Precaución</strong>: respalda y planifica el cambio. <strong>Malo</strong>: respalda de inmediato y reemplaza.</p><h3>HWiNFO: sensores en tiempo real</h3><p>Abre HWiNFO en modo <strong>Sensors only</strong>. Revisa la temperatura del CPU (reposo 30–50 °C; bajo carga, por debajo de 85–90 °C), la de la GPU, las RPM de los ventiladores y los voltajes de la fuente. Ver el video de Pablito Informático sobre HWiNFO: <a href=\"https://www.youtube.com/watch?v=N7-YzbrsUEU\">abrir en YouTube</a>.</p><h3>Prueba de memoria RAM</h3><ul><li><strong>Diagnóstico de memoria de Windows:</strong> <kbd>Windows</kbd> + <kbd>R</kbd> → <code>mdsched</code> → reiniciar y comprobar.</li><li><strong>MemTest86</strong> (desde una USB de arranque): más completo; deja al menos 1 pasada completa. Un solo error ya indica un problema.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Instala CrystalDiskInfo y anota el estado, las horas de uso y los atributos 05, C5 y C6 de tu disco.</li><li>Abre HWiNFO Sensors y anota temperaturas en reposo.</li><li>Ejecuta <code>mdsched</code> y anota el resultado tras reiniciar.</li><li>Redacta una conclusión de 3 líneas como si fuera para un cliente.</li></ol></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>Un disco tiene 0 sectores reasignados pero 12 pendientes (C5). ¿Es seguro?</summary><p>No del todo: hay zonas dudosas. Respalda y vuelve a revisar; si aumentan, reemplaza el disco.</p></details><p class=\"aula-credit\"><small>Video: Comarca Digital (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
         },
         {
           "titulo": "Falla: la computadora está muy lenta",
           "tipo": "lectura",
           "duracion": "15 min",
           "video": "",
-          "contenido": "<p>«Está lenta» es la queja más común. La solución depende de la causa, así que primero <strong>mide</strong>.</p><h3>Diagnóstico con el Administrador de tareas</h3><p>Abre <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Esc</kbd> → pestaña <strong>Rendimiento</strong> y observa con el equipo recién encendido:</p><table><thead><tr><th>Si ves…</th><th>Probable causa</th><th>Solución</th></tr></thead><tbody><tr><td>Disco al 100 % todo el tiempo</td><td>Disco duro mecánico lento o fallando</td><td>Cambiar a SSD (revisar antes su salud)</td></tr><tr><td>Memoria por encima del 85 %</td><td>Poca RAM para lo que se usa</td><td>Ampliar RAM; reducir programas de inicio</td></tr><tr><td>CPU alta sin programas abiertos</td><td>Malware, procesos en segundo plano, sobrecalentamiento</td><td>Antivirus, revisar procesos, limpieza y pasta térmica</td></tr><tr><td>Todo bien, pero lento al navegar</td><td>Internet lento o navegador saturado de extensiones</td><td>Prueba de velocidad, limpiar extensiones</td></tr></tbody></table><h3>Plan de mejora típico</h3><ol><li>Respaldar la información.</li><li>Limpieza física y pasta térmica.</li><li>Cambio a <strong>SSD</strong> (la mejora más notable en equipos con disco mecánico).</li><li>Ampliar a <strong>8 o 16 GB de RAM</strong>.</li><li>Instalación limpia de Windows o depuración de programas.</li></ol><h3>¿Vale la pena reparar o mejor cambiar?</h3><p>Como regla práctica: si la mejora cuesta más del <strong>50 %</strong> de un equipo nuevo equivalente, o el procesador es demasiado antiguo para Windows 11 y para lo que el cliente necesita, recomienda el cambio. Sé honesto: la confianza del cliente vale más que una venta.</p>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Medir la causa de la lentitud con datos</li><li>Proponer un plan de mejora con costo y beneficio</li><li>Decidir cuándo conviene reparar o reemplazar</li></ul></aside><p>«Está lenta» es la queja más común. La solución depende de la causa, así que primero <strong>mide</strong>.</p><h3>Diagnóstico con el Administrador de tareas</h3><p>Abre <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Esc</kbd> → pestaña <strong>Rendimiento</strong> y observa con el equipo recién encendido:</p><table><thead><tr><th>Si ves…</th><th>Probable causa</th><th>Solución</th></tr></thead><tbody><tr><td>Disco al 100 % todo el tiempo</td><td>Disco duro mecánico lento o fallando</td><td>Cambiar a SSD (revisar antes su salud)</td></tr><tr><td>Memoria por encima del 85 %</td><td>Poca RAM para lo que se usa</td><td>Ampliar RAM; reducir programas de inicio</td></tr><tr><td>CPU alta sin programas abiertos</td><td>Malware, procesos en segundo plano, sobrecalentamiento</td><td>Antivirus, revisar procesos, limpieza y pasta térmica</td></tr><tr><td>Todo bien, pero lento al navegar</td><td>Internet lento o navegador saturado de extensiones</td><td>Prueba de velocidad, limpiar extensiones</td></tr></tbody></table><h3>Plan de mejora típico</h3><ol><li>Respaldar la información.</li><li>Limpieza física y pasta térmica.</li><li>Cambio a <strong>SSD</strong> (la mejora más notable en equipos con disco mecánico).</li><li>Ampliar a <strong>8 o 16 GB de RAM</strong>.</li><li>Instalación limpia de Windows o depuración de programas.</li></ol><h3>¿Vale la pena reparar o mejor cambiar?</h3><p>Como regla práctica: si la mejora cuesta más del <strong>50 %</strong> de un equipo nuevo equivalente, o el procesador es demasiado antiguo para Windows 11 y para lo que el cliente necesita, recomienda el cambio. Sé honesto: la confianza del cliente vale más que una venta.</p><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Una laptop i5 de 7.ª generación tardaba 4 minutos en arrancar. El Administrador de tareas mostraba el disco al 100 % todo el tiempo y CrystalDiskInfo marcaba «Precaución» por sectores reasignados. Se clonó el disco a un SSD de 480 GB y se agregó un módulo de 8 GB. Resultado: arranque en 25 segundos por menos de la cuarta parte del precio de una laptop nueva.</p></aside>"
         },
         {
           "titulo": "Pantallas azules, reinicios y virus",
           "tipo": "lectura",
           "duracion": "15 min",
           "video": "",
-          "contenido": "<h3>Pantalla azul (BSOD)</h3><p>Windows se detiene y muestra un <strong>código de detención</strong>, por ejemplo <code>MEMORY_MANAGEMENT</code> o <code>CRITICAL_PROCESS_DIED</code>. Anótalo o fotografía el código QR: es la pista principal.</p><ul><li><strong>MEMORY_MANAGEMENT, PAGE_FAULT…:</strong> suele ser la RAM. Pruébala con el <em>Diagnóstico de memoria de Windows</em> (busca «mdsched»).</li><li><strong>Errores de controladores</strong> (archivos .sys en el mensaje): actualiza o reinstala el controlador indicado.</li><li><strong>INACCESSIBLE_BOOT_DEVICE, errores de disco:</strong> revisa la salud del disco y los cables SATA.</li><li>Si empezó tras una actualización o un programa nuevo: desinstálalo o usa un punto de restauración.</li></ul><h3>Reinicios o apagados repentinos</h3><ul><li>Si ocurren con carga (juegos, video): <strong>sobrecalentamiento</strong> o <strong>fuente de poder</strong> insuficiente o deteriorada.</li><li>Si ocurren al azar: RAM, fuente, variaciones de voltaje o placa.</li><li>Revisa el <strong>Visor de eventos</strong> (Registros de Windows → Sistema) buscando el error «Kernel-Power 41».</li></ul><h3>Virus y malware</h3><p>Síntomas: publicidad que aparece sola, navegador que abre páginas extrañas, archivos con extensiones raras (ransomware), programas desconocidos, lentitud repentina.</p><ol><li><strong>Desconecta</strong> el equipo de internet.</li><li>Arranca en <strong>modo seguro</strong> si el malware impide trabajar.</li><li>Ejecuta un análisis completo con Microsoft Defender y otro con Malwarebytes. Usa también el <em>Análisis sin conexión de Microsoft Defender</em>.</li><li>Desinstala programas sospechosos y extensiones del navegador; restablece el navegador.</li><li>Cambia las contraseñas del cliente desde <strong>otro</strong> dispositivo limpio.</li><li>Si el sistema queda inestable o hubo ransomware: respalda lo rescatable (analizándolo) e instala Windows desde cero.</li></ol>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Leer el código de una pantalla azul y buscar su causa</li><li>Diferenciar fallas de hardware y de software en los reinicios</li><li>Limpiar malware con herramientas confiables</li></ul></aside><h3>Pantalla azul (BSOD)</h3><p>Windows se detiene y muestra un <strong>código de detención</strong>, por ejemplo <code>MEMORY_MANAGEMENT</code> o <code>CRITICAL_PROCESS_DIED</code>. Anótalo o fotografía el código QR: es la pista principal.</p><ul><li><strong>MEMORY_MANAGEMENT, PAGE_FAULT…:</strong> suele ser la RAM. Pruébala con el <em>Diagnóstico de memoria de Windows</em> (busca «mdsched»).</li><li><strong>Errores de controladores</strong> (archivos .sys en el mensaje): actualiza o reinstala el controlador indicado.</li><li><strong>INACCESSIBLE_BOOT_DEVICE, errores de disco:</strong> revisa la salud del disco y los cables SATA.</li><li>Si empezó tras una actualización o un programa nuevo: desinstálalo o usa un punto de restauración.</li></ul><h3>Reinicios o apagados repentinos</h3><ul><li>Si ocurren con carga (juegos, video): <strong>sobrecalentamiento</strong> o <strong>fuente de poder</strong> insuficiente o deteriorada.</li><li>Si ocurren al azar: RAM, fuente, variaciones de voltaje o placa.</li><li>Revisa el <strong>Visor de eventos</strong> (Registros de Windows → Sistema) buscando el error «Kernel-Power 41».</li></ul><h3>Virus y malware</h3><p>Síntomas: publicidad que aparece sola, navegador que abre páginas extrañas, archivos con extensiones raras (ransomware), programas desconocidos, lentitud repentina.</p><ol><li><strong>Desconecta</strong> el equipo de internet.</li><li>Arranca en <strong>modo seguro</strong> si el malware impide trabajar.</li><li>Ejecuta un análisis completo con Microsoft Defender y otro con Malwarebytes. Usa también el <em>Análisis sin conexión de Microsoft Defender</em>.</li><li>Desinstala programas sospechosos y extensiones del navegador; restablece el navegador.</li><li>Cambia las contraseñas del cliente desde <strong>otro</strong> dispositivo limpio.</li><li>Si el sistema queda inestable o hubo ransomware: respalda lo rescatable (analizándolo) e instala Windows desde cero.</li></ol><table><thead><tr><th>Código de detención frecuente</th><th>Causa probable</th><th>Primera acción</th></tr></thead><tbody><tr><td>MEMORY_MANAGEMENT</td><td>RAM defectuosa o mal asentada</td><td>Prueba de memoria (mdsched o MemTest86)</td></tr><tr><td>CRITICAL_PROCESS_DIED</td><td>Archivos del sistema dañados o disco fallando</td><td>sfc /scannow, DISM y revisar SMART</td></tr><tr><td>IRQL_NOT_LESS_OR_EQUAL</td><td>Driver defectuoso</td><td>Actualizar o revertir el driver reciente</td></tr><tr><td>INACCESSIBLE_BOOT_DEVICE</td><td>Modo del disco cambiado en BIOS o disco dañado</td><td>Revisar AHCI/RAID en BIOS y el disco</td></tr><tr><td>WHEA_UNCORRECTABLE_ERROR</td><td>Hardware: CPU, voltajes, temperatura</td><td>Temperaturas, quitar overclock, revisar fuente</td></tr></tbody></table><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>El programa gratuito <strong>BlueScreenView</strong> (NirSoft) o el <strong>Visor de eventos</strong> de Windows muestran las pantallas azules anteriores y el archivo (driver) que las causó.</p></aside>"
+        },
+        {
+          "titulo": "Laptops: pantalla, teclado, bisagras y batería",
+          "tipo": "video",
+          "duracion": "20 min",
+          "video": "https://www.youtube.com/watch?v=CLdJI57qfdc",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Diagnosticar si la falla de imagen es de la pantalla, del cable o de la placa</li><li>Encontrar el número de parte exacto de una pantalla</li><li>Evaluar el estado de la batería y las bisagras</li></ul></aside><h3>¿Pantalla, cable o placa?</h3><ol><li>Conecta un <strong>monitor externo</strong> por HDMI: si ahí se ve bien, la placa y el video funcionan; la falla está en la pantalla o su cable.</li><li>Ilumina la pantalla con una linterna: si se ve la imagen muy tenue, falla la <strong>retroiluminación</strong> (backlight), no el panel.</li><li>Si la imagen parpadea o tiene rayas al mover la tapa, sospecha del <strong>cable flex de video</strong> (eDP) desgastado por las bisagras.</li></ol><h3>Comprar la pantalla correcta</h3><p>No basta con el modelo de la laptop: retira el marco y lee la etiqueta trasera del panel (ejemplo: <code>NV156FHM-N48</code>). Verifica tamaño, resolución, conector (30 o 40 pines eDP), si es táctil y la frecuencia (60, 120 o 144 Hz).</p><h3>Batería</h3><p>Ejecuta <code>powercfg /batteryreport</code> en Terminal y abre el informe: si la <strong>capacidad completa de carga</strong> está por debajo del 60 % de la <strong>capacidad de diseño</strong>, recomienda cambiarla.</p><aside class=\"nota alerta\"><h4>⚠️ Cuidado</h4><p>Bisagras duras o rotas fuerzan la carcasa y cortan el cable de video. Repararlas a tiempo evita una pantalla nueva.</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>La laptop no muestra nada en su pantalla pero sí en un monitor externo. ¿Dónde está la falla?</summary><p>En la pantalla, su retroiluminación o su cable flex; la placa y el video funcionan.</p></details><p class=\"aula-credit\"><small>Video: Moracho Electrónica (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
         },
         {
           "titulo": "Cuestionario: diagnóstico de fallas",
           "tipo": "cuestionario",
           "duracion": "10 min",
           "video": "",
-          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Las revisa el servidor: verás tu nota, cuáles acertaste y la explicación de cada una. Las preguntas y las opciones cambian de orden en cada intento, así que no memorices posiciones: entiende el porqué. Necesitas la nota mínima para que la lección quede completada.</p>",
           "preguntas": [
             {
               "pregunta": "Una PC no da ninguna señal al presionar el botón. ¿Qué revisas primero?",
@@ -543,20 +822,53 @@
               ],
               "correcta": 1,
               "explicacion": ""
+            },
+            {
+              "pregunta": "Pantalla azul «MEMORY_MANAGEMENT». ¿Qué pruebas primero?",
+              "opciones": [
+                "La memoria RAM",
+                "El mouse",
+                "La impresora",
+                "El monitor"
+              ],
+              "correcta": 1,
+              "explicacion": "Ese código suele indicar problemas de memoria."
+            },
+            {
+              "pregunta": "¿Qué es una «configuración mínima»?",
+              "opciones": [
+                "Instalar Windows sin programas",
+                "Arrancar solo con placa, CPU, un módulo de RAM y fuente para aislar la falla",
+                "Bajar el brillo de la pantalla",
+                "Usar la resolución más baja"
+              ],
+              "correcta": 2,
+              "explicacion": "Quitar todo lo que no es indispensable ayuda a encontrar la pieza que falla."
+            },
+            {
+              "pregunta": "CrystalDiskInfo marca «Precaución» por sectores reasignados. ¿Qué recomiendas?",
+              "opciones": [
+                "Ignorarlo",
+                "Respaldar de inmediato y reemplazar el disco",
+                "Formatearlo para que se arregle",
+                "Desfragmentarlo"
+              ],
+              "correcta": 2,
+              "explicacion": "Los sectores reasignados indican desgaste físico: el disco puede fallar pronto."
             }
           ]
         }
       ]
     },
     {
-      "titulo": "Sistema operativo, datos y servicio al cliente",
+      "titulo": "Sistema operativo, drivers y redes",
       "lecciones": [
         {
           "titulo": "Instalar Windows desde una memoria USB",
           "tipo": "lectura",
           "duracion": "20 min",
           "video": "",
-          "contenido": "<h3>Antes de empezar</h3><ul><li><strong>Respalda</strong> toda la información del cliente (Documentos, Escritorio, Descargas, Imágenes, favoritos del navegador, archivos de programas contables…). Confirma con el cliente qué es importante.</li><li>Anota o verifica la <strong>licencia</strong>: la mayoría de equipos con Windows original se reactivan solos con la licencia digital guardada en la placa.</li><li>Descarga los <strong>controladores</strong> de red del modelo por si Windows no los trae.</li><li>Para Windows 11 el equipo necesita <strong>TPM 2.0</strong>, <strong>Secure Boot</strong> y un procesador compatible (Intel de 8.ª generación o AMD Ryzen 2000 en adelante, aproximadamente). Verifícalo con la app <em>Comprobación de estado del PC</em>.</li></ul><h3>1. Crear la memoria booteable</h3><ol><li>En otra computadora, entra a la página oficial de descarga de Windows de Microsoft y descarga la <strong>Herramienta de creación de medios</strong>.</li><li>Conecta una memoria USB de <strong>8 GB o más</strong> (se borrará todo su contenido).</li><li>Ejecuta la herramienta, acepta la licencia, elige idioma y edición y selecciona <strong>Unidad flash USB</strong>.</li></ol><h3>2. Arrancar desde la USB</h3><p>Conecta la USB al equipo, enciéndelo y presiona la tecla del <strong>menú de arranque</strong> (según la marca: <kbd>F12</kbd> Dell/Lenovo, <kbd>F9</kbd> HP, <kbd>Esc</kbd> o <kbd>F8</kbd> Asus, <kbd>F11</kbd> en muchas placas). Elige la memoria USB (modo UEFI).</p><h3>3. Instalar</h3><ol><li>Elige idioma y teclado <strong>Español (México) o Latinoamericano</strong>.</li><li>«No tengo clave de producto» si el equipo ya tenía Windows activado (se activará solo).</li><li>Tipo de instalación: <strong>Personalizada</strong>. Elimina las particiones del disco donde estaba Windows (¡solo después de respaldar!) y selecciona el espacio sin asignar.</li><li>Al terminar, configura la cuenta del cliente, instala controladores y actualizaciones, el antivirus y los programas que usa.</li></ol><blockquote>Entrega el equipo con Windows actualizado, controladores instalados, sin programas basura y con la información del cliente restaurada y verificada junto a él.</blockquote>",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Crear una USB de instalación oficial</li><li>Elegir correctamente GPT/UEFI o MBR/Legacy</li><li>Dejar el equipo listo con drivers y actualizaciones</li></ul></aside><h3>Antes de empezar</h3><ul><li><strong>Respalda</strong> toda la información del cliente (Documentos, Escritorio, Descargas, Imágenes, favoritos del navegador, archivos de programas contables…). Confirma con el cliente qué es importante.</li><li>Anota o verifica la <strong>licencia</strong>: la mayoría de equipos con Windows original se reactivan solos con la licencia digital guardada en la placa.</li><li>Descarga los <strong>controladores</strong> de red del modelo por si Windows no los trae.</li><li>Para Windows 11 el equipo necesita <strong>TPM 2.0</strong>, <strong>Secure Boot</strong> y un procesador compatible (Intel de 8.ª generación o AMD Ryzen 2000 en adelante, aproximadamente). Verifícalo con la app <em>Comprobación de estado del PC</em>.</li></ul><h3>1. Crear la memoria booteable</h3><ol><li>En otra computadora, entra a la página oficial de descarga de Windows de Microsoft y descarga la <strong>Herramienta de creación de medios</strong>.</li><li>Conecta una memoria USB de <strong>8 GB o más</strong> (se borrará todo su contenido).</li><li>Ejecuta la herramienta, acepta la licencia, elige idioma y edición y selecciona <strong>Unidad flash USB</strong>.</li></ol><h3>2. Arrancar desde la USB</h3><p>Conecta la USB al equipo, enciéndelo y presiona la tecla del <strong>menú de arranque</strong> (según la marca: <kbd>F12</kbd> Dell/Lenovo, <kbd>F9</kbd> HP, <kbd>Esc</kbd> o <kbd>F8</kbd> Asus, <kbd>F11</kbd> en muchas placas). Elige la memoria USB (modo UEFI).</p><h3>3. Instalar</h3><ol><li>Elige idioma y teclado <strong>Español (México) o Latinoamericano</strong>.</li><li>«No tengo clave de producto» si el equipo ya tenía Windows activado (se activará solo).</li><li>Tipo de instalación: <strong>Personalizada</strong>. Elimina las particiones del disco donde estaba Windows (¡solo después de respaldar!) y selecciona el espacio sin asignar.</li><li>Al terminar, configura la cuenta del cliente, instala controladores y actualizaciones, el antivirus y los programas que usa.</li></ol><blockquote>Entrega el equipo con Windows actualizado, controladores instalados, sin programas basura y con la información del cliente restaurada y verificada junto a él.</blockquote><h3>Lista de verificación de instalación</h3><ul class=\"checklist\"><li>Respaldo verificado de los datos del cliente</li><li>Clave o licencia digital vinculada (Windows se activa solo si ya estaba activado en ese equipo)</li><li>USB oficial creada con la herramienta de Microsoft</li><li>Modo UEFI y Secure Boot activos (Windows 11)</li><li>Particiones viejas eliminadas solo después de confirmar el respaldo</li><li>Drivers del fabricante instalados (sin signos amarillos en el Administrador de dispositivos)</li><li>Windows Update completo y reinicio final</li><li>Datos del cliente restaurados y verificados con él</li></ul>",
           "materiales": [
             {
               "titulo": "Descargar Windows 11 (sitio oficial de Microsoft)",
@@ -566,34 +878,135 @@
           ]
         },
         {
+          "titulo": "Drivers: instalación correcta",
+          "tipo": "video",
+          "duracion": "20 min",
+          "video": "https://www.youtube.com/watch?v=a2Krz-eK5_w",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Identificar dispositivos sin driver en el Administrador de dispositivos</li><li>Instalar drivers desde fuentes oficiales y en el orden correcto</li><li>Revertir un driver que causa problemas</li></ul></aside><h3>Orden recomendado después de instalar Windows</h3><ol><li><strong>Windows Update</strong> completo (instala muchos drivers solo).</li><li><strong>Chipset</strong> del fabricante (Intel o AMD).</li><li><strong>Video</strong> (Intel, AMD o NVIDIA).</li><li><strong>Red y Wi-Fi</strong>, <strong>audio</strong>, <strong>touchpad</strong> y utilidades del fabricante.</li></ol><p>En laptops descarga todo desde la página de soporte de la marca con el <strong>número de serie</strong> o el modelo exacto (Dell Support, HP Support Assistant, Lenovo Vantage).</p><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>¿Dispositivo desconocido? En el Administrador de dispositivos → clic derecho → <strong>Propiedades</strong> → <strong>Detalles</strong> → <strong>Id. de hardware</strong>. Los códigos <code>VEN_</code> (fabricante) y <code>DEV_</code> (dispositivo) te dicen exactamente qué es.</p></aside><aside class=\"nota alerta\"><h4>⚠️ Cuidado</h4><p>No uses sitios ni programas de «drivers automáticos gratis»: suelen instalar versiones incorrectas, publicidad o malware.</p></aside><p><strong>Revertir:</strong> Administrador de dispositivos → el dispositivo → Propiedades → Controlador → <strong>Revertir al controlador anterior</strong>.</p><h3>Ponte a prueba</h3><details class=\"check\"><summary>Un signo amarillo en «Controlador de red» y sin internet. ¿Cómo instalas el driver?</summary><p>Descárgalo en otra computadora desde la página oficial y pásalo por USB, o usa el anclaje USB del celular para conectarte.</p></details><p class=\"aula-credit\"><small>Video: Mazthertutoriales (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Redes básicas: IP, Wi-Fi y «no tengo internet»",
+          "tipo": "video",
+          "duracion": "25 min",
+          "video": "https://www.youtube.com/watch?v=YSVo21r3wBg",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es una dirección IP, la puerta de enlace y el DNS</li><li>Diagnosticar «sin internet» con comandos en orden</li><li>Resolver las fallas de red más comunes en casas y oficinas</li></ul></aside><table><thead><tr><th>Concepto</th><th>Qué es</th><th>Ejemplo</th></tr></thead><tbody><tr><td>IP privada</td><td>Dirección del equipo dentro de la red local</td><td>192.168.1.25</td></tr><tr><td>Puerta de enlace</td><td>El router</td><td>192.168.1.1</td></tr><tr><td>DNS</td><td>Traduce nombres a IP</td><td>8.8.8.8 (Google) o 1.1.1.1 (Cloudflare)</td></tr><tr><td>DHCP</td><td>El router asigna las IP automáticamente</td><td>Activo por defecto</td></tr><tr><td>169.254.x.x</td><td>IP automática de emergencia</td><td>El equipo no recibió IP del router</td></tr></tbody></table><h3>Diagnóstico en orden (Terminal)</h3><ol><li><code>ipconfig</code> → ¿tienes IP y puerta de enlace? Si ves 169.254.x.x, el problema está entre el equipo y el router.</li><li><code>ping 192.168.1.1</code> (tu puerta de enlace) → ¿llegas al router?</li><li><code>ping 8.8.8.8</code> → ¿hay salida a internet?</li><li><code>ping google.com</code> → si el anterior funciona y este no, es un problema de <strong>DNS</strong>.</li></ol><table><thead><tr><th>Síntoma</th><th>Solución típica</th></tr></thead><tbody><tr><td>IP 169.254.x.x</td><td>Reiniciar router; <code>ipconfig /release</code> y <code>ipconfig /renew</code>; revisar cable o Wi-Fi</td></tr><tr><td>Ping a 8.8.8.8 funciona, a google.com no</td><td><code>ipconfig /flushdns</code> o cambiar DNS a 8.8.8.8 / 1.1.1.1</td></tr><tr><td>Nada funciona después de un virus</td><td><code>netsh winsock reset</code> y reiniciar</td></tr><tr><td>Wi-Fi lento lejos del router</td><td>Usar la banda de 2.4 GHz (más alcance) o un repetidor/mesh; 5 GHz es más rápido pero de menor alcance</td></tr></tbody></table><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Antes de tocar la computadora, pregunta: ¿los demás equipos o celulares tienen internet? Si nadie tiene, el problema es del router o del proveedor, no del equipo.</p></aside><h3>Ponte a prueba</h3><details class=\"check\"><summary>ping 8.8.8.8 responde, pero ping google.com dice «no se pudo encontrar el host». ¿Qué falla?</summary><p>El DNS. Limpia la caché con <code>ipconfig /flushdns</code> o configura DNS 8.8.8.8 / 1.1.1.1.</p></details><p class=\"aula-credit\"><small>Video: Retro (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
           "titulo": "Respaldo y recuperación de datos",
           "tipo": "lectura",
           "duracion": "15 min",
           "video": "",
-          "contenido": "<p>Para el cliente, sus fotos y documentos valen más que la computadora. Por eso el respaldo es lo primero en cualquier servicio.</p><h3>Respaldar un equipo que todavía arranca</h3><ul><li>Copia las carpetas del usuario (<code>C:\\Usuarios\\Nombre</code>): Escritorio, Documentos, Descargas, Imágenes, Videos, Música.</li><li>Exporta los <strong>favoritos y contraseñas</strong> del navegador (o verifica que estén sincronizados con la cuenta de Google o Microsoft).</li><li>Revisa programas con datos propios: correo de Outlook (archivos .pst), sistemas contables, bases de datos.</li><li>Pregunta por otras particiones o discos (D:, E:).</li></ul><h3>Si el equipo no arranca</h3><ol><li>Retira el disco y conéctalo a otra computadora con un <strong>adaptador o gabinete USB</strong> (SATA a USB, o M.2 a USB).</li><li>Copia la información. Si el disco tiene sectores dañados, usa herramientas que copien con reintentos y no lo fuerces con usos repetidos.</li><li>Otra opción: arrancar con una USB de <em>Linux live</em> o del instalador de Windows y copiar a un disco externo.</li></ol><h3>Archivos borrados por error</h3><p>Mientras no se escriba encima, muchas veces se recuperan con programas como <strong>Recuva</strong> o <strong>PhotoRec</strong>. Regla de oro: <strong>deja de usar ese disco</strong> de inmediato y recupera hacia <em>otro</em> disco.</p><h3>Cuándo derivar a un laboratorio</h3><p>Si el disco mecánico hace clics, no gira, o se golpeó, no lo sigas encendiendo: cada intento puede empeorar el daño. Esos casos requieren laboratorio especializado (sala limpia). Explícale al cliente costos y probabilidades con honestidad.</p><h3>Confidencialidad</h3><p>La información del cliente es privada. No revises fotos ni documentos más allá de lo necesario para verificar el respaldo, y borra tus copias temporales al entregar.</p>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Respaldar datos de un equipo que arranca y de uno que no</li><li>Recuperar archivos borrados sin empeorar el daño</li><li>Manejar la información del cliente con confidencialidad</li></ul></aside><p>Para el cliente, sus fotos y documentos valen más que la computadora. Por eso el respaldo es lo primero en cualquier servicio.</p><h3>Respaldar un equipo que todavía arranca</h3><ul><li>Copia las carpetas del usuario (<code>C:\\Usuarios\\Nombre</code>): Escritorio, Documentos, Descargas, Imágenes, Videos, Música.</li><li>Exporta los <strong>favoritos y contraseñas</strong> del navegador (o verifica que estén sincronizados con la cuenta de Google o Microsoft).</li><li>Revisa programas con datos propios: correo de Outlook (archivos .pst), sistemas contables, bases de datos.</li><li>Pregunta por otras particiones o discos (D:, E:).</li></ul><h3>Si el equipo no arranca</h3><ol><li>Retira el disco y conéctalo a otra computadora con un <strong>adaptador o gabinete USB</strong> (SATA a USB, o M.2 a USB).</li><li>Copia la información. Si el disco tiene sectores dañados, usa herramientas que copien con reintentos y no lo fuerces con usos repetidos.</li><li>Otra opción: arrancar con una USB de <em>Linux live</em> o del instalador de Windows y copiar a un disco externo.</li></ol><h3>Archivos borrados por error</h3><p>Mientras no se escriba encima, muchas veces se recuperan con programas como <strong>Recuva</strong> o <strong>PhotoRec</strong>. Regla de oro: <strong>deja de usar ese disco</strong> de inmediato y recupera hacia <em>otro</em> disco.</p><h3>Cuándo derivar a un laboratorio</h3><p>Si el disco mecánico hace clics, no gira, o se golpeó, no lo sigas encendiendo: cada intento puede empeorar el daño. Esos casos requieren laboratorio especializado (sala limpia). Explícale al cliente costos y probabilidades con honestidad.</p><h3>Confidencialidad</h3><p>La información del cliente es privada. No revises fotos ni documentos más allá de lo necesario para verificar el respaldo, y borra tus copias temporales al entregar.</p><aside class=\"nota alerta\"><h4>⚠️ Disco con ruidos</h4><p>Si un disco hace clics o ruidos raros, <strong>no lo sigas encendiendo</strong> ni le corras programas de recuperación: cada minuto puede destruir más datos. Derívalo a un laboratorio especializado.</p></aside>"
         },
+        {
+          "titulo": "Cuestionario: sistema, drivers y redes",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Cuál es el orden recomendado para instalar drivers?",
+              "opciones": [
+                "Video, audio, chipset",
+                "Windows Update, chipset, video, red y demás",
+                "Solo el de audio",
+                "Cualquier orden con un programa automático"
+              ],
+              "correcta": 2,
+              "explicacion": "El chipset es la base de los demás dispositivos."
+            },
+            {
+              "pregunta": "¿Dónde ves el código VEN_ y DEV_ de un dispositivo desconocido?",
+              "opciones": [
+                "En el Bloc de notas",
+                "Administrador de dispositivos → Propiedades → Detalles → Id. de hardware",
+                "En el BIOS siempre",
+                "En el Panel de sonido"
+              ],
+              "correcta": 2,
+              "explicacion": "Esos códigos identifican al fabricante y al dispositivo."
+            },
+            {
+              "pregunta": "Un equipo tiene IP 169.254.10.5. ¿Qué significa?",
+              "opciones": [
+                "Todo está bien",
+                "No recibió IP del router (problema de conexión local o DHCP)",
+                "Tiene un virus",
+                "Es la IP de Google"
+              ],
+              "correcta": 2,
+              "explicacion": "Es una IP automática de emergencia cuando no hay DHCP."
+            },
+            {
+              "pregunta": "ping 8.8.8.8 funciona pero las páginas no cargan por nombre. ¿Qué revisas?",
+              "opciones": [
+                "La RAM",
+                "El DNS",
+                "La pantalla",
+                "La batería"
+              ],
+              "correcta": 2,
+              "explicacion": "Sin DNS el equipo no puede traducir nombres como google.com."
+            },
+            {
+              "pregunta": "¿Qué comando restablece la configuración de red de Windows después de un malware?",
+              "opciones": [
+                "netsh winsock reset",
+                "sfc /scannow",
+                "winver",
+                "mdsched"
+              ],
+              "correcta": 1,
+              "explicacion": "Restablece el catálogo de Winsock; luego hay que reiniciar."
+            },
+            {
+              "pregunta": "¿Qué banda de Wi-Fi tiene más alcance?",
+              "opciones": [
+                "5 GHz",
+                "2.4 GHz",
+                "Ambas igual",
+                "Ninguna"
+              ],
+              "correcta": 2,
+              "explicacion": "2.4 GHz llega más lejos y atraviesa mejor las paredes; 5 GHz es más rápida a corta distancia."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Servicio profesional y proyecto final",
+      "lecciones": [
         {
           "titulo": "Atención al cliente y presupuestos",
           "tipo": "lectura",
           "duracion": "12 min",
           "video": "",
-          "contenido": "<p>Un técnico excelente también sabe comunicar. Así es como trabajamos en TechRevive:</p><h3>1. Recepción</h3><p>Llena la orden de servicio con el cliente presente: datos, equipo, accesorios, estado físico, falla reportada y contraseña (si autoriza). Entrega un comprobante.</p><h3>2. Diagnóstico y presupuesto</h3><ul><li>Explica la falla en palabras sencillas: «el disco duro está fallando y por eso la computadora está tan lenta; hay riesgo de perder la información».</li><li>Presenta opciones: <em>reparación mínima</em>, <em>recomendada</em> y, si aplica, <em>cambio de equipo</em>.</li><li>Detalla <strong>mano de obra</strong> y <strong>repuestos</strong> por separado, el tiempo estimado y la garantía.</li><li>No hagas trabajos que el cliente no haya autorizado.</li></ul><p>Puedes usar nuestro <a href=\"/cotizador.html\" target=\"_blank\" rel=\"noopener\">tarifario y cotizador en línea</a> como referencia de precios y para imprimir cotizaciones.</p><h3>3. Reparación</h3><p>Si durante el trabajo encuentras otra falla, <strong>consulta antes de continuar</strong>. Guarda las piezas reemplazadas para mostrarlas al cliente.</p><h3>4. Entrega</h3><ul><li>Prueba el equipo completo frente al cliente (encendido, imagen, internet, sonido, sus archivos).</li><li>Explica lo que se hizo y da recomendaciones de cuidado.</li><li>Entrega comprobante con la <strong>garantía</strong> (qué cubre y por cuánto tiempo).</li></ul><h3>5. Seguimiento</h3><p>Un mensaje a los pocos días («¿cómo le ha funcionado el equipo?») genera confianza y recomendaciones. Agenda el próximo mantenimiento preventivo.</p>"
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Recibir un equipo con orden de servicio completa</li><li>Elaborar un presupuesto claro con opciones</li><li>Entregar con evidencia y garantía</li></ul></aside><p>Un técnico excelente también sabe comunicar. Así es como trabajamos en TechRevive:</p><h3>1. Recepción</h3><p>Llena la orden de servicio con el cliente presente: datos, equipo, accesorios, estado físico, falla reportada y contraseña (si autoriza). Entrega un comprobante.</p><h3>2. Diagnóstico y presupuesto</h3><ul><li>Explica la falla en palabras sencillas: «el disco duro está fallando y por eso la computadora está tan lenta; hay riesgo de perder la información».</li><li>Presenta opciones: <em>reparación mínima</em>, <em>recomendada</em> y, si aplica, <em>cambio de equipo</em>.</li><li>Detalla <strong>mano de obra</strong> y <strong>repuestos</strong> por separado, el tiempo estimado y la garantía.</li><li>No hagas trabajos que el cliente no haya autorizado.</li></ul><p>Puedes usar nuestro <a href=\"/cotizador.html\" target=\"_blank\" rel=\"noopener\">tarifario y cotizador en línea</a> como referencia de precios y para imprimir cotizaciones.</p><h3>3. Reparación</h3><p>Si durante el trabajo encuentras otra falla, <strong>consulta antes de continuar</strong>. Guarda las piezas reemplazadas para mostrarlas al cliente.</p><h3>4. Entrega</h3><ul><li>Prueba el equipo completo frente al cliente (encendido, imagen, internet, sonido, sus archivos).</li><li>Explica lo que se hizo y da recomendaciones de cuidado.</li><li>Entrega comprobante con la <strong>garantía</strong> (qué cubre y por cuánto tiempo).</li></ul><h3>5. Seguimiento</h3><p>Un mensaje a los pocos días («¿cómo le ha funcionado el equipo?») genera confianza y recomendaciones. Agenda el próximo mantenimiento preventivo.</p><h3>Ejemplo de presupuesto con opciones</h3><table><thead><tr><th>Opción</th><th>Incluye</th><th>Precio de referencia</th></tr></thead><tbody><tr><td>Básica</td><td>Mantenimiento preventivo + optimización de Windows</td><td>Q250</td></tr><tr><td>Recomendada</td><td>Básica + SSD 480 GB con migración de datos</td><td>Q650</td></tr><tr><td>Completa</td><td>Recomendada + 8 GB de RAM adicional</td><td>Q900</td></tr></tbody></table><p><small>Precios demostrativos: usa el tarifario vigente de TechRevive.</small></p><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Ofrecer tres opciones con una «recomendada» ayuda al cliente a decidir y aumenta la confianza: siente que eligió él, no que le vendieron.</p></aside>"
         },
         {
           "titulo": "Proyecto final: diagnóstico y presupuesto de un caso real",
           "tipo": "tarea",
           "duracion": "2 horas",
           "video": "",
-          "contenido": "<p>Elige una computadora con algún problema (lentitud, ruido, se calienta, no arranca, virus…) y haz el proceso completo como técnico.</p><ol><li><strong>Orden de servicio:</strong> datos del equipo (marca, modelo, procesador, RAM, disco), estado físico y falla reportada.</li><li><strong>Diagnóstico:</strong> describe las pruebas que hiciste siguiendo el método de 6 pasos (con capturas: Administrador de tareas, CrystalDiskInfo, HWMonitor, etc.).</li><li><strong>Conclusión:</strong> ¿cuál es la causa más probable y por qué?</li><li><strong>Presupuesto con 2 opciones</strong> (mínima y recomendada), separando mano de obra y repuestos. Puedes apoyarte en el cotizador de TechRevive.</li><li><strong>Recomendaciones</strong> de cuidado para el cliente.</li></ol><p><strong>Entrega:</strong> un documento PDF o fotos claras. Después presenta el examen final.</p>",
+          "contenido": "<p>Elige una computadora con algún problema (lentitud, ruido, se calienta, no arranca, virus…) y haz el proceso completo como técnico.</p><ol><li><strong>Orden de servicio:</strong> datos del equipo (marca, modelo, procesador, RAM, disco), estado físico y falla reportada.</li><li><strong>Diagnóstico:</strong> describe las pruebas que hiciste siguiendo el método de 6 pasos (con capturas: Administrador de tareas, CrystalDiskInfo, HWMonitor, etc.).</li><li><strong>Conclusión:</strong> ¿cuál es la causa más probable y por qué?</li><li><strong>Presupuesto con 2 opciones</strong> (mínima y recomendada), separando mano de obra y repuestos. Puedes apoyarte en el cotizador de TechRevive.</li><li><strong>Recomendaciones</strong> de cuidado para el cliente.</li></ol><p><strong>Entrega:</strong> un documento PDF o fotos claras. Después presenta el examen final.</p><h3>Rúbrica de evaluación</h3><table><thead><tr><th>Criterio</th><th>Excelente</th><th>Por mejorar</th></tr></thead><tbody><tr><td>Orden de servicio</td><td>Datos completos, síntomas en palabras del cliente, estado físico con fotos</td><td>Datos incompletos</td></tr><tr><td>Diagnóstico</td><td>Sigue el método de 6 pasos con mediciones (SMART, temperaturas, voltajes)</td><td>Conclusión sin pruebas</td></tr><tr><td>Solución</td><td>Opciones con costo y beneficio</td><td>Una sola opción sin justificar</td></tr><tr><td>Informe de entrega</td><td>Antes/después con cifras, recomendaciones y garantía</td><td>Sin evidencias</td></tr></tbody></table>",
           "fecha_limite": "",
           "enlace_entrega": ""
+        },
+        {
+          "titulo": "Repaso general: casos para practicar",
+          "tipo": "lectura",
+          "duracion": "30 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Aplicar todo el curso a casos reales antes del examen</li><li>Detectar tus temas débiles</li></ul></aside><p>Resuelve cada caso mentalmente y luego abre la respuesta. Si fallas más de dos, repasa esas lecciones antes del examen.</p><details class=\"check\"><summary>1. Una PC no hace nada al presionar el botón. El tomacorriente marca 120 V. ¿Siguiente paso?</summary><p>Probar la fuente: prueba del clip y medición de voltajes. Si está bien, revisar el botón del panel frontal puenteando PWR SW.</p></details><details class=\"check\"><summary>2. Ventiladores giran, no hay imagen y hay pitidos largos repetidos.</summary><p>Memoria RAM: limpiar contactos, probar un módulo a la vez y en otra ranura.</p></details><details class=\"check\"><summary>3. Laptop muy lenta, disco al 100 % y CrystalDiskInfo en «Precaución».</summary><p>Respaldar de inmediato, clonar o instalar en un SSD y recomendar más RAM si tiene menos de 8 GB.</p></details><details class=\"check\"><summary>4. Se apaga sola al jugar o renderizar, y el ventilador suena fuerte.</summary><p>Sobrecalentamiento: medir con HWiNFO, limpiar disipador y cambiar pasta térmica; revisar también la fuente.</p></details><details class=\"check\"><summary>5. Pantalla azul IRQL_NOT_LESS_OR_EQUAL desde que actualizó el driver de video.</summary><p>Revertir el driver o instalar la versión estable del fabricante.</p></details><details class=\"check\"><summary>6. Instalaste Windows 11 y dice que el equipo no cumple los requisitos.</summary><p>Activar UEFI (desactivar CSM), Secure Boot y TPM 2.0 (fTPM/PTT) en el BIOS; el disco debe ser GPT.</p></details><details class=\"check\"><summary>7. La laptop no da imagen en su pantalla pero sí en un monitor externo.</summary><p>Pantalla, retroiluminación o cable flex: prueba de linterna y revisar el cable en las bisagras.</p></details><details class=\"check\"><summary>8. Sin internet: IP 169.254.x.x.</summary><p>Reiniciar router, revisar cable/Wi-Fi, ipconfig /release y /renew; si los demás equipos tampoco tienen internet, es el router o el proveedor.</p></details><details class=\"check\"><summary>9. El cliente pierde la hora y la fecha cada vez que desconecta la PC.</summary><p>Pila CMOS gastada (menos de 2.8 V): cambiar la CR2032 y reconfigurar el BIOS.</p></details><details class=\"check\"><summary>10. Un disco hace clics y el cliente necesita sus fotos.</summary><p>No seguir encendiéndolo ni usar programas de recuperación: derivarlo a un laboratorio especializado.</p></details><h3>Autoevaluación antes del examen</h3><ul class=\"checklist\"><li>Uso el multímetro con seguridad y conozco los voltajes ATX</li><li>Armo una PC y configuro el BIOS/UEFI</li><li>Hago mantenimiento con mediciones antes y después</li><li>Diagnostico con método y herramientas (SMART, HWiNFO, MemTest)</li><li>Instalo Windows, drivers y resuelvo problemas de red</li><li>Atiendo al cliente con orden de servicio, presupuesto e informe</li></ul>"
         },
         {
           "titulo": "Examen final: Reparación y mantenimiento de computadoras",
           "tipo": "cuestionario",
           "duracion": "25 min",
           "video": "",
-          "contenido": "<p>Este examen evalúa todo el curso. Al aprobarlo podrás solicitar tu <strong>certificado</strong> en la página del curso. Puedes repetirlo las veces que necesites.</p>",
+          "contenido": "<p>Este examen evalúa <strong>todo el curso</strong>: electricidad y fuente, componentes, armado y BIOS, mantenimiento, diagnóstico, sistema, redes y servicio al cliente. Resuelve antes los casos de la lección de repaso. Al aprobarlo podrás solicitar tu <strong>certificado</strong> en la página del curso.</p>",
           "preguntas": [
             {
               "pregunta": "¿Cuál es la diferencia entre mantenimiento preventivo y correctivo?",
@@ -756,6 +1169,171 @@
                 "Mano de obra y repuestos por separado, tiempo y garantía",
                 "Nada por escrito",
                 "Solo los repuestos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué color de cable de la fuente ATX entrega +12 V?",
+              "opciones": [
+                "Rojo",
+                "Amarillo",
+                "Naranja",
+                "Morado"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál es el voltaje correcto de una pila CMOS sana?",
+              "opciones": [
+                "Alrededor de 3 V",
+                "12 V",
+                "120 V",
+                "0.5 V"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué función del multímetro NUNCA se usa en un tomacorriente?",
+              "opciones": [
+                "Voltaje AC",
+                "Corriente (amperios)",
+                "Ninguna, todas son seguras",
+                "Pantalla de retención (HOLD)"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué revisas primero si un procesador no entra en el socket?",
+              "opciones": [
+                "Lo presiono con fuerza",
+                "La orientación (triángulo) y que el socket sea compatible",
+                "Le pongo más pasta",
+                "Cambio la fuente"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué atributo SMART indica sectores dañados ya reemplazados?",
+              "opciones": [
+                "05 Sectores reasignados",
+                "Temperatura",
+                "Horas de encendido",
+                "Número de encendidos"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué herramienta gratuita prueba la RAM a fondo desde una USB de arranque?",
+              "opciones": [
+                "MemTest86",
+                "Paint",
+                "CrystalDiskMark",
+                "Notepad++"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La laptop se ve con una linterna pero la pantalla está oscura. ¿Qué falla?",
+              "opciones": [
+                "El disco duro",
+                "La retroiluminación (backlight)",
+                "La RAM",
+                "El teclado"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Dónde encuentras el número de parte exacto de una pantalla de laptop?",
+              "opciones": [
+                "En la caja del cargador",
+                "En la etiqueta trasera del panel",
+                "En el BIOS siempre",
+                "En la batería"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Desde dónde se descargan los drivers de una laptop?",
+              "opciones": [
+                "De cualquier sitio de «drivers gratis»",
+                "De la página de soporte del fabricante con el modelo o número de serie",
+                "De un CD genérico",
+                "No se necesitan drivers"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué comando muestra la IP y la puerta de enlace del equipo?",
+              "opciones": [
+                "ipconfig",
+                "sfc",
+                "chkdsk",
+                "mdsched"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué opción del BIOS se usa para arrancar desde una USB sin cambiar la configuración?",
+              "opciones": [
+                "El menú de arranque (Boot Menu, F12 en muchas marcas)",
+                "XMP",
+                "Secure Erase",
+                "Fan control"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Una fuente de 500 W genérica sin certificación para una PC con GPU de 220 W. ¿Qué recomiendas?",
+              "opciones": [
+                "Usarla igual",
+                "Una fuente de calidad 80 PLUS con margen (600–650 W)",
+                "Quitar la GPU",
+                "Bajar el brillo del monitor"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Pantalla azul INACCESSIBLE_BOOT_DEVICE justo después de cambiar el modo SATA en el BIOS. ¿Qué haces?",
+              "opciones": [
+                "Reinstalar Windows de inmediato",
+                "Volver el modo SATA a como estaba (AHCI/RAID)",
+                "Cambiar la RAM",
+                "Cambiar la pantalla"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué debe incluir siempre el informe de entrega al cliente?",
+              "opciones": [
+                "Solo el precio",
+                "Trabajo realizado, mediciones antes/después, recomendaciones y garantía",
+                "Las contraseñas del cliente",
+                "Nada, basta con entregar el equipo"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Al armar una PC, ¿cuándo se instala el procesador?",
+              "opciones": [
+                "Al final, con la placa ya en el gabinete",
+                "Primero, con la placa fuera del gabinete",
+                "Después de cerrar el gabinete",
+                "No importa"
               ],
               "correcta": 2,
               "explicacion": ""

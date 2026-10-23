@@ -705,7 +705,10 @@
   }
 
   /* ───────── texto con formato ───────── */
-  const ALLOWED = { P: [], H2: [], H3: [], STRONG: [], B: [], EM: [], I: [], U: [], UL: [], OL: [], LI: [], A: ["href"], BR: [], BLOCKQUOTE: [] };
+  const ALLOWED = { P: ["class"], H2: [], H3: [], H4: [], STRONG: [], B: [], EM: [], I: [], U: [], UL: ["class"], OL: [], LI: [], A: ["href"], BR: [], BLOCKQUOTE: [],
+    ASIDE: ["class"], DETAILS: ["class"], SUMMARY: [], TABLE: [], THEAD: [], TBODY: [], TR: [], TH: [], TD: [], KBD: [], CODE: [], SMALL: [] };
+  // Clases permitidas (bloques didácticos del aula: objetivos, puntos clave, consejos, prácticas…)
+  const ALLOWED_CLASS = { P: ["aula-credit"], UL: ["checklist"], ASIDE: ["nota", "objetivos", "clave", "tip", "alerta", "practica", "caso", "typing"], DETAILS: ["check"] };
   function sanitize(html) {
     const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
     const walk = (node) => {
@@ -720,6 +723,10 @@
         if (!ALLOWED[tag]) { n.replaceWith(...n.childNodes); return; }
         if (tag !== n.tagName) { const r = doc.createElement(tag); r.append(...n.childNodes); n.replaceWith(r); return; }
         [...n.attributes].forEach((a) => { if (!ALLOWED[tag].includes(a.name)) n.removeAttribute(a.name); });
+        if (n.hasAttribute("class")) {
+          const ok = n.getAttribute("class").split(/\s+/).filter((c) => (ALLOWED_CLASS[tag] || []).includes(c));
+          if (ok.length) n.setAttribute("class", ok.join(" ")); else n.removeAttribute("class");
+        }
         if (tag === "A") {
           const href = n.getAttribute("href") || "";
           if (!/^(https?:|mailto:|tel:|\/|#|[a-z0-9-]+\.html)/i.test(href)) n.removeAttribute("href");
@@ -751,7 +758,24 @@
       h("button", { type: "button", title: "Lista con viñetas", onmousedown: cmd("insertUnorderedList") }, "• Lista"),
       h("button", { type: "button", title: "Lista numerada", onmousedown: cmd("insertOrderedList") }, "1. Lista"),
       h("button", { type: "button", title: "Enlace", onmousedown: (e) => { e.preventDefault(); const u = prompt("Dirección del enlace (https://…):", "https://"); if (u) { area.focus(); document.execCommand("createLink", false, u); update(); } } }, "🔗 Enlace"),
-      h("button", { type: "button", title: "Quitar formato", onmousedown: cmd("removeFormat") }, "Limpiar"));
+      h("button", { type: "button", title: "Quitar formato", onmousedown: cmd("removeFormat") }, "Limpiar"),
+      ...(/contenido/.test(f.name) ? [h("select", { class: "rte__blocks", title: "Insertar un bloque didáctico", onchange: (e) => {
+        const v = e.target.value; e.target.value = ""; if (!v) return;
+        const B = {
+          objetivos: '<aside class="nota objetivos"><h4>🎯 Lo que aprenderás</h4><ul><li>…</li></ul></aside>',
+          clave: '<aside class="nota clave"><h4>📌 Puntos clave</h4><ul><li>…</li></ul></aside>',
+          tip: '<aside class="nota tip"><h4>💡 Consejo de técnico</h4><p>…</p></aside>',
+          alerta: '<aside class="nota alerta"><h4>⚠️ Cuidado</h4><p>…</p></aside>',
+          practica: '<aside class="nota practica"><h4>🧪 Práctica guiada</h4><ol><li>…</li></ol></aside>',
+          caso: '<aside class="nota caso"><h4>🧰 Caso real</h4><p>…</p></aside>',
+          check: '<details class="check"><summary>Pregunta para repasar…</summary><p>Respuesta…</p></details>',
+          checklist: '<ul class="checklist"><li>Paso 1…</li><li>Paso 2…</li></ul>',
+          typing: '<aside class="typing"><p>Escribe aquí el texto que el alumno debe copiar.</p></aside>',
+        };
+        area.focus(); document.execCommand("insertHTML", false, B[v] + "<p><br></p>"); update();
+      } }, h("option", { value: "" }, "➕ Insertar bloque…"), h("option", { value: "objetivos" }, "🎯 Lo que aprenderás"), h("option", { value: "clave" }, "📌 Puntos clave"),
+        h("option", { value: "tip" }, "💡 Consejo"), h("option", { value: "alerta" }, "⚠️ Cuidado"), h("option", { value: "practica" }, "🧪 Práctica guiada"), h("option", { value: "caso" }, "🧰 Caso real"),
+        h("option", { value: "check" }, "❓ Ponte a prueba (pregunta y respuesta)"), h("option", { value: "checklist" }, "☑️ Lista de verificación"), h("option", { value: "typing" }, "⌨️ Práctica de mecanografía"))] : []));
     return h("div", { class: "field" }, ...labelEl(f, id), h("div", { class: "rte" }, bar, area));
   }
 

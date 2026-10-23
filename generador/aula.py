@@ -353,27 +353,42 @@ def build_curso(c):
     write(os.path.join(c["_id"], "index.html"), shell(c["titulo"], body, cls="aula--curso"))
 
 
-def quiz_html(l):
-    qs = [q for q in arr(l.get("preguntas")) if isinstance(q, dict) and q.get("pregunta") and len(arr(q.get("opciones"))) >= 2]
-    if not qs:
-        return '<p class="aula-empty">Este cuestionario todavía no tiene preguntas.</p>'
-    items = []
-    for qi, q in enumerate(qs):
+def quiz_items(l):
+    """Preguntas válidas de un cuestionario: [(pregunta, opciones, correcta, explicación)]."""
+    out = []
+    for q in arr(l.get("preguntas")):
+        if not (isinstance(q, dict) and q.get("pregunta") and len(arr(q.get("opciones"))) >= 2):
+            continue
         opts = [str(o) for o in arr(q.get("opciones"))]
         try:
             ok = int(q.get("correcta") or 0)
         except (TypeError, ValueError):
             ok = 0
         if not 1 <= ok <= len(opts):
-            WARNINGS.append(f"Aula: la pregunta «{q['pregunta'][:50]}» no tiene una respuesta correcta válida (usa 1 a {len(opts)}).")
+            WARNINGS.append(f"Aula: la pregunta «{str(q['pregunta'])[:50]}» no tiene una respuesta correcta válida (usa 1 a {len(opts)}).")
             ok = 1
+        out.append((str(q["pregunta"]), opts, ok, str(q.get("explicacion") or "")))
+    return out
+
+
+def quiz_html(l):
+    # Las respuestas correctas y las explicaciones NO van en la página: las revisa el servidor
+    # (worker/aula-datos.js), así nadie puede verlas con «Inspeccionar» antes de responder.
+    qs = quiz_items(l)
+    if not qs:
+        return '<p class="aula-empty">Este cuestionario todavía no tiene preguntas.</p>'
+    items = []
+    for qi, (preg, opts, ok, exp) in enumerate(qs):
         lis = "".join(f'<label class="quiz__opt"><input type="radio" name="q{qi}" value="{oi + 1}" /><span class="quiz__mark" aria-hidden="true"></span><span>{e(o)}</span></label>'
                       for oi, o in enumerate(opts))
-        exp = f'<p class="quiz__exp" hidden>{e(q.get("explicacion"))}</p>' if q.get("explicacion") else '<p class="quiz__exp" hidden></p>'
-        items.append(f'<fieldset class="quiz__q" data-ok="{ok}"><legend><span>{qi + 1}</span>{e(q["pregunta"])}</legend><div class="quiz__opts">{lis}</div>{exp}</fieldset>')
+        items.append(f'<fieldset class="quiz__q" data-q="{qi}"><legend><span>{qi + 1}</span>{e(preg)}</legend><div class="quiz__opts">{lis}</div><p class="quiz__exp" hidden></p></fieldset>')
     minimo = int(precio_num(g(A, "nota_minima") or 70)) or 70
-    return f'''<form class="quiz" data-min="{minimo}" novalidate>
-            {"".join(items)}
+    final = " data-final" if l.get("examen_final") else ""
+    aviso = (f'<p class="quiz__intro">📝 <strong>Examen final:</strong> {len(qs)} preguntas en orden aleatorio. Necesitas {minimo}% para aprobar. '
+             'Si no apruebas verás qué preguntas fallaste (sin revelar la respuesta) para que repases esos temas; las preguntas y opciones cambian de orden en cada intento '
+             'y hay un máximo de 5 intentos por hora.</p>') if final else ""
+    return f'''<form class="quiz" data-min="{minimo}"{final} novalidate>
+            {aviso}{"".join(items)}
             <div class="quiz__foot">
               <button type="submit" class="btn btn--primary">{icon("check")} Revisar respuestas</button>
               <button type="button" class="btn btn--outline" data-quiz-reset hidden>{icon("refresh")} Intentar de nuevo</button>
@@ -572,7 +587,9 @@ def datos_worker():
         cdata[cid] = {"t": c["titulo"], "h": horas_txt(c), "c": cert_on(c), "i": libre_on(c),
                       "l": [l["_key"] for l in c["_lessons"]],
                       "q": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario"],
-                      "x": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario" and l.get("examen_final")]}
+                      "x": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario" and l.get("examen_final")],
+                      # Clave de respuestas de cada cuestionario (solo la conoce el servidor)
+                      "r": {l["_key"]: [[ok, exp] for (_, _, ok, exp) in quiz_items(l)] for l in c["_lessons"] if l["_tipo"] == "cuestionario"}}
     minimo = int(precio_num(g(A, "nota_minima") or 70)) or 70
     data = {"k": secrets.token_hex(24), "m": minimo, "cursos": cdata, "alumnos": alumnos}
     js = ("// Archivo generado automáticamente por build.py en cada publicación (no se sube a GitHub).\n"

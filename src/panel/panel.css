@@ -497,3 +497,15 @@ a { color: var(--blue); }
   .ord-table td { border: 0; padding: 4px 12px; }
   .ord-prob { max-width: none; }
 }
+
+/* Bloques didácticos dentro del editor */
+.rte__blocks { margin-left: auto; border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; font-size: .84rem; background: #fff; }
+.rte__area aside { display: block; border: 1px solid #D6E2F5; border-left: 4px solid #2563EB; border-radius: 10px; padding: 8px 12px; margin: 8px 0; background: #F7FAFF; }
+.rte__area aside.alerta { border-left-color: #DC2626; background: #FFF6F6; } .rte__area aside.tip { border-left-color: #16A34A; background: #F3FBF5; }
+.rte__area aside.practica { border-left-color: #7C3AED; background: #F8F5FF; } .rte__area aside.caso { border-left-color: #D97706; background: #FFF9EF; }
+.rte__area aside.clave { border-left-color: #0EA5E9; } .rte__area aside.typing { border-left-color: #64748B; font-family: ui-monospace, monospace; }
+.rte__area details { border: 1px dashed #BFD3F7; border-radius: 10px; padding: 6px 12px; margin: 8px 0; }
+.rte__area details > * { display: block; }
+.rte__area ul.checklist { list-style: "☐  "; }
+.rte__area table { border-collapse: collapse; margin: 8px 0; } .rte__area th, .rte__area td { border: 1px solid #D6E2F5; padding: 4px 8px; }
+.rte__area h4 { font-size: .95rem; margin: 2px 0; }

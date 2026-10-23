@@ -285,3 +285,22 @@ Textos fijos de: la página **Redes sociales** (los enlaces sí se editan), el *
 - **IA:** `build.py` (`configurar_ia`) agrega `"ai": {"binding": "AI"}` a `wrangler.jsonc` solo en Cloudflare y solo si `asistente_ia` está activado.
 - **Rendimiento y seguridad:** `build.py` escribe `_site/_headers` (cabeceras de seguridad, CSP y caché; Cloudflare lo aplica a los archivos estáticos, y el Worker agrega las suyas a `/api` y `/aula`), `manifest.webmanifest` y `sw.js` (red primero, página sin conexión; nunca guarda `/api`, `/panel` ni `/aula`). `optimizar_imagenes()` envuelve las `<img>` en `<picture>` con la versión WebP de `src/img/` solo si su huella coincide con `src/img/webp.json`; con Pillow instalado también genera las que falten.
 - `.pages.yml` sigue presente por compatibilidad con Pages CMS, pero ya no es necesario.
+
+## Calidad de los cursos: bloques didácticos y exámenes seguros
+
+**Cuestionarios revisados por el servidor.** Las respuestas correctas ya no están en la página: cuando el alumno pulsa «Revisar respuestas», el servidor califica, guarda la nota (si aprueba) y devuelve las explicaciones. Las preguntas y opciones cambian de orden en cada intento. En el **examen final**, si el alumno no aprueba solo ve qué preguntas falló (sin la respuesta correcta) y tiene un máximo de 5 intentos por hora.
+
+**Bloques didácticos en el editor de lecciones.** En Panel → Aula → (curso) → lección → Contenido, usa el menú **«➕ Insertar bloque…»**:
+
+| Bloque | Para qué |
+|---|---|
+| 🎯 Lo que aprenderás | Objetivos al inicio de la lección |
+| 📌 Puntos clave | Resumen al final |
+| 💡 Consejo / ⚠️ Cuidado | Tips de técnico y advertencias de seguridad |
+| 🧪 Práctica guiada | Pasos para hacer en la computadora |
+| 🧰 Caso real | Ejemplos del taller |
+| ❓ Ponte a prueba | Pregunta con respuesta que se despliega |
+| ☑️ Lista de verificación | El alumno marca cada punto (se guarda en su navegador) |
+| ⌨️ Práctica de mecanografía | El alumno copia el texto y ve palabras por minuto y precisión |
+
+El editor ahora conserva tablas, `kbd`, `code` y estos bloques al guardar.

@@ -348,6 +348,48 @@ async function handleAulaApi(request, env, url, route, method) {
   // Lo que sigue necesita sesión de alumno y la base de datos.
   const s = await aulaSession(request, env);
   if (!s) return json({ error: "Inicia sesión para entrar al aula." }, 401);
+
+  // Cuestionarios y exámenes: los revisa el servidor (las respuestas correctas no están en la página).
+  if (route === "aula/quiz" && method === "POST") {
+    const body = await readJson(request);
+    const key = String(body.leccion || "");
+    const cid = LESSON_COURSE[key];
+    if (!cid || !aulaHasCourse(s.user, cid)) return json({ error: "No tienes acceso a ese cuestionario." }, 403);
+    const c = AULA_COURSE_DATA[cid];
+    const clave = (c.r || {})[key];
+    if (!Array.isArray(clave) || !clave.length) return json({ error: "Este cuestionario no tiene preguntas." }, 404);
+    const esExamen = (c.x || []).includes(key);
+    const rk = `examen:${s.usuario}:${key}`;
+    if (esExamen && await rlCount(env, rk, 3600) >= 5) {
+      return json({ error: "Ya hiciste 5 intentos del examen en la última hora. Repasa las lecciones y vuelve a intentarlo más tarde." }, 429);
+    }
+    const resp = body.respuestas && typeof body.respuestas === "object" ? body.respuestas : {};
+    let ok = 0;
+    const detalle = clave.map(([right, exp], i) => {
+      const pick = Math.round(Number(resp[i])) || null;
+      const bien = pick === right;
+      if (bien) ok++;
+      return { bien, elegida: pick, correcta: right, explicacion: exp || "" };
+    });
+    const faltan = detalle.filter((d) => !d.elegida).length;
+    if (faltan) return json({ error: faltan === 1 ? "Te falta responder 1 pregunta." : `Te faltan ${faltan} preguntas por responder.`, faltan }, 400);
+    if (esExamen) await rlHit(env, rk);
+    const pct = Math.round((ok * 100) / clave.length);
+    const pass = pct >= AULA_MIN;
+    // En el examen final, si no aprueba solo se dice cuáles falló (sin revelar la respuesta correcta).
+    const out = esExamen && !pass ? detalle.map((d) => ({ bien: d.bien, elegida: d.elegida })) : detalle;
+    let guardado = false;
+    if (pass && env.DB) {
+      await ensureSchema(env);
+      await env.DB.prepare(
+        "INSERT INTO progreso (usuario, leccion, ts, nota) VALUES (?, ?, ?, ?) " +
+        "ON CONFLICT(usuario, leccion) DO UPDATE SET nota = CASE WHEN progreso.nota IS NULL OR excluded.nota > progreso.nota THEN excluded.nota ELSE progreso.nota END"
+      ).bind(s.usuario, key, Date.now(), pct).run();
+      guardado = true;
+    }
+    return json({ pct, ok, total: clave.length, pass, min: AULA_MIN, examen: esExamen, detalle: out, guardado });
+  }
+
   if (!env.DB) return json({ error: "La base de datos del aula todavía no está conectada.", sinBase: true }, 503);
   await ensureSchema(env);
 
@@ -384,7 +426,7 @@ async function handleAulaApi(request, env, url, route, method) {
         if (!isQuiz) stmts.push(env.DB.prepare("DELETE FROM progreso WHERE usuario = ? AND leccion = ?").bind(s.usuario, key));
         continue;
       }
-      if (isQuiz && (nota == null || nota < AULA_MIN)) continue; // un cuestionario solo cuenta si se aprueba
+      if (isQuiz) continue; // los cuestionarios solo se registran cuando los revisa el servidor (aula/quiz)
       const ts = Math.min(Number(it.ts) || Date.now(), Date.now());
       stmts.push(env.DB.prepare(
         "INSERT INTO progreso (usuario, leccion, ts, nota) VALUES (?, ?, ?, ?) " +

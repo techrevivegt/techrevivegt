@@ -389,6 +389,7 @@
     // cuestionario
     var quiz = $(".quiz");
     if (quiz) initQuiz(quiz, key, setDone);
+    initChecklists(key); initTyping();
     // tarea por WhatsApp
     $$("[data-task-wa]").forEach(function (a) {
       a.addEventListener("click", function (ev) {
@@ -401,51 +402,123 @@
     if (cur && cur.scrollIntoView && window.innerWidth > 1024) cur.scrollIntoView({ block: "center" });
   }
 
+  function shuffle(list) {
+    for (var i = list.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = list[i]; list[i] = list[j]; list[j] = t; }
+    return list;
+  }
   function initQuiz(form, key, setDone) {
     var min = Number(form.getAttribute("data-min") || 70);
     var result = $(".quiz__result", form), reset = $("[data-quiz-reset]", form), bestEl = $("[data-quiz-best]", form);
+    var submit = $('button[type="submit"]', form), foot = $(".quiz__foot", form);
     var notas = read("notas", {});
     function showBest() {
       if (notas[key] != null) { bestEl.textContent = "Tu mejor nota: " + notas[key] + "%"; bestEl.hidden = false; }
     }
-    showBest();
+    // Preguntas y opciones en orden aleatorio en cada intento
+    function mix() {
+      var qs = shuffle($$(".quiz__q", form));
+      qs.forEach(function (q, i) {
+        form.insertBefore(q, foot);
+        var n = $("legend span", q); if (n) n.textContent = i + 1;
+        var box = $(".quiz__opts", q); shuffle($$(".quiz__opt", box)).forEach(function (o) { box.appendChild(o); });
+      });
+    }
+    mix(); showBest();
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
-      var qs = $$(".quiz__q", form), ok = 0, falt = 0;
-      qs.forEach(function (q) { if (!$("input:checked", q)) falt++; });
-      if (falt) {
+      var qs = $$(".quiz__q", form), resp = {}, falt = qs.filter(function (q) { return !$("input:checked", q); });
+      if (falt.length) {
         result.className = "quiz__result is-warn"; result.hidden = false;
-        result.textContent = falt === 1 ? "Te falta responder 1 pregunta." : "Te faltan " + falt + " preguntas por responder.";
-        var first = qs.filter(function (q) { return !$("input:checked", q); })[0];
-        first.scrollIntoView({ behavior: "smooth", block: "center" });
+        result.textContent = falt.length === 1 ? "Te falta responder 1 pregunta." : "Te faltan " + falt.length + " preguntas por responder.";
+        falt[0].scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
-      qs.forEach(function (q) {
-        var right = q.getAttribute("data-ok"), pick = $("input:checked", q).value;
-        var good = pick === right; if (good) ok++;
-        q.classList.add(good ? "is-right" : "is-wrong");
-        $$(".quiz__opt", q).forEach(function (o) {
-          var v = $("input", o).value;
-          o.classList.toggle("is-answer", v === right);
-          o.classList.toggle("is-picked-wrong", v === pick && !good);
-          $("input", o).disabled = true;
+      qs.forEach(function (q) { resp[q.getAttribute("data-q")] = Number($("input:checked", q).value); });
+      submit.disabled = true; submit.textContent = "Revisando…";
+      api("POST", "quiz", { leccion: key, respuestas: resp }).then(function (r) {
+        qs.forEach(function (q) {
+          var d = r.detalle[Number(q.getAttribute("data-q"))] || {};
+          q.classList.add(d.bien ? "is-right" : "is-wrong");
+          $$(".quiz__opt", q).forEach(function (o) {
+            var v = Number($("input", o).value);
+            if (d.correcta) o.classList.toggle("is-answer", v === d.correcta);
+            o.classList.toggle("is-picked-wrong", v === d.elegida && !d.bien);
+            $("input", o).disabled = true;
+          });
+          var exp = $(".quiz__exp", q);
+          if (exp) { exp.textContent = d.explicacion || ""; exp.hidden = !d.explicacion; }
         });
-        var exp = $(".quiz__exp", q); if (exp && exp.textContent.trim()) exp.hidden = false;
+        notas[key] = Math.max(notas[key] || 0, r.pct); write("notas", notas); showBest();
+        result.className = "quiz__result " + (r.pass ? "is-pass" : "is-fail"); result.hidden = false;
+        result.innerHTML = "<strong>" + r.pct + "%</strong> · " + r.ok + " de " + r.total + " correctas. " +
+          (r.pass ? "¡Aprobaste! La lección quedó marcada como completada."
+            : r.examen ? "Necesitas " + r.min + "% para aprobar. Las preguntas en rojo son las que fallaste: repasa esos temas en las lecciones y vuelve a intentarlo."
+            : "Necesitas " + r.min + "% para aprobar. Revisa las explicaciones e inténtalo de nuevo.");
+        if (r.pass) setDone(true, notas[key]);
+        submit.hidden = true; reset.hidden = false;
+        result.scrollIntoView({ behavior: "smooth", block: "center" });
+      }).catch(function (e) {
+        result.className = "quiz__result is-warn"; result.hidden = false;
+        result.textContent = e.status === 401 ? "Tu sesión terminó. Vuelve a entrar al aula para enviar tus respuestas." : (e.message || "No se pudieron revisar tus respuestas. Revisa tu conexión e inténtalo de nuevo.");
+      }).finally(function () {
+        submit.disabled = false; submit.innerHTML = submit.getAttribute("data-label") || submit.innerHTML;
       });
-      var pct = Math.round(ok * 100 / qs.length), pass = pct >= min;
-      notas[key] = Math.max(notas[key] || 0, pct); write("notas", notas); showBest();
-      result.className = "quiz__result " + (pass ? "is-pass" : "is-fail"); result.hidden = false;
-      result.innerHTML = "<strong>" + pct + "%</strong> · " + ok + " de " + qs.length + " correctas. " +
-        (pass ? "¡Aprobaste! La lección quedó marcada como completada." : "Necesitas " + min + "% para aprobar. Revisa las explicaciones e inténtalo de nuevo.");
-      if (pass) setDone(true, notas[key]);
-      $('button[type="submit"]', form).hidden = true; reset.hidden = false;
-      result.scrollIntoView({ behavior: "smooth", block: "center" });
     });
+    submit.setAttribute("data-label", submit.innerHTML);
     reset.addEventListener("click", function () {
-      $$(".quiz__q", form).forEach(function (q) { q.classList.remove("is-right", "is-wrong"); var x = $(".quiz__exp", q); if (x) x.hidden = true; });
+      $$(".quiz__q", form).forEach(function (q) { q.classList.remove("is-right", "is-wrong"); var x = $(".quiz__exp", q); if (x) { x.hidden = true; x.textContent = ""; } });
       $$(".quiz__opt", form).forEach(function (o) { o.classList.remove("is-answer", "is-picked-wrong"); var i = $("input", o); i.disabled = false; i.checked = false; });
-      result.hidden = true; reset.hidden = true; $('button[type="submit"]', form).hidden = false;
+      mix();
+      result.hidden = true; reset.hidden = true; submit.hidden = false;
       form.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  /* ---------- Bloques interactivos de las lecciones ---------- */
+  // Lista de verificación: <ul class="checklist"> → cada punto se puede marcar (se guarda en el navegador)
+  function initChecklists(key) {
+    $$(".aula-rich ul.checklist").forEach(function (ul, n) {
+      var id = "check:" + key + ":" + n, st = read(id, {});
+      $$("li", ul).forEach(function (li, i) {
+        li.setAttribute("role", "checkbox"); li.tabIndex = 0;
+        var paint = function () { li.classList.toggle("is-checked", !!st[i]); li.setAttribute("aria-checked", st[i] ? "true" : "false"); };
+        var toggle = function () { st[i] = !st[i]; write(id, st); paint(); };
+        li.addEventListener("click", function (ev) { if (ev.target.tagName !== "A") toggle(); });
+        li.addEventListener("keydown", function (ev) { if (ev.key === " " || ev.key === "Enter") { ev.preventDefault(); toggle(); } });
+        paint();
+      });
+    });
+  }
+  // Práctica de mecanografía: <aside class="typing"><p>Texto a copiar</p></aside>
+  function initTyping() {
+    $$(".aula-rich aside.typing").forEach(function (box) {
+      var text = (box.textContent || "").replace(/\s+/g, " ").trim();
+      if (!text) return;
+      box.innerHTML = '<p class="typing__label">⌨️ Práctica de mecanografía: copia el texto tal como está (con tildes y signos).</p>' +
+        '<p class="typing__text"></p><textarea class="typing__input" rows="3" spellcheck="false" autocomplete="off" placeholder="Empieza a escribir aquí… el tiempo corre desde la primera tecla"></textarea>' +
+        '<p class="typing__stats"><span data-t="ppm">—</span> palabras por minuto · <span data-t="pre">100</span>% de precisión · <span data-t="avance">0</span>% completado</p>' +
+        '<button type="button" class="btn btn--outline btn--sm">Reiniciar</button>';
+      var shown = $(".typing__text", box), input = $(".typing__input", box), t0 = 0;
+      var paintText = function (typed) {
+        shown.innerHTML = text.split("").map(function (ch, i) {
+          var cls = i < typed.length ? (typed[i] === ch ? "ok" : "bad") : (i === typed.length ? "cur" : "");
+          return '<span class="' + cls + '">' + esc(ch) + "</span>";
+        }).join("");
+      };
+      var stat = function (k, v) { $('[data-t="' + k + '"]', box).textContent = v; };
+      paintText("");
+      input.addEventListener("input", function () {
+        var typed = input.value;
+        if (!t0 && typed) t0 = Date.now();
+        var good = 0; for (var i = 0; i < typed.length; i++) if (typed[i] === text[i]) good++;
+        var min = (Date.now() - t0) / 60000;
+        stat("ppm", typed && min > 0.08 ? Math.round(good / 5 / min) : "—");
+        stat("pre", typed ? Math.round(good * 100 / typed.length) : 100);
+        stat("avance", Math.min(100, Math.round(typed.length * 100 / text.length)));
+        paintText(typed);
+        if (typed.length >= text.length) { input.disabled = true; box.classList.add("is-done"); }
+      });
+      $("button", box).addEventListener("click", function () { input.disabled = false; input.value = ""; t0 = 0; box.classList.remove("is-done"); paintText(""); stat("ppm", "—"); stat("pre", 100); stat("avance", 0); input.focus(); });
     });
   }
 
