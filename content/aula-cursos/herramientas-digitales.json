@@ -1,0 +1,294 @@
+{
+  "titulo": "Herramientas digitales para el trabajo",
+  "publicado": true,
+  "orden": 4,
+  "descripcion": "Las herramientas que se usan en el trabajo y el estudio: búsqueda inteligente en Google, correo electrónico profesional, Drive y documentos colaborativos, videollamadas, calendario y, muy importante, cómo proteger tus cuentas con contraseñas fuertes y verificación en dos pasos.",
+  "imagen": "/img/aula-virtual.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "4 semanas",
+  "horas": "12",
+  "nivel": "Principiante",
+  "certificado": true,
+  "requisitos": "Conexión a internet y cuenta de correo (puede ser Gmail gratuita).",
+  "objetivos": [
+    "Buscar información confiable en internet",
+    "Redactar correos y usar herramientas colaborativas con criterio",
+    "Organizar tu tiempo con calendario, notas y recordatorios",
+    "Proteger tus cuentas con contraseñas seguras y 2FA"
+  ],
+  "modulos": [
+    {
+      "titulo": "Buscar y comunicarse bien",
+      "lecciones": [
+        {
+          "titulo": "Buscar bien en Google: filtros, comillas y trucos",
+          "tipo": "video",
+          "duracion": "12 min",
+          "video": "https://www.youtube.com/watch?v=MMF2T0Yhf70",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Filtrar por sitio, tipo de archivo y fecha</li><li>Usar comillas, signo menos y site:</li><li>Verificar que una web sea confiable</li></ul></aside><p>Buscar bien ahorra horas. Compleméntalo con el curso de Computación básica.</p><ul><li><code>\"frase exacta\"</code> · <code>pdf</code> · <code>site:reuters.com</code> · <code>-término</code> para excluir.</li><li>Búsqueda por imagen (Google Lens) para saber qué objeto es o de dónde salió una foto.</li><li>Tres piezas de información distintas que se contradigan antes de creer algo.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>En Google Imágenes toca la cámara: puedes subir una foto y verificar si está circulando un rumor.</p></aside><p class=\"aula-credit\"><small>Video: Xataka (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Correo electrónico: redactar, responder y organizar",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Escribir correos con asunto, saludo y despedida claros</li><li>Usar CC, CCO y responder sin confundir</li><li>Crear carpetas, filtros y firma automática</li></ul></aside><p>Tu correo es tu identidad profesional. Un mensaje conciso y bien organizado causa mejor impresión que 10 párrafos.</p><ul><li><strong>Asunto específico</strong>: «Presupuesto reparación laptop - Juan Pérez» en vez de «Hola».</li><li><strong>CC</strong> = copia de cortesía (todos ven); <strong>CCO</strong> = copia oculta (nadie ve a los demás: úsalo para listas masivas y proteger privacidad).</li><li>Filtros: archiva los boletines en una carpeta y marca con estrella lo que requiere acción.</li></ul><aside class=\"nota alerta\"><h4>🚨 Seguridad</h4><p>Desconfía de «urgencias» y premios: el phishing pide tus datos haciéndote sentir presión o codicia. Nunca abras enlaces de correos bancarios inesperados; entra tú escribiendo la dirección del banco.</p></aside>"
+        },
+        {
+          "titulo": "Drive, Docs y colaboración en tiempo real",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Subir, ordenar y compartir archivos por enlace</li><li>Trabajar juntos en el mismo documento</li><li>Usar el historial de versiones para no perder nada</li></ul></aside><p>Google Drive te da 15 GB gratis. Con «Compartir → Copiar enlace» eliges si el otro solo ve o puede comentar o editar.</p><ul><li>Dos personas pueden escribir al mismo tiempo y ver en qué parte está el cursor del otro.</li><li><strong>Historial de versiones</strong>: Archivo → Historial del documento; se puede volver a cualquier punto.</li><li>Respaldos 3-2-1: 3 copias, en 2 medios distintos, 1 fuera de casa (la nube).</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Un trabajo grupal de colegio deja de ser 20 archivos llamados «finalfinal.docx» y pasa a ser un solo enlace donde todos escriben al mismo tiempo.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: carpeta de respaldo y enlace",
+          "tipo": "tarea",
+          "duracion": "30 min",
+          "video": "",
+          "contenido": "<p>Crea en tu Drive una carpeta que la llames «Curso TechRevive»; sube 3 archivos (foto, PDF, cuál es tu comida típica.txt); compártela por enlace de solo lectura y envíanos la URL por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: correo y documentos en línea",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Para qué sirven las comillas en una búsqueda?",
+              "opciones": [
+                "Voz",
+                "Buscar una frase exacta",
+                "Traducir"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "CCO es…",
+              "opciones": [
+                "Copia visible para todos",
+                "Copia oculta que protege los correos de los demás",
+                "Un archivo comprimido"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En la nube puedes…",
+              "opciones": [
+                "Trabajar solo",
+                "Colaborar en tiempo real y volver a versiones anteriores",
+                "Nada, es solo copiar"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cómo verificas si un correo «de tu banco» es phishing?",
+              "opciones": [
+                "Lo abro igual porque parece del banco",
+                "Escribo yo mismo la dirección del banco o llamo al número oficial sin usar el enlace del correo",
+                "Le doy click al logo"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Reuniones y organización",
+      "lecciones": [
+        {
+          "titulo": "Videollamadas: Meet, Zoom y etiqueta en línea",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Iniciar y unirse a llamadas con buena iluminación y sonido</li><li>Compartir pantalla sin exponer datos</li><li>Grabar y transcribir reuniones (con permiso)</li></ul></aside><ul><li>Iluminación de frente, cámara a la altura de los ojos y micrófono en silencio cuando no hables.</li><li>Comparte solo la ventana necesaria, no toda la pantalla.</li><li>Agenda con enlace; llega 2 minutos antes para probar audio.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>En Meet: «Actividades → Subtítulos en vivo» para seguir la charla en espacios ruidosos o escribir el idioma del otro hablante.</p></aside>"
+        },
+        {
+          "titulo": "Calendario, tareas y gestión del tiempo (Google Calendar, Tasks, Keep)",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Programar eventos y recordatorios</li><li>Tomar notas y listas de pendientes que sí uses</li><li>Bloquear tiempo para estudiar a tu ritmo</li></ul></aside><p>El calendario es tu segundo cerebro: si no está agendado, no existe.</p><ul><li>Bloquea 30 minutos para tareas importantes como si fueran citas.</li><li><strong>Notas</strong>: Keep es ideal para ideas rápidas; las largas van a Docs.</li><li>Recordatorios al WhatsApp del que quieres no olvidar.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Agenda en Calendar tu horario de jornada esta semana</li><li>Crea 3 listas en Keep: «Estudiar», «Casa» y «Ideas»</li><li>Programa un recordatorio diario de 15 min para repaso</li></ol></aside>"
+        },
+        {
+          "titulo": "Cuestionario: reuniones y organización",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Cómo debe ser la iluminación en una videollamada?",
+              "opciones": [
+                "Detrás de ti",
+                "De frente hacia tu rostro",
+                "Lo más oscura posible"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El calendario sirve sobre todo para…",
+              "opciones": [
+                "Nada, basta recordar",
+                "Asegurar tu tiempo y no olvidar compromisos",
+                "Llenarlo de fotos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Al compartir pantalla se recomienda…",
+              "opciones": [
+                "Toda la pantalla siempre",
+                "Solo la ventana necesaria",
+                "Compartir el escritorio con fotos personales abiertas"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Seguridad de cuentas",
+      "lecciones": [
+        {
+          "titulo": "Protege tus cuentas: contraseñas y verificación en 2 pasos",
+          "tipo": "video",
+          "duracion": "25 min",
+          "video": "https://www.youtube.com/watch?v=0tpin55ra88",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Crear contraseñas seguras y distintas</li><li>Activar 2FA en Gmail, Facebook y WhatsApp</li><li>Reconocer intentos de estafa y recuperar cuentas</li></ul></aside><p>Una contraseña para todo es como una misma llave para tu casa, tu carro y tu caja fuerte. El administrador de contraseñas de Google te las guarda y sugiere seguras.</p><ul><li><strong>Frase</strong>: MangoGuatemala2026!es para decir en vez de Mango123.</li><li><strong>2FA</strong>: alguien con tu contraseña no puede entrar sin tu celular.</li><li>Código de respaldo y recuperación: guárdalos escritos en un lugar seguro.</li></ul><aside class=\"nota alerta\"><h4>🚨</h4><p>Nunca compartas el código que llega por SMS: es la llave de 2FA. El banco NUNCA te lo va a pedir por teléfono.</p></aside><p class=\"aula-credit\"><small>Video: Computer Hoy (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Tarea final: pon en orden tu vida digital",
+          "tipo": "tarea",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<p>1) Activa la verificación en 2 pasos en tu correo principal y WhatsApp. 2) Crea en Drive una carpeta respaldo con tus documentos importantes. 3) Escribe tu firma de correo con nombre completo y teléfono. Mándanos una captura por WhatsApp (sin mostrar las contraseñas) para validar la práctica.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Examen final de Herramientas digitales",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los tres módulos del curso. Al aprobarlo con 70 % podrás solicitar tu certificado.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Una frase como contraseña es mejor porque…",
+              "opciones": [
+                "Es más corta",
+                "Es más larga y memorable, y difícil de adivinar",
+                "No hace falta 2FA"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué es el phishing?",
+              "opciones": [
+                "Virus del celular",
+                "Engaño por correo/SMS para robarte datos",
+                "Pesca en línea"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Google Drive gratis ofrece…",
+              "opciones": [
+                "5 GB",
+                "15 GB",
+                "100 GB"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "site:reuters.com en una búsqueda…",
+              "opciones": [
+                "Muestra solo Reuters",
+                "Excluye Reuters",
+                "Traduce a inglés"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "CCO se usa para…",
+              "opciones": [
+                "Copiar imágenes",
+                "Enviar a muchos sin que vean los correos de los demás",
+                "Ver los mensajes ocultos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "2FA significa…",
+              "opciones": [
+                "Dos factores de autenticación (contraseña + tu celular)",
+                "Doble cuenta de Facebook",
+                "Formato de archivo"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En Meet, una buena práctica es…",
+              "opciones": [
+                "Gritar",
+                "Micrófono en silencio si no hablas",
+                "Compartir toda la pantalla siempre"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El historial de versiones te permite…",
+              "opciones": [
+                "Ver quién editó y volver atrás",
+                "Hacer tu correo",
+                "Imprimir"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para respaldar bien se recomienda…",
+              "opciones": [
+                "1 copia en la nube",
+                "3-2-1: tres copias, dos medios, una fuera de casa",
+                "Un solo USB"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Lo primero al abrir un correo del banco…",
+              "opciones": [
+                "Dar click al enlace",
+                "Verificar dominio y, si dudas, abrir tú escribiendo la web oficial",
+                "Reenviar a todos tus contactos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}

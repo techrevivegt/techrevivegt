@@ -1,0 +1,345 @@
+{
+  "titulo": "Emprendimiento: de la idea a tu negocio",
+  "publicado": true,
+  "orden": 5,
+  "descripcion": "Convierte tu idea en un negocio que deje plata: identifica un problema real de clientes guatemaltecos, valida antes de invertir, ponle precio con números, formaliza cuando toca ante la SAT y promociónate gratis con WhatsApp Business, Canva y estados.",
+  "imagen": "/img/emprendedor.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "5 semanas",
+  "horas": "15",
+  "nivel": "Todos los niveles",
+  "certificado": true,
+  "requisitos": "Ninguno. Tener una idea en mente ayuda, pero no es obligatorio.",
+  "objetivos": [
+    "Encontrar y describir un problema real de cliente",
+    "Calcular punto de equilibrio y precios con números",
+    "Validar la idea antes de invertir",
+    "Promocionar gratis con WhatsApp Business y redes sociales"
+  ],
+  "modulos": [
+    {
+      "titulo": "Idea y números básicos",
+      "lecciones": [
+        {
+          "titulo": "De la idea al problema que sí duele",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Distinguir una idea bonita de un problema real</li><li>Describir a tu cliente ideal</li><li>Probar tu idea sin gastar una fortuna</li></ul></aside><p>Ningún negocio empieza con un logo: empieza con una incomodidad concreta de un grupo específico de personas. Antes de invertir un quetzal, respondé en una frase cada una de estas preguntas:</p><ul><li><strong>¿Quién sufre el problema?</strong> (edad, ubicación, situación)</li><li><strong>¿Qué le duele?</strong> (pierde tiempo, dinero, le da vergüenza o miedo)</li><li><strong>¿Cómo lo resolvés vos?</strong> (mejor, más rápido, más barato o más original)</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Si todos dicen «¡qué buena idea!» pero nadie suelta dinero ni un adelanto, todavía es solo una idea bonita. El negocio existe cuando alguien paga.</p></aside>"
+        },
+        {
+          "titulo": "Modelo de ingreso y punto de equilibrio",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Definir cómo y a qué precio vas a vender</li><li>Calcular tu punto de equilibrio</li><li>Elegir entre producto, servicio o suscripción</li></ul></aside><p>El <strong>punto de equilibrio</strong> es cuántas unidades tenés que vender para cubrir tus gastos fijos. Sin ese número, estás manejando a ciegas.</p><ul><li><strong>Gastos fijos:</strong> renta, sueldos, internet (se pagan vendás o no vendás).</li><li><strong>Margen por unidad</strong> = precio de venta − costo directo.</li><li><strong>Punto de equilibrio</strong> = gastos fijos ÷ margen por unidad.</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Vendés almuerzos a Q40. Los ingredientes cuestan Q18 por almuerzo, así que tu margen es Q22. Con renta de Q1,500 al mes: 1,500 ÷ 22 ≈ 68 almuerzos al mes, o sea unos 3 por día, solo para no perder. Del almuerzo 69 en adelante, empezás a ganar.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: tu tarjeta de problema",
+          "tipo": "tarea",
+          "duracion": "30 min",
+          "video": "",
+          "contenido": "<p>Escribí en un documento (o mandalo como audio): 1) Mi cliente es ____ (descríbelo en una frase). 2) Su problema principal es ____. 3) Mi solución es ____. 4) Cobraré Q____ porque ____. Enviá la tarjeta a tu instructor por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: idea y números",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Un buen negocio empieza por…",
+              "opciones": [
+                "El logo",
+                "Un problema real de un grupo específico",
+                "Un local bonito"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El punto de equilibrio es…",
+              "opciones": [
+                "La fecha de inauguración",
+                "Cuánto tenés que vender para cubrir tus gastos fijos",
+                "Tu día de más ventas"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un gasto fijo es…",
+              "opciones": [
+                "Los ingredientes de cada almuerzo",
+                "La renta mensual",
+                "El empaque"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Margen por unidad =",
+              "opciones": [
+                "precio + costo",
+                "precio − costo",
+                "costo fijo total"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Validación y diferenciación",
+      "lecciones": [
+        {
+          "titulo": "Validación: preguntale a 10 personas antes de invertir",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entrevistar clientes sin venderles</li><li>Detectar señales de que la idea sirve o hay que ajustarla</li><li>Usar la encuesta de 5 preguntas por WhatsApp</li></ul></aside><p>Antes de comprar equipo o alquilar local, salí a validar: descubrí si la gente ya gasta dinero en resolver ese problema.</p><ul><li>No preguntes «¿te parece buena mi idea?»: te van a mentir por quedar bien.</li><li>Preguntá sobre su presente: «¿cada cuánto te pasa esto?», «¿cómo lo resolvés hoy?», «¿cuánto te cuesta?».</li><li>Si de 10 personas pocas ya gastan en resolverlo → ajustá el problema o el cliente, no lo fuerces.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Escribí 5 preguntas que no sugieran la respuesta</li><li>Hacé la miniencuesta a 10 personas (en la calle o por WhatsApp)</li><li>Anotá quiénes sufren más el problema y qué dijeron sobre el precio</li></ol></aside>"
+        },
+        {
+          "titulo": "Tu diferencial: por qué te comprarían a vos",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Identificar qué te hace diferente</li><li>Escribir tu propuesta en una frase que vende</li><li>Diferenciarte aunque vendás lo mismo que el vecino</li></ul></aside><p>Si vendés lo mismo que otros diez, el mercado compite solo por precio… y el que vende más barato «gana» clientes pero pierde plata. Tu diferencial puede ser la rapidez, la garantía, el empaque, la atención personalizada o tu propia historia.</p><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>En un mercado artesanal de Guatemala todos venden tejidos similares. Quien vende más no es el más barato: es quien cuenta la historia de su familia tejedora, con buenas fotos y empaque bonito, y cobra más por el mismo trabajo.</p></aside><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Tu frase debe poder decirse en 5 segundos: «Reparamos tu celular a domicilio, el mismo día, con garantía de 90 días».</p></aside>"
+        },
+        {
+          "titulo": "Cuestionario: validación y diferenciación",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "La pregunta menos útil en una entrevista es…",
+              "opciones": [
+                "¿Cuánto gastás en esto?",
+                "¿Cada cuánto te pasa?",
+                "¿Te parece buena mi idea?"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Si el mercado compite solo por precio…",
+              "opciones": [
+                "Siempre gana el más barato y le va bien",
+                "Hay poca ganancia para todos y hay que diferenciarse",
+                "Es el paraíso del emprendedor"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un diferencial útil puede ser…",
+              "opciones": [
+                "El color del logo",
+                "Rapidez, garantía, empaque o atención personalizada",
+                "Publicar más seguido"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Precios, plata y formalización",
+      "lecciones": [
+        {
+          "titulo": "Precios con números y sin miedo a cobrar",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Cobrar por valor, no solo por costo</li><li>Incluir tu mano de obra y los impuestos en el precio</li><li>No competir a la baja</li></ul></aside><p>Fórmula básica: <strong>precio = costo directo + parte proporcional de gastos fijos + impuestos + la ganancia que buscás</strong>.</p><ul><li>Tu mano de obra vale: calculá cuánto ganarías por hora en un empleo similar y no cobres menos.</li><li>Aprendé a decir el precio sin nervios y explicá qué incluye (garantía, entrega, asesoría).</li><li>Descontar por costumbre «al primer regateo» le enseña al cliente que tus precios no son reales.</li></ul><aside class=\"nota alerta\"><h4>⚠️</h4><p>El negocio de «todo barato para ganar clientes» que no deja ganancia es trabajo gratis con estrés extra.</p></aside>"
+        },
+        {
+          "titulo": "Formalización sencilla en Guatemala",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Cuándo tiene sentido formalizar</li><li>Qué es el RTU de la SAT</li><li>Separar la plata del negocio de la tuya</li></ul></aside><p>Mientras estás probando la idea a pequeña escala podés operar informal. Cuando el negocio crece, lo correcto es formalizarte ante la <strong>SAT</strong>:</p><ul><li>El <strong>RTU</strong> (Registro Tributario Unificado) se tramita en línea y sin costo: te identifica como contribuyente.</li><li>Reservá alrededor del 15 % de cada venta para impuestos; esa plata no es tuya.</li><li>Abrí una cuenta bancaria (o billetera) solo del negocio y separá tu dinero personal desde el día uno.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Este módulo es orientativo: para tu caso concreto, consultá en la SAT o con un contador. Las fechas y requisitos pueden cambiar.</p></aside>"
+        },
+        {
+          "titulo": "Cuestionario: plata y formalización",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Un precio correcto incluye…",
+              "opciones": [
+                "Solo los materiales",
+                "Costo + gastos proporcionales + impuestos + ganancia",
+                "Lo que cobra el vecino"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Formalizar antes de validar el negocio es…",
+              "opciones": [
+                "Siempre el primer paso",
+                "Prematuro: primero validá, formalizá al crecer",
+                "Imposible"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué porcentaje aproximado conviene reservar para impuestos?",
+              "opciones": [
+                "0 %",
+                "Unos 15 % de cada venta",
+                "Todo"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Marketing gratis y proyecto final",
+      "lecciones": [
+        {
+          "titulo": "Marketing gratis: WhatsApp Business, Canva y estados",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Configurar WhatsApp Business con catálogo</li><li>Diseñar publicaciones en Canva sin saber diseño</li><li>Aplicar la regla 70/30 de contenido</li></ul></aside><ul><li><strong>WhatsApp Business</strong> es gratis: perfil con horario, catálogo de 5-10 productos con foto y precio, y respuestas rápidas.</li><li><strong>Estados de WhatsApp</strong> = publicidad gratis diaria: mostrá el proceso, el antes y el después, el empaque.</li><li><strong>Regla 70/30:</strong> 7 de cada 10 publicaciones enseñan, entretienen o ayudan; 3 venden directamente. Si solo vendés, la gente silencia tus estados.</li><li><strong>Canva</strong> (gratis): plantillas listas (stories, postales, menús) que solo editás con tus textos.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Pedí el WhatsApp a cada cliente que te compra: tu lista de contactos vale más que cualquier anuncio pagado.</p></aside>"
+        },
+        {
+          "titulo": "Tarea final: tu negocio en línea",
+          "tipo": "tarea",
+          "duracion": "45 min",
+          "video": "",
+          "contenido": "<p>1) Instalá WhatsApp Business y configurá tu perfil (nombre, descripción, horario) y el catálogo con al menos 5 productos o servicios. 2) Diseñá en Canva una publicación presentando tu negocio y mandala por tu estado. 3) Compartí capturas de ambas cosas con tu instructor.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Examen final de Emprendimiento",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los cuatro módulos del curso. Al aprobarlo podrás solicitar tu certificado.</p>",
+          "preguntas": [
+            {
+              "pregunta": "El primer paso del emprendedor responsable es…",
+              "opciones": [
+                "Comprar equipo",
+                "Escuchar el problema real de los clientes",
+                "Pedir un préstamo"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Con margen de Q22 y gastos fijos de Q1,500, el equilibrio es…",
+              "opciones": [
+                "Unos 68 almuerzos al mes",
+                "200 almuerzos",
+                "10 almuerzos"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En las entrevistas, la señal más valiosa es que la gente…",
+              "opciones": [
+                "Diga «qué buena idea»",
+                "Ya gaste dinero en resolver ese problema hoy",
+                "Te dé like"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un buen diferencial en Guatemala puede ser…",
+              "opciones": [
+                "Ser el más barato de todos",
+                "Rapidez y garantía en tu servicio",
+                "Tener más publicidad"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un precio profesional incluye…",
+              "opciones": [
+                "Solo materiales",
+                "Tu mano de obra, gastos, impuestos y ganancia",
+                "Lo que el cliente quiera pagar"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "WhatsApp Business permite…",
+              "opciones": [
+                "Solo chatear",
+                "Mostrar un catálogo y usar respuestas rápidas",
+                "Emitir facturas"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La regla 70/30 en redes es…",
+              "opciones": [
+                "70 % contenido útil y 30 % venta directa",
+                "70 minutos diarios",
+                "30 fotos por semana"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Antes de pedir un préstamo conviene…",
+              "opciones": [
+                "Validar la idea con ventas reales",
+                "Comprar el carro primero",
+                "Registrar la marca"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El RTU es…",
+              "opciones": [
+                "Una tarifa de energía eléctrica",
+                "Tu registro tributario en línea ante la SAT de Guatemala",
+                "Un registro de marcas"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Si tu negocio aún no vende, lo correcto es…",
+              "opciones": [
+                "Cambiar el logo",
+                "Escuchar por qué no compran y ajustar antes de gastar más",
+                "Rendirte"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}

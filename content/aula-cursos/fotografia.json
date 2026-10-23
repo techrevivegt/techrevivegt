@@ -1,0 +1,243 @@
+{
+  "titulo": "Fotografía y contenido visual",
+  "publicado": true,
+  "orden": 7,
+  "descripcion": "Fotos bonitas y vendibles con tu celular: composición con regla de tercios, luz natural y estudio casero barato, modo Pro con ISO y obturación, edición en Snapseed y Lightroom, y cómo publicar tu portafolio con ética y estrategia para tu emprendimiento o empleo.",
+  "imagen": "/img/hero.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "4 semanas",
+  "horas": "12",
+  "nivel": "Principiante",
+  "certificado": true,
+  "requisitos": "Un celular con cámara (cualquier marca).",
+  "objetivos": [
+    "Componer fotos con reglas visuales",
+    "Aprovechar la luz natural y un estudio casero",
+    "Editar fotos de forma profesional y sutil",
+    "Publicar tu trabajo respetando derechos y con estrategia"
+  ],
+  "modulos": [
+    {
+      "titulo": "Composición y luz",
+      "lecciones": [
+        {
+          "titulo": "Composición: reglas que nunca fallan",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Usar la regla de tercios</li><li>Elegir y limpiar el fondo</li><li>Aprovechar la hora dorada</li></ul></aside><p>Una foto buena no depende de la cámara cara: es la decisión que tomás antes del click.</p><ul><li><strong>Regla de tercios:</strong> activá la cuadrícula del celular y colocá lo importante en las intersecciones de las líneas, no siempre al centro.</li><li><strong>El fondo es tuyo:</strong> antes de disparar mirá qué hay detrás; evitá postes saliendo de la cabeza, basura o paredes sucias.</li><li><strong>Hora dorada:</strong> la primera hora después del amanecer y la última antes del atardecer dan una luz suave y caliente que hace todo más bonito (retratos, comida, paisajes).</li><li><strong>Ángulos:</strong> probá a la altura del objeto, desde abajo (imitá grandeza) o desde arriba (flatlay: comida o producto sobre la mesa).</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Las fotos de productos en tienda se ven profesionales con un pliego de papel blanco curvado como fondo infinito: cuesta Q5 y te dura meses.</p></aside>"
+        },
+        {
+          "titulo": "La luz: tu mejor herramienta (aunque solo tengas celular)",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Leer la luz natural y usarla a tu favor</li><li>Montar tu mini estudio casero por Q5</li><li>Usar el flash de forma inteligente</li></ul></aside><ul><li><strong>Luz de lado</strong> marca texturas; <strong>luz frontal</strong> plana todo y reduce volumen; <strong>contra-luz</strong> (detrás) crea siluetas y puede volverse negro si no bloqueás exposición.</li><li><strong>Mini estudio:</strong> una caja blanca, una ventana grande y un pliego de papel blanco curvado = fotos de producto perfectas sin sombras duras ni reflectores caros.</li><li><strong>Exposición:</strong> tocá la pantalla sobre el sujeto y deslizá el sol (bajar para un cielo detallado, subir para caras oscuras).</li><li><strong>Flash</strong>: el de una sola dirección aplana y da ojos rojos. Úsalo poco; si es de noche buscá una lámpara de lado (luz rebotada en pared blanca es más suave).</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Doña María vende tortillas en su casa. Con una cartulina blanca en la mesa junto a la ventana y el flash apagado, las fotos de sus empaquetados quedan tan limpias como de tienda. El cliente compra con la vista.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: el mismo objeto, varias veces",
+          "tipo": "tarea",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<p>Fotografiá el mismo objeto (puede ser un producto de tu emprendimiento, comida o cualquier cosa de tu casa) al menos 6 veces: 2 con luz natural de lado, 2 con luz frontal, 2 al aire libre con fondo simple. Enviá las 6 fotos a tu instructor e indicá cuál es tu mejor y por qué (fondo, enfoque, luz).</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: composición y luz",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "La regla de tercios dice que el sujeto va…",
+              "opciones": [
+                "Siempre exactamente al centro",
+                "En las intersecciones de la cuadrícula",
+                "En una esquina sí o sí"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La mejor luz para productos de tienda es…",
+              "opciones": [
+                "La dura del mediodía",
+                "Luz suave de ventana o hora dorada",
+                "Solo con flash"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Antes de disparar deberías…",
+              "opciones": [
+                "Ver el clima",
+                "Revisar exposición y fondo",
+                "Subir saturación"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El flash directo del celular es mejor usarlo…",
+              "opciones": [
+                "Siempre",
+                "Poco: solo de relleno o emergencia, de preferencia rebotado",
+                "Para paisajes"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Cámara, edición y publicación",
+      "lecciones": [
+        {
+          "titulo": "El modo Pro de tu celular: ISO, obturación y enfoque",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender ISO, tiempo de obturación y enfoque</li><li>Bloquear foco y exposición</li><li>Usar el modo retrato con criterio</li></ul></aside><ul><li><strong>ISO:</strong> alto = sensor más sensible, pero con «ruido» (grano feo). De noche el celular sube el ISO solo; mejor dejar la foto quieta que oscurecerla más.</li><li><strong>Tiempo de obturación:</strong> rápido (1/1000) congela el movimiento (un salto, agua); lento (1/15) deja ver movimiento (suavidad, luz en la oscuridad), pero se «agita» si se mueve el celular.</li><li><strong>AE/AF Lock:</strong> tocá la pantalla sobre una cara y mantené presionado un segundo: bloquea foco y exposición aunque te movás.</li><li><strong>Modo retrato:</strong> desenfoca el fondo, útil para personas y productos. Ojo: si detecta mal el borde, borra el cabello o los dedos; revisá el resultado antes de publicar.</li></ul><aside class=\"nota alerta\"><h4>📱</h4><p>Si tu celular no trae modo «Pro manual», apps gratis como Lightroom Mobile te dan esos controles.</p></aside>"
+        },
+        {
+          "titulo": "Editar en Snapseed y Lightroom sin excederte",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Corregir exposición, temperatura de color y encuadre</li><li>Usar herramientas por pincel y quitar imperfecciones</li><li>Exportar para redes y para impresión</li></ul></aside><ul><li><strong>Snapseed</strong> (gratis, de Google): abre archivos RAW, tiene curvas, «Iluminación facial» y el «Quitamanchas» para borrar cables o basura en el fondo.</li><li><strong>Lightroom Mobile</strong>: guarda «preajustes» (presets) para que todas tus fotos tengan el mismo estilo (tu marca) y sincroniza en la nube si tienes el plan de pago.</li><li>Ruta básica: enderezar y recortar → exposición (+0.2 suele bastar) → blancos y negros (contraste) → saturación mínima. La foto debe verse clara, no «filtrada».</li><li>Exportá para redes en JPG calidad alta; para imprimir mantené máxima resolución.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Si tu emprendimiento necesita el «mismo look» en las fotos (marca), guardá tus ajustes favoritos como preajuste: coherencia = profesionalismo.</p></aside>"
+        },
+        {
+          "titulo": "Tu portafolio y publicar con ética",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Armar un portafolio coherente en Instagram o Google Fotos</li><li>Escribir descripciones que vendan</li><li>Respetar derechos: permiso, música y marcas</li></ul></aside><p>Mostrar tu trabajo gratis es cómo te consiguen los clientes hoy, pero con responsabilidad.</p><ul><li>Pedí permiso antes de publicar fotos de clientes o vecinos, incluso si les salís «de paso».</li><li>Usá música con licencia de la propia red (Biblioteca de audio de Meta/YouTube) para evitar bloqueos o multas.</li><li>Firmá tus fotos con un logo pequeño y discreto; guardá siempre el archivo original sin editar.</li><li>Tus 9 primeras publicaciones deben contar una historia coherente: misma edición, tema y calidad (aunque sea de tu barrio o tu comida).</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Elegí tus 9 mejores fotos (con tu estilo propio)</li><li>Editá todas con el mismo ajuste base</li><li>Escribí una descripción de una línea con el nombre del lugar o producto</li></ol></aside>"
+        },
+        {
+          "titulo": "Tarea final: tu serie de 9 fotos",
+          "tipo": "tarea",
+          "duracion": "60 min",
+          "video": "",
+          "contenido": "<p>Publicá (o mandale a tu instructor las capturas) una serie de 9 fotos coherentes de un solo tema (tu producto, tu comunidad o un retrato), editadas en Snapseed, con descripción de 1 línea cada una. Enviá el enlace o capturas por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Examen final de Fotografía",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los dos módulos del curso. Al aprobarlo podrás solicitar tu certificado.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Para congelar un salto necesitás…",
+              "opciones": [
+                "ISO bajito",
+                "Obturación rápida",
+                "Zoom"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El modo retrato…",
+              "opciones": [
+                "Funciona igual en cualquier escena",
+                "Simula el desenfoque de fondo con detección de bordes (a veces con errores)",
+                "Arregla la exposición solo"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para un producto blanco sobre fondo blanco, lo principal es…",
+              "opciones": [
+                "No usar luces",
+                "Buena luz suave de lado y un poco de contraste para separar",
+                "Flash frontal"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La regla principal en edición es…",
+              "opciones": [
+                "Máxima saturación siempre",
+                "Sutil y coherente: clara, no «filtrada»",
+                "Usar el mismo filtro de colores intensos"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Si publicás fotos de clientes o vecinos, primero…",
+              "opciones": [
+                "Las subís igual",
+                "Les pedís permiso",
+                "Les cobrás"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Hora dorada es…",
+              "opciones": [
+                "El mediodía",
+                "Cerca del amanecer y del atardecer, con luz suave y caliente",
+                "La noche"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Snapseed te permite…",
+              "opciones": [
+                "Pagar recibos",
+                "Ajustes por pincel, curvas y quitar objetos",
+                "Editar video 4K"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El bloqueo AE/AF sirve para…",
+              "opciones": [
+                "Apagar la cámara",
+                "Fijar foco y exposición aunque muevas el celular",
+                "Tomar selfies"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Una foto «sobreexpuesta» es…",
+              "opciones": [
+                "Muy oscura",
+                "Con blancos quemados sin detalle",
+                "Perfecta"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El formato RAW es bueno porque…",
+              "opciones": [
+                "Ocupa menos espacio",
+                "Guarda más detalle para editar después sin perder calidad",
+                "Se sube directo a Instagram"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}

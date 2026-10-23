@@ -1,0 +1,408 @@
+{
+  "titulo": "Ofimática: Word, Excel y PowerPoint",
+  "publicado": true,
+  "orden": 3,
+  "descripcion": "Domina las herramientas de oficina que piden en el trabajo y la universidad: documentos prolijos en Word, hojas de cálculo que automatizan con fórmulas en Excel, presentaciones efectivas en PowerPoint y manejo profesional de PDF, impresión y archivos en la nube.",
+  "imagen": "/img/aprender.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "6 semanas",
+  "horas": "24",
+  "nivel": "Principiante · Intermedio",
+  "certificado": true,
+  "requisitos": "Saber usar la computadora a nivel básico (curso de Computación básica recomendado).",
+  "objetivos": [
+    "Crear y dar formato profesional a documentos en Word",
+    "Automatizar cálculos y análisis de datos con fórmulas en Excel",
+    "Diseñar presentaciones claras y efectivas en PowerPoint",
+    "Gestionar archivos, PDF e impresión con buen criterio"
+  ],
+  "modulos": [
+    {
+      "titulo": "Microsoft Word",
+      "lecciones": [
+        {
+          "titulo": "Word desde cero: interfaz y primer documento",
+          "tipo": "video",
+          "duracion": "35 min",
+          "video": "https://www.youtube.com/watch?v=gPlhLZcJ4t0",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Moverte por Word sin perderte</li><li>Crear, guardar y dar formato básico a un documento</li><li>Usar negrita, colores, listas y alineación</li></ul></aside><p>Word es la máquina de escribir del mundo digital. Aprenderemos la cinta de opciones, a guardar en DOCX y PDF, y a dar formato sin desorden: <strong>menos es más</strong>.</p><ul><li><strong>Archivo → Guardar como</strong>: DOCX para seguir editando, PDF para enviar o imprimir sin que se mueva nada.</li><li><kbd>Ctrl</kbd>+<kbd>N</kbd> negrita · <kbd>Ctrl</kbd>+<kbd>S</kbd> subrayado · <kbd>Ctrl</kbd>+<kbd>K</kbd> cursiva · <kbd>Ctrl</kbd>+<kbd>G</kbd> guardar.</li><li>Alineación justificada para textos formales; listas con viñetas para enumerar.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Guarda con nombre claro: <em>Informe-2026-v1.docx</em> mejor que <em>documento12345-final-FINAL.docx</em>.</p></aside><p class=\"aula-credit\"><small>Video: Ronal Mañuico (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Formato de párrafos, estilos y tablas",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Dar formato limpio con estilos</li><li>Insertar tablas e imágenes que no rompan el documento</li><li>Configurar página, márgenes y sangrías</li></ul></aside><p>El secreto de los documentos prolijos son los <strong>estilos</strong> (Título, Encabezado 1, Normal). Sirven para el índice automático y para que todo se vea uniforme.</p><ul><li><strong>Diseño</strong>: tamaño carta u oficio, márgenes de 2.54 cm estándar.</li><li><strong>Tablas</strong>: Insertar → Tabla; luego «Diseño de tabla» para bordes y encabezados. Ideal para listas de precios, horarios y presupuestos.</li><li><strong>Imágenes</strong>: inserta y elige «Cuadrado ajustado al texto»; en envoltura «Detrás del texto» solo para logos.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Crea un documento con 2 estilos de título y 3 párrafos</li><li>Inserta una tabla de 3×4 con los días y horarios de clase</li><li>Cambia los márgenes a 2 cm y guarda como PDF</li></ol></aside>"
+        },
+        {
+          "titulo": "Plantillas, encabezados e índice automático",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Usar encabezados con número de página</li><li>Generar el índice (tabla de contenido) automático</li><li>Empezar desde una plantilla bonita</li></ul></aside><p>Los trabajos largos (informes, tesis, manuales) se hacen siempre con encabezado por secciones y un índice que Word genera solo si usaste los estilos.</p><ul><li><strong>Encabezado</strong>: Insertar → Encabezado → número de página.</li><li><strong>Portada</strong>: Insertar → Página de portada.</li><li><strong>Índice</strong>: Referencias → Tabla de contenido. Se actualiza con clic derecho → Actualizar campos.</li></ul><aside class=\"nota alerta\"><h4>⚠️ Error común</h4><p>Si tu índice sale vacío es porque escribiste los títulos a mano en negrita en vez de usar el estilo «Título 1».</p></aside>"
+        },
+        {
+          "titulo": "Tarea: tu informe profesional en Word",
+          "tipo": "tarea",
+          "duracion": "45 min",
+          "video": "",
+          "contenido": "<p>Escribe un informe de tu actividad o trabajo (mínimo 2 páginas) que incluya: portada con título y tu nombre, índice automático, mínimo dos secciones con estilo «Título 1», una tabla y una imagen con envoltura cuadrada. Exporta a PDF y compártelo por WhatsApp al instructor con el asunto «Tarea Word».</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: Word",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Para qué sirve el PDF al enviar un documento?",
+              "opciones": [
+                "Para que pese menos",
+                "Para que nadie lo pueda copiar",
+                "Para que se vea igual en cualquier equipo sin que el formato se mueva"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué mantiene el formato uniforme y permite un índice automático?",
+              "opciones": [
+                "Las mayúsculas",
+                "Los estilos (Título 1, Normal…)",
+                "Cambiar la fuente en cada renglón"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Los márgenes estándar de un documento formal son de…",
+              "opciones": [
+                "1 cm",
+                "2.54 cm",
+                "5 cm"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Dónde es mejor poner una lista de precios con columnas?",
+              "opciones": [
+                "En una tabla",
+                "Separando con muchos espacios",
+                "Con guiones"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "«Título 1» escrito en negrita a mano…",
+              "opciones": [
+                "Activar el índice igual",
+                "No aparece en el índice automático",
+                "Es lo mismo que el estilo"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Microsoft Excel",
+      "lecciones": [
+        {
+          "titulo": "Excel: interfaz, celdas y primeras fórmulas",
+          "tipo": "video",
+          "duracion": "12 min",
+          "video": "https://www.youtube.com/watch?v=yKWFMgurUnU",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender celdas, filas y columnas</li><li>Usar =SUMA, =PROMEDIO, =MAX y =MIN</li><li>Referenciar celdas con A1, $A$1 y arrastre</li></ul></aside><p>Excel calcula por ti. Todo empieza con el signo <code>=</code>. Aprenderás a escribir fórmulas y a «arrastrarlas» por la esquina de la celda para copiarlas.</p><ul><li><code>=SUMA(B2:B20)</code> suma un rango; <code>=PROMEDIO(C2:C8)</code>.</li><li><strong>Anulación</strong>: <code>B2</code> cambia al arrastrar; <code>$B$2</code> se queda fija (dólar = ancla).</li><li>El pequeño error <code>#¡DIV/0!</code> y <code>#¡REF!</code>: qué significan.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Aprende <kbd>F4</kbd>: al editar una referencia, alterna B2 → $B$2 → B$2 → $B2.</p></aside><p class=\"aula-credit\"><small>Video: Dostin Hurtado (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Fórmulas útiles: SI, BUSCARV y formato condicional",
+          "tipo": "video",
+          "duracion": "16 min",
+          "video": "https://www.youtube.com/watch?v=47nJsZ97sz0",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Usar =SI para tomar decisiones</li><li>Buscar datos con =BUSCARV o =X.BUSCAR</li><li>Marcar visualmente con formato condicional</li></ul></aside><p>Estas tres herramientas convierten a Excel en un mini sistema de gestión.</p><ul><li><code>=SI(B2>=61,\"Aprobado\",\"Reprobado\")</code> — condicional sencilla.</li><li><code>=BUSCARV(A2;Lista!$A$2:$D$50;4;FALSO)</code> — busca un código y trae su precio.</li><li><strong>Formato condicional</strong>: marcar en rojo las ventas por debajo de la meta.</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>El control de notas que haces en el colegio usa exactamente estas fórmulas: con BUSCARV traes la nota del alumno y con SI decides si gana.</p></aside><p class=\"aula-credit\"><small>Video: Dostin Hurtado (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Gráficas, filtros y tablas dinámicas (nivel base)",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Crear una gráfica de barras y circular</li><li>Filtrar y ordenar una lista</li><li>Resumir muchas filas con una tabla dinámica sencilla</li></ul></aside><p>Los números se entienden mejor con imágenes: aprenderás cuándo usar barras (comparar), líneas (evolución en el tiempo) y circular (partes de un todo, con pocas categorías).</p><ul><li><strong>Filtros</strong>: Datos → Filtro y luego la flecha del encabezado.</li><li><strong>Tabla dinámica</strong>: Insertar → Tabla dinámica, arrastra campos a Filas y Valores.</li></ul><aside class=\"nota alerta\"><h4>⚠️ Regla de diseño</h4><p>Nunca uses una gráfica circular con más de 6 rebanadas: se vuelve ilegible.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: control de gastos personales",
+          "tipo": "tarea",
+          "duracion": "45 min",
+          "video": "",
+          "contenido": "<p>Crea un libro de Excel «Mis gastos» con 3 columnas (Fecha, Gasto, Monto) y 12 filas de ejemplo. Usa <code>=SUMA</code> para el total, <code>=PROMEDIO</code> para el gasto diario promedio y formato condicional que marque en rojo los gastos arriba de Q100. Guarda y comparte por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: Excel",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Toda fórmula en Excel empieza con…",
+              "opciones": [
+                "+",
+                "=",
+                "@"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué hace $B$2 al arrastrar la fórmula?",
+              "opciones": [
+                "La convierte en texto",
+                "Mantiene fija la referencia a B2",
+                "Multiplica por 2"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "=BUSCARV sirve para…",
+              "opciones": [
+                "Sumar una columna",
+                "Buscar un dato en otra tabla y traer su valor asociado",
+                "Crear una gráfica"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para comparar ventas por mes es mejor…",
+              "opciones": [
+                "Gráfica circular",
+                "Gráfica de barras o columnas",
+                "Una hoja con muchos colores"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué marca automáticamente en rojo los valores bajos?",
+              "opciones": [
+                "Formato condicional",
+                "La fórmula SI",
+                "Los filtros"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Microsoft PowerPoint",
+      "lecciones": [
+        {
+          "titulo": "PowerPoint: presentaciones que sí se entienden",
+          "tipo": "video",
+          "duracion": "12 min",
+          "video": "https://www.youtube.com/watch?v=UzAHubCqyHo",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Diseñar diapositivas con poco texto</li><li>Usar imágenes y consistente paleta de colores</li><li>Ensayar con el presentador</li></ul></aside><p>Una buena presentación acompaña tu voz, no la reemplaza. Máximo una idea por diapositiva y mucho texto grande.</p><ul><li>Regla 6×6: no más de 6 líneas con 6 palabras por diapositiva (en la práctica, incluso menos).</li><li>Diseño → Temas te dan combinaciones profesionales ya hechas.</li><li><kbd>F5</kbd> para presentar desde el inicio.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Las transiciones «Zoom» o «Giro» que duran 2 segundos se sienten naturales; las de tren y persianas distraen.</p></aside><p class=\"aula-credit\"><small>Video: VideoMarketingViral (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Imágenes, videos y notas del orador",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Insertar y recortar imágenes sin deformarlas</li><li>Usar las notas del orador para no leer la pantalla</li><li>Insertar un video corto con volumen controlado</li></ul></aside><aside class=\"nota clave\"><h4>📌 Puntos clave para recordar</h4><ul><li>Nunca estires una foto: recorta (Imagen → Recortar).</li><li>Usa las notas del orador para los datos que se te olvidan.</li><li>Inserta el video solo si aporta; preferible un clip de 30 segundos o menos.</li></ul></aside><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Crea 5 diapositivas sobre un tema que domines</li><li>Usa el tema «Ion» o «Facet», máximo 5 palabras por diapositiva</li><li>Añade 2 notas del orador y preséntalo con F5</li></ol></aside>"
+        },
+        {
+          "titulo": "Tarea: presenta tu negocio o pasión",
+          "tipo": "tarea",
+          "duracion": "45 min",
+          "video": "",
+          "contenido": "<p>Crea una presentación de 6 diapositivas: título, problema, solución, 2 diapositivas de contenido con imágenes y cierre con llamada a la acción. Máximo 10 palabras por diapositiva. Exporta a PDF y compártela por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: PowerPoint",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Cuál es la regla 6×6?",
+              "opciones": [
+                "6 diapositivas por tema",
+                "No más de 6 líneas con 6 palabras",
+                "6 temas de diseño"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Para qué sirven las notas del orador?",
+              "opciones": [
+                "Para que el público lea",
+                "Para que tú recuerdes datos sin llenar la diapositiva",
+                "Para imprimir"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué es mejor al usar fotos?",
+              "opciones": [
+                "Estirarlas hasta llenar",
+                "Recortarlas sin deformarlas",
+                "Dejarlas minúsculas"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El tema de diseño sirve para…",
+              "opciones": [
+                "Cambiar fuente y ver una combinación coherente y bonita",
+                "Escribir más rápido",
+                "Quitar el color"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Archivos, PDF e impresión",
+      "lecciones": [
+        {
+          "titulo": "PDF, impresión y compartir archivos con criterio",
+          "tipo": "lectura",
+          "duracion": "15 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Crear PDFs bien nombrados y livianos</li><li>Imprimir con las opciones correctas (caras, grises, escalado)</li><li>Compartir enlaces de nube en vez de adjuntos pesados</li></ul></aside><ul><li><strong>Nombres de archivo</strong>: 2026-10-Informe-AnaLopez.pdf es encontrable; «doc111.pdf» no.</li><li><strong>Impresión</strong>: vista previa siempre, modo «Calidad normal», grises para borradores, doble cara para informes.</li><li><strong>Compartir</strong>: un enlace de Google Drive o OneDrive con permiso «Puede ver» en vez de adjuntar 20 MB.</li></ul><aside class=\"nota alerta\"><h4>🇬🇹 Consejo local</h4><p>En Guatemala muchas impresoras de cibercafé solo aceptan PDF en USB: lleva tu PDF y no el DOCX.</p></aside>"
+        },
+        {
+          "titulo": "Examen final de Ofimática",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los cuatro módulos del curso de ofimática. Al aprobarlo con 70 % o más podrás solicitar tu certificado.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Cuántas palabras por diapositiva recomendamos como máximo?",
+              "opciones": [
+                "50",
+                "10-15",
+                "200"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En Excel, el ancla que fija una celda al copiar fórmulas es…",
+              "opciones": [
+                "La letra mayúscula",
+                "El signo de dólar ($)",
+                "La letra H"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Qué formato se usa para enviar un presupuesto sin que cambie la vista?",
+              "opciones": [
+                "DOCX",
+                "XLSX",
+                "PDF"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para buscar el precio de un producto por su código se usa…",
+              "opciones": [
+                "=SUMA",
+                "=BUSCARV",
+                "=MAX"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un índice automático en Word solo funciona si usaste…",
+              "opciones": [
+                "Negrita",
+                "Estilos de título",
+                "Alineación justificada"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La mejor manera de compartir muchas fotos es…",
+              "opciones": [
+                "Adjuntarlas todas",
+                "Comprimirlas en un ZIP y subir en un solo archivo o enlace de nube",
+                "Enviarlas una por una"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Los márgenes estándar son de…",
+              "opciones": [
+                "2.54 cm",
+                "0 cm",
+                "4 cm"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál gráfica compara categorías?",
+              "opciones": [
+                "Circular",
+                "Barras/columnas",
+                "Dispersión"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En PowerPoint, ¿con qué tecla empiezas a presentar?",
+              "opciones": [
+                "F1",
+                "F5",
+                "F12"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "«Doble cara» en la impresora significa…",
+              "opciones": [
+                "Imprimir dos hojas",
+                "Imprimir por ambos lados del papel",
+                "Imprimir a color"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}

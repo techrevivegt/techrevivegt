@@ -1,0 +1,234 @@
+{
+  "titulo": "Empleabilidad: consigue tu empleo",
+  "publicado": true,
+  "orden": 6,
+  "descripcion": "Todo para conseguir empleo en un contexto digital: CV de una página que vende logros con números, LinkedIn que aparezca en búsquedas, búsqueda estratégica con seguimiento en plataformas de Guatemala, entrevistas con el método STAR y una primera impresión memorable desde el primer día.",
+  "imagen": "/img/p-capacitacion.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "3 semanas",
+  "horas": "10",
+  "nivel": "Todos los niveles",
+  "certificado": true,
+  "requisitos": "Ninguno.",
+  "objetivos": [
+    "Elaborar un CV claro con logros medibles",
+    "Usar LinkedIn y plataformas de empleo estratégicamente",
+    "Responder entrevistas con el método STAR",
+    "Causar una primera impresión profesional"
+  ],
+  "modulos": [
+    {
+      "titulo": "Tu CV y la búsqueda",
+      "lecciones": [
+        {
+          "titulo": "Tu CV moderno en una página",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Escribir un CV claro de una página</li><li>Medir logros con números</li><li>Saber qué NO poner</li></ul></aside><p>El CV no es tu biografía: es tu carta de venta. Un reclutador le dedica 10 segundos antes de decidir si sigue leyendo.</p><ul><li><strong>Encabezado:</strong> nombre, teléfono, correo profesional (nada de apodos tipo darkGamer123) y tu ciudad.</li><li><strong>Perfil en 2 líneas:</strong> quién sos y qué valor aportás.</li><li><strong>Experiencia con logros medibles:</strong> «Atendí en promedio 40 clientes al día» vende mucho más que «Atención al cliente». Poné números: ventas, clientes, porcentajes, ahorro de tiempo.</li><li><strong>Educación y cursos:</strong> del más reciente al más antiguo, con certificados.</li></ul><aside class=\"nota alerta\"><h4>⚠️</h4><p>Quita del CV: estado civil, número de hijos, dirección exacta de tu casa, religión y fotos de mala calidad. En la mayoría de empresas modernas ya no se piden.</p></aside>"
+        },
+        {
+          "titulo": "LinkedIn y tu marca personal",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Crear un LinkedIn que aparezca en búsquedas</li><li>Cuidar lo que Google dice de ti</li><li>Usar la red de contactos que ya tienes</li></ul></aside><ul><li>Foto sencilla, de frente, con luz decente y fondo simple. Título descriptivo: nada de solo «Estudiante» sino «Estudiante de sistemas · técnico en reparación de computadoras».</li><li>Pedí a 2 o 3 personas (jefes, instructores, compañeros) una recomendación breve de un trabajo real contigo.</li><li>Buscá tu nombre en Google (modo incógnito): si aparecen publicaciones viejas y desafortunadas, eliminá lo que puedas.</li><li>Tu correo, tu CV y tu LinkedIn deben mostrar el mismo nombre, sin apodos.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Mucho empleo en Guatemala se consigue por recomendación: avisale a tus contactos que estás buscando y en qué área.</p></aside>"
+        },
+        {
+          "titulo": "Buscar trabajo con método, no con suerte",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Filtrar ofertas en plataformas reales</li><li>Personalizar tu postulación sin reescribir todo</li><li>Llevar el control con una tabla de postulaciones</li></ul></aside><ul><li>Dónde buscar en Guatemala: Computrabajo, LinkedIn Empleos, Tecoloco y las convocatorias de municipalidades y ministerios (MINTRAB publica ferias de empleo).</li><li>Mejor pocas y bien: 7 a 10 aplicaciones a la semana <strong>personalizadas</strong> (adaptando tu CV a las palabras clave de la oferta) rinden más que 40 genéricas copiadas.</li><li>Llevá una tabla (Excel o en papel): empresa, puesto, fecha en que aplicaste, estado y próximo paso. Así no se te pierde un seguimiento ni aplicás dos veces al mismo puesto.</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>María aplica a 3 trabajos bien personalizados por semana y da seguimiento a cada uno. José manda el mismo CV a 40 empresas. Al final del mes, María tuvo 3 entrevistas; José, ninguna respuesta. La calidad le gana a la cantidad.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: tu kit de postulación",
+          "tipo": "tarea",
+          "duracion": "45 min",
+          "video": "",
+          "contenido": "<p>1) Creá o actualizá tu CV de una página en Word y exportalo a PDF. 2) Escribí tu párrafo de presentación (perfil) poniendo lo mejor de ti con un número. 3) Armá una tabla de seguimiento en Excel y anotá 2 ofertas reales que te interesen. Enviá el PDF y una captura de la tabla a tu instructor por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: CV y búsqueda",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Un CV ideal para empezar tiene…",
+              "opciones": [
+                "3 páginas con todo el detalle",
+                "1 página clara con logros medibles",
+                "Foto familiar en la primera plana"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Tu correo de trabajo debe verse…",
+              "opciones": [
+                "Divertido y con apodos",
+                "Profesional y reconocible",
+                "Con muchos números"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La mejor estrategia al aplicar es…",
+              "opciones": [
+                "Muchas postulaciones idénticas",
+                "Pocas, personalizadas y con seguimiento",
+                "Esperar a que te busquen"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La tabla de postulaciones sirve para…",
+              "opciones": [
+                "Ocupar el tiempo",
+                "No olvidar seguimientos ni repetir aplicaciones",
+                "Imprimirla en colores"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "La entrevista y el primer día",
+      "lecciones": [
+        {
+          "titulo": "La entrevista: respuestas STAR y errores fatales",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Responder con el método STAR</li><li>Evitar los errores más comunes</li><li>Preparar preguntas para el final</li></ul></aside><p>Cuando te dicen «contame de un reto que superaste», no divagués: usá <strong>STAR</strong>.</p><ul><li><strong>S</strong>ituación: el contexto en una frase.</li><li><strong>T</strong>area: qué te tocaba resolver.</li><li><strong>A</strong>cción: qué hiciste vos (no «el equipo»: vos).</li><li><strong>R</strong>esultado: el número o aprendizaje obtenido.</li></ul><aside class=\"nota clave\"><h4>📌 Puntos clave para recordar</h4><ul><li>Llegá 10 minutos antes y con la ropa lista desde la noche anterior.</li><li>Nunca hables mal de tu jefe anterior: hablá de lo que aprendiste.</li><li>Prepará 2 preguntas buenas para el final («¿cómo se mide el éxito en este puesto?»).</li></ul></aside>"
+        },
+        {
+          "titulo": "El sueldo, la negociación y el primer día",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Manejar la pregunta incómoda del salario</li><li>Hacer una primera impresión memorable</li><li>Preparar tu presentación de 30 segundos</li></ul></aside><ul><li>El sueldo no se toca al inicio: se habla cuando el empleador lo menciona o ya hay oferta. Investigá antes el rango normal del puesto para no quedarte corto ni irrealista.</li><li>Si te preguntan tu mayor debilidad: mencioná una real en la que ya estás trabajando (y contá cómo la estás mejorando). Nunca «no tengo debilidades» ni caigas en hablar de todas.</li><li>Tu primer día: llegá 10 minutos antes, aprendete los nombres rápido, escuchá más de lo que hablás, y aceptá la invitación al café de la oficina (ahí se aprende la cultura real).</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Después de la entrevista, en las próximas 24 horas mandá un correo corto de agradecimiento. Casi nadie lo hace y te hace destacar.</p></aside>"
+        },
+        {
+          "titulo": "Examen final de Empleabilidad",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los dos módulos del curso. Al aprobarlo podrás solicitar tu certificado.</p>",
+          "preguntas": [
+            {
+              "pregunta": "La pregunta «contame de vos» se responde en…",
+              "opciones": [
+                "10 minutos",
+                "Un minuto a minuto y medio, enfocado en el trabajo",
+                "Tu vida completa"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "STAR es…",
+              "opciones": [
+                "Una técnica para responder en entrevistas",
+                "Un software para hacer CV",
+                "Una empresa reclutadora"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En LinkedIn, el título de tu perfil debe…",
+              "opciones": [
+                "Mostrar solo «Estudiante»",
+                "Describir quién sos y qué sabés hacer",
+                "Tener muchos emojis"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El sueldo se conversa mejor…",
+              "opciones": [
+                "En tu primer correo",
+                "Cuando el empleador lo mencione o ya haya oferta",
+                "En la puerta de entrada"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál NO va en un CV moderno?",
+              "opciones": [
+                "Segundo idioma",
+                "Número de hijos",
+                "Logros con números"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Computrabajo en Guatemala es…",
+              "opciones": [
+                "Un software de nómina",
+                "Una plataforma para buscar empleo",
+                "La versión local de LinkedIn"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Si te preguntan tu mayor debilidad…",
+              "opciones": [
+                "Decís todas",
+                "Mencionás una real que ya estás mejorando",
+                "Decís que no tenés ninguna"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En tu primer día conviene…",
+              "opciones": [
+                "Llegar justo a tiempo y hablar mucho",
+                "Llegar 10 minutos antes, escuchar y aprender nombres",
+                "Llevar tu música"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Después de la entrevista conviene…",
+              "opciones": [
+                "Desaparecer hasta que llamen",
+                "Enviar un correo corto de agradecimiento en 24 horas",
+                "Llamar todos los días"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Una postulación personalizada significa…",
+              "opciones": [
+                "Cambiar solo el nombre de la empresa en la carta",
+                "Adaptar tu CV a las palabras clave de cada oferta",
+                "Doblar el sueldo que pedís"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}
