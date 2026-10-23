@@ -346,7 +346,7 @@
     var key = lesson.getAttribute("data-lesson");
     write("ultima", { url: location.pathname, titulo: lesson.getAttribute("data-titulo"), curso: lesson.getAttribute("data-curso-titulo") });
     var btn = $("[data-done]");
-    var isQuiz = lesson.getAttribute("data-tipo") === "cuestionario";
+    var isQuiz = ["cuestionario", "simulador"].indexOf(lesson.getAttribute("data-tipo")) > -1;
     function setDone(v, nota) {
       var d = done();
       if (v) d[key] = d[key] || Date.now(); else delete d[key];
@@ -390,6 +390,12 @@
     var quiz = $(".quiz");
     if (quiz) initQuiz(quiz, key, setDone);
     initChecklists(key); initTyping();
+    // simulador (js/simulador.js avisa cuando el alumno lo aprueba)
+    document.addEventListener("aula:sim-done", function (ev) {
+      var notas = read("notas", {}), n = ev.detail && ev.detail.nota;
+      if (n != null) { notas[key] = Math.max(notas[key] || 0, n); write("notas", notas); }
+      setDone(true, n);
+    });
     // tarea por WhatsApp
     $$("[data-task-wa]").forEach(function (a) {
       a.addEventListener("click", function (ev) {

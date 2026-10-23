@@ -304,3 +304,25 @@ Textos fijos de: la página **Redes sociales** (los enlaces sí se editan), el *
 | ⌨️ Práctica de mecanografía | El alumno copia el texto y ve palabras por minuto y precisión |
 
 El editor ahora conserva tablas, `kbd`, `code` y estos bloques al guardar.
+
+## Simuladores interactivos (armado de PC y laptop)
+
+Hay un nuevo tipo de lección: **🧩 Simulador interactivo**. En Panel → Aula → (curso) → lección, elige *Tipo: Simulador* y en *Simulador* elige:
+
+- **🖥️ Armado de PC de escritorio:** el alumno instala separadores, placa, procesador, disipador, memorias, SSD, tarjeta de video y fuente, conecta los cables (24 pines, EPS, PCIe y panel frontal) y enciende. Hay piezas incompatibles (socket LGA1700, DDR4, fuente genérica) y, si enciende con algo faltante, ve el síntoma real (sin imagen, pitidos, luz CPU/DRAM/VGA…).
+- **💻 Mantenimiento de laptop:** pulsera antiestática, quitar tornillos con el destornillador correcto, abrir con púa, desconectar la batería, cambiar RAM SODIMM, instalar SSD NVMe, limpiar el ventilador, reconectar y colocar cada tornillo (largos en las bisagras).
+
+El alumno empieza con 100 puntos; cada error resta y se explica por qué. La lección se completa sola al terminar con la nota mínima del aula (70 % por defecto). Funciona con mouse (arrastrar o clic) y en celular (tocar la pieza y luego el lugar).
+
+## Taller 3D (armado libre de PC y laptops)
+
+En el aula, el tipo **🧩 Simulador interactivo** ahora tiene tres opciones. La nueva es **«Taller 3D»**: un modo libre, inspirado en PC Building Simulator, para que el alumno arme computadoras de escritorio y laptops de distintas generaciones y tamaños, girándolas en 3D.
+
+- **Catálogo** (más de 100 piezas con datos reales): gabinetes Full Tower, ATX, Micro-ATX, Mini-ITX y uno beige de 2008; placas LGA775 · LGA1155 · AM3+ · LGA1151 v1/v2 · LGA1200 · LGA1700 · LGA1851 · AM4 · AM5 (con micro-ATX, ATX, E-ATX y Mini-ITX); procesadores desde Core 2 Duo hasta Ryzen 9000 y Core Ultra; memorias DDR2/DDR3/DDR4/DDR5 y SODIMM; tarjetas desde la GT 710 hasta la RTX 4090 (con sus medidas y consumos reales); discos HDD/SSD SATA/M.2 NVMe Gen 3–5; fuentes ATX y SFX; 4 laptops (2012, 2019, ultrabook con RAM soldada y gamer).
+- **Valida compatibilidad de verdad**: socket vs. chipset (LGA1151 v1 vs. v2), tipo de memoria, largo de tarjeta vs. gabinete, altura del disipador, radiadores, consumo vs. fuente real, conectores PCIe 8 pines / 16 pines, bahías, ranuras M.2 y generación PCIe, RAM soldada en laptops…
+- Al elegir una pieza, el modelo marca dónde va en **verde / amarillo / rojo** y el panel explica por qué. El alumno puede apagar la ayuda para probarse a sí mismo.
+- **Pasos reales**: pasta térmica, CPU_FAN, 24 pines, EPS 8 pines, PCIe, SATA y panel frontal, y actualizar el BIOS cuando hace falta.
+- **Encender**: si falta algo, muestra los síntomas reales (nada enciende, LED CPU/VGA/DRAM, sin señal, se apaga por fuente o por calor, sin disco). Si arranca, muestra una pantalla de BIOS, el rendimiento estimado (oficina, juegos, edición), el consumo y la fuente recomendada, el precio de referencia y si admite Windows 11.
+- Incluye **ejemplos listos** (oficina, gamer, Mini-ITX, entusiasta 4K, retro 2008, laptop para mejorar) y un **reto con fallas ocultas**. El armado se guarda en el navegador del alumno y la lección se completa sola cuando arma un equipo que enciende y arranca sin errores graves.
+- El 3D usa **Three.js r170** (archivos propios en `src/js/vendor/`, sin internet); si el equipo del alumno no tiene WebGL, el catálogo y las reglas siguen funcionando igual.
+- Los datos de las piezas se editan en `src/js/taller3d-catalogo.js` (un comentario al inicio explica los campos).

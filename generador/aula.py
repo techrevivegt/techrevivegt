@@ -29,7 +29,9 @@ TIPOS = {
     "lectura": ("book", "Lectura"),
     "cuestionario": ("clipboard", "Cuestionario"),
     "tarea": ("file", "Tarea"),
+    "simulador": ("cpu", "Simulador"),
 }
+SIMULADORES = {"pc": "Armado de PC de escritorio", "laptop": "Mantenimiento de laptop", "taller3d": "Taller 3D: arma PC y laptops"}
 
 
 def habilitada():
@@ -420,6 +422,18 @@ def build_leccion(c, l):
     extra = ""
     if l["_tipo"] == "cuestionario":
         extra = quiz_html(l)
+    elif l["_tipo"] == "simulador":
+        sim = l.get("simulador") if l.get("simulador") in SIMULADORES else "pc"
+        minimo = int(precio_num(g(A, "nota_minima") or 70)) or 70
+        if sim == "taller3d":
+            extra = ('<section class="t3d" data-t3d aria-label="Taller 3D: armado libre de PC y laptops">'
+                     '<p class="sim__loading">Cargando el taller 3D…</p><noscript>Activa JavaScript para usar el taller 3D.</noscript></section>'
+                     '<script src="/js/taller3d-catalogo.js" defer></script>'
+                     '<script type="module" src="/js/taller3d.js"></script>')
+        else:
+            extra = (f'<section class="sim" data-sim="{sim}" data-min="{minimo}" aria-label="Simulador: {e(SIMULADORES[sim])}">'
+                     f'<p class="sim__loading">Cargando el simulador…</p><noscript>Activa JavaScript para usar el simulador.</noscript></section>'
+                     f'<script src="/js/simulador.js" defer></script>')
     elif l["_tipo"] == "tarea":
         fl = l.get("fecha_limite")
         fecha = f'<p class="aula-task__date">{icon("calendar")} Fecha límite: <strong>{e(fecha_larga(fl))}</strong></p>' if fl else ""
@@ -456,7 +470,15 @@ def build_leccion(c, l):
     nxt = (f'<a href="{next_l["_url"]}" class="aula-pager__btn aula-pager__btn--next"><small>Siguiente</small><span>{e(next_l["titulo"])}</span></a>'
            if next_l else f'<a href="/aula/{c["_id"]}/" class="aula-pager__btn aula-pager__btn--next"><small>Terminaste</small><span>Volver al curso</span></a>')
     keys = [x["_key"] for x in c["_lessons"]]
-    if l["_tipo"] == "cuestionario":
+    if l["_tipo"] == "simulador" and l.get("simulador") == "taller3d":
+        done_html = (f'<div class="aula-done aula-done--quiz"><p data-quiz-state>{icon("cpu")} Esta lección se completa automáticamente cuando armas un equipo '
+                     f'que enciende, arranca desde un disco y no tiene errores graves.</p>'
+                     f'<button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false" hidden>{icon("check")} <span>Marcar como completada</span></button></div>')
+    elif l["_tipo"] == "simulador":
+        done_html = (f'<div class="aula-done aula-done--quiz"><p data-quiz-state>{icon("cpu")} Esta lección se completa automáticamente cuando terminas el simulador con '
+                     f'{int(precio_num(g(A, "nota_minima") or 70)) or 70}% o más.</p>'
+                     f'<button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false" hidden>{icon("check")} <span>Marcar como completada</span></button></div>')
+    elif l["_tipo"] == "cuestionario":
         done_html = (f'<div class="aula-done aula-done--quiz"><p data-quiz-state>{icon("clipboard")} Esta lección se completa automáticamente cuando apruebas el '
                      f'{"examen" if l.get("examen_final") else "cuestionario"} con {int(precio_num(g(A, "nota_minima") or 70)) or 70}% o más.</p>'
                      f'<button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false" hidden>{icon("check")} <span>Marcar como completada</span></button></div>')

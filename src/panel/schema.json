@@ -2127,8 +2127,32 @@
                         {
                           "value": "tarea",
                           "label": "📤 Tarea"
+                        },
+                        {
+                          "value": "simulador",
+                          "label": "🧩 Simulador interactivo"
                         }
                       ]
+                    },
+                    {
+                      "name": "simulador",
+                      "label": "Simulador",
+                      "type": "select",
+                      "options": [
+                        {
+                          "value": "pc",
+                          "label": "🖥️ Armado de PC de escritorio"
+                        },
+                        {
+                          "value": "laptop",
+                          "label": "💻 Mantenimiento de laptop"
+                        },
+                        {
+                          "value": "taller3d",
+                          "label": "🧰 Taller 3D: armado libre de PC y laptops (todas las generaciones)"
+                        }
+                      ],
+                      "description": "Solo para lecciones de tipo Simulador. PC y laptop se completan con la nota mínima; el Taller 3D se completa al armar un equipo que enciende y arranca sin errores graves."
                     },
                     {
                       "name": "examen_final",
