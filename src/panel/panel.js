@@ -1235,7 +1235,14 @@
               h("td", {}, ...a.cursos.map((c) => {
                 const pct = c.total ? Math.round(c.hechas * 100 / c.total) : 0;
                 return h("div", { class: "prog" }, h("span", { class: "prog__t" }, c.titulo), h("span", { class: "prog__bar" }, h("i", { style: `width:${pct}%` })), h("span", { class: "prog__n" }, `${c.hechas}/${c.total}`),
-                  c.certificado ? h("span", { class: `badge ${(certEstado[c.certificado] || [])[1] || ""}` }, (certEstado[c.certificado] || [c.certificado])[0]) : null);
+                  h("span", { class: "prog__x" }, c.certificado ? h("span", { class: `badge ${(certEstado[c.certificado] || [])[1] || ""}` }, (certEstado[c.certificado] || [c.certificado])[0]) : null,
+                  c.elegido ? h("span", { class: "badge badge--info", title: "El alumno se inscribió solo desde el aula" }, "🎓 Lo eligió el alumno") : null,
+                  c.elegido ? h("button", { type: "button", class: "btn btn--sm btn--danger", title: "Quitar este curso al alumno (su avance no se borra)", onclick: async (ev) => {
+                    if (!confirm(`¿Quitar «${c.titulo}» a ${a.nombre}? Su avance se conserva por si lo vuelve a tomar.`)) return;
+                    ev.target.disabled = true;
+                    try { await api("DELETE", `alumnos/inscripcion?usuario=${encodeURIComponent(a.usuario)}&curso=${encodeURIComponent(c.id)}`); toast("Curso quitado.", "ok"); renderCerts(sec); }
+                    catch (e) { ev.target.disabled = false; if (e.message !== "sesión") toast(e.message, "error"); }
+                  } }, "Quitar") : null));
               }))))))));
       } catch (e) { if (e.message !== "sesión") body.replaceChildren(dbError(e)); }
     }

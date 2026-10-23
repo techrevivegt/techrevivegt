@@ -280,7 +280,10 @@
         '<p class="aula-course__desc">' + esc(c.descripcion) + "</p>" +
         '<div class="aula-progress"><div class="aula-progress__bar"><span style="width:' + pct + '%"></span></div><p><strong>' + pct + "%</strong> · " + n + " de " + c.total + "</p></div>" +
         '<a href="' + esc(next ? c.urls[next] : c.url) + '" class="btn btn--primary btn--sm">' + label + "</a></div></article>";
-    }).join("") : '<div class="aula-empty"><p>Todavía no tienes cursos asignados.</p><p>Si ya te inscribiste, escríbenos y lo activamos.</p></div>';
+    }).join("") : (libresDe(cat).length
+      ? '<div class="aula-empty"><p>Todavía no tienes cursos.</p><p>Elige uno abajo en <strong>Cursos disponibles</strong> y empieza hoy mismo. 👇</p></div>'
+      : '<div class="aula-empty"><p>Todavía no tienes cursos asignados.</p><p>Si ya te inscribiste, escríbenos y lo activamos.</p></div>');
+    renderAvailable(cat);
     var s = function (k, v) { var el = $('[data-stat="' + k + '"]'); if (el) el.textContent = v; };
     s("cursos", mine.length); s("hechas", hechas);
     if (USER && USER.vence) { s("vence", fecha(USER.vence)); $("[data-stat-vence]").hidden = false; }
@@ -291,6 +294,49 @@
       r.hidden = false;
     }
     if (new URLSearchParams(location.search).get("sin-acceso")) $("[data-noaccess]").hidden = false;
+  }
+
+  /* ---------- Cursos disponibles (inscripción libre) ---------- */
+  function libresDe(cat) {
+    var ids = (USER && USER.libres) || [];
+    return cat.filter(function (c) { return ids.indexOf(c.id) > -1; });
+  }
+  function renderAvailable(cat) {
+    var sec = $("[data-available]");
+    if (!sec) return;
+    var list = libresDe(cat);
+    sec.hidden = !list.length;
+    if (!list.length) return;
+    $("[data-available-list]", sec).innerHTML = list.map(function (c) {
+      var meta = [c.nivel, c.duracion, c.total + " lecciones"].filter(Boolean).map(esc).join(" · ");
+      return '<article class="aula-course aula-course--new">' +
+        '<div class="aula-course__media"><img src="' + esc(c.imagen) + '" alt="" loading="lazy" />' +
+        (c.certificado ? '<span class="aula-course__badge">🏅 Con certificado</span>' : "") + "</div>" +
+        '<div class="aula-course__body"><p class="aula-course__meta">' + meta + "</p>" +
+        "<h3>" + esc(c.titulo) + "</h3>" +
+        '<p class="aula-course__desc">' + esc(c.descripcion) + "</p>" +
+        (c.docente ? '<p class="aula-course__meta">Docente: ' + esc(c.docente) + "</p>" : "") +
+        '<button type="button" class="btn btn--primary btn--sm" data-enroll="' + esc(c.id) + '" data-title="' + esc(c.titulo) + '">Inscribirme</button></div></article>';
+    }).join("");
+    $$("[data-enroll]", sec).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-enroll"), title = b.getAttribute("data-title");
+        if (!confirm("¿Quieres inscribirte en «" + title + "»?\n\nEl curso aparecerá en «Mis cursos» y podrás empezar de inmediato.")) return;
+        b.disabled = true; b.textContent = "Inscribiendo…";
+        api("POST", "inscribir", { curso: id }).then(function () {
+          sessionStorage.removeItem("tr-aula-yo");
+          return getUser();
+        }).then(function (u) {
+          if (u) fillUser(u);
+          renderDashboard();
+          var first = (cat.filter(function (c) { return c.id === id; })[0] || {});
+          if (first.url) location.href = first.url;
+        }).catch(function (e) {
+          alert(e.message || "No se pudo completar la inscripción. Intenta de nuevo.");
+          b.disabled = false; b.textContent = "Inscribirme";
+        });
+      });
+    });
   }
 
   /* ---------- Lección ---------- */

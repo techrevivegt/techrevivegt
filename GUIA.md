@@ -154,6 +154,15 @@ Sin este paso el sitio, el panel y el aula funcionan igual; solo quedan apagadas
 - Cuentas de ejemplo incluidas: `demo` (todos los cursos) y `alumno.prueba` (solo Computación básica). Sus contraseñas están en el documento de accesos. **Desactívalas o bórralas** cuando ya no las necesites.
 - Si en algún momento prefieres Google Classroom o Moodle, pega su enlace en **Configuración general → Enlace de un aula externa**. El botón del sitio llevará ahí en lugar del aula propia.
 
+### Inscripción libre: el alumno elige sus cursos (requiere el Paso 6)
+
+- En **Mis cursos** del aula aparece la sección **Cursos disponibles** con los cursos que el alumno todavía no tiene. Con **Inscribirme** el curso pasa a «Mis cursos» y puede empezar de inmediato.
+- Los cursos que tú asignas en **👥 Alumnos y accesos** siguen funcionando igual; la inscripción libre se suma a esos.
+- **Para apagarla en todo el aula:** **⚙️ Ajustes del aula y certificado → «🎓 Los alumnos pueden elegir sus cursos»**.
+- **Para cerrar solo un curso** (por ejemplo, uno pagado): **📘 Cursos del aula →** el curso **→** desactiva **Inscripción libre**. Ese curso solo lo tendrá quien tú se lo asignes.
+- En **🏅 Certificados → 📊 Progreso de alumnos** los cursos elegidos por el alumno salen con la etiqueta **«🎓 Lo eligió el alumno»** y un botón **Quitar** (su avance no se borra).
+- El alumno sigue necesitando usuario y contraseña (los creas tú) y su acceso vence en la fecha que pongas.
+
 ### Certificados (requiere el Paso 6)
 
 1. El alumno termina **todas** las lecciones y aprueba el examen final. En la página del curso aparece **Solicitar certificado**: escribe su nombre completo, lo confirma y envía.

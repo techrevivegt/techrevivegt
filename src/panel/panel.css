@@ -334,12 +334,15 @@ a { color: var(--blue); }
 .prog__bar { height: 7px; background: #EEF2F7; border-radius: 99px; overflow: hidden; }
 .prog__bar i { display: block; height: 100%; background: var(--green); }
 .prog__n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.prog__x { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.prog__x .btn { padding: 2px 9px; font-size: .78rem; }
 .card__head--static { cursor: default; }
 @media (max-width: 720px) {
   .cert-req { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   .prog { grid-template-columns: 1fr 80px 40px; }
   .prog .badge { grid-column: 1 / -1; justify-self: start; }
+  .prog .prog__x { grid-column: 1 / -1; }
   .input--sm { min-width: 0; width: 100%; }
   .map { height: 300px; }
 }

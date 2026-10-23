@@ -123,7 +123,7 @@ async function handleApi(request, env, url) {
   if (!session) return json({ error: "Tu sesión terminó. Vuelve a entrar con tu contraseña.", login: true }, 401);
 
   // Estadísticas, certificados y progreso de alumnos (base de datos, no necesitan GitHub).
-  if (route === "estadisticas" || route === "estadisticas/csv" || route === "certificados" || route === "alumnos/progreso" || route === "solicitudes" || route === "reparaciones" || route === "resumen") {
+  if (route === "estadisticas" || route === "estadisticas/csv" || route === "certificados" || route === "alumnos/progreso" || route === "alumnos/inscripcion" || route === "solicitudes" || route === "reparaciones" || route === "resumen") {
     return handlePanelDb(request, env, url, route, method);
   }
   if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) {
@@ -280,7 +280,27 @@ async function aulaSession(request, env) {
   try { usuario = b64ToUtf8(u64.replace(/-/g, "+").replace(/_/g, "/")); } catch { return null; }
   const user = Object.prototype.hasOwnProperty.call(AULA_USERS, usuario) ? AULA_USERS[usuario] : null;
   if (aulaProblem(user)) return null; // se desactivó, venció o se borró: la sesión deja de valer
+  // Cursos que el alumno eligió por su cuenta (inscripción libre, guardados en la base de datos)
+  const elegidos = await aulaElegidos(env, usuario);
+  if (elegidos.length) {
+    const c = Array.isArray(user.c) ? user.c : [];
+    return { usuario, user: { ...user, c: [...new Set([...c, ...elegidos])], e: elegidos } };
+  }
   return { usuario, user };
+}
+
+async function aulaElegidos(env, usuario) {
+  if (!env.DB) return [];
+  try {
+    await ensureSchema(env);
+    const rows = (await env.DB.prepare("SELECT curso FROM inscripciones WHERE usuario = ?").bind(usuario).all()).results || [];
+    return rows.map((r) => r.curso).filter((cid) => AULA_COURSES.includes(cid));
+  } catch { return []; }
+}
+
+function aulaLibre(cid) {
+  const c = AULA_COURSE_DATA[cid];
+  return Boolean(c && c.i === true);
 }
 
 function aulaCookie(url, value, maxAge) {
@@ -321,7 +341,8 @@ async function handleAulaApi(request, env, url, route, method) {
   if (route === "aula/yo" && method === "GET") {
     const s = await aulaSession(request, env);
     if (!s) return json({ error: "Inicia sesión para entrar al aula." }, 401);
-    return json({ usuario: s.usuario, nombre: s.user.n, cursos: s.user.c, vence: s.user.v || "", servidor: Boolean(env.DB) });
+    return json({ usuario: s.usuario, nombre: s.user.n, cursos: s.user.c, elegidos: s.user.e || [], vence: s.user.v || "", servidor: Boolean(env.DB),
+      libres: env.DB ? AULA_COURSES.filter((cid) => aulaLibre(cid) && !aulaHasCourse(s.user, cid)) : [] });
   }
 
   // Lo que sigue necesita sesión de alumno y la base de datos.
@@ -329,6 +350,17 @@ async function handleAulaApi(request, env, url, route, method) {
   if (!s) return json({ error: "Inicia sesión para entrar al aula." }, 401);
   if (!env.DB) return json({ error: "La base de datos del aula todavía no está conectada.", sinBase: true }, 503);
   await ensureSchema(env);
+
+  if (route === "aula/inscribir" && method === "POST") {
+    const body = await readJson(request);
+    const cid = String(body.curso || "");
+    if (!AULA_COURSES.includes(cid)) return json({ error: "Ese curso no existe." }, 404);
+    if (aulaHasCourse(s.user, cid)) return json({ ok: true, ya: true });
+    if (!aulaLibre(cid)) return json({ error: "Este curso no tiene inscripción libre. Escríbenos y te lo activamos." }, 403);
+    if ((s.user.e || []).length >= 20) return json({ error: "Llegaste al máximo de cursos elegidos. Escríbenos si necesitas más." }, 400);
+    await env.DB.prepare("INSERT OR IGNORE INTO inscripciones (usuario, curso, ts) VALUES (?, ?, ?)").bind(s.usuario, cid, Date.now()).run();
+    return json({ ok: true, curso: cid });
+  }
 
   if (route === "aula/progreso" && method === "GET") {
     const rows = (await env.DB.prepare("SELECT leccion, ts, nota FROM progreso WHERE usuario = ?").bind(s.usuario).all()).results || [];
@@ -437,6 +469,7 @@ function ensureSchema(env) {
       env.DB.prepare("CREATE TABLE IF NOT EXISTS intentos (clave TEXT NOT NULL, ts INTEGER NOT NULL)"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS intentos_clave ON intentos(clave, ts)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS ia_uso (dia TEXT PRIMARY KEY, n INTEGER NOT NULL DEFAULT 0)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS inscripciones (usuario TEXT NOT NULL, curso TEXT NOT NULL, ts INTEGER NOT NULL, PRIMARY KEY (usuario, curso))"),
     ]).catch((e) => { schemaReady = null; throw e; });
   }
   return schemaReady;
@@ -704,19 +737,29 @@ async function handlePanelDb(request, env, url, route, method) {
     }
   }
 
+  if (route === "alumnos/inscripcion" && method === "DELETE") {
+    await DB.prepare("DELETE FROM inscripciones WHERE usuario = ? AND curso = ?")
+      .bind(String(url.searchParams.get("usuario") || ""), String(url.searchParams.get("curso") || "")).run();
+    return json({ ok: true });
+  }
+
   if (route === "alumnos/progreso" && method === "GET") {
     const rows = (await DB.prepare("SELECT usuario, leccion, ts, nota FROM progreso").all()).results || [];
     const byUser = {};
     for (const x of rows) (byUser[x.usuario] = byUser[x.usuario] || []).push(x);
     const certs = (await DB.prepare("SELECT usuario, curso, estado FROM certificados WHERE usuario IS NOT NULL").all()).results || [];
-    const items = Object.entries(AULA_USERS).map(([u, info]) => {
+    const insc = (await DB.prepare("SELECT usuario, curso, ts FROM inscripciones").all()).results || [];
+    const items = Object.entries(AULA_USERS).map(([u, info0]) => {
+      const elegidos = insc.filter((z) => z.usuario === u && AULA_COURSES.includes(z.curso)).map((z) => z.curso);
+      const info = elegidos.length ? { ...info0, c: [...new Set([...(info0.c || []), ...elegidos])] } : info0;
       const mine = byUser[u] || [];
       const done = new Set(mine.map((x) => x.leccion));
       const cursos = AULA_COURSES.filter((cid) => aulaHasCourse(info, cid)).map((cid) => {
         const c = AULA_COURSE_DATA[cid] || { l: [] };
         const h = (c.l || []).filter((k) => done.has(k)).length;
         const cert = certs.find((z) => z.usuario === u && z.curso === cid && z.estado !== "rechazado");
-        return { id: cid, titulo: c.t || cid, hechas: h, total: (c.l || []).length, certificado: cert ? cert.estado : "" };
+        const asignado = aulaHasCourse(info0, cid);
+        return { id: cid, titulo: c.t || cid, hechas: h, total: (c.l || []).length, certificado: cert ? cert.estado : "", elegido: !asignado };
       });
       const ultima = mine.reduce((m, x) => Math.max(m, x.ts || 0), 0) || null;
       return { usuario: u, nombre: info.n, activo: info.a, vence: info.v || "", ultima, cursos };

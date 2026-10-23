@@ -114,6 +114,11 @@ def cert_on(c):
     return c.get("certificado", True) is not False
 
 
+def libre_on(c):
+    """El alumno puede inscribirse solo en este curso (ajuste general + ajuste del curso)."""
+    return g(A, "inscripcion_libre") is not False and c.get("inscripcion_libre", True) is not False
+
+
 def img_abs(v, default="/img/aula-virtual.jpg"):
     v = str(v or "").strip()
     if not v:
@@ -477,7 +482,7 @@ def build_tablero():
         "total": len(c["_lessons"]), "keys": [l["_key"] for l in c["_lessons"]],
         "titulos": {l["_key"]: l["titulo"] for l in c["_lessons"]},
         "urls": {l["_key"]: l["_url"] for l in c["_lessons"]}, "url": f'/aula/{c["_id"]}/',
-        "certificado": cert_on(c), "horas": horas_txt(c),
+        "certificado": cert_on(c), "horas": horas_txt(c), "libre": libre_on(c),
     } for c in cursos()]
     avisos = [a for a in arr(g(A, "avisos", default=[])) if isinstance(a, dict) and (a.get("titulo") or a.get("texto"))]
     avisos.sort(key=lambda a: str(a.get("fecha") or ""), reverse=True)
@@ -506,6 +511,11 @@ def build_tablero():
         <section aria-labelledby="mis-cursos">
           <h2 class="aula-h2" id="mis-cursos">Mis cursos</h2>
           <div class="aula-courses" data-courses><p class="aula-empty">Cargando tus cursos…</p></div>
+          <section class="aula-available" data-available hidden aria-labelledby="cursos-disponibles">
+            <h2 class="aula-h2" id="cursos-disponibles">Cursos disponibles</h2>
+            <p class="aula-available__lead">Elige el curso que quieras tomar y empieza de inmediato. Al terminarlo también puedes solicitar tu certificado.</p>
+            <div class="aula-courses" data-available-list></div>
+          </section>
         </section>
         <aside class="aula-dash__side">
           <section class="aula-card aula-mycerts" data-mycerts hidden>
@@ -559,7 +569,7 @@ def datos_worker():
                       "c": acc, "a": a.get("activo", True) is not False, "v": str(a.get("vence") or "")[:10]}
     cdata = {}
     for cid, c in ids.items():
-        cdata[cid] = {"t": c["titulo"], "h": horas_txt(c), "c": cert_on(c),
+        cdata[cid] = {"t": c["titulo"], "h": horas_txt(c), "c": cert_on(c), "i": libre_on(c),
                       "l": [l["_key"] for l in c["_lessons"]],
                       "q": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario"],
                       "x": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario" and l.get("examen_final")]}

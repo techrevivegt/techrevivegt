@@ -2060,6 +2060,13 @@
               "description": "El alumno lo solicita al completar el curso y tú lo apruebas en «Certificados»."
             },
             {
+              "name": "inscripcion_libre",
+              "label": "Inscripción libre",
+              "type": "boolean",
+              "default": true,
+              "description": "El alumno puede inscribirse solo desde el aula. Desactívalo si este curso es pagado o quieres asignarlo tú en «Alumnos y accesos»."
+            },
+            {
               "name": "requisitos",
               "label": "Requisitos",
               "type": "string",
@@ -2340,6 +2347,13 @@
               "label": "Nota mínima para aprobar cuestionarios y exámenes (%)",
               "type": "number",
               "default": 70
+            },
+            {
+              "name": "inscripcion_libre",
+              "label": "🎓 Los alumnos pueden elegir sus cursos",
+              "type": "boolean",
+              "default": true,
+              "description": "En «Mis cursos» aparece la sección «Cursos disponibles» y el alumno se inscribe solo con un clic (necesita la base de datos conectada). Puedes cerrar la inscripción libre de un curso en particular desde ese curso. Los cursos que tú asignas en «Alumnos y accesos» siguen funcionando igual."
             },
             {
               "name": "avisos",
