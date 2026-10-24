@@ -1,0 +1,561 @@
+{
+  "titulo": "Arduino y robótica desde cero",
+  "publicado": true,
+  "orden": 10,
+  "descripcion": "Aprende electrónica y programación con Arduino UNO sin quemar nada: circuitos en protoboard, LEDs, botones, perillas, motores y un robot que evita obstáculos. Incluye Laboratorio 3D con simulador interactivo donde ejecutás código Arduino real en las 7 prácticas guiadas, todo gratis y desde tu navegador.",
+  "imagen": "/img/taller.jpg",
+  "docente": "Instructores de TechRevive",
+  "duracion": "7 semanas",
+  "horas": "20",
+  "nivel": "Principiante",
+  "certificado": true,
+  "requisitos": "Computadora con navegador (para el simulador). El kit físico es opcional: las prácticas del laboratorio 3D no lo requieren.",
+  "objetivos": [
+    "Entender electrónica básica y el protoboard",
+    "Programar Arduino UNO (setup, loop, pines digitales, analógicos y PWM)",
+    "Armar proyectos con LEDs, botones, perillas, motores y el LED RGB",
+    "Llevar tu primer robot que evita obstáculos al mundo real cuando tengás tu kit"
+  ],
+  "modulos": [
+    {
+      "titulo": "Electrónica base sin miedo",
+      "lecciones": [
+        {
+          "titulo": "Electricidad sin miedo: voltaje, corriente y resistencia",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué son voltios, amperios y ohmios con ejemplos del día a día</li><li>Distinguir corriente directa (DC) de alterna (AC)</li><li>Leer el valor de una resistencia por sus franjas de color</li></ul></aside><h3>La analogía del agua (la que nunca falla)</h3><ul><li><strong>Voltaje (V, voltios)</strong> = la presión del agua. Los 5V de Arduino son una manguerita; los 110V de la pared son una hidrolavadora: ¡jamás se tocan!</li><li><strong>Corriente (A, amperios)</strong> = cuánta agua fluye. Un LED pide poquito (0.02 A); un motor pide bastante más.</li><li><strong>Resistencia (Ω, ohmios)</strong> = una llave medio cerrada que frena el agua. Sirve para proteger componentes delicados.</li></ul><p>Todo en Arduino y robótica trabaja con <strong>corriente directa (DC)</strong> de bajo voltaje (3.3V a 12V): segura para aprender, suficiente para mover robots.</p><aside class=\"nota clave\"><h4>📌 Puntos clave para recordar</h4><ul><li>La corriente siempre necesita un camino cerrado (circuito).</li><li>El orden de los colores de la resistencia se lee de la franja más juntas al dorada/plateada (tolerancia).</li><li>x1000 regla rápida: 1A = 1000 mA; un pin de Arduino da máximo 20 mA (por eso, motor → transistor).</li></ul></aside>"
+        },
+        {
+          "titulo": "El protoboard: tu mesa de trabajo sin soldadura",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender cómo están conectados internamente los huecos del protoboard</li><li>Armado del primer circuito: batería + LED + resistencia</li><li>Usar cables Dupont macho-macho</li></ul></aside><p>El <strong>protoboard</strong> (tablero de pruebas) es el mejor amigo del principiante: inserta patitas y quedan conectadas, sin soldar ni dañar nada.</p><ul><li><strong>Rieles laterales (+ y −):</strong> se conectan a lo largo de toda la columna. Rojo = positivo, azul/negro = negativo.</li><li><strong>Zona central:</strong> los huecos se conectan por filas de 5, pero el canal del medio los separa en dos mitades (¡trampa clásica!).</li><li>Los <strong>cables Dupont</strong> (macho-macho) son los puentes: igual que usar extensiones para unir puntos lejanos.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Mirá la foto de tu simulador de la escena «Prendé un LED»</li><li>Identificá: rieles, filas de 5 y el canal central</li><li>Imaginá cómo fluye la corriente desde el pin 13 hasta GND</li></ol></aside><aside class=\"nota alerta\"><h4>⚠️</h4><p>Antes de conectar cualquier cosa al protoboard, quitá la energía (desconectá el USB). Un toque en corto con energía puede quemar el pin de tu placa.</p></aside>"
+        },
+        {
+          "titulo": "El multímetro: el médico de tus circuitos",
+          "tipo": "video",
+          "duracion": "15 min",
+          "video": "https://www.youtube.com/watch?v=Z1pxudDk-BM",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Medir voltaje, continuidad y resistencia</li><li>Detectar cortos y falsos contactos antes de encender</li><li>Verificar que una resistencia es del valor correcto</li></ul></aside><p>Un multímetro barato (desde Q60 en tiendas de electrónica) responde el 80 % de los «¿por qué no funciona?»:</p><ul><li><strong>Voltaje (V=):</strong> ¿llegan los 5V del pin a mi circuito?</li><li><strong>Continuidad (el que pita):</strong> ¿están unidos estos dos puntos? ¡La herramienta número uno contra falsos contactos!</li><li><strong>Resistencia (Ω):</strong> comprobá que la resistencia que agarraste es de 220Ω y no de 2.2kΩ.</li></ul><p class=\"aula-credit\"><small>Video: Hetzu Academy (YouTube). Contenido de terceros usado con fines educativos; todos los derechos pertenecen a su autor.</small></p>"
+        },
+        {
+          "titulo": "Cuestionario: electrónica base",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "El papel de la resistencia en un circuito con LED es…",
+              "opciones": [
+                "Decorar",
+                "Limitar la corriente para proteger el LED",
+                "Aumentar el voltaje"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En un protoboard, los huecos de las zonas centrales se conectan…",
+              "opciones": [
+                "Por filas de 5, separadas por el canal central",
+                "Por columnas completas",
+                "Todas se tocan entre sí"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La función del multímetro más usada para falsos contactos es…",
+              "opciones": [
+                "Voltaje",
+                "Continuidad (la que pita)",
+                "Amperaje"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La energía segura para aprender con Arduino es…",
+              "opciones": [
+                "Directa de 110V",
+                "Corriente directa de bajo voltaje (5 a 12V)",
+                "Alterna de 220V"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Tu Arduino UNO por dentro",
+      "lecciones": [
+        {
+          "titulo": "¿Qué es Arduino y cómo se programa?",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender qué es una placa Arduino UNO y para qué sirve</li><li>Conocer el Arduino IDE y el ciclo cargar-ver-ajustar</li><li>Ver el ciclo de vida de un sketch (setup y loop)</li></ul></aside><p><strong>Arduino</strong> es una plataforma abierta de hardware y software para crear proyectos electrónicos sin ser ingeniero: le das instrucciones (el <em>sketch</em>) por USB y la placa las ejecuta una y otra vez.</p><ul><li><strong>void setup():</strong> se ejecuta UNA sola vez al encender: ahí configuras los pines.</li><li><strong>void loop():</strong> se repite para siempre, millones de veces por segundo, hasta que apagues.</li><li>Para programarla en tu compu se usa el <strong>Arduino IDE</strong> (gratis, en español) o la web de Arduino Cloud.</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>En Guatemala, estudiantes de colegio han hecho regadores automáticos con sensor de humedad, alarmas para moto y hasta cocinas solares con seguimiento del sol, todo con Arduino. Si ellos pudieron, vos también.</p></aside>"
+        },
+        {
+          "titulo": "El mapa de pines: tu GPS en la placa",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Distinguir pines digitales, analógicos y de poder</li><li>Saber qué es PWM y dónde encontrarlo</li><li>Evitar los errores que más dañan placas</li></ul></aside><ul><li><strong>Digitales (0–13):</strong> solo ON/OFF. Los con símbolo ~ (3, 5, 6, 9, 10, 11) además hacen <strong>PWM</strong> (brillos y velocidades).</li><li><strong>Analógicos (A0–A5):</strong> leen sensores con valores de 0 a 1023: perillas, luz (LDR), temperatura…</li><li><strong>De poder:</strong> 5V y 3.3V para alimentar componentes, GND (tierra común, ¡jamás la olvides!), VIN (entrada de fuente externa).</li></ul><aside class=\"nota alerta\"><h4>⚠️</h4><p>Los pines 0 y 1 también sirven para comunicarse con la compu (TX/RX): evitá usarlos en tus primeros proyectos o la placa no cargará el sketch.</p></aside>"
+        },
+        {
+          "titulo": "Simulador 3D: tu laboratorio virtual de Arduino",
+          "tipo": "simulador",
+          "simulador": "arduino",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Explorar la placa UNO en 3D con sus marcadores y pestañas de información</li><li>Ejecutar ejemplos de código Arduino reales dentro del simulador</li><li>Completar las 7 prácticas guiadas: placa, LED, botón, perilla, RGB, motor y robot</li></ul></aside> <p>Este laboratorio es <strong>como tener la placa en tus manos, pero sin poder quemar nada</strong> (todavía). Encontrarás:</p> <ul><li>La <strong>Arduino UNO en 3D</strong> con los componentes marcados: girá, acercá y descubrí cada parte.</li> <li>El panel de la derecha con <strong>resumen, pines y explicación</strong> de cada práctica.</li> <li>El editor <strong>«Pruébalo tú»</strong>: código Arduino real que se ejecuta sobre la escena (encendé LEDs, leé botones, mové motores).</li> <li>Abajo, la tira de <strong>7 prácticas</strong>: andá completándolas en orden. Tu avance se guarda en este navegador.</li></ul> <aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Cuando hayas pagado tu kit físico, repetí cada práctica en la placa real comparando con el simulador. ¡Vas a ver que es casi idéntica!</p></aside>"
+        },
+        {
+          "titulo": "Cuestionario: tu Arduino UNO",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "¿Cuál función corre UNA sola vez al encender la placa?",
+              "opciones": [
+                "loop()",
+                "setup()",
+                "main()"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Los pines con símbolo ~ son especiales porque…",
+              "opciones": [
+                "Son más grandes",
+                "Soportan PWM (brillos y velocidades)",
+                "Son para el WiFi"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El pin GND es…",
+              "opciones": [
+                "El que más energía da",
+                "La tierra común de todo el circuito",
+                "Para audio"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Dónde se programa la placa Arduino?",
+              "opciones": [
+                "Con Facebook",
+                "Con el Arduino IDE (gratis) o la web de Arduino Cloud",
+                "Solo en una Mac"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Salidas digitales: tu LED obedece",
+      "lecciones": [
+        {
+          "titulo": "Salidas digitales: el LED parpadeante",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Encender/apagar desde el código con digitalWrite()</li><li>Usar const int para nombrar tus pines</li><li>Apagar con exito tu primer programa cargado en el simulador</li></ul></aside><p>Todo empieza con el <strong>blink</strong>: es el «Hola, mundo» de electrónica. Con lo del Módulo 2 ya conocés <code>pinMode()</code>, <code>digitalWrite()</code> y <code>delay()</code>. Recuerda:</p><ul><li><strong>La pata LARGA del LED es la positiva:</strong> va hacia el pin.</li><li><strong>Siempre resistencia (220Ω rojo-rojo-café):</strong> sin ella el LED se quema al instante.</li><li>Usá <code>const int LED = 13;</code> en vez del número pelado: si mañana cambias de pin, solo editas una línea.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Abrí la escena 2 «Prendé un LED» del simulador</li><li>Ejecutá el ejemplo y observá el patrón</li><li>Cambiá los delay() a 100 y corrélo de nuevo: ¿notaste la diferencia?</li></ol></aside>"
+        },
+        {
+          "titulo": "El semáforo chapín: LEDs en secuencia",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Coordinar tres LEDs con tiempos distintos</li><li>Usar variables y for para contar repeticiones</li><li>Conocer el patrón de estados para máquinas más complejas</li></ul></aside><p>Tres LEDs (rojo, amarillo, verde) y la lógica del semáforo de la esquina: es el ejercicio perfecto para <strong>planear estados</strong> antes de escribir código.</p><ul><li>Verde (3 s) → Amarillo (1 s) → Rojo (3 s) → Verde… por siempre.</li><li>¿Qué pasaría si quieres un cruce peatonal? Un botón que adelante el cambio: ya tenés todas las piezas (M3 y M4 juntos).</li><li>El truco: escribí los estados en papel primero (pseudocódigo) y después traducilos.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>Los pines 11, 12 y 13 (o 8, 9, 10) son perfectos para tu semáforo: queda todo juntito con filas del protoboard.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: tu semáforo en el simulador",
+          "tipo": "tarea",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<p>En la escena 2 del simulador, modificá el código para que en vez de parpadear infinito haga este patrón: ON 1 segundo, OFF 3 segundos, ON 1 segundo, OFF medio segundo, y se repita. Como reto extra, usá un <code>for</code> para que primero destelle 5 veces rapidísimo y después entre al patrón. Compartile a tu instructor una captura de tu código corriendo por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: salidas digitales",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "La pata larga del LED va hacia…",
+              "opciones": [
+                "GND",
+                "El pin de salida",
+                "No importa"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Usar <code>const int LED = 13;</code> te facilita…",
+              "opciones": [
+                "Ahorrar espacio solo",
+                "Cambiar de pin en un solo lugar después",
+                "Nada en particular"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "delay(500) significa…",
+              "opciones": [
+                "Medio segundo",
+                "5 segundos",
+                "50 segundos"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El flujo del semáforo se recomienda planear primero en…",
+              "opciones": [
+                "El IDE directamente",
+                "Papel (pseudocódigo / diagrama de estados)",
+                "La pared"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Entradas: botones y sensores",
+      "lecciones": [
+        {
+          "titulo": "Entradas digitales: botones y la resistencia pull-up",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Leer un botón con digitalRead()</li><li>Entender INPUT_PULLUP (lógica invertida pero fácil)</li><li>Hacer que un LED responda al mismo tiempo que pulsás</li></ul></aside><p>Una <strong>entrada</strong> es lo contrario de una salida: la placa «escucha». El botón es la entrada más simple, pero tiene un truco que confunde a todos al inicio:</p><ul><li>Con <code>pinMode(BOTON, INPUT_PULLUP)</code> la placa activa una resistencia interna: en reposo lee HIGH.</li><li>Al pulsar, el botón conecta el pin a GND: lee <strong>LOW</strong>. O sea, LOW = pulsado. ¡Al revés de lo intuitivo!</li><li>Ventaja enorme: no necesitás resistencias externas para el botón, solo dos cables.</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Abrí la escena 3 «Pulsá el botón» del simulador</li><li>Pulsá Ejecutar y luego pulsá el botón blanco en el 3D</li><li>Vea el LED «L» de la placa encenderse mientras mantenés pulsado</li></ol></aside>"
+        },
+        {
+          "titulo": "Entradas analógicas: perillas, luz y temperatura",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Leer valores de 0 a 1023 con analogRead()</li><li>Entender la conversión ADC (analógico → digital)</li><li>Aplicar la lectura a PWM (dimmer de LED)</li></ul></aside><p>El mundo real no es ON/OFF: un giróscopo, una fotocelda, un dimmer de luz. Los pines A0–A5 <strong>miden voltaje</strong> de 0 a 5V y lo convierten a un número de 0 a 1023 (el ADC de 10 bits).</p><ul><li><strong>Perilla (potenciómetro):</strong> una resistencia variable; la pata central entrega el voltaje según el ángulo.</li><li><strong>Sensores ambientales:</strong> una LDR cambia su resistencia con la Luz; un NTC con la temperatura: misma idea.</li><li>Para pasar de 0–1023 a 0–255 (PWM) basta dividir entre 4.</li></ul><aside class=\"nota caso\"><h4>🧰 Caso real del taller</h4><p>Nefeli, de un colegio en Xela, hizo un medidor de humedad de tierra para el huerto de su abuelita con solo dos clavos como sonda y una placa Arduino: cuando la tierra se seca, enciende un LED rojo. Costo total: menos de Q40 en el mercado de electrónica.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: tu dimmer inteligente",
+          "tipo": "tarea",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<p>En la escena 4 «Girá la perilla» del simulador: 1) Ejecutá el ejemplo y girá la perilla (con el control o arrastrando el mando en el 3D). 2) Modificá el código para que además del brillo del LED, el <strong>Serial imprima «BAJO», «MEDIO» o «ALTO»</strong> según la lectura (usá if con <code>&lt;</code> y <code>&gt;</code> en la lectura / 4). 3) Reto: que el dimmer recuerde el valor más alto alcanzado y lo muestre cada 3 segundos. Compartí capturas por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: entradas",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "Con INPUT_PULLUP, un botón pulsado lee…",
+              "opciones": [
+                "HIGH",
+                "LOW",
+                "Al azar"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "analogRead() en un potenciómetro a la mitad leerá aproximadamente…",
+              "opciones": [
+                "0",
+                "512",
+                "1023"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Para pasar de una lectura analógica (0–1023) a un PWM (0–255)…",
+              "opciones": [
+                "Se multiplica ×4",
+                "Se divide ÷4",
+                "No se puede"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La función del canal ADC de los pines A0–A5 es…",
+              "opciones": [
+                "Cargar baterías",
+                "Convertir voltaje analógico a número digital",
+                "Nombrar pines"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Luces de colores y motores",
+      "lecciones": [
+        {
+          "titulo": "PWM y el LED RGB: millones de colores",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Entender PWM como «promedio» de voltaje</li><li>Mezclar rojo, verde y azul para cualquier color</li><li>Usar for con analogWrite() para transiciones suaves</li></ul></aside><p>El <strong>PWM</strong> (modulación por ancho de pulso) enciende y apaga el pin rapidísimo (unas 490 veces por segundo). El ojo (y el LED) lo perciben como brillo intermedio: 50 % del tiempo prendido = brillo a la mitad.</p><ul><li>Un LED <strong>RGB</strong> trae 3 LEDs en una cápsula (con la pata común a GND).</li><li>Usando 3 pines ~ (9, 10, 11) cada canal se controla por separado: rojo 255 + verde 255 = amarillo intenso.</li><li>Con <code>for (int v = 0; v &lt;= 255; v += 5)</code> y <code>analogWrite()</code> haces fundidos suaves (¡el efecto «respiración» del LED de tu laptop!).</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Abrí la escena 5 «Mezclá colores» del simulador</li><li>Mové los controles R, G y B con el sketch corriendo</li><li>Lográ el violeta (R+B), el turquesa (G+B) y el blanco tibio (todo a la mitad)</li></ol></aside>"
+        },
+        {
+          "titulo": "Motores y la regla de la potencia separada",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Por qué un motor nunca va directo al pin</li><li>Controlar velocidad con el transistor TIP120 y PWM</li><li>Distinguir alimentación de la lógica y del motor</li></ul></aside><p>Un motor DC de juguete pide más corriente de la que un pin de Arduino puede dar (20 mA). Conectarlo directo fríe el pin.</p><ul><li>La solución: <strong>transistor</strong> (TIP120 o MOSFET). El pin solo «abre la llave»; el motor agarra corriente de su propia fuente (9V o fuente externa).</li><li><strong>Regla de oro:</strong> la alimentación de la lógica (Arduino) y la del motor pueden ser distintas, pero <strong>los GND siempre se unen</strong>.</li><li>Con <code>analogWrite(PIN, velocidad)</code> controlas la velocidad, no solo ON/OFF.</li></ul><aside class=\"nota alerta\"><h4>⚠️</h4><p>En proyectos reales agregá un diodo 1N4007 en paralelo al motor (el «diodo flyback»): los picos que devuelve el motor al apagarse pueden dañar al transistor. En el simulador no hace falta, en tu mesa sí.</p></aside>"
+        },
+        {
+          "titulo": "Tarea: el ventilador con eco",
+          "tipo": "tarea",
+          "duracion": "40 min",
+          "video": "",
+          "contenido": "<p>En la escena 6 «Controlá un motor» del simulador: 1) Ejecutá el ejemplo de la rampa y observá la hélice. 2) Agregá una perilla en tu cabeza (usá <code>analogRead(A0)</code> — en el simulador esa lectura será 0, pero escribilo igual como preparación para tu kit) para que la velocidad máxima dependa de la perilla. 3) Reto: con un botón (INPUT_PULLUP), que el motor solo ande mientras el botón esté pulsado. Compartí el código por WhatsApp.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Cuestionario: PWM y motores",
+          "tipo": "cuestionario",
+          "duracion": "10 min",
+          "video": "",
+          "contenido": "<p>Responde todas las preguntas y pulsa «Revisar respuestas». Puedes intentarlo las veces que necesites; al revisar verás la explicación de cada respuesta.</p>",
+          "preguntas": [
+            {
+              "pregunta": "PWM funciona…",
+              "opciones": [
+                "Aumentando el voltaje",
+                "Encendiendo y apagando rapidísimo y «promediando»",
+                "Bajando la frecuencia del cristal"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Por qué un motor no va directo al pin de Arduino?",
+              "opciones": [
+                "Porque los motores son malos",
+                "Porque pide más corriente de la que el pin puede dar (se quema)",
+                "Porque no caben los cables"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El TIP120 actúa como…",
+              "opciones": [
+                "Una resistencia extra",
+                "Una llave controlada por el pin para la potencia del motor",
+                "Un sensor"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La suma de R (255) + G (255) en un LED RGB común produce…",
+              "opciones": [
+                "Blanco",
+                "Amarillo",
+                "Violeta"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Proyecto robot y el siguiente paso",
+      "lecciones": [
+        {
+          "titulo": "El sensor ultrasónico y el robot evitador",
+          "tipo": "lectura",
+          "duracion": "25 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Cómo mide el HC-SR04 la distancia</li><li>La lógica de decisión de un robot autónomo</li><li>Todos los componentes de un robot mínimo</li></ul></aside><p>El <strong>HC-SR04</strong> es el sensor ultrasónico de Q30 que parecen «ojos»: manda un pitido inaudible, mide el eco y calcula la distancia (de 2 a 400 cm). Es el murciélago de tu robot.</p><ul><li>Chasis mínimo: 2 motores con ruedas + una ruedita loca, la placa, baterías y el sensor.</li><li>La lógica es solo un <code>if</code> gigante: <strong>¿camino libre? avanzá · ¿obstáculo cerca? girá</strong>.</li><li>El mismo sensor sirve para: alarmas de garaje, dispensadores de jabón automáticos, nivel de agua de tanque…</li></ul><aside class=\"nota practica\"><h4>🧪 Práctica guiada</h4><ol><li>Abrí la escena 7 «Mini-robot evita obstáculos» del simulador</li><li>Ejecutá el código y observá cómo sigue la pared y esquiva la caja</li><li>Arrastrá la caja naranja a otra parte y mira cómo el robot reacciona</li></ol></aside>"
+        },
+        {
+          "titulo": "¿A dónde seguir? Kits, comunidad y proyectos chapines",
+          "tipo": "lectura",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar esta lección podrás</h4><ul><li>Elegir tu primer kit real sin gastar de más</li><li>Encontrar ayuda y proyectos en español</li><li>Tres ideas de proyectos posibles con lo que aprendiste</li></ul></aside><ul><li><strong>Tu primer kit:</strong> buscá «kit Arduino Uno iniciación» con UNO (compatible), protoboard, LEDs, resistencias, botones, potenciómetro, sensor ultrasónico, servo y motor: entre Q250 y Q450 en tiendas chapinas de electrónica o Mercado Libre (envío a Guatemala).</li><li><strong>Comunidades:</strong> grupos de Facebook «Arduino Guatemala», canales en YouTube en español (búscense: Luis Llamas, PlatformIO, Curso Arduino desde cero), y el foro oficial en español.</li><li><strong>Proyectos para continuar:</strong> 1) Luces de escalera con sensor ultrasónico. 2) Riego automático del huerto con sensor de humedad. 3) Alarma de moto con acelerómetro. 4) Carro controlado por Bluetooth con el celular.</li></ul><aside class=\"nota tip\"><h4>💡 Consejo de técnico</h4><p>No compres el kit más caro del mundo: la UNO compatible funciona igual que la original para aprender. Cuando ya dominás, ¡una original apoya al proyecto!</p></aside>"
+        },
+        {
+          "titulo": "Tarea final: tu robot virtual dominado",
+          "tipo": "tarea",
+          "duracion": "50 min",
+          "video": "",
+          "contenido": "<p>Última tarea del curso. 1) En la escena 7 del simulador, hacé que el robot complete una vuelta completa de la mesa sin pararse (¡probá cambiar la distancia segura!). 2) Agregá <code>Serial.println(\"¡Obstáculo a \" + String(d) + \" cm!\")</code> antes de girar. 3) Compartí con tu instructor una captura del robot moviendo la caja (o un video corto del celular) por WhatsApp describiendo qué cambiaste.</p>",
+          "fecha_limite": "",
+          "enlace_entrega": ""
+        },
+        {
+          "titulo": "Examen final de Arduino y robótica",
+          "tipo": "cuestionario",
+          "duracion": "20 min",
+          "video": "",
+          "contenido": "<p>Evalúa los seis módulos del curso. Al aprobarlo, y con tu laboratorio 3D completo, podrás solicitar tu certificado de Arduino y robótica.</p>",
+          "preguntas": [
+            {
+              "pregunta": "La corriente directa de bajo voltaje para aprender es…",
+              "opciones": [
+                "Peligrosa siempre",
+                "Segura (5–12V, como la de Arduino)",
+                "Inexistente"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "En el protoboard, los rieles laterales sirven para…",
+              "opciones": [
+                "Poner tu nombre",
+                "Distribuir + y − a lo largo de la tabla",
+                "Decorar"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "setup() corre…",
+              "opciones": [
+                "Una vez al encender",
+                "En ciclo infinito",
+                "Solo los lunes"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Los pines ~ de Arduino sirven para…",
+              "opciones": [
+                "Medir distancia",
+                "PWM: brillos y velocidades",
+                "Llamar por teléfono"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "La resistencia de 220Ω junto al LED…",
+              "opciones": [
+                "Aumenta su brillo",
+                "Limita la corriente y lo protege",
+                "Es opcional siempre"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Con INPUT_PULLUP, el botón pulsado lee…",
+              "opciones": [
+                "HIGH",
+                "LOW",
+                "Depende del día"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "analogRead() entrega valores entre…",
+              "opciones": [
+                "0 y 100",
+                "0 y 1023",
+                "−255 y 255"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un motor DC en Arduino siempre lleva…",
+              "opciones": [
+                "Fusible de casa",
+                "Transistor (o driver) para no quemar el pin",
+                "Una pila doble A en el pin"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "PWM es útil para…",
+              "opciones": [
+                "Brillos y velocidades suaves",
+                "Solo números enteros",
+                "Hacer más ruido"
+              ],
+              "correcta": 1,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "El HC-SR04 usa…",
+              "opciones": [
+                "Láser",
+                "Ultrasonido: pitido + eco",
+                "Imanes"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "Un robot evitador decide con…",
+              "opciones": [
+                "Magia",
+                "Un if: ¿libre? avanzar · ¿cerca? girar",
+                "Mapas de Google"
+              ],
+              "correcta": 2,
+              "explicacion": ""
+            },
+            {
+              "pregunta": "¿Cuál NO es un buen próxio paso?",
+              "opciones": [
+                "Un kit de iniciación",
+                "Unirse a una comunidad en español",
+                "Comprar un robot industrial de miles de quetzales antes de practicar"
+              ],
+              "correcta": 3,
+              "explicacion": ""
+            }
+          ],
+          "examen_final": true
+        }
+      ]
+    }
+  ]
+}

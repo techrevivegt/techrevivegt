@@ -31,7 +31,7 @@ TIPOS = {
     "tarea": ("file", "Tarea"),
     "simulador": ("cpu", "Simulador"),
 }
-SIMULADORES = {"pc": "Armado de PC de escritorio", "laptop": "Mantenimiento de laptop", "taller3d": "Taller 3D: arma PC y laptops"}
+SIMULADORES = {"pc": "Armado de PC de escritorio", "laptop": "Mantenimiento de laptop", "taller3d": "Taller 3D: arma PC y laptops", "arduino": "Laboratorio 3D de Arduino y robótica"}
 
 
 def habilitada():
@@ -425,7 +425,11 @@ def build_leccion(c, l):
     elif l["_tipo"] == "simulador":
         sim = l.get("simulador") if l.get("simulador") in SIMULADORES else "pc"
         minimo = int(precio_num(g(A, "nota_minima") or 70)) or 70
-        if sim == "taller3d":
+        if sim == "arduino":
+            extra = ('<section class="a3d" data-a3d aria-label="Laboratorio 3D de Arduino y robótica">'
+                     '<p class="sim__loading">Cargando el laboratorio 3D…</p><noscript>Activa JavaScript para usar el laboratorio 3D.</noscript></section>'
+                     '<script type="module" src="/js/arduino3d.js"></script>')
+        elif sim == "taller3d":
             extra = ('<section class="t3d" data-t3d aria-label="Taller 3D: armado libre de PC y laptops">'
                      '<p class="sim__loading">Cargando el taller 3D…</p><noscript>Activa JavaScript para usar el taller 3D.</noscript></section>'
                      '<script src="/js/taller3d-catalogo.js" defer></script>'
@@ -470,7 +474,11 @@ def build_leccion(c, l):
     nxt = (f'<a href="{next_l["_url"]}" class="aula-pager__btn aula-pager__btn--next"><small>Siguiente</small><span>{e(next_l["titulo"])}</span></a>'
            if next_l else f'<a href="/aula/{c["_id"]}/" class="aula-pager__btn aula-pager__btn--next"><small>Terminaste</small><span>Volver al curso</span></a>')
     keys = [x["_key"] for x in c["_lessons"]]
-    if l["_tipo"] == "simulador" and l.get("simulador") == "taller3d":
+    if l["_tipo"] == "simulador" and l.get("simulador") == "arduino":
+        done_html = (f'<div class="aula-done aula-done--quiz"><p data-quiz-state>{icon("cpu")} Esta lección se completa automáticamente cuando terminás las 7 prácticas del '
+                     f'laboratorio (tu progreso se guarda en este navegador).</p>'
+                     f'<button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false" hidden>{icon("check")} <span>Marcar como completada</span></button></div>')
+    elif l["_tipo"] == "simulador" and l.get("simulador") == "taller3d":
         done_html = (f'<div class="aula-done aula-done--quiz"><p data-quiz-state>{icon("cpu")} Esta lección se completa automáticamente cuando armas un equipo '
                      f'que enciende, arranca desde un disco y no tiene errores graves.</p>'
                      f'<button type="button" class="btn btn--outline aula-done__btn" data-done aria-pressed="false" hidden>{icon("check")} <span>Marcar como completada</span></button></div>')

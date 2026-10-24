@@ -327,3 +327,10 @@ En el aula, el tipo **🧩 Simulador interactivo** ahora tiene tres opciones. La
 - El 3D usa **Three.js r170** (archivos propios en `src/js/vendor/`, sin internet); si el equipo del alumno no tiene WebGL, el catálogo y las reglas siguen funcionando igual.
 - Los datos de las piezas se editan en `src/js/taller3d-catalogo.js` (un comentario al inicio explica los campos).
 - **Laptops completas**: además de RAM SODIMM y discos, cada laptop trae **tarjeta WiFi** (ranura mini PCIe en viejas, M.2 2230 A/E-key en modernas), **batería intercambiable** (no son universales: chasis y conector deben coincidir), **ventiladores** que se pueden retirar/limpiar/sustituir (el tamaño debe coincidir), **pantalla** con conector eDP de 30 o 40 pines (se puede mejorar TN→IPS si coinciden tamaño y conector) y **cargador** (los watts deben alcanzar los que pide el fabricante; las gamer viven mal con cargadores débiles). Sin ventilador la laptop se apaga por calor; sin pantalla o sin cable eDP enciende pero no da video; sin batería ni cargador no responde al botón.
+
+## Laboratorio 3D de Arduino y robótica (curso «Arduino y robótica desde cero»)
+
+- La lección «Simulador 3D: tu laboratorio virtual» (tipo **Simulador → arduino** en el generador) carga `src/js/arduino3d.js`.
+- Son **7 prácticas** guiadas: conocer la placa, LED, botón, perilla, LED RGB, motor y mini-robot. Cada una trae pestañas de teoría y el editor «Pruébalo tú» con un mini-intérprete de Arduino (`pinMode`, `digitalWrite/Read`, `analogWrite/Read`, `delay`, `Serial.print(ln)`, `if/else`, `for`, más `distancia()`, `avanzar()` y `girar()` en el robot).
+- La lección se **completa sola** cuando el alumno termina las 7 prácticas (cada práctica valida que el código hizo lo esperado: blink real, botón pulsado, perilla girada, 3 canales PWM, rampa del motor y robot avanzar+girar). Llave local del progreso y código editado: `tr-a3d:v1` y `tr-a3d:done:<lección>` en el navegador.
+- Los botones, perillas y obstáculos se manipulan con el mouse encima de la escena 3D; hay controles deslizantes para perillas/RGB y la cámara sigue al robot en la práctica 7.
