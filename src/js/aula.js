@@ -265,13 +265,19 @@
     var cat = JSON.parse(($("#aula-catalogo") || {}).textContent || "[]");
     var mine = USER && USER.cursos.indexOf("*") === -1 ? cat.filter(function (c) { return USER.cursos.indexOf(c.id) > -1; }) : cat;
     var d = done(), hechas = 0;
+    var uNivel = null;
     box.innerHTML = mine.length ? mine.map(function (c) {
+      var head = "";
+      if ((c.nivel || "") !== uNivel) {
+        uNivel = c.nivel || "";
+        head = '<h2 class="aula-level-head">' + esc(uNivel || "Otros cursos") + "</h2>";
+      }
       var n = c.keys.filter(function (k) { return d[k]; }).length; hechas += n;
       var pct = c.total ? Math.round(n * 100 / c.total) : 0;
       var next = c.keys.filter(function (k) { return !d[k]; })[0];
       var label = !n ? "Comenzar" : next ? "Continuar" : "Repasar";
       var meta = [c.nivel, c.duracion, c.total + " lecciones"].filter(Boolean).map(esc).join(" · ");
-      return '<article class="aula-course">' +
+      return head + '<article class="aula-course">' +
         '<a href="' + esc(c.url) + '" class="aula-course__media"><img src="' + esc(c.imagen) + '" alt="" loading="lazy" />' +
         (pct === 100 ? '<span class="aula-course__done">✓ Completado</span>' : "") + "</a>" +
         (function () { var ce = c.certificado && certFor(c.id); return ce && ce.estado === "aprobado" ? '<a class="aula-course__cert" href="' + certUrl(ce.id) + '" target="_blank" rel="noopener">🏅 Ver certificado</a>' : (pct === 100 && c.certificado && !ce && online() ? '<a class="aula-course__cert aula-course__cert--ask" href="' + esc(c.url) + '#certificado">🏅 Solicitar certificado</a>' : ""); })() +
@@ -307,9 +313,15 @@
     var list = libresDe(cat);
     sec.hidden = !list.length;
     if (!list.length) return;
+    var uNivel = null;
     $("[data-available-list]", sec).innerHTML = list.map(function (c) {
+      var head = "";
+      if ((c.nivel || "") !== uNivel) {
+        uNivel = c.nivel || "";
+        head = '<h2 class="aula-level-head">' + esc(uNivel || "Otros cursos") + "</h2>";
+      }
       var meta = [c.nivel, c.duracion, c.total + " lecciones"].filter(Boolean).map(esc).join(" · ");
-      return '<article class="aula-course aula-course--new">' +
+      return head + '<article class="aula-course aula-course--new">' +
         '<div class="aula-course__media"><img src="' + esc(c.imagen) + '" alt="" loading="lazy" />' +
         (c.certificado ? '<span class="aula-course__badge">🏅 Con certificado</span>' : "") + "</div>" +
         '<div class="aula-course__body"><p class="aula-course__meta">' + meta + "</p>" +
@@ -339,12 +351,42 @@
     });
   }
 
+  /* ---------- Tiempo por lección (heartbeat) ---------- */
+  // Cuenta los segundos con la pestaña visible y los envía al servidor cada 45 s.
+  var SEG_MAX = 120; // tope por envío (el servidor también lo limita)
+  function initTiempo(key) {
+    if (!key) return;
+    var pend = read("tiempoPend", {}), seg = 0;
+    function flush(beacon) {
+      if (seg > 0) { pend[key] = Math.min((pend[key] || 0) + seg, SEG_MAX * 8); seg = 0; write("tiempoPend", pend); }
+      if (!online()) return;
+      var items = Object.keys(pend).map(function (k) { return { leccion: k, segundos: pend[k] }; });
+      if (!items.length) return;
+      if (beacon) {
+        fetch("/api/aula/tiempo", {
+          method: "POST", credentials: "same-origin", keepalive: true, cache: "no-store",
+          headers: { "Content-Type": "application/json", "x-aula": "1" },
+          body: JSON.stringify({ items: items }),
+        }).catch(function () { /* al salir no se puede reintentar */ });
+        write("tiempoPend", {}); pend = {};
+        return;
+      }
+      api("POST", "tiempo", { items: items }).then(function () { write("tiempoPend", {}); pend = {}; })
+        .catch(function () { /* se reintenta en el próximo flush */ });
+    }
+    setInterval(function () { if (!document.hidden) seg += 4; }, 4000);
+    setInterval(function () { flush(false); }, 45000);
+    window.addEventListener("pagehide", function () { flush(true); });
+    flush(false); // entrega lo que haya quedado pendiente de la visita anterior
+  }
+
   /* ---------- Lección ---------- */
   var lesson = $("[data-lesson]"), lessonPaint = null;
   function initLesson() {
     if (!lesson) return;
     var key = lesson.getAttribute("data-lesson");
     write("ultima", { url: location.pathname, titulo: lesson.getAttribute("data-titulo"), curso: lesson.getAttribute("data-curso-titulo") });
+    initTiempo(key);
     var btn = $("[data-done]");
     var isQuiz = ["cuestionario", "simulador"].indexOf(lesson.getAttribute("data-tipo")) > -1;
     function setDone(v, nota) {

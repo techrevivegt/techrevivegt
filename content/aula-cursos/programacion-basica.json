@@ -1,13 +1,13 @@
 {
   "titulo": "Programación básica desde cero",
   "publicado": true,
-  "orden": 8,
+  "orden": 30,
   "descripcion": "Aprende a programar desde cero sin instalar nada: primero la lógica y el pseudocódigo, luego HTML y CSS para crear páginas, Python para tus primeros programas reales (con cálculos en quetzales), JavaScript para páginas que responden y C++ para entender la potencia de bajo nivel, con un mapa de caminos para seguir creciendo.",
   "imagen": "/img/p-web.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "8 semanas",
   "horas": "24",
-  "nivel": "Principiante",
+  "nivel": "Nivel 3 · Intermedio",
   "certificado": true,
   "requisitos": "Saber usar el navegador y el bloc de notas. Todas las prácticas se hacen con herramientas gratuitas en línea o que ya trae Windows.",
   "objetivos": [
@@ -174,6 +174,22 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: HTML y CSS desde cero (curso completo)",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=ELSm-G201Ls",
+          "duracion": "50 min",
+          "_pl": 1,
+          "contenido": "<p>Todo HTML y CSS en un solo curso didáctico: mirá los primeros 40 minutos para reforzar tu primera página web.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=curso+html+css+desde+cero\" target=\"_blank\" rel=\"noopener\">curso html css desde cero</a> en YouTube.</p>"
+        },
+        {
+          "titulo": "Video: HTML, CSS y JavaScript para princiapantes",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=8gJz2WSs99c",
+          "duracion": "40 min",
+          "_pl": 1,
+          "contenido": "<p>Los tres lenguajes de la web trabajando juntos: la previa perfecta del módulo de JavaScript.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=curso+html+css+javascript+principiantes\" target=\"_blank\" rel=\"noopener\">curso html css javascript principiantes</a> en YouTube.</p>"
         }
       ]
     },
@@ -265,6 +281,14 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: Python desde cero (curso completo)",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=Kp4Mvapo5kc",
+          "duracion": "60 min",
+          "_pl": 1,
+          "contenido": "<p>El curso completo y gratuito de Python en español más usado del mundo. Mirá los capítulos de variables y condicionales para repasar este módulo.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=curso+python+desde+cero\" target=\"_blank\" rel=\"noopener\">curso python desde cero</a> en YouTube.</p>"
         }
       ]
     },
@@ -472,6 +496,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: el editor de código en vivo",
+          "tipo": "simulador",
+          "simulador": "codigo",
+          "duracion": "25 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Editar HTML, CSS y JS y ver el resultado al instante</li><li>Conectar un botón con una acción</li><li>Debuggear mirando lo que cambió</li></ul></aside><p>Un editor de 3 pestañas (HTML, CSS, JavaScript) con vista previa real. Superá los 3 retos guiados (título, estilo y botón que responde) y completás la lección.</p>"
         }
       ]
     }

@@ -1151,7 +1151,7 @@
     let d;
     try { d = await api("GET", "certificados"); } catch (e) { if (e.message !== "sesión") contentEl.replaceChildren(dbError(e)); return; }
     const pend = d.items.filter((x) => x.estado === "solicitado");
-    const tabs = [["pendientes", `⏳ Solicitudes${pend.length ? ` (${pend.length})` : ""}`], ["emitidos", "🏅 Certificados"], ["manual", "✍️ Emitir manualmente"], ["progreso", "📊 Progreso de alumnos"]];
+    const tabs = [["pendientes", `⏳ Solicitudes${pend.length ? ` (${pend.length})` : ""}`], ["emitidos", "🏅 Certificados"], ["manual", "✍️ Emitir manualmente"], ["progreso", "📊 Progreso de alumnos"], ["tiempo", "⏱️ Tiempo por lección"]];
     const go = (t) => { sessionStorage.setItem("tr-cert-tab", t); renderCerts(sec); };
     const bar = h("div", { class: "seg seg--tabs", role: "tablist" }, ...tabs.map(([k, l]) => h("button", { type: "button", role: "tab", "aria-selected": k === tab ? "true" : "false", class: k === tab ? "is-on" : "", onclick: () => go(k) }, l)));
     const body = h("div", {});
@@ -1268,6 +1268,51 @@
                     catch (e) { ev.target.disabled = false; if (e.message !== "sesión") toast(e.message, "error"); }
                   } }, "Quitar") : null));
               }))))))));
+      } catch (e) { if (e.message !== "sesión") body.replaceChildren(dbError(e)); }
+    }
+
+    /* Tiempo real que cada alumno pasa en cada lección (latidos del aula). */
+    if (tab === "tiempo") {
+      body.append(loading("Cargando tiempos…"));
+      try {
+        const r = await api("GET", "alumnos/tiempo");
+        const items = r.items || [];
+        if (!items.length) {
+          body.replaceChildren(h("div", { class: "alert alert--info" },
+            "Todavía no hay tiempos registrados. Se empiezan a guardar automáticamente cuando un alumno abre una lección del aula (con la base de datos conectada)."));
+          return;
+        }
+        const umbral = 0.6; // ✓ si el tiempo real es al menos el 60 % del tiempo estimado
+        const filas = [];
+        items.forEach((a) => a.cursos.forEach((c) => {
+          let umin = 0, ureal = 0;
+          const lecs = c.lecciones.map((l) => {
+            const real = l.segundos / 60, cumple = l.minutos ? real >= l.minutos * umbral : l.segundos > 0;
+            umin += l.minutos; ureal += real;
+            filas.push([a.nombre, a.usuario, c.titulo, l.modulo, l.titulo, l.minutos, Math.round(real), cumple ? "Sí" : "No"]);
+            return { l, real, cumple };
+          });
+          const bloque = h("details", { class: "card", open: items.length === 1 },
+            h("summary", { class: "card__sum" }, h("strong", {}, c.titulo),
+              h("span", { class: "muted-sm" }, ` · ${c.lecciones.length} lecciones vistas · ${Math.round(ureal)} min reales de ~${umin} min estimados`)),
+            h("div", { class: "table-wrap" }, h("table", { class: "table table--compact" },
+              h("thead", {}, h("tr", {}, h("th", {}, "Lección"), h("th", {}, "Módulo"), h("th", {}, "Estimado"), h("th", {}, "Tiempo real"), h("th", {}, "¿Cumple?"))),
+              h("tbody", {}, ...lecs.map(({ l, real, cumple }) => h("tr", {},
+                h("td", {}, l.titulo),
+                h("td", { class: "muted-sm" }, l.modulo || "—"),
+                h("td", { class: "nowrap muted-sm" }, l.minutos ? `~${l.minutos} min` : "—"),
+                h("td", { class: "nowrap" }, fmtDur(l.segundos)),
+                h("td", {}, cumple ? h("span", { class: "badge badge--ok" }, "✓ Cumple") : h("span", { class: "badge badge--warn", title: `Menos del ${umbral * 100}% del tiempo estimado` }, "⏳ Falta tiempo"))))))));
+          body.append(h("h3", { class: "muted-sm", style: "margin:1rem 0 .2rem" }, `👤 ${a.nombre} (${a.usuario})`), bloque);
+        }));
+        const csvBtn = h("button", { type: "button", class: "btn btn--sm btn--white", onclick: () => {
+          const head = ["Alumno", "Usuario", "Curso", "Módulo", "Lección", "Min. estimados", "Min. reales", `Cumple (≥${umbral * 100}%)`];
+          const csv = [head, ...filas].map((f) => f.map((v) => `"${String(v == null ? "" : v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+          const aEl = h("a", { href: URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" })), download: "tiempo-por-leccion.csv" });
+          aEl.click(); setTimeout(() => URL.revokeObjectURL(aEl.href), 4000);
+        } }, "⬇ CSV para Excel");
+        body.prepend(h("p", { class: "intro" }, "Tiempo real que cada alumno pasa en cada lección (se cuenta solo con la pestaña visible). ",
+          "✓ «Cumple» cuando el tiempo real llega al menos al 60 % del tiempo estimado de la lección."), h("div", { style: "margin-bottom:1rem" }, csvBtn));
       } catch (e) { if (e.message !== "sesión") body.replaceChildren(dbError(e)); }
     }
   }

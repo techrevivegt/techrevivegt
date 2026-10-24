@@ -612,3 +612,7 @@ body.sim-dragging, body.sim-dragging * { cursor: grabbing !important; }
   .t3d__preset { max-width: 100%; flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .t3d__nosig span { animation: none; } }
+
+/* Encabezado de nivel en el tablero (ocupa toda la fila del grid) */
+.aula-level-head { grid-column: 1 / -1; margin: 1.1rem 0 0; padding: .55rem .9rem; font-size: 1rem; color: var(--ink, #2f2a1e);
+  background: linear-gradient(90deg, #f0e9d8, transparent); border-left: 4px solid var(--teal, #00756f); border-radius: 8px; }

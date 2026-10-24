@@ -1,13 +1,13 @@
 {
   "titulo": "Emprendimiento: de la idea a tu negocio",
   "publicado": true,
-  "orden": 5,
+  "orden": 32,
   "descripcion": "Emprende desde cero: mentalidad sin mitos, tipos de negocio y tus habilidades que ya valen plata. Luego tendrás que validar la idea con clientes reales, ponerle precio con números, formalizar ante la SAT cuando toque y promocionarte gratis con WhatsApp Business, Canva y estados.",
   "imagen": "/img/emprendedor.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "6 semanas",
   "horas": "20",
-  "nivel": "Todos los niveles",
+  "nivel": "Nivel 3 · Intermedio",
   "certificado": true,
   "requisitos": "Ninguno. Tener una idea en mente ayuda, pero no es obligatorio.",
   "objetivos": [
@@ -98,6 +98,22 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: emprender tu negocio sin dinero",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=As1tDl-TWDA",
+          "duracion": "25 min",
+          "_pl": 1,
+          "contenido": "<p>Estrategias reales para arrancar sin capital fuerte: validar, vender y reinvertir. Compará con lo visto en el módulo.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=emprender+negocio+sin+dinero+clase\" target=\"_blank\" rel=\"noopener\">emprender negocio sin dinero clase</a> en YouTube.</p>"
+        },
+        {
+          "titulo": "Video: tu negocio desde cero en 6 minutos",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=ar4xFOJbCs8",
+          "duracion": "6 min",
+          "_pl": 1,
+          "contenido": "<p>El paso a paso condensado: idea, primer cliente e ingresos. Un repaso rápido antes de tu tarjeta de problema.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=como+empezar+un+negocio+desde+cero\" target=\"_blank\" rel=\"noopener\">como empezar un negocio desde cero</a> en YouTube.</p>"
         }
       ]
     },
@@ -422,6 +438,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: ¿daría plata tu negocio?",
+          "tipo": "simulador",
+          "simulador": "emprende",
+          "duracion": "20 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Calcular el punto de equilibrio moviendo precio y costos</li><li>Sentir cuánto se vende por día para no perder</li><li>Poner precio sin miedo con números</li></ul></aside><p>Resolvé los 3 escenarios (almuerzos, técnico a domicilio y tienda de ropa) moviendo los controles hasta que el negocio sea viable. Al aprobar los 3, la lección se completa sola.</p>"
         }
       ]
     }

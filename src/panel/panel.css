@@ -509,3 +509,8 @@ a { color: var(--blue); }
 .rte__area ul.checklist { list-style: "☐  "; }
 .rte__area table { border-collapse: collapse; margin: 8px 0; } .rte__area th, .rte__area td { border: 1px solid #D6E2F5; padding: 4px 8px; }
 .rte__area h4 { font-size: .95rem; margin: 2px 0; }
+
+/* Reporte de tiempo por lección (certificados → ⏱️ Tiempo) */
+.card__sum { cursor: pointer; padding: 10px 12px; font-size: .95rem; color: var(--navy-900, #16223d); }
+.card__sum .muted-sm { font-weight: 400; color: var(--muted, #6b7280); }
+details.card { margin: 0 0 10px; }

@@ -334,3 +334,31 @@ En el aula, el tipo **🧩 Simulador interactivo** ahora tiene tres opciones. La
 - Son **7 prácticas** guiadas: conocer la placa, LED, botón, perilla, LED RGB, motor y mini-robot. Cada una trae pestañas de teoría y el editor «Pruébalo tú» con un mini-intérprete de Arduino (`pinMode`, `digitalWrite/Read`, `analogWrite/Read`, `delay`, `Serial.print(ln)`, `if/else`, `for`, más `distancia()`, `avanzar()` y `girar()` en el robot).
 - La lección se **completa sola** cuando el alumno termina las 7 prácticas (cada práctica valida que el código hizo lo esperado: blink real, botón pulsado, perilla girada, 3 canales PWM, rampa del motor y robot avanzar+girar). Llave local del progreso y código editado: `tr-a3d:v1` y `tr-a3d:done:<lección>` en el navegador.
 - Los botones, perillas y obstáculos se manipulan con el mouse encima de la escena 3D; hay controles deslizantes para perillas/RGB y la cámara sigue al robot en la práctica 7.
+
+## Cursos por niveles y laboratorios virtuales (octubre 2026)
+
+**Niveles.** Los 10 cursos del aula están ordenados en 4 niveles y el tablero del alumno los agrupa con encabezados: Nivel 1 · Básico (Computación básica, Herramientas digitales), Nivel 2 · Principiante (Ofimática, Empleabilidad, Fotografía, Diseño gráfico), Nivel 3 · Intermedio (Programación básica, Reparación de computadoras, Emprendimiento) y Nivel 4 · Experto (Arduino y robótica). El nivel de cada curso está en su ficha («nivel») y el orden en el campo «orden» del archivo JSON del curso.
+
+**Laboratorios virtuales (mini-simuladores).** Cada curso tiene un módulo «🧪 Laboratorio virtual» con un simulador interactivo que se completa solo al superar sus retos (no hay botón «marcar como completada»):
+
+| Curso | Simulador |
+|---|---|
+| Computación básica | Ordenar archivos en carpetas (arrastrar y soltar) |
+| Ofimática | Mini hoja de cálculo con fórmulas reales (=SUMA, =B2*C3…) |
+| Herramientas digitales | Búsquedas de Google con operadores (site:, filetype:, comillas, -excluir) |
+| Fotografía | Cámara virtual: triángulo de exposición con escena animada |
+| Diseño gráfico | Paleta de colores con la regla 60-30-10 y contraste |
+| Empleabilidad | Entrevista de trabajo con chat y retroalimentación |
+| Emprendimiento | Punto de equilibrio con gráfica de ingresos vs. costos |
+| Programación básica | Editor web en vivo (HTML/CSS/JS con vista previa) |
+
+El avance de cada simulador se guarda en el navegador del alumno (llaves `tr-msim:v1`) y, al completarlo, la lección se marca sola con la nota obtenida. Estos simuladores los corre `src/js/minisim.js` y no cargan librerías externas.
+
+**Más videos.** Se agregaron lecciones de video verificadas (que permiten incrustarse) a varios cursos; aparecen dentro de sus módulos como lecciones de tipo «Video».
+
+## Reporte de tiempo por lección (panel)
+
+El aula mide automáticamente cuánto tiempo pasa cada alumno en cada lección (solo cuenta con la pestaña visible; se envía al servidor cada 45 segundos y al salir de la página). En el panel, en **Certificados → ⏱️ Tiempo por lección**, ves por alumno y curso: la lección, su módulo, los minutos estimados, el tiempo real y si «cumple» (tiempo real ≥ 60 % del estimado). Hay botón para descargar **CSV para Excel**.
+
+- Requiere la base de datos conectada (si no, los tiempos quedan en el navegador del alumno hasta que se conecte).
+- En la base se crea la tabla `tiempo` automáticamente (`CREATE TABLE IF NOT EXISTS`); no hay que hacer nada manual.

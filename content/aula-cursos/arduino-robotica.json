@@ -1,13 +1,13 @@
 {
   "titulo": "Arduino y robótica desde cero",
   "publicado": true,
-  "orden": 10,
+  "orden": 40,
   "descripcion": "Aprende electrónica y programación con Arduino UNO sin quemar nada: circuitos en protoboard, LEDs, botones, perillas, motores y un robot que evita obstáculos. Incluye Laboratorio 3D con simulador interactivo donde ejecutás código Arduino real en las 7 prácticas guiadas, todo gratis y desde tu navegador.",
   "imagen": "/img/taller.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "7 semanas",
   "horas": "20",
-  "nivel": "Principiante",
+  "nivel": "Nivel 4 · Experto",
   "certificado": true,
   "requisitos": "Computadora con navegador (para el simulador). El kit físico es opcional: las prácticas del laboratorio 3D no lo requieren.",
   "objetivos": [
@@ -89,6 +89,14 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: la protoboard paso a paso",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=C_4-4_RpNEU",
+          "duracion": "10 min",
+          "_pl": 1,
+          "contenido": "<p>Cómo están conectadas internamente las filas y columnas del protoboard, y el primer circuito montado en vivo.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=como+usar+protoboard\" target=\"_blank\" rel=\"noopener\">como usar protoboard</a> en YouTube.</p>"
         }
       ]
     },
@@ -165,6 +173,14 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: Arduino desde cero (bienvenida)",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=RxIgT5uhSxw",
+          "duracion": "14 min",
+          "_pl": 1,
+          "contenido": "<p>La primera clase del curso de Arduino en español: qué es la placa, el IDE y cómo se carga un sketch. Va de la mano de este módulo.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=curso+arduino+desde+cero+español\" target=\"_blank\" rel=\"noopener\">curso arduino desde cero español</a> en YouTube.</p>"
         }
       ]
     },

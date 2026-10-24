@@ -31,7 +31,22 @@ TIPOS = {
     "tarea": ("file", "Tarea"),
     "simulador": ("cpu", "Simulador"),
 }
-SIMULADORES = {"pc": "Armado de PC de escritorio", "laptop": "Mantenimiento de laptop", "taller3d": "Taller 3D: arma PC y laptops", "arduino": "Laboratorio 3D de Arduino y robótica"}
+SIMULADORES = {"pc": "Armado de PC de escritorio", "laptop": "Mantenimiento de laptop", "taller3d": "Taller 3D: arma PC y laptops", "arduino": "Laboratorio 3D de Arduino y robótica",
+               "archivos": "Laboratorio: ordená el escritorio digital", "excel": "Laboratorio: mini hoja de cálculo con fórmulas",
+               "busqueda": "Laboratorio: buscá en Google como profesional", "foto": "Laboratorio: la cámara y la exposición",
+               "diseno": "Laboratorio: paleta de colores 60-30-10", "entrevista": "Laboratorio: entrevista de trabajo simulada",
+               "emprende": "Laboratorio: punto de equilibrio de tu negocio", "codigo": "Laboratorio: editor web en vivo"}
+# Simuladores ligeros (puro DOM/canvas, sin WebGL) que corre src/js/minisim.js
+MINISIMS = ("archivos", "excel", "busqueda", "foto", "diseno", "entrevista", "emprende", "codigo")
+
+
+def minutos_de(dur):
+    """Convierte «20 min» / «2 horas» a minutos (0 si no se entiende)."""
+    m = re.match(r"\s*(\d+)", str(dur or ""))
+    if not m:
+        return 0
+    n = int(m.group(1))
+    return n * 60 if "hora" in str(dur).lower() else n
 
 
 def habilitada():
@@ -434,6 +449,10 @@ def build_leccion(c, l):
                      '<p class="sim__loading">Cargando el taller 3D…</p><noscript>Activa JavaScript para usar el taller 3D.</noscript></section>'
                      '<script src="/js/taller3d-catalogo.js" defer></script>'
                      '<script type="module" src="/js/taller3d.js"></script>')
+        elif sim in MINISIMS:
+            extra = (f'<section class="msim" data-msim="{sim}" aria-label="{e(SIMULADORES[sim])}">'
+                     f'<p class="sim__loading">🧪 Cargando el laboratorio virtual…</p><noscript>Activa JavaScript para usar el laboratorio virtual.</noscript></section>'
+                     f'<script src="/js/minisim.js" defer></script>')
         else:
             extra = (f'<section class="sim" data-sim="{sim}" data-min="{minimo}" aria-label="Simulador: {e(SIMULADORES[sim])}">'
                      f'<p class="sim__loading">Cargando el simulador…</p><noscript>Activa JavaScript para usar el simulador.</noscript></section>'
@@ -524,6 +543,7 @@ def build_tablero():
     catalogo = [{
         "id": c["_id"], "titulo": c["titulo"], "descripcion": c.get("descripcion") or "", "imagen": img_abs(c.get("imagen")),
         "docente": c.get("docente") or "", "duracion": c.get("duracion") or "", "nivel": c.get("nivel") or "",
+        "orden": precio_num(c.get("orden")) or 999,
         "total": len(c["_lessons"]), "keys": [l["_key"] for l in c["_lessons"]],
         "titulos": {l["_key"]: l["titulo"] for l in c["_lessons"]},
         "urls": {l["_key"]: l["_url"] for l in c["_lessons"]}, "url": f'/aula/{c["_id"]}/',
@@ -618,6 +638,8 @@ def datos_worker():
                       "l": [l["_key"] for l in c["_lessons"]],
                       "q": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario"],
                       "x": [l["_key"] for l in c["_lessons"] if l["_tipo"] == "cuestionario" and l.get("examen_final")],
+                      # Ficha de cada lección para el reporte de tiempo: [título, minutos estimados, módulo]
+                      "m": {l["_key"]: [l["titulo"], minutos_de(l.get("duracion")), l["_mod_titulo"]] for l in c["_lessons"]},
                       # Clave de respuestas de cada cuestionario (solo la conoce el servidor)
                       "r": {l["_key"]: [[ok, exp] for (_, _, ok, exp) in quiz_items(l)] for l in c["_lessons"] if l["_tipo"] == "cuestionario"}}
     minimo = int(precio_num(g(A, "nota_minima") or 70)) or 70

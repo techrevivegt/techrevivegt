@@ -1,13 +1,13 @@
 {
   "titulo": "Ofimática: Word, Excel y PowerPoint",
   "publicado": true,
-  "orden": 3,
+  "orden": 20,
   "descripcion": "Domina las herramientas de oficina que piden en el trabajo y la universidad: documentos prolijos en Word, hojas de cálculo que automatizan con fórmulas en Excel, presentaciones efectivas en PowerPoint y manejo profesional de PDF, impresión y archivos en la nube.",
   "imagen": "/img/aprender.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "6 semanas",
   "horas": "24",
-  "nivel": "Principiante · Intermedio",
+  "nivel": "Nivel 2 · Principiante",
   "certificado": true,
   "requisitos": "Saber usar la computadora a nivel básico (curso de Computación básica recomendado).",
   "objetivos": [
@@ -401,6 +401,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: tu primera hoja de cálculo con fórmulas",
+          "tipo": "simulador",
+          "simulador": "excel",
+          "duracion": "20 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Multiplicar celdas (=A1*B1) para totales de venta</li><li>Sumar rangos con =SUMA(A1:B4)</li><li>Calcular el IVA del 12 % con una fórmula</li></ul></aside><p>Una mini-Excel de 6×6 donde las fórmulas funcionan de verdad. Resolvé los 3 retos de la tienda (totales, suma e IVA) y la lección se completa sola.</p>"
         }
       ]
     }

@@ -1,13 +1,13 @@
 {
   "titulo": "Diseño gráfico básico",
   "publicado": true,
-  "orden": 9,
+  "orden": 23,
   "descripcion": "Aprende diseño gráfico desde cero con herramientas 100 % gratuitas: composición, jerarquía, color y tipografías; Canva como profesional; Photopea y GIMP para editar imágenes y quitar fondos; y al final diseña tu propio logo y kit de marca completo para tu negocio o emprendimiento.",
   "imagen": "/img/p-app.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "5 semanas",
   "horas": "16",
-  "nivel": "Principiante",
+  "nivel": "Nivel 2 · Principiante",
   "certificado": true,
   "requisitos": "Ninguno. Todas las herramientas son gratuitas y funcionan en el navegador o en tu computadora.",
   "objetivos": [
@@ -89,6 +89,22 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: teoría del color en diseño",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=7Sc-WkcQKj4",
+          "duracion": "25 min",
+          "_pl": 1,
+          "contenido": "<p>La rueda cromática en acción: complementarios, análogos y cómo armar una paleta coherente. Miralo antes de la práctica 60-30-10.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=teoria+del+color+diseño+grafico\" target=\"_blank\" rel=\"noopener\">teoria del color diseño grafico</a> en YouTube.</p>"
+        },
+        {
+          "titulo": "Video: curso de diseño gráfico publicitario (parte 1)",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=4OYzul-X1Yg",
+          "duracion": "45 min",
+          "_pl": 1,
+          "contenido": "<p>Recorrido completo por identidad visual, branding, psicología del color y tipografía publicitaria. Ideal para el fin de semana.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=curso+diseño+grafico+publicitario\" target=\"_blank\" rel=\"noopener\">curso diseño grafico publicitario</a> en YouTube.</p>"
         }
       ]
     },
@@ -352,6 +368,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: diseñá tu afiche con la regla 60-30-10",
+          "tipo": "simulador",
+          "simulador": "diseno",
+          "duracion": "15 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Aplicar la regla 60-30-10 con paletas reales</li><li>Comprobar el contraste (que se lea de lejos)</li><li>Elegir combinaciones seguras sin «arcoíris»</li></ul></aside><p>Un afiche de venta editable: elegí los 3 colores y el medidor te dice al instante si cumplís la regla y si el texto se lee bien. Lográ un diseño aprobado y listo.</p>"
         }
       ]
     }

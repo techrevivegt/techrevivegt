@@ -1,13 +1,13 @@
 {
   "titulo": "Fotografía y contenido visual",
   "publicado": true,
-  "orden": 7,
+  "orden": 22,
   "descripcion": "Fotos bonitas y vendibles con tu celular: composición con regla de tercios, luz natural y estudio casero barato, modo Pro con ISO y obturación, edición en Snapseed y Lightroom, y cómo publicar tu portafolio con ética y estrategia para tu emprendimiento o empleo.",
   "imagen": "/img/hero.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "4 semanas",
   "horas": "12",
-  "nivel": "Principiante",
+  "nivel": "Nivel 2 · Principiante",
   "certificado": true,
   "requisitos": "Un celular con cámara (cualquier marca).",
   "objetivos": [
@@ -91,6 +91,22 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: fotografía con celular desde cero",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=vtGMdEs7CT4",
+          "duracion": "40 min",
+          "_pl": 1,
+          "contenido": "<p>Curso gratuito de fotografía básica: composición, luz y los secretos de las fotos con celular. Mirá la primera parte esta semana.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=curso+fotografia+principiantes+español\" target=\"_blank\" rel=\"noopener\">curso fotografia principiantes español</a> en YouTube.</p>"
+        },
+        {
+          "titulo": "Video: composición fotográfica que se nota",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=iHHk6wN_QHs",
+          "duracion": "15 min",
+          "_pl": 1,
+          "contenido": "<p>Cómo la composición transforma una foto común en una que vende: tercios, líneas guía y respiración visual.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=composicion+fotografica+movil\" target=\"_blank\" rel=\"noopener\">composicion fotografica movil</a> en YouTube.</p>"
         }
       ]
     },
@@ -236,6 +252,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: la cámara y la exposición",
+          "tipo": "simulador",
+          "simulador": "foto",
+          "duracion": "20 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Equilibrar ISO, velocidad y apertura (el triángulo de exposición)</li><li>Congelar el movimiento sin que la foto quede oscura</li><li>Evitar el ruido del ISO alto de noche</li></ul></aside><p>Una cámara virtual con sus tres diales. Resolvé los 3 retos (deporte, retrato suave y foto nocturna) viendo al instante cómo queda la foto. Al lograr los 3, la lección se completa sola.</p>"
         }
       ]
     }

@@ -1,13 +1,13 @@
 {
   "titulo": "Empleabilidad: consigue tu empleo",
   "publicado": true,
-  "orden": 6,
+  "orden": 21,
   "descripcion": "Todo para conseguir empleo en un contexto digital: CV de una página que vende logros con números, LinkedIn que aparezca en búsquedas, búsqueda estratégica con seguimiento en plataformas de Guatemala, entrevistas con el método STAR y una primera impresión memorable desde el primer día.",
   "imagen": "/img/p-capacitacion.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "3 semanas",
   "horas": "10",
-  "nivel": "Todos los niveles",
+  "nivel": "Nivel 2 · Principiante",
   "certificado": true,
   "requisitos": "Ninguno.",
   "objetivos": [
@@ -98,6 +98,22 @@
               "explicacion": ""
             }
           ]
+        },
+        {
+          "titulo": "Video: armá tu CV sin errores en minutos",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=nH8fwsKKJ4I",
+          "duracion": "12 min",
+          "_pl": 1,
+          "contenido": "<p>Mirá cómo se arma un currículum paso a paso, con las pautas que revisan los reclutadores. Anotá dos cosas que cambiarías en tu CV actual.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=hacer+curriculum+vitae\" target=\"_blank\" rel=\"noopener\">hacer curriculum vitae</a> en YouTube.</p>"
+        },
+        {
+          "titulo": "Video: preparate para la entrevista en persona",
+          "tipo": "video",
+          "video": "https://www.youtube.com/watch?v=4VvrObTo-UQ",
+          "duracion": "20 min",
+          "_pl": 1,
+          "contenido": "<p>Clase guiada sobre cómo presentarte, qué decir (y qué no) y cómo cerrar la entrevista con buena impresión.</p><p class=\"aula-credit\">🎥 Video educativo seleccionado por TechRevive · Canal: <a href=\"https://www.youtube.com/results?search_query=preparacion+entrevista+trabajo\" target=\"_blank\" rel=\"noopener\">preparacion entrevista trabajo</a> en YouTube.</p>"
         }
       ]
     },
@@ -227,6 +243,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: la entrevista de trabajo",
+          "tipo": "simulador",
+          "simulador": "entrevista",
+          "duracion": "15 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Responder las 5 preguntas clásicas sin congelarte</li><li>Usar el método STAR con ejemplos reales</li><li>Evitar las respuestas que descartan candidatos</li></ul></aside><p>Chat con la reclutadora «Andrea»: contestá sus 5 preguntas eligiendo la mejor opción y recibí retroalimentación al instante. Obtené 70 puntos o más para «quedar contratado/a» y completar la lección.</p>"
         }
       ]
     }

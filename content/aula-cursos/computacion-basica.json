@@ -1,13 +1,13 @@
 {
   "titulo": "Computación básica",
   "publicado": true,
-  "orden": 1,
+  "orden": 10,
   "descripcion": "Aprende a usar la computadora con confianza desde cero: sus partes, el mouse y el teclado, Windows, cómo organizar y respaldar tus archivos, internet y búsquedas eficaces, correo profesional, videollamadas, Word, Excel y PowerPoint, y cómo protegerte de estafas. Con prácticas guiadas, mecanografía interactiva y un proyecto final.",
   "imagen": "/img/aprender.jpg",
   "docente": "Equipo de capacitación TechRevive",
   "duracion": "8 semanas",
   "horas": "40",
-  "nivel": "Principiante",
+  "nivel": "Nivel 1 · Básico",
   "certificado": true,
   "requisitos": "Ninguno. Solo necesitas acceso a una computadora con Windows e internet.",
   "objetivos": [
@@ -1095,6 +1095,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: ordená tu computadora (archivos y carpetas)",
+          "tipo": "simulador",
+          "simulador": "archivos",
+          "duracion": "15 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Clasificar documentos, imágenes, videos y programas</li><li>Reconocer extensiones (.pdf, .png, .mp4, .exe)</li><li>Mantener el escritorio limpio de verdad</li></ul></aside><p>Te llegaron 10 archivos revueltos al escritorio. Arrastrá cada uno a su carpeta correcta; si te equivocás, el simulador te explica por qué. Al ordenar los 10, la lección se completa sola.</p>"
         }
       ]
     }

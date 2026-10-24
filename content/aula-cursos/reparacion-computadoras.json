@@ -1,13 +1,13 @@
 {
   "titulo": "Reparación y mantenimiento de computadoras",
   "publicado": true,
-  "orden": 2,
+  "orden": 31,
   "descripcion": "Aprende a diagnosticar, limpiar, mejorar y reparar computadoras de escritorio y laptops como un técnico: electricidad y multímetro, fuente de poder, componentes, armado de PC y BIOS/UEFI, mantenimiento preventivo, diagnóstico con método y software, laptops, instalación de Windows y drivers, redes, respaldo de datos y atención al cliente. Con casos reales, prácticas guiadas y un proyecto final.",
   "imagen": "/img/tecnico.jpg",
   "docente": "Técnicos de TechRevive",
   "duracion": "10 semanas",
   "horas": "60",
-  "nivel": "Intermedio",
+  "nivel": "Nivel 3 · Intermedio",
   "certificado": true,
   "requisitos": "Haber completado Computación básica o saber usar Windows con soltura.",
   "objetivos": [

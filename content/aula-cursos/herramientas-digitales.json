@@ -1,13 +1,13 @@
 {
   "titulo": "Herramientas digitales para el trabajo",
   "publicado": true,
-  "orden": 4,
+  "orden": 11,
   "descripcion": "Las herramientas que se usan en el trabajo y el estudio: búsqueda inteligente en Google, correo electrónico profesional, Drive y documentos colaborativos, videollamadas, calendario y, muy importante, cómo proteger tus cuentas con contraseñas fuertes y verificación en dos pasos.",
   "imagen": "/img/aula-virtual.jpg",
   "docente": "Instructores de TechRevive",
   "duracion": "4 semanas",
   "horas": "12",
-  "nivel": "Principiante",
+  "nivel": "Nivel 1 · Básico",
   "certificado": true,
   "requisitos": "Conexión a internet y cuenta de correo (puede ser Gmail gratuita).",
   "objetivos": [
@@ -287,6 +287,20 @@
             }
           ],
           "examen_final": true
+        }
+      ]
+    },
+    {
+      "titulo": "🧪 Laboratorio virtual",
+      "lecciones": [
+        {
+          "titulo": "Simulador: googleá como profesional",
+          "tipo": "simulador",
+          "simulador": "busqueda",
+          "duracion": "15 min",
+          "video": "",
+          "_pl": 1,
+          "contenido": "<aside class=\"nota objetivos\"><h4>🎯 Al terminar podrás</h4><ul><li>Usar comillas para frases exactas</li><li>Excluir palabras con el signo menos</li><li>Buscar dentro de un sitio con site: y por tipo de archivo con filetype:</li></ul></aside><p>5 misiones de búsqueda. Escribí el «googlear» perfecto para cada una y el simulador evalúa si usarías los operadores correctos. Completá al menos 4 misiones para terminar la lección.</p>"
         }
       ]
     }

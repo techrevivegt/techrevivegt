@@ -123,7 +123,7 @@ async function handleApi(request, env, url) {
   if (!session) return json({ error: "Tu sesión terminó. Vuelve a entrar con tu contraseña.", login: true }, 401);
 
   // Estadísticas, certificados y progreso de alumnos (base de datos, no necesitan GitHub).
-  if (route === "estadisticas" || route === "estadisticas/csv" || route === "certificados" || route === "alumnos/progreso" || route === "alumnos/inscripcion" || route === "solicitudes" || route === "reparaciones" || route === "resumen") {
+  if (route === "estadisticas" || route === "estadisticas/csv" || route === "certificados" || route === "alumnos/progreso" || route === "alumnos/tiempo" || route === "alumnos/inscripcion" || route === "solicitudes" || route === "reparaciones" || route === "resumen") {
     return handlePanelDb(request, env, url, route, method);
   }
   if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) {
@@ -438,6 +438,26 @@ async function handleAulaApi(request, env, url, route, method) {
     return json({ ok: true, guardados: stmts.length });
   }
 
+  // Tiempo real por lección: el navegador manda latidos con los segundos vistos.
+  if (route === "aula/tiempo" && method === "POST") {
+    const body = await readJson(request);
+    const items = Array.isArray(body.items) ? body.items.slice(0, 200) : [];
+    const stmts = [];
+    for (const it of items) {
+      const key = String(it.leccion || "");
+      const cid = LESSON_COURSE[key];
+      if (!cid || !aulaHasCourse(s.user, cid)) continue;
+      const seg = Math.max(0, Math.min(960, Math.round(Number(it.segundos) || 0))); // tope anti-basura: 16 min por latido
+      if (!seg) continue;
+      stmts.push(env.DB.prepare(
+        "INSERT INTO tiempo (usuario, leccion, segundos, actualizado) VALUES (?, ?, ?, ?) " +
+        "ON CONFLICT(usuario, leccion) DO UPDATE SET segundos = tiempo.segundos + excluded.segundos, actualizado = excluded.actualizado"
+      ).bind(s.usuario, key, seg, Date.now()));
+    }
+    if (stmts.length) await env.DB.batch(stmts);
+    return json({ ok: true, guardados: stmts.length });
+  }
+
   if (route === "aula/certificados" && method === "GET") {
     const rows = (await env.DB.prepare("SELECT id, curso, curso_titulo, nombre, estado, motivo, solicitado, emitido FROM certificados WHERE usuario = ? ORDER BY solicitado DESC").bind(s.usuario).all()).results || [];
     return json({ items: rows });
@@ -501,6 +521,7 @@ function ensureSchema(env) {
       env.DB.prepare("CREATE TABLE IF NOT EXISTS secciones (pid TEXT NOT NULL, seccion TEXT NOT NULL, ts INTEGER NOT NULL, segundos INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (pid, seccion))"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS secciones_ts ON secciones(ts)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS progreso (usuario TEXT NOT NULL, leccion TEXT NOT NULL, ts INTEGER NOT NULL, nota INTEGER, PRIMARY KEY (usuario, leccion))"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS tiempo (usuario TEXT NOT NULL, leccion TEXT NOT NULL, segundos INTEGER NOT NULL DEFAULT 0, actualizado INTEGER, PRIMARY KEY (usuario, leccion))"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS certificados (id TEXT PRIMARY KEY, usuario TEXT, nombre TEXT NOT NULL, curso TEXT, curso_titulo TEXT NOT NULL, horas TEXT, nota INTEGER, estado TEXT NOT NULL, origen TEXT, motivo TEXT, solicitado INTEGER, emitido INTEGER, fecha TEXT)"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS cert_usuario ON certificados(usuario, curso)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS eventos (id INTEGER PRIMARY KEY AUTOINCREMENT, ts INTEGER NOT NULL, pid TEXT, vid TEXT, tipo TEXT NOT NULL, etiqueta TEXT, ruta TEXT, seccion TEXT)"),
@@ -806,6 +827,30 @@ async function handlePanelDb(request, env, url, route, method) {
       const ultima = mine.reduce((m, x) => Math.max(m, x.ts || 0), 0) || null;
       return { usuario: u, nombre: info.n, activo: info.a, vence: info.v || "", ultima, cursos };
     });
+    return json({ items });
+  }
+
+  // Reporte de tiempo real por lección (segundos vistos vs. minutos estimados de la lección).
+  if (route === "alumnos/tiempo" && method === "GET") {
+    const rows = (await DB.prepare("SELECT usuario, leccion, segundos, actualizado FROM tiempo").all()).results || [];
+    const byUser = {};
+    for (const x of rows) (byUser[x.usuario] = byUser[x.usuario] || {})[x.leccion] = { seg: x.segundos || 0, act: x.actualizado || 0 };
+    const insc = (await DB.prepare("SELECT usuario, curso FROM inscripciones").all()).results || [];
+    const items = Object.entries(AULA_USERS).map(([u, info0]) => {
+      const elegidos = insc.filter((z) => z.usuario === u && AULA_COURSES.includes(z.curso)).map((z) => z.curso);
+      const info = elegidos.length ? { ...info0, c: [...new Set([...(info0.c || []), ...elegidos])] } : info0;
+      const t = byUser[u] || {};
+      const cursos = AULA_COURSES.filter((cid) => aulaHasCourse(info, cid)).map((cid) => {
+        const c = AULA_COURSE_DATA[cid] || { l: [], m: {} };
+        const lecciones = (c.l || []).map((k) => {
+          const meta = (c.m || {})[k] || [k, 0, ""];
+          const r = t[k];
+          return { key: k, titulo: meta[0], minutos: meta[1], modulo: meta[2], segundos: r ? r.seg : 0, actualizado: r ? r.act : 0 };
+        }).filter((x) => x.segundos > 0);
+        return { id: cid, titulo: c.t || cid, lecciones };
+      }).filter((c) => c.lecciones.length);
+      return { usuario: u, nombre: info.n, cursos };
+    }).filter((u) => u.cursos.length);
     return json({ items });
   }
 
