@@ -22,10 +22,10 @@ Crea el bucket **antes** de desplegar el cambio que agrega el binding R2.
 
 ## 2. Verificar y cargar la ISO
 
-La captura que compartiste mostraba `ERR_FILE_NOT_FOUND` en `C:\\Users\\elias\\Downloads\\...`; eso significa que la ISO no está guardada en esa carpeta todavía. **Primero debe existir un archivo local completo**; si no, el comando de carga fallará. La imagen esperada tiene 2,103,746,560 bytes y este SHA-256:
+La captura que compartiste mostraba `ERR_FILE_NOT_FOUND` en `C:\\Users\\elias\\Downloads\\...`; eso significa que la ISO no está guardada en esa carpeta todavía. **Primero debe existir un archivo local completo**; si no, el comando de carga fallará. La imagen esperada tiene 2,103,742,464 bytes y este SHA-256:
 
 ```text
-9b9ae6f056f5c929eb9090f470c1f1ee9fbce98fda5fad8053458c8a3e0e95e6
+075c6c00b79c541c13f890dcd4c5aaa2671eea30cd30805b1be77b8ed86372a9
 ```
 
 En PowerShell, verifica el archivo local:
