@@ -1,0 +1,315 @@
+diff --git a/AULAOS-R2-DEPLOY.md b/AULAOS-R2-DEPLOY.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..22f37fed2d0e62cca694e5330783b712c4af4a15
+--- /dev/null
++++ b/AULAOS-R2-DEPLOY.md
+@@ -0,0 +1,79 @@
++# Publicar AulaOS 0.1 desde TechRevive con Cloudflare R2
++
++Esta integración publica una página informativa en `/aulaos.html` y sirve la ISO desde un bucket R2 privado, mediante una ruta de solo lectura del Worker. **La ISO no se añade a GitHub ni al paquete de assets del Worker.**
++
++## Cambios de código incluidos
++
++- `wrangler.jsonc`: binding R2 `AULAOS_RELEASES` al bucket `techrevive-aulaos` y enrutamiento `/descargas/*` al Worker.
++- `worker/index.js`: endpoint `GET`/`HEAD` en `/descargas/aulaos-0.1-amd64-amd64.hybrid.iso`, con soporte de solicitudes `Range` para descargas reanudables.
++- `build.py` y `generador/`: página AulaOS, enlace en inicio/menú y exclusión de la descarga grande del service worker.
++- No se crea ninguna ruta pública para subir archivos; la carga se hace autenticada con Wrangler.
++
++## 1. Crear el bucket
++
++En una terminal con Wrangler instalado y con sesión en la cuenta de Cloudflare:
++
++```bash
++npx wrangler login
++npx wrangler r2 bucket create techrevive-aulaos
++```
++
++Crea el bucket **antes** de desplegar el cambio que agrega el binding R2.
++
++## 2. Verificar y cargar la ISO
++
++La captura que compartiste mostraba `ERR_FILE_NOT_FOUND` en `C:\\Users\\elias\\Downloads\\...`; eso significa que la ISO no está guardada en esa carpeta todavía. **Primero debe existir un archivo local completo**; si no, el comando de carga fallará. La imagen esperada tiene 2,103,746,560 bytes y este SHA-256:
++
++```text
++9b9ae6f056f5c929eb9090f470c1f1ee9fbce98fda5fad8053458c8a3e0e95e6
++```
++
++En PowerShell, verifica el archivo local:
++
++```powershell
++Get-FileHash -Algorithm SHA256 "C:\Users\elias\Downloads\aulaos-0.1-amd64-amd64.hybrid.iso"
++```
++
++Si coincide, cárgalo al bucket (ajusta la ruta local si lo guardaste en otra carpeta):
++
++```powershell
++npx wrangler r2 object put techrevive-aulaos/aulaos/aulaos-0.1-amd64-amd64.hybrid.iso `
++  --file "C:\Users\elias\Downloads\aulaos-0.1-amd64-amd64.hybrid.iso" `
++  --remote `
++  --content-type "application/octet-stream" `
++  --content-disposition 'attachment; filename="AulaOS-0.1-Live-AMD64.iso"' `
++  --cache-control "public, max-age=3600"
++```
++
++Wrangler gestiona las credenciales de la cuenta; **no pegues tokens de Cloudflare en el repositorio ni en el chat**.
++
++## 3. Publicar los cambios de este proyecto
++
++1. Aplica los archivos modificados de este paquete al repositorio `techrevivegt/techrevivegt`.
++2. Confirma y publica los cambios en `main`. Si el despliegue automático de Cloudflare está conectado, espera a que termine.
++3. Si publicas manualmente desde el proyecto, ejecuta desde la raíz:
++
++```bash
++python build.py
++npx wrangler deploy
++```
++
++## 4. Comprobar
++
++- Página informativa: `https://techrevive.techrevive-gt.workers.dev/aulaos.html`
++- Descarga directa: `https://techrevive.techrevive-gt.workers.dev/descargas/aulaos-0.1-amd64-amd64.hybrid.iso`
++
++Si el Worker responde `503`, falta desplegar el binding R2. Si responde `404`, el objeto todavía no se ha cargado con la clave exacta indicada arriba.
++
++## Aviso del prototipo
++
++AulaOS 0.1 es una ISO Live experimental para PC amd64, no un instalador estable. Esta reconstrucción aún no se ha vuelto a probar en QEMU ni en equipos físicos. Escribirla en una memoria USB borra su contenido; no instalarla ni modificar el disco interno de un equipo escolar.
++
++## Revisión de seguridad al dejar público el repositorio
++
++Antes de mantenerlo público, confirma en Cloudflare que el secreto `AULA_SECRET` está configurado con un valor aleatorio fuerte y revisa/desactiva las cuentas de demostración. El código del Worker usa una clave generada que está en el repositorio como último recurso si no encuentra `AULA_SECRET` ni `PANEL_PASSWORD`; al ser público el repo, no conviene depender de ese fallback.
++
++## Documentación oficial
++
++- [Cloudflare R2 Workers API](https://developers.cloudflare.com/r2/api/workers/workers-api-reference/)
++- [Wrangler: comandos de R2 y carga de objetos](https://developers.cloudflare.com/workers/wrangler/commands/r2/)
+diff --git a/build.py b/build.py
+index abfc8560688710bfb1062c347d8bb0a67bc11edf..4affa03cf8c45bc49bb97c4a90a8e2a4607d58f9 100644
+--- a/build.py
++++ b/build.py
+@@ -256,7 +256,7 @@ self.addEventListener("activate", function (e) {
+ self.addEventListener("fetch", function (e) {
+   var r = e.request, u = new URL(r.url);
+   if (r.method !== "GET" || u.origin !== location.origin) return;
+-  if (/^\\/(api|panel|aula|admin)(\\/|$)/.test(u.pathname) || u.pathname === "/version.json" || u.pathname === "/js/config.js") return;
++  if (/^\\/(api|panel|aula|admin|descargas)(\\/|$)/.test(u.pathname) || u.pathname === "/version.json" || u.pathname === "/js/config.js") return;
+   if (r.mode === "navigate") {
+     e.respondWith(fetch(r).catch(function () {
+       return caches.match(r).then(function (m) { return m || caches.match(OFFLINE); });
+@@ -350,6 +350,7 @@ def main():
+     import aula as pa
+ 
+     pp.build_index(pr.posts_preview)
++    pp.build_aulaos_page()
+     pp.build_about()
+     pp.build_services()
+     pp.build_service_pages()
+diff --git a/generador/base.py b/generador/base.py
+index 8c9a3516e676d3976799d2f1f25384ca1b93a36f..dc47dd2411cfceee93d6751b9dc46429142c809a 100644
+--- a/generador/base.py
++++ b/generador/base.py
+@@ -150,7 +150,7 @@ ARROW = icon("arrow")
+ SERVICIOS = load("servicios.json")
+ TARIFARIO = load("tarifario.json") or {}
+ RESERVED = {"index", "quienes-somos", "servicios", "capacitacion", "cursos", "aula-virtual", "inscripcion", "blog",
+-            "preguntas-frecuentes", "novedades", "galeria", "redes-sociales", "contacto", "ubicacion", "mapa-del-sitio", "404", "cotizador"}
++            "preguntas-frecuentes", "novedades", "galeria", "redes-sociales", "contacto", "ubicacion", "mapa-del-sitio", "404", "cotizador", "aulaos"}
+ 
+ 
+ def service_list():
+@@ -221,6 +221,7 @@ def nav_items():
+             ("Capacitación tecnológica", "capacitacion.html", "cap", "Modalidades, niveles y nuestra forma de enseñar."),
+             ("Cursos disponibles", "cursos.html", "book", "Computación, ofimática, reparación y más."),
+             ("Aula virtual", "aula-virtual.html", "monitor", "Aprende en línea, a tu ritmo."),
++            ("Sistema educativo AulaOS", "aulaos.html", "monitor", "Live USB experimental para PC amd64."),
+             ("Inscripción", "inscripcion.html", "clipboard", "Reserva tu lugar en un curso.")]),
+         ("Recursos", "blog.html", [
+             ("Blog y tutoriales", "blog.html", "file", "Consejos prácticos para tu tecnología."),
+@@ -339,6 +340,7 @@ def footer():
+         <ul>
+           <li><a href="quienes-somos.html">¿Quiénes somos?</a></li>
+           <li><a href="capacitacion.html">Capacitación</a></li>
++          <li><a href="aulaos.html">AulaOS educativo</a></li>
+           <li><a href="cursos.html">Cursos</a></li>
+           <li><a href="blog.html">Blog y tutoriales</a></li>
+           <li><a href="novedades.html">Novedades</a></li>
+diff --git a/generador/principal.py b/generador/principal.py
+index f4e39693ecb3754aacc30ac4a87b4eee3e94d1c3..4dd86aa5fbacb2cac11139017c6f2e9827e9b51b 100644
+--- a/generador/principal.py
++++ b/generador/principal.py
+@@ -370,6 +370,63 @@ def sec_blog(B, posts_preview):
+ '''
+ 
+ 
++def sec_aulaos():
++    return f'''    <section class="section section--dark" id="aulaos" aria-labelledby="aulaos-home-title">
++      <div class="container">
++{section_head("Proyecto educativo", "AulaOS", "Una imagen Live experimental basada en Debian para probar recursos educativos en PC amd64.", center=True, hid="aulaos-home-title", light=True)}
++        <div class="section-foot">
++          <a href="aulaos.html" class="btn btn--white btn--lg">Conocer AulaOS {ARROW}</a>
++        </div>
++      </div>
++    </section>
++'''
++
++
++def build_aulaos_page():
++    download = "/descargas/aulaos-0.1-amd64-amd64.hybrid.iso"
++    hero = page_hero(
++        [("AulaOS", None)],
++        "Proyecto educativo experimental",
++        "AulaOS 0.1",
++        "Una primera imagen Live USB basada en Debian 13 y XFCE, con Firefox ESR, LibreOffice en español y un portal educativo local.",
++        buttons=(f'<a href="{download}" class="btn btn--primary btn--lg">{icon("download")} Descargar ISO · 2.1 GB</a>'
++                 '<a href="#antes-de-probar" class="btn btn--ghost-light btn--lg">Leer antes de probar</a>'),
++        chips=["Debian 13", "XFCE", "Live USB", "PC amd64"]
++    )
++    features = cards([
++        {"icono": "monitor", "titulo": "Entorno de escritorio", "texto": "XFCE para una experiencia ligera en PC x86-64."},
++        {"icono": "wifi", "titulo": "Uso Live", "texto": "Se prueba desde USB sin instalar el sistema en el disco interno."},
++        {"icono": "file", "titulo": "Herramientas", "texto": "Firefox ESR, LibreOffice en español y recursos locales de AulaOS."},
++    ])
++    overview = f'''    <section class="section section--soft" aria-labelledby="aulaos-incluye-title">
++      <div class="container">
++{section_head("Primera versión tangible", "Qué incluye esta ISO", "Es una base para validar la experiencia, recoger comentarios y probar el concepto en equipos compatibles.", center=True, hid="aulaos-incluye-title")}
++        {features}
++      </div>
++    </section>
++'''
++    safety = f'''    <section class="section" id="antes-de-probar" aria-labelledby="aulaos-safety-title">
++      <div class="container">
++{section_head("Importante", "Antes de descargar y probar", "Esta compilación todavía no está lista para despliegue institucional.", hid="aulaos-safety-title")}
++        <ul class="checklist checklist--2">
++          <li>Es una versión experimental; la reconstrucción actual no se ha vuelto a probar en QEMU ni en hardware real.</li>
++          <li>Está dirigida únicamente a PC amd64 (x86-64); no se ha certificado para modelos escolares concretos, Chromebooks ni ARM.</li>
++          <li>Es una sesión Live, no un instalador estable. No selecciones instalar, reparticionar ni formatear discos.</li>
++          <li>Escribir la imagen borra todo el contenido de la memoria USB. Usa una USB vacía y prueba primero en una máquina virtual o equipo autorizado.</li>
++        </ul>
++        <p style="margin-top:1.5rem"><strong>Tamaño:</strong> 2,103,746,560 bytes (aprox. 2.1 GB).</p>
++        <p><strong>SHA-256:</strong> <code style="word-break:break-all">9b9ae6f056f5c929eb9090f470c1f1ee9fbce98fda5fad8053458c8a3e0e95e6</code></p>
++        <div class="section-foot">
++          <a href="{download}" class="btn btn--primary btn--lg">{icon("download")} Descargar ISO · 2.1 GB</a>
++        </div>
++      </div>
++    </section>
++'''
++    page("aulaos.html", "AulaOS 0.1 · Live USB educativo experimental",
++         "Descarga AulaOS 0.1, una ISO Live experimental basada en Debian 13 para PC amd64. No es un instalador ni está validada para despliegue escolar.",
++         hero + overview + safety, section="AulaOS")
++
++
+ def build_index(preview_fn):
+     B = g(INI, "blog", default={})
+     try:
+@@ -384,7 +441,7 @@ def build_index(preview_fn):
+     body = (sec_hero() + sec_values() + sec_services(g(INI, "servicios", default={})) + ph.promo_home() + sec_why(g(INI, "por_que", default={}))
+             + sec_training(g(INI, "capacitacion", default={})) + sec_business(g(INI, "negocios", default={}))
+             + process_section() + sec_projects(g(INI, "proyectos", default={})) + sec_testimonials(g(INI, "testimonios", default={}))
+-            + sec_blog(B, preview_fn(n)) + cta + contact_section("contacto"))
++            + sec_blog(B, preview_fn(n)) + sec_aulaos() + cta + contact_section("contacto"))
+     P = g(INI, "portada", default={})
+     jsonld = {
+         "@context": "https://schema.org", "@type": "ProfessionalService", "name": "TechRevive",
+diff --git a/worker/index.js b/worker/index.js
+index b66578b1a2a289723a97d6f560bb49c5cc1f24dc..cf9444c3d3f599d030c5d367932b51a39b85bad1 100644
+--- a/worker/index.js
++++ b/worker/index.js
+@@ -43,9 +43,23 @@ const ALLOWED_DIRS = ["content/blog", "content/aula-cursos", "src/img", "src/aul
+ const AULA_COOKIE = "tr_aula";
+ const AULA_DAYS = 14;
+ 
++const AULAOS_DOWNLOAD_PATH = "/descargas/aulaos-0.1-amd64-amd64.hybrid.iso";
++const AULAOS_R2_KEY = "aulaos/aulaos-0.1-amd64-amd64.hybrid.iso";
++
+ export default {
+   async fetch(request, env) {
+     const url = new URL(request.url);
++    if (url.pathname === AULAOS_DOWNLOAD_PATH) {
++      if (request.method !== "GET" && request.method !== "HEAD") {
++        return withSec(new Response("Método no permitido.", { status: 405, headers: { Allow: "GET, HEAD" } }));
++      }
++      try {
++        return withSec(await handleAulaOSDownload(request, env));
++      } catch (err) {
++        console.error("No se pudo servir AulaOS desde R2", err);
++        return withSec(new Response("No se pudo acceder a la ISO de AulaOS.", { status: 502 }));
++      }
++    }
+     if (url.pathname.startsWith("/api/")) {
+       try {
+         return withSec(await handleApi(request, env, url));
+@@ -64,6 +78,54 @@ export default {
+   },
+ };
+ 
++/* ───────────────────────── Descarga de AulaOS desde R2 ───────────────────────── */
++async function handleAulaOSDownload(request, env) {
++  const bucket = env.AULAOS_RELEASES;
++  if (!bucket) {
++    return new Response("La descarga de AulaOS aún no está configurada.", { status: 503 });
++  }
++
++  const object = request.method === "HEAD"
++    ? await bucket.head(AULAOS_R2_KEY)
++    : await bucket.get(
++        AULAOS_R2_KEY,
++        request.headers.has("range") ? { range: request.headers } : undefined
++      );
++
++  if (!object) {
++    return new Response("La ISO de AulaOS todavía no está cargada en R2.", { status: 404 });
++  }
++
++  const headers = new Headers();
++  if (typeof object.writeHttpMetadata === "function") object.writeHttpMetadata(headers);
++  headers.set("Content-Type", "application/octet-stream");
++  headers.set("Content-Disposition", 'attachment; filename="AulaOS-0.1-Live-AMD64.iso"');
++  headers.set("Accept-Ranges", "bytes");
++  headers.set("Cache-Control", "public, max-age=3600");
++  headers.set("X-Content-Type-Options", "nosniff");
++  if (object.httpEtag) headers.set("ETag", object.httpEtag);
++
++  if (request.method === "HEAD") {
++    headers.set("Content-Length", String(object.size));
++    return new Response(null, { status: 200, headers });
++  }
++
++  if (!object.body) {
++    return new Response("No se pudo leer la ISO desde R2.", { status: 502 });
++  }
++
++  if (object.range && Number.isSafeInteger(object.range.offset) && Number.isSafeInteger(object.range.length)) {
++    const first = object.range.offset;
++    const last = first + object.range.length - 1;
++    headers.set("Content-Range", `bytes ${first}-${last}/${object.size}`);
++    headers.set("Content-Length", String(object.range.length));
++    return new Response(object.body, { status: 206, headers });
++  }
++
++  headers.set("Content-Length", String(object.size));
++  return new Response(object.body, { status: 200, headers });
++}
++
+ /* ───────────────────────── API ───────────────────────── */
+ 
+ async function handleApi(request, env, url) {
+diff --git a/wrangler.jsonc b/wrangler.jsonc
+index 6caf28c947de8cf0caad2bc27dae2ae7575b1cfb..03ba449cdd8d2a9ae605f9de124813d5a2b5c7f1 100644
+--- a/wrangler.jsonc
++++ b/wrangler.jsonc
+@@ -9,8 +9,14 @@
+     "directory": "./_site",
+     "binding": "ASSETS",
+     "not_found_handling": "404-page",
+-    "run_worker_first": ["/api/*", "/aula", "/aula/*"]
++    "run_worker_first": ["/api/*", "/aula", "/aula/*", "/descargas/*"]
+   },
++  "r2_buckets": [
++    {
++      "binding": "AULAOS_RELEASES",
++      "bucket_name": "techrevive-aulaos"
++    }
++  ],
+   "vars": {
+     // Tu repositorio de GitHub (usuario/repositorio) y la rama.
+     "GITHUB_REPO": "techrevivegt/techrevivegt",
