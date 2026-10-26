@@ -256,7 +256,7 @@ self.addEventListener("activate", function (e) {
 self.addEventListener("fetch", function (e) {
   var r = e.request, u = new URL(r.url);
   if (r.method !== "GET" || u.origin !== location.origin) return;
-  if (/^\\/(api|panel|aula|admin)(\\/|$)/.test(u.pathname) || u.pathname === "/version.json" || u.pathname === "/js/config.js") return;
+  if (/^\\/(api|panel|aula|admin|descargas)(\\/|$)/.test(u.pathname) || u.pathname === "/version.json" || u.pathname === "/js/config.js") return;
   if (r.mode === "navigate") {
     e.respondWith(fetch(r).catch(function () {
       return caches.match(r).then(function (m) { return m || caches.match(OFFLINE); });
@@ -350,6 +350,7 @@ def main():
     import aula as pa
 
     pp.build_index(pr.posts_preview)
+    pp.build_aulaos_page()
     pp.build_about()
     pp.build_services()
     pp.build_service_pages()

@@ -370,6 +370,63 @@ def sec_blog(B, posts_preview):
 '''
 
 
+def sec_aulaos():
+    return f'''    <section class="section section--dark" id="aulaos" aria-labelledby="aulaos-home-title">
+      <div class="container">
+{section_head("Proyecto educativo", "AulaOS", "Una imagen Live experimental basada en Debian para probar recursos educativos en PC amd64.", center=True, hid="aulaos-home-title", light=True)}
+        <div class="section-foot">
+          <a href="aulaos.html" class="btn btn--white btn--lg">Conocer AulaOS {ARROW}</a>
+        </div>
+      </div>
+    </section>
+'''
+
+
+def build_aulaos_page():
+    download = "/descargas/aulaos-0.1-amd64-amd64.hybrid.iso"
+    hero = page_hero(
+        [("AulaOS", None)],
+        "Proyecto educativo experimental",
+        "AulaOS 0.1",
+        "Una primera imagen Live USB basada en Debian 13 y XFCE, con Firefox ESR, LibreOffice en español y un portal educativo local.",
+        buttons=(f'<a href="{download}" class="btn btn--primary btn--lg">{icon("download")} Descargar ISO · 2.1 GB</a>'
+                 '<a href="#antes-de-probar" class="btn btn--ghost-light btn--lg">Leer antes de probar</a>'),
+        chips=["Debian 13", "XFCE", "Live USB", "PC amd64"]
+    )
+    features = cards([
+        {"icono": "monitor", "titulo": "Entorno de escritorio", "texto": "XFCE para una experiencia ligera en PC x86-64."},
+        {"icono": "wifi", "titulo": "Uso Live", "texto": "Se prueba desde USB sin instalar el sistema en el disco interno."},
+        {"icono": "file", "titulo": "Herramientas", "texto": "Firefox ESR, LibreOffice en español y recursos locales de AulaOS."},
+    ])
+    overview = f'''    <section class="section section--soft" aria-labelledby="aulaos-incluye-title">
+      <div class="container">
+{section_head("Primera versión tangible", "Qué incluye esta ISO", "Es una base para validar la experiencia, recoger comentarios y probar el concepto en equipos compatibles.", center=True, hid="aulaos-incluye-title")}
+        {features}
+      </div>
+    </section>
+'''
+    safety = f'''    <section class="section" id="antes-de-probar" aria-labelledby="aulaos-safety-title">
+      <div class="container">
+{section_head("Importante", "Antes de descargar y probar", "Esta compilación todavía no está lista para despliegue institucional.", hid="aulaos-safety-title")}
+        <ul class="checklist checklist--2">
+          <li>Es una versión experimental; la reconstrucción actual no se ha vuelto a probar en QEMU ni en hardware real.</li>
+          <li>Está dirigida únicamente a PC amd64 (x86-64); no se ha certificado para modelos escolares concretos, Chromebooks ni ARM.</li>
+          <li>Es una sesión Live, no un instalador estable. No selecciones instalar, reparticionar ni formatear discos.</li>
+          <li>Escribir la imagen borra todo el contenido de la memoria USB. Usa una USB vacía y prueba primero en una máquina virtual o equipo autorizado.</li>
+        </ul>
+        <p style="margin-top:1.5rem"><strong>Tamaño:</strong> 2,103,746,560 bytes (aprox. 2.1 GB).</p>
+        <p><strong>SHA-256:</strong> <code style="word-break:break-all">5d5f18cb7cc93f7ace7b8e5bb787dec9a99ce7e0fccff07ad3aad165ddb7ab90</code></p>
+        <div class="section-foot">
+          <a href="{download}" class="btn btn--primary btn--lg">{icon("download")} Descargar ISO · 2.1 GB</a>
+        </div>
+      </div>
+    </section>
+'''
+    page("aulaos.html", "AulaOS 0.1 · Live USB educativo experimental",
+         "Descarga AulaOS 0.1, una ISO Live experimental basada en Debian 13 para PC amd64. No es un instalador ni está validada para despliegue escolar.",
+         hero + overview + safety, section="AulaOS")
+
+
 def build_index(preview_fn):
     B = g(INI, "blog", default={})
     try:
@@ -384,7 +441,7 @@ def build_index(preview_fn):
     body = (sec_hero() + sec_values() + sec_services(g(INI, "servicios", default={})) + ph.promo_home() + sec_why(g(INI, "por_que", default={}))
             + sec_training(g(INI, "capacitacion", default={})) + sec_business(g(INI, "negocios", default={}))
             + process_section() + sec_projects(g(INI, "proyectos", default={})) + sec_testimonials(g(INI, "testimonios", default={}))
-            + sec_blog(B, preview_fn(n)) + cta + contact_section("contacto"))
+            + sec_blog(B, preview_fn(n)) + sec_aulaos() + cta + contact_section("contacto"))
     P = g(INI, "portada", default={})
     jsonld = {
         "@context": "https://schema.org", "@type": "ProfessionalService", "name": "TechRevive",

@@ -150,7 +150,7 @@ ARROW = icon("arrow")
 SERVICIOS = load("servicios.json")
 TARIFARIO = load("tarifario.json") or {}
 RESERVED = {"index", "quienes-somos", "servicios", "capacitacion", "cursos", "aula-virtual", "inscripcion", "blog",
-            "preguntas-frecuentes", "novedades", "galeria", "redes-sociales", "contacto", "ubicacion", "mapa-del-sitio", "404", "cotizador"}
+            "preguntas-frecuentes", "novedades", "galeria", "redes-sociales", "contacto", "ubicacion", "mapa-del-sitio", "404", "cotizador", "aulaos"}
 
 
 def service_list():
@@ -221,6 +221,7 @@ def nav_items():
             ("Capacitación tecnológica", "capacitacion.html", "cap", "Modalidades, niveles y nuestra forma de enseñar."),
             ("Cursos disponibles", "cursos.html", "book", "Computación, ofimática, reparación y más."),
             ("Aula virtual", "aula-virtual.html", "monitor", "Aprende en línea, a tu ritmo."),
+            ("Sistema educativo AulaOS", "aulaos.html", "monitor", "Live USB experimental para PC amd64."),
             ("Inscripción", "inscripcion.html", "clipboard", "Reserva tu lugar en un curso.")]),
         ("Recursos", "blog.html", [
             ("Blog y tutoriales", "blog.html", "file", "Consejos prácticos para tu tecnología."),
@@ -339,6 +340,7 @@ def footer():
         <ul>
           <li><a href="quienes-somos.html">¿Quiénes somos?</a></li>
           <li><a href="capacitacion.html">Capacitación</a></li>
+          <li><a href="aulaos.html">AulaOS educativo</a></li>
           <li><a href="cursos.html">Cursos</a></li>
           <li><a href="blog.html">Blog y tutoriales</a></li>
           <li><a href="novedades.html">Novedades</a></li>

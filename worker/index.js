@@ -43,9 +43,23 @@ const ALLOWED_DIRS = ["content/blog", "content/aula-cursos", "src/img", "src/aul
 const AULA_COOKIE = "tr_aula";
 const AULA_DAYS = 14;
 
+const AULAOS_DOWNLOAD_PATH = "/descargas/aulaos-0.1-amd64-amd64.hybrid.iso";
+const AULAOS_R2_KEY = "aulaos/aulaos-0.1-amd64-amd64.hybrid.iso";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === AULAOS_DOWNLOAD_PATH) {
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        return withSec(new Response("Método no permitido.", { status: 405, headers: { Allow: "GET, HEAD" } }));
+      }
+      try {
+        return withSec(await handleAulaOSDownload(request, env));
+      } catch (err) {
+        console.error("No se pudo servir AulaOS desde R2", err);
+        return withSec(new Response("No se pudo acceder a la ISO de AulaOS.", { status: 502 }));
+      }
+    }
     if (url.pathname.startsWith("/api/")) {
       try {
         return withSec(await handleApi(request, env, url));
@@ -63,6 +77,54 @@ export default {
     return new Response("No encontrado", { status: 404 });
   },
 };
+
+/* ───────────────────────── Descarga de AulaOS desde R2 ───────────────────────── */
+async function handleAulaOSDownload(request, env) {
+  const bucket = env.AULAOS_RELEASES;
+  if (!bucket) {
+    return new Response("La descarga de AulaOS aún no está configurada.", { status: 503 });
+  }
+
+  const object = request.method === "HEAD"
+    ? await bucket.head(AULAOS_R2_KEY)
+    : await bucket.get(
+        AULAOS_R2_KEY,
+        request.headers.has("range") ? { range: request.headers } : undefined
+      );
+
+  if (!object) {
+    return new Response("La ISO de AulaOS todavía no está cargada en R2.", { status: 404 });
+  }
+
+  const headers = new Headers();
+  if (typeof object.writeHttpMetadata === "function") object.writeHttpMetadata(headers);
+  headers.set("Content-Type", "application/octet-stream");
+  headers.set("Content-Disposition", 'attachment; filename="AulaOS-0.1-Live-AMD64.iso"');
+  headers.set("Accept-Ranges", "bytes");
+  headers.set("Cache-Control", "public, max-age=3600");
+  headers.set("X-Content-Type-Options", "nosniff");
+  if (object.httpEtag) headers.set("ETag", object.httpEtag);
+
+  if (request.method === "HEAD") {
+    headers.set("Content-Length", String(object.size));
+    return new Response(null, { status: 200, headers });
+  }
+
+  if (!object.body) {
+    return new Response("No se pudo leer la ISO desde R2.", { status: 502 });
+  }
+
+  if (object.range && Number.isSafeInteger(object.range.offset) && Number.isSafeInteger(object.range.length)) {
+    const first = object.range.offset;
+    const last = first + object.range.length - 1;
+    headers.set("Content-Range", `bytes ${first}-${last}/${object.size}`);
+    headers.set("Content-Length", String(object.range.length));
+    return new Response(object.body, { status: 206, headers });
+  }
+
+  headers.set("Content-Length", String(object.size));
+  return new Response(object.body, { status: 200, headers });
+}
 
 /* ───────────────────────── API ───────────────────────── */
 

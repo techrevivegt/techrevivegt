@@ -9,8 +9,14 @@
     "directory": "./_site",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*", "/aula", "/aula/*"]
+    "run_worker_first": ["/api/*", "/aula", "/aula/*", "/descargas/*"]
   },
+  "r2_buckets": [
+    {
+      "binding": "AULAOS_RELEASES",
+      "bucket_name": "techrevive-aulaos"
+    }
+  ],
   "vars": {
     // Tu repositorio de GitHub (usuario/repositorio) y la rama.
     "GITHUB_REPO": "techrevivegt/techrevivegt",
