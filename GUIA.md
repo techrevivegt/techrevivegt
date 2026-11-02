@@ -367,8 +367,9 @@ El aula mide automáticamente cuánto tiempo pasa cada alumno en cada lección (
 
 Tu sitio tiene un asistente llamado **Gucu** (inspirado en Gucumatz/Quetzalcóatl, la serpiente emplumada maya, con piel de circuitos azul neón). Aparece flotando en la esquina inferior derecha, saluda a los visitantes y les da consejos según la página donde estén (inicio, servicios, cotizador, contacto, seguimiento, diagnóstico).
 
-- **Se mueve** suavemente (flota) y, al hacerle clic, muestra un consejo nuevo.
-- **Puede hablar en voz alta** si el visitante activa el botón 🔊 (usa la voz del navegador, sin costo ni servicios externos).
+- **Vuela por la pantalla**: cada rato sale de paseo a otro rincón (inclinándose mientras vuela, como una guía animada) y regresa solito a su esquina. Nunca tapa contenido importante: pasea solo por la franja baja.
+- **Cualquiera lo puede agarrar y arrastrar** con el mouse o el dedo a donde quiera; al rato vuelve a su esquina.
+- **Habla en voz alta con voz de caricatura** (la voz del navegador, gratis y sin servicios externos). El navegador exige un primer clic en la página para activar el sonido; el visitante puede apagar la voz con el botón 🔊.
 - El visitante puede **silenciarlo por hoy** o **quitarlo para siempre** en su navegador.
 - No aparece dentro del aula virtual ni al imprimir una página.
 - Los mensajes y su nombre se editan en `src/js/gucu.js`; la imagen está en `src/img/gucu-mascota.png` (puedes reemplazarla manteniendo el nombre).
