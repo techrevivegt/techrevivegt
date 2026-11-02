@@ -48,5 +48,6 @@
       "Otro"
     ],
     "endpoint": ""
-  }
+  },
+  "asistente_ia": true
 }
