@@ -362,3 +362,13 @@ El aula mide automáticamente cuánto tiempo pasa cada alumno en cada lección (
 
 - Requiere la base de datos conectada (si no, los tiempos quedan en el navegador del alumno hasta que se conecte).
 - En la base se crea la tabla `tiempo` automáticamente (`CREATE TABLE IF NOT EXISTS`); no hay que hacer nada manual.
+
+## Gucu, el guía del sitio (mascota flotante) 🐍
+
+Tu sitio tiene un asistente llamado **Gucu** (inspirado en Gucumatz/Quetzalcóatl, la serpiente emplumada maya, con piel de circuitos azul neón). Aparece flotando en la esquina inferior derecha, saluda a los visitantes y les da consejos según la página donde estén (inicio, servicios, cotizador, contacto, seguimiento, diagnóstico).
+
+- **Se mueve** suavemente (flota) y, al hacerle clic, muestra un consejo nuevo.
+- **Puede hablar en voz alta** si el visitante activa el botón 🔊 (usa la voz del navegador, sin costo ni servicios externos).
+- El visitante puede **silenciarlo por hoy** o **quitarlo para siempre** en su navegador.
+- No aparece dentro del aula virtual ni al imprimir una página.
+- Los mensajes y su nombre se editan en `src/js/gucu.js`; la imagen está en `src/img/gucu-mascota.png` (puedes reemplazarla manteniendo el nombre).
