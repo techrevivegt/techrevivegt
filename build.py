@@ -22,6 +22,8 @@ def preparar_salida():
     os.makedirs(os.path.join(OUT, "css"))
     shutil.copytree(os.path.join(SRC, "img"), os.path.join(OUT, "img"))
     shutil.copytree(os.path.join(SRC, "js"), os.path.join(OUT, "js"))
+    if os.path.isdir(os.path.join(SRC, "audio")):
+        shutil.copytree(os.path.join(SRC, "audio"), os.path.join(OUT, "audio"))
     shutil.copytree(os.path.join(SRC, "panel"), os.path.join(OUT, "panel"))
     if os.path.isfile(os.path.join(SRC, "img", "favicon.ico")):
         shutil.copy(os.path.join(SRC, "img", "favicon.ico"), os.path.join(OUT, "favicon.ico"))

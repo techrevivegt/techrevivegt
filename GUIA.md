@@ -369,7 +369,15 @@ Tu sitio tiene un asistente llamado **Gucu** (inspirado en Gucumatz/Quetzalcóat
 
 - **Vuela por la pantalla**: cada rato sale de paseo a otro rincón (inclinándose mientras vuela, como una guía animada) y regresa solito a su esquina. Nunca tapa contenido importante: pasea solo por la franja baja.
 - **Cualquiera lo puede agarrar y arrastrar** con el mouse o el dedo a donde quiera; al rato vuelve a su esquina.
-- **Habla en voz alta con voz de caricatura** (la voz del navegador, gratis y sin servicios externos). El navegador exige un primer clic en la página para activar el sonido; el visitante puede apagar la voz con el botón 🔊.
+- **Habla con voz grabada de verdad** (voz de «deidad maya», no robotizada): 16 diálogos grabados en `src/audio/gucu/` que se reproducen también sin internet. Los navegadores exigen un primer clic en la página para activar el audio; después, Gucu habla con autonomía. El visitante apaga la voz con el botón 🔊.
+- **Dialogá con el visitante**: al darle clic presenta botones de conversación (🔧 Reparar / 🎓 Aprender / 💲 Cotizar / 👋 Solo saludaba), responde y **lleva al visitante a la página elegida**.
+- **Tiene 21 poses de acción** (`src/img/gucu-*.png|webp`): saludando al entrar, señalando al ofrecer opciones, guiñando al llevarte a otra página, soldador en Servicios, calculadora en el Cotizador, doctor en el Diagnóstico, lupa en el Seguimiento, teléfono en Contacto, graduado/pensando/riendo/dormido según el paseo, durmiendo si nadie lo mira 1 minuto, zen donde lo sueltes, mohín cómico si lo arrastrás mucho, y celebrando al volver a su esquina.
 - El visitante puede **silenciarlo por hoy** o **quitarlo para siempre** en su navegador.
 - No aparece dentro del aula virtual ni al imprimir una página.
 - Los mensajes y su nombre se editan en `src/js/gucu.js`; la imagen está en `src/img/gucu-mascota.png` (puedes reemplazarla manteniendo el nombre).
+
+## Certificados: finalización y participación
+En el panel, sección **Certificados**, hay dos tipos:
+- **🏅 Finalización**: para quienes **completaron y aprobaron** el curso (los que sí ganaron). Las solicitudes que hacen los alumnos desde el aula son de este tipo.
+- **🎗 Participación**: reconocimiento para quienes **no alcanzaron a ganar** el curso. El documento dice claramente que es una constancia por haber participado, agradecimiento al esfuerzo. **Cómo emitirla**: (a) en la pestaña *Emisión manual* elegí el tipo «Participación», o (b) en la lista de certificados, los registros **rechazados** tienen el botón «🎗 Dar participación», que la emite de una vez con el nombre y curso del alumno.
+Ambos tipos se pueden verificar en la página pública `/certificado` con su código, que cambia el diseño y el texto según el tipo.
