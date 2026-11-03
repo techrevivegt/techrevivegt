@@ -51,6 +51,17 @@
 
   function show(d) {
     var url = location.origin + "/certificado?c=" + d.id;
+    /* Dos tipos: finalización (ganó el curso) y participación (no alcanzó a ganarlo) */
+    var esParticipacion = d.tipo === "participacion";
+    set("titulo", esParticipacion ? "Certificado de Participación" : "Certificado de Finalización");
+    set("subtitulo", esParticipacion ? "Constancia de esfuerzo y asistencia" : "Capacitación tecnológica completada");
+    var nota = document.querySelector('[data-f="nota"]');
+    if (nota) {
+      nota.hidden = !esParticipacion;
+      nota.textContent = "Constancia otorgada por su participación. Este reconocimiento se entrega a quienes participaron y no alcanzaron la finalización del curso (no ganaron el certificado de finalización); es un agradecimiento por su esfuerzo y asistencia.";
+    }
+    var certEl = document.querySelector("[data-cert]");
+    if (certEl) certEl.classList.toggle("cert--participacion", esParticipacion);
     set("nombre", d.nombre);
     set("curso", d.curso);
     var horas = d.horas ? (/[a-z]/i.test(d.horas) ? d.horas : d.horas + " horas") : "";

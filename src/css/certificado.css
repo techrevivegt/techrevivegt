@@ -78,3 +78,12 @@ body.certp{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-seri
   .certp__stage{height:auto!important;overflow:visible}
   .cert{transform:none!important;box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+/* Variante «participación»: acentos en verde esmeralda en lugar de azul real */
+.cert__note{position:relative;font-size:10pt;color:#8a97b8;font-style:italic;margin:3mm 0 0;max-width:130mm;text-align:center}
+.cert--participacion .cert__subtitle{color:#0F766E}
+.cert--participacion .cert__subtitle::after{background:linear-gradient(90deg,#0F766E,#2DD4BF)}
+.cert--participacion .cert__title{color:#0A342E}
+.cert--participacion .cert__tag{color:#0F766E;border-color:#99F6E4}
+.cert--participacion .cert__facts div{border-left-color:#2DD4BF}
+.cert--participacion .cert__band::after{background:linear-gradient(180deg,#2DD4BF,#0F766E 50%,#115E59)}
+.cert--participacion .cert__band{background:radial-gradient(120% 60% at 0 0,rgba(45,212,191,.18),transparent 60%),radial-gradient(90% 50% at 100% 100%,rgba(15,118,110,.32),transparent 70%),linear-gradient(180deg,#071233 0%,#0B1C4A 55%,#040A1C 100%)}

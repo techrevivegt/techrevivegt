@@ -92,7 +92,7 @@
       actions.innerHTML = ""; form.hidden = true;
       if (c && c.estado === "aprobado") {
         box.classList.add("is-ready");
-        msg.innerHTML = "¡Felicidades! Tu certificado a nombre de <strong>" + esc(c.nombre) + "</strong> está listo.";
+        msg.innerHTML = "¡Felicidades! Tu " + (c.tipo === "participacion" ? "constancia de participación" : "certificado de finalización") + " a nombre de <strong>" + esc(c.nombre) + "</strong> está listo." + (c.tipo === "participacion" ? " (Constancia por haber participado; el certificado de finalización se otorga al completar y aprobar el curso.)" : "");
         actions.innerHTML = '<a class="btn btn--primary btn--sm" href="' + certUrl(c.id) + '" target="_blank" rel="noopener">Ver e imprimir certificado</a>';
         return;
       }
@@ -280,7 +280,7 @@
       return head + '<article class="aula-course">' +
         '<a href="' + esc(c.url) + '" class="aula-course__media"><img src="' + esc(c.imagen) + '" alt="" loading="lazy" />' +
         (pct === 100 ? '<span class="aula-course__done">✓ Completado</span>' : "") + "</a>" +
-        (function () { var ce = c.certificado && certFor(c.id); return ce && ce.estado === "aprobado" ? '<a class="aula-course__cert" href="' + certUrl(ce.id) + '" target="_blank" rel="noopener">🏅 Ver certificado</a>' : (pct === 100 && c.certificado && !ce && online() ? '<a class="aula-course__cert aula-course__cert--ask" href="' + esc(c.url) + '#certificado">🏅 Solicitar certificado</a>' : ""); })() +
+        (function () { var ce = c.certificado && certFor(c.id); return ce && ce.estado === "aprobado" ? '<a class="aula-course__cert" href="' + certUrl(ce.id) + '" target="_blank" rel="noopener">' + (ce.tipo === "participacion" ? "🎗 Ver constancia de participación" : "🏅 Ver certificado") + "</a>" : (pct === 100 && c.certificado && !ce && online() ? '<a class="aula-course__cert aula-course__cert--ask" href="' + esc(c.url) + '#certificado">🏅 Solicitar certificado</a>' : ""); })() +
         '<div class="aula-course__body"><p class="aula-course__meta">' + meta + "</p>" +
         '<h3><a href="' + esc(c.url) + '">' + esc(c.titulo) + "</a></h3>" +
         '<p class="aula-course__desc">' + esc(c.descripcion) + "</p>" +
