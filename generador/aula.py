@@ -766,8 +766,9 @@ def build_certificado():
             <img class="cert__logo" src="{e(cfg["logo"])}" alt="TechRevive" />
             <span class="cert__tag">Capacitación tecnológica</span>
           </header>
-          <p class="cert__title">{e(cfg["titulo"])}</p>
-          <p class="cert__subtitle">{e(cfg["subtitulo"])}</p>
+          <p class="cert__title" data-f="titulo">{e(cfg["titulo"])}</p>
+          <p class="cert__subtitle" data-f="subtitulo">{e(cfg["subtitulo"])}</p>
+          <p class="cert__note" data-f="nota" hidden></p>
           <p class="cert__lead">{e(cfg["texto_otorga"])}</p>
           <p class="cert__name" data-f="nombre"></p>
           <p class="cert__lead">{e(cfg["texto_curso"])}</p>
