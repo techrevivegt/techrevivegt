@@ -224,65 +224,15 @@
   }
   despierta();
 
-  /* ---------- Vuelo autónomo ---------- */
-  var enVuelo = false, volando = null, rondin = null, casaIx = 0;
-  function casas() {
-    var vw = window.innerWidth, vh = window.innerHeight;
-    var t = { w: wrap.offsetWidth || 130, h: wrap.offsetHeight || 220 };
-    var inf = vh - t.h - 96, m = 14;
-    return [
-      { x: vw - t.w - m, y: inf },
-      { x: m, y: inf },
-      { x: vw * 0.5 - t.w / 2, y: inf - 8 },
-      { x: vw - t.w - m - 30, y: Math.min(inf, vh * 0.6) },
-      { x: m + 20, y: Math.min(inf, vh * 0.62) },
-    ];
-  }
-  function vuelveHome(ms) { clearTimeout(rondin); rondin = setTimeout(function () { volarA(0, true); }, ms); }
-  function volarA(i, callado) {
-    if (REDUCIDO || arrastrando) return;
-    var lista = casas();
-    if (i == null) {
-      var ops = [];
-      for (var k = 0; k < lista.length; k++) if (k !== casaIx) ops.push(k);
-      i = ops[Math.floor(Math.random() * ops.length)];
-    }
-    var origen = lista[casaIx], dest = lista[i];
-    casaIx = i;
-    enVuelo = true;
-    wrap.classList.remove("gucu--quieto");
-    wrap.classList.add("gucu--volando");
-    wrap.classList.toggle("gucu--izq", dest.x < origen.x);
-    sprite("volando");
-    wrap.style.left = origen.x + "px"; wrap.style.top = origen.y + "px";
-    wrap.style.right = "auto"; wrap.style.bottom = "auto";
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { wrap.style.left = dest.x + "px"; wrap.style.top = dest.y + "px"; });
-    });
-    clearTimeout(volando);
-    volando = setTimeout(function () {
-      enVuelo = false;
-      wrap.classList.remove("gucu--volando");
-      wrap.classList.add("gucu--quieto");
-      sprite("celebrando");
-      setTimeout(function () { if (!enVuelo && !siesta) sprite("normal"); }, 1600);
-      despierta();
-      if (!callado && Math.random() < 0.6) di(PASEOS[Math.floor(Math.random() * PASEOS.length)]);
-      vuelveHome(12000);
-    }, 2600);
-  }
-  setInterval(function () {
-    if (!REDUCIDO && burbuja.hidden && !arrastrando && !enVuelo && !siesta) volarA();
-  }, 35000);
-
-  /* ---------- Arrastre libre ---------- */
+  /* ---------- Arrastre libre (se queda donde el visitante lo deja) ---------- */
+  var enVuelo = false; /* ya no vuela solo; variable por compatibilidad de estados */
   var arrastrando = false, ddx = 0, ddy = 0, movio = 0;
   btn.addEventListener("pointerdown", function (e) {
     arrastrando = true; movio = 0; despierta();
     var r = wrap.getBoundingClientRect();
     ddx = e.clientX - r.left; ddy = e.clientY - r.top;
     wrap.classList.add("gucu--arrastrando");
-    clearTimeout(volando); clearTimeout(rondin);
+    calla();
     wrap.style.left = r.left + "px"; wrap.style.top = r.top + "px";
     wrap.style.right = "auto"; wrap.style.bottom = "auto";
     try { btn.setPointerCapture(e.pointerId); } catch (err) {}
@@ -301,16 +251,14 @@
     if (movio < 6) {
       if (burbuja.hidden) di(PAGINA === "inicio" ? "opciones" : PAGINA, PAGINA === "inicio" || PAGINA === "generico");
       else burbuja.hidden = true;
-      vuelveHome(60000);
     } else {
       /* lo arrastraron de verdad: sonrisa zen donde lo dejaron, o mohín cómico si lo trajinaron mucho */
       sprite(movio > 400 ? "enojado" : "zen");
       setTimeout(function () { if (!enVuelo && !siesta) sprite("normal"); }, 3500);
-      vuelveHome(30000);
     }
     despierta();
   });
-  btn.addEventListener("pointercancel", function () { arrastrando = false; wrap.classList.remove("gucu--arrastrando"); vuelveHome(30000); });
+  btn.addEventListener("pointercancel", function () { arrastrando = false; wrap.classList.remove("gucu--arrastrando"); });
 
   /* ---------- Silenciar ---------- */
   wrap.querySelector("[data-gucu-hoy]").addEventListener("click", function () {
@@ -324,10 +272,7 @@
     }
   });
 
-  /* ---------- Saludo inicial ---------- */
-  var yaSalude = false;
-  try { yaSalude = !!sessionStorage.getItem("tr-gucu:saludo"); } catch (e) {}
-  setTimeout(function () {
-    if (!yaSalude) { di("saludo"); try { sessionStorage.setItem("tr-gucu:saludo", "1"); } catch (e) {} }
-  }, 2600);
+  /* ---------- Tranquilo: Gucu no habla ni se mueve por su cuenta ----------
+     Solo responde con voz y bocadillo cuando el visitante le da clic
+     (queriendo chatear). El botón de voz y los silencios siguen iguales. */
 })();
