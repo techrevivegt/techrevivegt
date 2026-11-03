@@ -74,6 +74,7 @@ async function handleApi(request, env, url) {
   if (route === "solicitud" && method === "POST") return publicSolicitud(request, env, url);
   if (route === "seguimiento" && method === "GET") return publicSeguimiento(request, env, url);
   if (route === "diagnostico/ia" && method === "POST") return diagnosticoIA(request, env, url);
+  if (route === "gucu/chat" && method === "POST") return gucuChat(request, env, url);
   if (route === "certificado" && method === "GET") return publicCertificate(env, url);
   if (route.startsWith("aula/")) return handleAulaApi(request, env, url, route, method);
 
@@ -459,7 +460,7 @@ async function handleAulaApi(request, env, url, route, method) {
   }
 
   if (route === "aula/certificados" && method === "GET") {
-    const rows = (await env.DB.prepare("SELECT id, curso, curso_titulo, nombre, estado, motivo, solicitado, emitido FROM certificados WHERE usuario = ? ORDER BY solicitado DESC").bind(s.usuario).all()).results || [];
+    const rows = (await env.DB.prepare("SELECT id, curso, curso_titulo, nombre, estado, motivo, COALESCE(tipo,'finalizacion') AS tipo, solicitado, emitido FROM certificados WHERE usuario = ? ORDER BY solicitado DESC").bind(s.usuario).all()).results || [];
     return json({ items: rows });
   }
 
@@ -477,7 +478,7 @@ async function handleAulaApi(request, env, url, route, method) {
     if (st.faltan > 0) return json({ error: `Te faltan ${st.faltan} lección(es) por completar.` }, 400);
     const nombre = cleanName(body.nombre) || s.user.n;
     const id = certId();
-    await env.DB.prepare("INSERT INTO certificados (id, usuario, nombre, curso, curso_titulo, horas, nota, estado, origen, solicitado) VALUES (?, ?, ?, ?, ?, ?, ?, 'solicitado', 'aula', ?)")
+    await env.DB.prepare("INSERT INTO certificados (id, usuario, nombre, curso, curso_titulo, horas, nota, estado, origen, tipo, solicitado) VALUES (?, ?, ?, ?, ?, ?, ?, 'solicitado', 'aula', 'finalizacion', ?)")
       .bind(id, s.usuario, nombre, cid, c.t, String(c.h || ""), st.nota, Date.now()).run();
     return json({ ok: true, id, estado: "solicitado" });
   }
@@ -522,7 +523,7 @@ function ensureSchema(env) {
       env.DB.prepare("CREATE INDEX IF NOT EXISTS secciones_ts ON secciones(ts)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS progreso (usuario TEXT NOT NULL, leccion TEXT NOT NULL, ts INTEGER NOT NULL, nota INTEGER, PRIMARY KEY (usuario, leccion))"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS tiempo (usuario TEXT NOT NULL, leccion TEXT NOT NULL, segundos INTEGER NOT NULL DEFAULT 0, actualizado INTEGER, PRIMARY KEY (usuario, leccion))"),
-      env.DB.prepare("CREATE TABLE IF NOT EXISTS certificados (id TEXT PRIMARY KEY, usuario TEXT, nombre TEXT NOT NULL, curso TEXT, curso_titulo TEXT NOT NULL, horas TEXT, nota INTEGER, estado TEXT NOT NULL, origen TEXT, motivo TEXT, solicitado INTEGER, emitido INTEGER, fecha TEXT)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS certificados (id TEXT PRIMARY KEY, usuario TEXT, nombre TEXT NOT NULL, curso TEXT, curso_titulo TEXT NOT NULL, horas TEXT, nota INTEGER, estado TEXT NOT NULL, origen TEXT, motivo TEXT, tipo TEXT DEFAULT 'finalizacion', solicitado INTEGER, emitido INTEGER, fecha TEXT)"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS cert_usuario ON certificados(usuario, curso)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS eventos (id INTEGER PRIMARY KEY AUTOINCREMENT, ts INTEGER NOT NULL, pid TEXT, vid TEXT, tipo TEXT NOT NULL, etiqueta TEXT, ruta TEXT, seccion TEXT)"),
       env.DB.prepare("CREATE INDEX IF NOT EXISTS eventos_ts ON eventos(ts)"),
@@ -534,6 +535,10 @@ function ensureSchema(env) {
       env.DB.prepare("CREATE TABLE IF NOT EXISTS ia_uso (dia TEXT PRIMARY KEY, n INTEGER NOT NULL DEFAULT 0)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS inscripciones (usuario TEXT NOT NULL, curso TEXT NOT NULL, ts INTEGER NOT NULL, PRIMARY KEY (usuario, curso))"),
     ]).catch((e) => { schemaReady = null; throw e; });
+    /* la columna tipo (finalizacion/participacion) en bases ya existentes */
+    schemaReady = schemaReady.then(async () => {
+      try { await env.DB.prepare("ALTER TABLE certificados ADD COLUMN tipo TEXT").run(); } catch (e) { /* columna ya existe */ }
+    });
   }
   return schemaReady;
 }
@@ -568,10 +573,10 @@ async function publicCertificate(env, url) {
   if (!/^TR-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(id)) return json({ error: "Código no válido." }, 400);
   if (!env.DB) return json({ error: "Servicio no disponible." }, 503);
   await ensureSchema(env);
-  const r = await env.DB.prepare("SELECT id, nombre, curso_titulo, horas, estado, emitido, fecha FROM certificados WHERE id = ?").bind(id).first();
+  const r = await env.DB.prepare("SELECT id, nombre, curso_titulo, horas, estado, COALESCE(tipo,'finalizacion') AS tipo, emitido, fecha FROM certificados WHERE id = ?").bind(id).first();
   if (!r || (r.estado !== "aprobado" && r.estado !== "revocado")) return json({ error: "No encontramos un certificado con ese código." }, 404);
   if (r.estado === "revocado") return json({ id: r.id, revocado: true });
-  return json({ id: r.id, nombre: r.nombre, curso: r.curso_titulo, horas: r.horas || "", fecha: r.fecha || "", emitido: r.emitido });
+  return json({ id: r.id, nombre: r.nombre, curso: r.curso_titulo, horas: r.horas || "", fecha: r.fecha || "", emitido: r.emitido, tipo: r.tipo || "finalizacion" });
 }
 
 /* ───────────── Estadísticas de visitas ───────────── */
@@ -870,8 +875,9 @@ async function handlePanelDb(request, env, url, route, method) {
       if (!nombre || !cursoTitulo) return json({ error: "Escribe el nombre del participante y el curso." }, 400);
       const id = certId();
       const fecha = /^\d{4}-\d{2}-\d{2}$/.test(String(b.fecha || "")) ? b.fecha : todayGT();
-      await DB.prepare("INSERT INTO certificados (id, usuario, nombre, curso, curso_titulo, horas, estado, origen, solicitado, emitido, fecha) VALUES (?, ?, ?, ?, ?, ?, 'aprobado', 'manual', ?, ?, ?)")
-        .bind(id, b.usuario ? clip(b.usuario, 60) : null, nombre, b.curso ? clip(b.curso, 60) : null, cursoTitulo, clip(b.horas, 20), Date.now(), Date.now(), fecha).run();
+      const tipo = b.tipo === "participacion" ? "participacion" : "finalizacion";
+      await DB.prepare("INSERT INTO certificados (id, usuario, nombre, curso, curso_titulo, horas, estado, origen, tipo, solicitado, emitido, fecha) VALUES (?, ?, ?, ?, ?, ?, 'aprobado', 'manual', ?, ?, ?, ?)")
+        .bind(id, b.usuario ? clip(b.usuario, 60) : null, nombre, b.curso ? clip(b.curso, 60) : null, cursoTitulo, clip(b.horas, 20), tipo, Date.now(), Date.now(), fecha).run();
       return json({ ok: true, id });
     }
     if (method === "PUT") {
@@ -1189,6 +1195,72 @@ async function publicSeguimiento(request, env, url) {
     nota: o.nota_publica || "", presupuesto: o.presupuesto || "", entrega: o.entrega || "", creado: o.creado, actualizado: o.actualizado,
     historial: hist, estados: ORDEN_ESTADOS,
   });
+}
+
+
+
+const GUCU_DIARIO = 100;
+const GUCU_BASE = [
+  "Eres «Gucu», la serpiente emplumada maya de la tecnología, asistente virtual oficial de TechRevive, un taller y escuela de tecnología en Guatemala.",
+  "Hablas SIEMPRE en español, amable, cercano y claro para personas sin conocimientos técnicos; puedes usar «vos» de forma natural y 1 emoji ocasional.",
+  "Respuestas CORTAS: máximo 60 palabras, directas a la pregunta.",
+  "Lo que ofrece TechRevive (sitio techrevive.gt): reparación y mantenimiento de computadoras y laptops (Windows, Mac, gamer), limpiezas, rescate de datos, actualizaciones, instalación de programas, desarrollo de sitios web, cotizaciones gratis en línea (página /cotizador, presupuesto enviado a WhatsApp), diagnóstico inteligente /diagnostico, seguimiento de órdenes /seguimiento, y un aula virtual GRATIS /aula con cursos prácticos que entregan certificado (computación básica, Excel, Word, PowerPoint, navegación segura, mantenimiento básico y más).",
+  "Si preguntan precios: no inventes números; invita a usar el cotizador (es gratis y el precio sale al instante) o a escribir por WhatsApp.",
+  "Si describen un problema técnico de su equipo: da 1-2 pistas seguras y sugiere el diagnóstico guiado /diagnostico o traerlo al taller; nunca sugieras abrir fuentes de poder ni manipular baterías hinchadas.",
+  "Si preguntan horarios, dirección o datos de contacto: invita a usar la página /contacto (los datos actuales son marcadores editables del sitio).",
+  "Si la pregunta no es de tecnología ni del sitio: responde con humor amable y redirige a los servicios («yo sé de circuitos, no de eso, pero…»).",
+  "Nunca prometas resultados imposibles ni datos del panel de administración. Eres un guía y mentor, no un villano: jamás intimidante.",
+];
+
+async function gucuChat(request, env, url) {
+  if (!sameOrigin(request, url)) return json({ error: "Solicitud no permitida." }, 403);
+  const b = await readJson(request);
+  const texto = String(b.texto || "").replace(/\s+/g, " ").trim().slice(0, 300);
+  if (texto.length < 2) return json({ error: "Escribe tu pregunta para Gucu." }, 400);
+  if (!await rlTake(env, `gucu:${clientIp(request)}`, 15, 3600)) return json({ error: "Muchas preguntas seguidas 😅. Dame un minuto y seguimos; o escríbenos por WhatsApp.", limite: true }, 429);
+  if (env.DB) {
+    try {
+      await ensureSchema(env);
+      const dia = "gucu:" + new Date().toISOString().slice(0, 10);
+      const u = await env.DB.prepare("SELECT n FROM ia_uso WHERE dia = ?").bind(dia).first();
+      if (u && u.n >= GUCU_DIARIO) return json({ error: "Gucu descansa sus plumas hoy; volvió a dar servicio mañana. Mientras tanto, el cotizador y el diagnóstico funcionan solos 🐍", limite: true }, 429);
+      await env.DB.prepare("INSERT INTO ia_uso (dia, n) VALUES (?, 1) ON CONFLICT(dia) DO UPDATE SET n = n + 1").bind(dia).run();
+    } catch { /* sigue */ }
+  }
+  /* Catálogo de servicios para anclar las respuestas */
+  let lista = "";
+  try {
+    const r = await env.ASSETS.fetch(new Request(new URL("/data/servicios-ia.json", url).toString()));
+    if (r.ok) lista = ((await r.json()).servicios || []).map((c) => "- " + c.n).join("\n");
+  } catch { /* sin catálogo */ }
+
+  if (!env.AI) {
+    /* Respaldos por palabra clave mientras se activa la IA del Worker */
+    const norm = texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let r;
+    if (/precio|cotiz|cuanto|cuesta|presupuesto|tarifa/.test(norm)) r = "Para el precio exacto, probá el cotizador en línea: ahí elegís tu equipo y servicio, y el presupuesto te llega al instante por WhatsApp. Es gratis 💲 → /cotizador";
+    else if (/curso|aprende|clase|aula|excel|word|powerpoint|estudi/.test(norm)) r = "¡Aprender es gratis aquí! En el aula virtual /aula tenés cursos prácticos con certificado: computación básica, Excel, Word, PowerPoint y más. Te inscribís solo con correo 🎓";
+    else if (/no enciende|lenta|traba|virus|pantalla|teclado|bateria|disco|wifi|internet|problema|falla|muere/.test(norm)) r = "Por los circuitos sagrados… eso merece un chequeo. Probá el diagnóstico inteligente en /diagnostico, o traé tu equipo al taller: en el sitio /contacto ves cómo escribirnos 🩺";
+    else if (/seguimient|orden|mi equipo|mi compu/.test(norm)) r = "Si ya dejaste tu equipo, consultá el estado en /seguimiento con tu código OT-XXXXX 🔎";
+    else if (/contacto|telefono|whatsapp|horario|direccion|ubicado/.test(norm)) r = "Todo lo de contacto y horarios está en /contacto — por WhatsApp respondemos rapidito en horario de servicio 📱";
+    else if (/hola|buenos|buenas|adios|gracias|quien eres|que eres/.test(norm)) r = "¡Hola, viajero! 🐍 Soy Gucu, serpiente emplumada de la tecnología. Guió: reparaciones, cursos gratis, cotizaciones… ¿qué necesita tu equipo?";
+    else r = "Entendido. Mirá, yo conozco el sitio: servicios en /servicios, precios instantáneos en /cotizador, cursos gratis en /aula, y el diagnóstico en /diagnostico. ¿Sobre cuál querés saber más? 🐍";
+    return json({ respuesta: r, modo: "basico" });
+  }
+
+  const hist = (Array.isArray(b.historial) ? b.historial : []).slice(-6).map((x) => ({ role: x && x.r === "g" ? "assistant" : "user", content: clip(x && x.t, 400) })).filter((x) => x.content);
+  const system = GUCU_BASE.join("\n") + (lista ? "\nCatálogo de servicios (nombres exactos):\n" + lista : "");
+  let raw = null;
+  for (const m of IA_MODELOS) {
+    try {
+      const out = await env.AI.run(m, { messages: [{ role: "system", content: system }, ...hist, { role: "user", content: texto }], max_tokens: 220, temperature: 0.6 });
+      raw = out && (out.response ?? (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content));
+      if (raw && typeof raw === "string" && raw.trim()) break;
+    } catch { /* siguiente modelo */ }
+  }
+  raw = typeof raw === "string" ? raw.trim().slice(0, 700) : "";
+  if (!raw) return json({ error: "Gucu pensó demasiado 🪶. Repetí la pregunta, por favor." }, 502);
+  return json({ respuesta: raw });
 }
 
 const IA_MODELOS = ["@cf/meta/llama-3.1-8b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/google/gemma-4-26b-a4b-it", "@cf/meta/llama-3.1-8b-instruct"];
