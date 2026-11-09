@@ -1166,8 +1166,9 @@ async function publicSolicitud(request, env, url) {
   const nombre = cleanName(b.nombre);
   const telefono = clip(String(b.telefono || "").replace(/[^\d+ -]/g, ""), 30);
   const correo = clip(String(b.correo || "").trim(), 120);
-  if (!nombre && !telefono && !correo) return json({ error: "Faltan tus datos de contacto." }, 400);
   const tipo = SOL_TIPOS.includes(b.tipo) ? b.tipo : "otro";
+  /* las cotizaciones se registran siempre, aunque el visitante no deje sus datos */
+  if (tipo !== "cotizacion" && !nombre && !telefono && !correo) return json({ error: "Faltan tus datos de contacto." }, 400);
   let datos = b.datos && typeof b.datos === "object" ? JSON.stringify(b.datos) : "";
   if (datos.length > 6000) datos = datos.slice(0, 6000);
   const cf = request.cf || {};
